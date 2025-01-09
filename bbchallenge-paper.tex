@@ -101,12 +101,12 @@
 
 \newcommand{\radofull}{Tibor Rad\'o\xspace}
 \newcommand{\rado}{Rad\'o\xspace}
-\newcommand{\noncomput}{noncomputable}
+\newcommand{\noncomput}{noncomputable\xspace}
 
 In 1962, \radofull introduced \textit{the busy beaver game} in an effort to ``present some very simple instances of \noncomput functions'' \cite{Rado_1962}. The original game was as such: (i) run all $n$-state Turing machines\footnote{See Appendix~\ref{app:TMs} for Turing machines definitions and examples.} from the all-zero tape (ii) consider the set of machines that eventually halt (iii) the winner of the game is the halting machine that has the most \sone symbols on its tape when it halts. This maximum number of \sone symbols on halting tape among $n$-state machines is called $\Sigma(n)$. The other function introduced by \rado is called $S$ and $S(n)$ is the maximum number of steps made by a halting $n$-state Turing machine from all-zero tape. Both functions $\Sigma$ and $S$ are \noncomput! This is the most obvious in the case of $S$: if an $n$-state machine runs for more than $S(n)+1$ steps, we know it will never halt, giving an algorithm to decide the halting problem is $S$ was computable.
 
 
-Because of the tight relationship between $S$ and the halting problem and similarly to other authors \cite{BusyBeaverFrontier}, we take the liberty to focus the busy beaver game on $S$ instead of $\Sigma$ and to call the $n$-state \textit{busy beaver winner} the machine achieving $S(n)$ running steps.
+Because of the tight relationship between $S$, similarly to other authors \cite{BusyBeaverFrontier}, we take the liberty to focus the busy beaver game on $S$ instead of $\Sigma$ and to call the $n$-state \textit{busy beaver winner} the machine achieving $S(n)$ running steps.
 
 
 
