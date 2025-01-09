@@ -75,6 +75,12 @@
 \definecolor{colorD}{RGB}{0,255,0}
 \definecolor{colorE}{RGB}{255,0,255}
 
+\newcommand{\stateA}{{\textcolor{colorA}{A}}}
+\newcommand{\stateB}{{\textcolor{colorB}{B}}}
+\newcommand{\stateC}{{\textcolor{colorC}{C}}}
+\newcommand{\stateD}{{\textcolor{colorD}{D}}}
+\newcommand{\stateE}{{\textcolor{colorE}{E}}}
+
 \begin{document}
 \date{}
 \maketitle
@@ -88,33 +94,18 @@
 \tableofcontents
 
 \section{Introduction}
-\subsection{Busy beaver functions}
-\subsection{The busy beaver scale: weighing open problems in mathematics}
-\subsection{Formal verification: Coq}
 
-\section{The road to S(4) and S(2,4)}
-\include{sections/decider-0-cyclers}
-\include{sections/decider-1-translated-cyclers}
-\include{sections/decider-2-ngram-CPS}
-\include{sections/decider-3-RepWL}
+\section{Deciders}
 
-\subsection{$S(4)=107$ and $S(2,4)=3,932,964$}
+% \input{sections/decider-0-cyclers.tex}
+% \input{sections/decider-1-translated-cyclers.tex}
+\input{sections/decider-2-NGramCPS.tex}
+% \input{sections/decider-3-RepWL.tex}
+% \input{sections/decider-4-FAR.tex}
+% \input{sections/decider-5-MITM-WFAR.tex}
 
-\section{The road to S(5)}
-\include{sections/decider-4-FAR}
-\include{sections/decider-5-MITM-WFAR}
+\section{Sporadic Machines}
 
-\subsection{Sporadic 5-state Turing machines}
-\subsection{$S(5)=47,176,870$}
-
-\section{Beyond S(5)}
-\include{sections/beyond-S(5)}
-\subsection{$S(6)$ cryptids}
-\subsection{$S(3,3)$ cryptids}
-\subsection{$S(2,5)$ cryptids}
-\subsection{The Beaver Mathematical Olympiad (BMO)}
-
-\section{Conclusion: the busy beaver frontier}
 
 \bibliographystyle{abbrv}
 \newpage
