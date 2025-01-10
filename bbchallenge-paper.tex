@@ -84,6 +84,23 @@
 \newcommand{\szero}{\texttt{0}\xspace}
 \newcommand{\sone}{\texttt{1}\xspace}
 
+\def\@fnsymbol#1{\ensuremath{\ifcase#1\or *\or \dagger\or \ddagger\or
+   \mathsection\or \mathparagraph\or \|\or **\or \dagger\dagger
+   \or \ddagger\ddagger \else\@ctrerr\fi}}
+\newcommand{\ssymbol}[1]{^{\@fnsymbol{#1}}}
+
+\newcommand{\BBtheFourth}{107}
+\newcommand{\SigmaTheFourth}{13}
+
+\newcommand{\BBtheFifth}{47{,}176{,}870}
+\newcommand{\SigmaTheFifth}{4{,}098}
+
+\newcommand{\BBTxF}{3{,}932{,}974}
+
+\newcommand{\radofull}{Tibor Rad\'o\xspace}
+\newcommand{\rado}{Rad\'o\xspace}
+
+\newcommand{\cryptid}{Cryptid\xspace}
 
 \begin{document}
 \date{}
@@ -102,14 +119,7 @@
 
 \end{center}
 
-\newcommand{\BBtheFourth}{107}
-\newcommand{\SigmaTheFourth}{13}
 
-\newcommand{\BBtheFifth}{47{,}176{,}870}
-\newcommand{\SigmaTheFifth}{4{,}098}
-
-\newcommand{\radofull}{Tibor Rad\'o\xspace}
-\newcommand{\rado}{Rad\'o\xspace}
 
 \begin{figure}
     \begin{quote}
@@ -135,7 +145,7 @@ In 1962, \radofull introduced \textit{the \BBfull game} in an effort to ``presen
 
 This tight link to the halting problem makes $S$ more interesting and practical to us than $\Sigma$, hence we take the liberty (similarly to other authors \cite{BusyBeaverFrontier,otherexamples?}) to focus the busy beaver game on $S$ instead of $\Sigma$ and to call the $n$-state \textit{busy beaver winner} the machine achieving $S(n)$ running steps. Prior to this work, only the four first values of $S$ (and $\Sigma$) had been proved: $S(1)=1$, $S(2)=6$ \cite{Rado_1962}, $S(3) = 21$ \cite{Lin1963}, $S(4) = 107$ \cite{Brady83}.
 
-With some early attempts in the 1960s and 1970s, the $S(5)$ quest seriously started in 1983 with a 2-day competition organised at the university of Dortmund\footnote{Report of the competition: \url{https://docs.bbchallenge.org/other/lud20.pdf}.} with sole goal to find new 5-state champions (\ie 5-state machines achieving better $S$/$\Sigma$ scores than previously known ones). The best machine achieved $134,467$ steps, establishing $S(5) \geq 134,467$. A big step was then made in 1989 when Marxen and Buntrock found a new champion\footnote{\url{https://bbchallenge.org/1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA} \ts{Eventually improve this by putting the full transition table, potentially in a standalone figure with illustrations.}} achieving $\BBtheFifth$ steps \cite{Marxen_1990}, showing $S(5) \geq \BBtheFifth$. However, it remained unknown if no other machine could beat it, \ie whether Marxen and Buntrock's 5-state machine was the actual winner or not. In 2020, Aaronson conjectured that there is no better 5-state machine, \ie $S(5) = \BBtheFifth$ \cite{BusyBeaverFrontier}.
+With some early attempts in the 1960s and 1970s, the $S(5)$ quest seriously started in 1983 with a 2-day competition organised at the university of Dortmund\footnote{Report of the competition: \url{https://docs.bbchallenge.org/other/lud20.pdf}.} with sole goal to find new 5-state champions -- \ie 5-state machines achieving better $S$/$\Sigma$ scores than previously known ones \cite{PMichel_website,michel2019busy}. The best machine achieved $134,467$ steps, establishing $S(5) \geq 134,467$. A big step was then made in 1989 when Marxen and Buntrock found a new champion\footnote{\url{https://bbchallenge.org/1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA} \ts{TS: (to improve with table)}} achieving $\BBtheFifth$ steps \cite{Marxen_1990}, showing $S(5) \geq \BBtheFifth$. However, it remained unknown if no other machine could beat it, \ie whether Marxen and Buntrock's 5-state machine was the actual winner or not. In 2020, Aaronson conjectured that there is no better 5-state machine, \ie $S(5) = \BBtheFifth$ \cite{BusyBeaverFrontier}.
 
 Our main result is to prove this conjecture, using the \Coq theorem prover\footnote{The \Coq proof is available at: \CoqProofReleaseURL}, see Theorem~\ref{th:BB5}. The 5-state winner for $S$ is also the winner for $\Sigma$ and $\Sigma(5) = \SigmaTheFifth$, see Theorem~\ref{th:BB5Sigma}.
 
@@ -147,6 +157,29 @@ Our main result is to prove this conjecture, using the \Coq theorem prover\footn
 \begin{theorem}\label{th:BB5Sigma}
     $\Sigma(5) = \SigmaTheFifth$.
 \end{theorem}
+
+The function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, i.e. $S(5) = S(5,2)$. It was previously known that $S(2,3) = 38$ \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We prove, using the Coq theorem prover, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB24}.
+
+\begin{theorem}\label{th:BB24}
+    $S(2,4) = \BBTxF$.
+\end{theorem}
+
+That way, we have now a clearer view of the small Busy Beaver values landscape, see Table~\ref{table:landscape}.
+
+
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{llllll}
+                 & 2-state                                                       & 3-state                                        & 4-state                                   & 5-state                            & 6-state                                                    \\
+        2-symbol & $S(2) = 6$ \cite{Rado_1962}                                   & $S(3) = 21$ \cite{Lin1963}                     & $S(4) = 107$ \cite{Brady83}               & $S(5) = \BBtheFifth \ssymbol{2}\ $ & $S(6) > 10 \uparrow \uparrow 15 \ssymbol{1}\ \ssymbol{3} $ \\
+        3-symbol & $S(2,3) = 38$ \cite{LafittePapazian2007}                      & $S(3,3) > {10^{17}} \ssymbol{1}\ \ssymbol{3} $ & $S(4,3) > {10^{14{,}072}} \ssymbol{1}\  $ &                                    &                                                            \\
+        4-symbol & $S(2,4) = \BBTxF \ssymbol{2}$                                 & $S(3,4) > 2 \uparrow^{15} 5 \ssymbol{1}\ $     &                                           &                                    &                                                            \\
+        5-symbol & $S(2,5) > 10 \uparrow \uparrow {4 \ssymbol{1}} \ssymbol{3}\ $ &                                                &                                           &                                    &
+    \end{tabular}
+    \caption{Landscape of small busy beaver values. $\ssymbol{2}\ $ proved in this work using the \Coq theorem prover. $\ssymbol{1}\ $ lower bounds, see Appendix~\ref{app:lowerbounds}. $\ssymbol{3}\ $ existence of a \textit{\cryptid}, see Appendix~\ref{app:cryptids}.}\label{table:landscape}
+\end{table}
+
 
 \paragraph{Challenges.}
 
@@ -162,8 +195,16 @@ Our main result is to prove this conjecture, using the \Coq theorem prover\footn
 \section{Sporadic Machines}
 
 
+
+
 \bibliographystyle{abbrv}
 \newpage
 \bibliography{bbchallenge-paper}
+
+\appendix
+
+\section{Turing machines}\label{app:TMs}
+\section{Lower bounds}\label{app:lowerbounds}
+\section{Cryptids}\label{app:cryptids}
 
 \end{document}
