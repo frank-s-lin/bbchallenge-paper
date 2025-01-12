@@ -93,6 +93,7 @@
 \newcommand{\SigmaTheFourth}{13}
 
 \newcommand{\BBtheFifth}{47{,}176{,}870}
+\newcommand{\BBtheFifthTNF}{181{,}385{,}789}
 \newcommand{\SigmaTheFifth}{4{,}098}
 
 \newcommand{\BBTxF}{3{,}932{,}974}
@@ -153,7 +154,7 @@ Our main result is to prove this conjecture, using the \Coq theorem prover \cite
     $S(5) = \BBtheFifth$.
 \end{theorem}
 
-The winning machine for $S(5)$ is also the winning machine for $\Sigma(5)$ and we prove $\Sigma(5) = \SigmaTheFifth$, see Theorem~\ref{th:BB5Sigma}. Also, the function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, where, for instance $S(5,2)$ is the value of $S$ for 5-state, 2-symbol machines, \ie $S(5)$. It was previously known that $S(2,3) = 38$ \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We also prove, using the Coq theorem prover \cite{the_coq_development_team_2024_14542673}, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB24}.
+The winning machine for $S(5)$ is also the winning machine for $\Sigma(5)$ and we prove $\Sigma(5) = \SigmaTheFifth$, see Theorem~\ref{th:BB5Sigma}. Also, the function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, where, for instance, $S(5,2)$ is the value of $S$ for 5-state, 2-symbol machines, \ie $S(5)$. It was previously known that $S(2,3) = 38$ \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We also prove, using the Coq theorem prover \cite{the_coq_development_team_2024_14542673}, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB24}:
 
 \begin{theorem}\label{th:BB24}
     $S(2,4) = \BBTxF$.
@@ -176,7 +177,9 @@ The Coq proofs are available at \url{https://github.com/ccz181078/Coq-BB5}. The 
 \end{table}
 
 
-\paragraph{Challenges.}
+\paragraph{Challenges.} Proving $S(5) = \BBtheFifth$ required to analyse the behavior of $\BBtheFifthTNF$ Turing machines\footnote{This exact number can only be known after the proof is done, see Section~\ref{sec:TNF}.}. The challenge for a halting machine is the case where it halts after a number of steps that is too enormous to be simulated naïvely (e.g. the current 6-state champion halts after $10 \uparrow \uparrow 15$ steps, see Appendix~\ref{app:lowerbounds}), this challenge was not met for 5-state machines since they halt in at most $\BBtheFifth$ steps -- this could not have been known in advance but was believed -- which is easy to simulate on modern computers. The challenge for a non-halting machine is that proving it does halt can be hard. How hard?
+
+Dauntingly, any $\Pi_1^0$ mathematical statement\footnote{A $\Pi_1^0$ statement is a statement of first-order logic of the form $\forall x, \phi(x)$ where $\phi$ is a sentence with only bounded quantifiers.} can be encoded as the halting problem of a machine Turing (from all-zero tape). Such statements are common and include famous open problems in mathematics such as Goldbach's conjecture or the Riemann hypothesis. Goldbach's conjecture, formulated in 1742, is one of the oldest open problems in mathematics and states that ``every even positive integer greater than 2 is the sum of two prime numbers''. We can build a Turing machine that halts iff the conjecture is false: by enumerating all positive integers, then for each, test all sums for small primes and halt iff we do not find the sum. This has been done in practice (and formally verified) using only 25 states \cite{GoldbachTM27, GoldbachTM25}. This means that proving the value of $S(25)$ is at least as hard as solving Goldbach's conjecture because the proof of $S(25)$ must contain an argument as of why this particular 25-state machine does not (or, less likely, does) halt.
 
 \section{Deciders}
 
