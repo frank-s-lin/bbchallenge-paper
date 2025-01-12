@@ -124,10 +124,10 @@
 
 \begin{figure}
     \begin{quote}
-        In any case, even though skilled mathematicians and experienced programmers attempted to evaluate $\Sigma(3)$ and S(3), there is no evidence that any known approach will yield the answer, even if we avail ourselves of high-speed computers and elaborate programs. As regards $\Sigma(4)$, $S(4)$ the situation seems to be entirely hopeless at present. --- \radofull, 1963 \cite{Rado_1963}
+        ``In any case, even though skilled mathematicians and experienced programmers attempted to evaluate $\Sigma(3)$ and S(3), there is no evidence that any known approach will yield the answer, even if we avail ourselves of high-speed computers and elaborate programs. As regards $\Sigma(4)$, $S(4)$ the situation seems to be entirely hopeless at present.'' --- \radofull, 1963 \cite{Rado_1963}
     \end{quote}
     \begin{quote}
-        \textit{Prediction 5}. It will never be proved that $\Sigma(5) = \SigmaTheFifth$ and $S(5) = \BBtheFifth$. --- Allen H. Brady, 1990 \cite{BradyMeaningOfLife}
+        ``\textit{Prediction 5}. It will never be proved that $\Sigma(5) = \SigmaTheFifth$ and $S(5) = \BBtheFifth$.'' --- Allen H. Brady, 1990 \cite{BradyMeaningOfLife}
     \end{quote}
     \caption{\radofull, who invented the Busy Beaver game and proved the value of $S(2)$ in 1962 \cite{Rado_1962} and who was involved in the proof of $S(3)$ in 1963 \cite{Lin1963} did not believe that $S(4)$ could be solved at his time. Allen H. Brady, who proved the value of $S(4)$ in 1983 \cite{Brady83} did not believe that $S(5)$ could be solved at all. Amusingly, Brady opens his article on $S(4)$ with \rado's above quote \cite{Brady83}. Under that light, the knowledge of a (small) Busy Beaver value seems to be a reflection of the computing technology available at the time it was proved.}
 \end{figure}
@@ -182,6 +182,12 @@ The Coq proofs are available at \url{https://github.com/ccz181078/Coq-BB5}. The 
 Dauntingly, any $\Pi_1^0$ mathematical statement\footnote{A $\Pi_1^0$ statement is a statement of first-order logic of the form $\forall x, \phi(x)$ where $\phi$ is a sentence with only bounded quantifiers.} can be encoded as the halting problem of a Turing machine (from all-zero tape). Such statements are common and include famous open problems in mathematics such as Goldbach's conjecture or the Riemann hypothesis. Goldbach's conjecture, formulated in 1742, is one of the oldest open problems in mathematics and states that ``every even positive integer greater than 2 is the sum of two prime numbers''. We can build a Turing machine that halts iff the conjecture is false: by enumerating all positive integers, then for each, test all sums for small primes and halt iff we do not find the sum. This has been done in practice (and formally verified) using only 25 states \cite{GoldbachTM27, GoldbachTM25}. This means that proving the value of $S(25)$ is at least as hard as solving Goldbach's conjecture because the proof of $S(25)$ must contain an argument as of why this particular 25-state machine does not (or, believed less likely, does) halt. The Riemann hypothesis has been encoded in an 744-state machines \cite{RiemannTM,Yedidia2016,BusyBeaverFrontier}. As low as 15 states is enough to encode a hard number theoretical conjecture by Erd\H{o}s \cite{BB15}. Worst, the consistency of common axioms sets such as Peano's Arithmetic (PA) or Zermelo–Fraenkel set theory (ZF) is also a  $\Pi_1^0$ since one can enumerate proofs in these systems until the proof of a contradiction is found. This has been done for ZF, using 748 states \cite{ZFTM,Yedidia2016,BusyBeaverFrontier,BB748Thesis}. By G\"odel's second incompletness theorem, this means that proving the value of $S(748)$ cannot be done using ZF and Aaronson conjectures that as low as $S(20)$ cannot be proven in ZF and as low as $S(10)$ cannot be proven in PA \cite{BusyBeaverFrontier}.
 
 Hence, while 5-state halting machines were not feared, it remained completely unknown how hard could non-halting 5-state machines could get. This article settles the question.
+
+\paragraph{Related Work.}
+
+\paragraph{Method and meta-method.}
+
+\paragraph{Formal Verification (\Coq).}
 
 \section{Deciders}
 
