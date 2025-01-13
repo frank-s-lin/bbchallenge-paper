@@ -134,7 +134,7 @@
 
 \section{Introduction}
 
-\newcommand{\noncomput}{non-computable\xspace}
+\newcommand{\noncomput}{noncomputable\xspace}
 \newcommand{\BBfull}{Busy Beaver\xspace}
 \newcommand{\Coq}{Coq\xspace}
 % We'll update this link to v1 release URL
@@ -183,9 +183,18 @@ Dauntingly, any $\Pi_1^0$ mathematical statement\footnote{A $\Pi_1^0$ statement 
 
 Hence, while 5-state halting machines were not feared, it remained completely unknown how hard could non-halting 5-state machines could get. This article settles the question.
 
-\paragraph{Related Work.}
+\paragraph{Related Work.} The proof of $S(4) = \BBtheFourth$ was published in 1983 \cite{Brady83}. A caveat of the proof resides in the following quote: ``All of the remaining holdouts were examined by means of voluminous printouts of their histories along with some program extracted features. It was determined to the author's satisfaction that none of these machines will ever stop.'' -- where \textit{holdout} means a machine needing of proof of halting/nonhalting. Using the Coq theorem prover, we confirm that the result is correct, see Theorem~\ref{th:BB4}.
 
-\paragraph{Method and meta-method.}
+\newcommand{\SkeletHoldoutsSporadic}{\ts{XX}\xspace}
+
+We know of two attempts at solving $S(5)$: in 2003, Georgi Georgiev (also known under pseudonym ``Skelet'' or ``Skeleta'') published the program \texttt{bbfind} \cite{Skelet_bbfind} which enumerates and decides the halting behavior of 5-state Turing machines, claiming to leave unsolved mainly 43 holdouts\footnote{\url{https://skelet.ludost.net/bb/nreg.html} and \url{https://bbchallenge.org/skelet}}. Attesting to the validity of the result is difficult as Skelet's code consists of ca. 6000 lines of uncommented and undocumented Pascal. That said, it turned out to be instrumental for our result as, after reverse engineering parts of it, we were able to learn and improve on his ``Closed Position Set'' technique (see Section~\ref{sec:n-gramCPS}) which decided slightly more than 99.87\% of the 5-state Turing machines excluding loops (see Section~\ref{sec:loops}). Also, \SkeletHoldoutsSporadic of his 43 holdouts ended up being part of our \textit{sporadic machines}, \ie machines for which we needed individual proofs of nonhalting, including machine Skelet \#1 and Skelet \#17 who were particularly hard to prove, see Section~\ref{sec:sporadic}. These facts give credit to the trustworthiness of Skelet's list of 43 holdouts, and some of these holdouts were analysed by hand prior to our work \cite{DanBriggs}. The second attempt was in 2008 with Joachim Hertel's ``Symbolic induction prover'' which claimed to leave only $1{,}000$ holdouts $900$ of them manually proven not to halt, allegedly leaving only $100$ proper holdouts \cite{Hertel}. In an opposite way to Skelet's work, the method is documented but, to the best of our knowledge, no code is made available, nor are the 900 claimed manual proofs making verification of the result difficult apart from reproduction from scratch (arguably, verification would still be tedious if the 900 proofs were given).
+
+
+% Several authors have worked on $S(5)$: in \cite{Ross2003}, the authors build on the techniques
+
+\paragraph{Method and structure of the proof.}
+
+\paragraph{Meta-method.}
 
 \paragraph{Formal Verification (\Coq).}
 
