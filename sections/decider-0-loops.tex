@@ -26,18 +26,21 @@ Here, we develop a new algorithm (Algorithm~\ref{alg:loops}) for deciding both \
     \State{\textbf{Output:} `NON-HALT' if the decider detects that the machine is a loop, `HALT' if the machine halts and `UNKNOWN' otherwise.}
 
     \State
-    \State Simulate $\mathcal{M}$ for $L$ steps and save the history of the \ssps seen by the machine as well as whether the head was on the extremity of the visited tape or not for each of these steps.
+    \State Simulate $\mathcal{M}$ for $L$ steps and save the history of the \ssps and head positions seen by the machine as well as whether the head was on the extremity of the visited tape or not for each of these steps.
 
     \State \If{The machine has halted before $L$ steps}
     \State \Return HALT
     \EndIf
     \State
     \State $h_0\in \states \times \alphabet = $ the last \ssp of the history
+    \State $d_0\in\mathbb{Z} = $ the position of the head on the tape for $h_0$
     \State \For{$l$ \textbf{in} $[0,+\infty[$ } \Comment{$l+1$ is the length of the potential loop}
     \State \If{$2l + 3 > L$} \Comment{The computed history is not long enough for the test}
     \State \Return UNKNOWN
     \State \EndIf
     \State $h_1 =$ the \ssp seen $l$ steps before $h_0$
+    \State $d_1 = $ the position of the head on the tape for $h_1$
+    \State
     \State $\text{extremity} = \text{false}$
     \State $\text{allseen} = \text{false}$
     \State \For{$i$ \textbf{in} $[0,l]$ }
@@ -53,7 +56,7 @@ Here, we develop a new algorithm (Algorithm~\ref{alg:loops}) for deciding both \
     \State $\text{allseen} = \text{true}$
     \EndIf
     \EndFor
-    \State \If{$\text{allseen}$ \textbf{and} $\text{extremity}$}
+    \State \If{$\text{allseen}$ \textbf{and} ($d_0 == d_1$ \textbf{or} $\text{extremity}$)}
     \State \Return NON-HALT
     \EndIf
     \State \EndFor
