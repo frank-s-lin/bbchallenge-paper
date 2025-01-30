@@ -2,7 +2,7 @@
 
 \newpage
 
-\newcommand{\alphabet}{\mathcal{A}}
+
 \newcommand{\ngramcps}{NGramCPS\xspace}
 
 \subsection{$n$-gram Closed Position Set (\ngramcps)}\label{sec:n-gramCPS}
@@ -51,7 +51,7 @@ In the computerised proof, the \ngramcps decider is used (a) without augmentatio
     \caption{{\sc decider-NGramCPS}}\label{alg:NGramCPS}
 
     \begin{algorithmic}[1]
-        \State{\textbf{Input:} a Turing machine `tm', the zero symbol of the alphabet $\alphabet_0$, the size of the n-grams $n > 0$.}
+        \State{\textbf{Input:} A Turing machine $\mathcal{M}$, the zero symbol of the alphabet $\alphabet_0$, the size of the n-grams $n > 0$.}
         \State{\textbf{Output:} `NON-HALT' if the decider detects that the machine doesn't halt and `UNKNOWN' otherwise.}
 
         \State $g_0 = (\alphabet_0)^n$ \Comment{The zero n-gram consists of $n$ zero symbols}
@@ -64,7 +64,7 @@ In the computerised proof, the \ngramcps decider is used (a) without augmentatio
         \While{$|V| \neq 0$}
         \State $c = V.\textbf{pop}()$
         \State $c' = c$
-        \State $\{w,d,s\}$ $=$ tm(c.state, c.\middlesymbol) \Comment{Transition's write symbol, move direction, and next state}
+        \State $\{w,d,s\}$ $=$ $\mathcal{M}$(c.state, c.\middlesymbol) \Comment{Transition's write symbol, move direction, and next state}
         \State \If{$s$ is undefined} \Comment{Undefined transition is met, we cannot conclude}
         \State \textbf{return} UNKNOWN\label{alg:NGramCPS:line:unknown}
         \EndIf
