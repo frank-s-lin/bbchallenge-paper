@@ -26,40 +26,35 @@ Here, we develop a new algorithm (Algorithm~\ref{alg:loops}) for deciding both \
     \State{\textbf{Output:} `NON-HALT' if the decider detects that the machine is a loop, `HALT' if the machine halts and `UNKNOWN' otherwise.}
 
     \State
-    \State Simulate $\mathcal{M}$ for $L$ steps and save the history of the \ssps and head positions seen by the machine as well as whether the head was on the extremity of the visited tape or not for each of these steps.
+    \State Simulate $\mathcal{M}$ for $L$ steps and save the history of
+    each consecutive state, read-symbol and tape position reached, \ie consecutive $h_i = (s_i,m_i,d_i) \in \states \times \alphabet \times \Z$ for $0 \leq i \leq L$ and $h_0 = (\stateA,\symbolzero,0)$.
+
 
     \State \If{the machine has halted before $L$ steps}
     \State \Return HALT
     \EndIf
-    \State
-    \State $h_0\in \states \times \alphabet = $ the last \ssp of the history
-    \State $d_0\in\mathbb{Z} = $ the position of the head on the tape for $h_0$
     \State \For{$l$ \textbf{in} $[0,+\infty[$ } \Comment{$l+1$ is the length of the potential loop}
-    \State \If{$2l + 3 > L$} \Comment{The computed history is not long enough for the test}
+    \State \If{$2(l + 1) > L$} \Comment{The history does not contain two potential loops of size $l+1$}
     \State \Return UNKNOWN
     \State \EndIf
-    \State $h_1 =$ the \ssp seen $l$ steps before $h_0$
-    \State $d_1 = $ the position of the head on the tape for $h_1$
-    \State
-    \State $\text{extremity} = \text{false}$
-    \State $\text{allseen} = \text{false}$
-    \State \For{$i$ \textbf{in} $[0,l]$ }
-    \State $h_0' = $ the \ssp $i$ steps before $h_0$
-    \State $h_1' = $ the \ssp $i$ steps before $h_1$
-    \State \If{$h_0'$ corresponds to a tape extremity}
-    \State $\text{extremity} = \text{true}$
-    \EndIf
-    \State \If{$h_0' \neq h_1'$}
-    \State \textbf{Break}
-    \EndIf
-    \State \If{$i == l$}
+    \State $K = L-l-1$
     \State $\text{allseen} = \text{true}$
+    \State $\text{recordbreak} = \text{false}$
+    \State \For{$i$ \textbf{in} $[0,l]$ } \Comment{Comparing \ssp equality at each step of both potential loops}
+    \State $s,m,d = h_{L-i}$
+    \State $s',m',d' = h_{K-i}$ \Comment{$d'$ will not be used}
+    \State \If{$s\neq s'$ \textbf{or} $m \neq m'$}
+    \State $\text{allseen} = \text{false}$
+    \State \textbf{break}
+    \EndIf
+    \State \If{$d > \text{max} \{d_j \, | \, j < L-i \}$ \textbf{or} $d < \text{min} \{d_j \, | \, j < L-i \}$}
+    \State $\text{recordbreak} = \text{true}$
     \EndIf
     \EndFor
-    \State \If{$\text{allseen}$ \textbf{and} ($d_0 == d_1$ \textbf{or} $\text{extremity}$)}
+    \State \If{$\text{allseen}$ \textbf{and} ($d_L == d_K$ \textbf{or} $\text{recordbreak}$)}
     \State \Return NON-HALT
     \EndIf
-    \State \EndFor
+    \EndFor
 
 
   \end{algorithmic}
