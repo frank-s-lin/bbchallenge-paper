@@ -7,15 +7,21 @@
   \centering
   \includegraphics[width=0.4\textwidth]{figures/space-time-diagrams/cycler_279081.pdf}
   \hspace{2ex}
-  \includegraphics[width=0.4\textwidth]{figures/space-time-diagrams/translated_cycler_59090563_2.png}
-  \caption{Space-time diagrams of the 30 first steps of a \textit{\cycler} with colors indicating head position and state (left) and of the 10,000 first steps of a \TC (right). \cyclers are machines that eventually repeat the same configuration forever. \TCs are machines that eventually repeats the same configuration forever, but translated in space. We refer to these two types of machines as \textit{loops}.}\label{fig:loops}
+  \includegraphics[width=0.4\textwidth]{figures/space-time-diagrams/translated_cycler_44394115.pdf}
+  %\includegraphics[width=0.4\textwidth]{figures/space-time-diagrams/translated_cycler_59090563_2.png}
+  \caption{Space-time diagrams of the 30 first steps of a \textit{\cycler}\protect\footnotemark  with colors indicating head position and state: \stateA, \stateB, \stateC, \stateD, \stateE (left) and of the 10,000 first steps of a \textit{\TC}\protect\footnotemark (right). \cyclers are machines that eventually repeat the same configuration forever. \TCs are machines that eventually repeats the same configuration forever, but translated in space. We refer to these two types of machines as \textit{loops}.}\label{fig:loops}
 \end{figure}
 
-The goal of this decider is to recognise \textit{Loops} which are Turing machines that eventually repeat the same configuration forever (called \textit{\cyclers}, Figure~\ref{fig:loops}~left), potentially translated in space (called \textit{\TCs}, Figure~\ref{fig:loops}~right).
+\footnotetext{\url{https://bbchallenge.org/1RB---\_0RC0LE\_1LD0LA\_1LB1RB\_1LC1RC}}
+\footnotetext{\url{https://bbchallenge.org/1RB0RE\_0LC1RC\_0RD1LA\_1LE---\_1LB1RC}}
 
-Deciding Cyclers reduces to the well-known mathematical problem of detecting the cycles of a function for which standard algorithms exist \cite{wiki:Cycle_detection}, the simplest one consisting in memorizing each successive configuration of the machine until encountering one that has been already seen. Translated Cyclers, also known as \textit{Lin's recurrence}, have first been described and decided in Shen Lin's 1963 PhD thesis \cite{Lin1963}, other algorithms to detect them have been developed since then\footnote{\url{https://discuss.bbchallenge.org/t/decider-translated-cyclers/34}}.
+The goal of this decider is to recognise two types of Turing machines: (i) \textit{\cyclers} (see Figure~\ref{fig:loops}~left) that eventually repeat the same configuration and therefore loop forever and (ii) \textit{\TCs} that also eventually repeat the same configuration, but translated in space (see Figure~\ref{fig:loops}~right). We regroup both types of machines under the umbrella term of \textit{loops}.
 
-Here, we develop a new algorithm (Algorithm~\ref{alg:loops}) for deciding both \cyclers and \TCs. The particularity of this algorithm is that it detects cyclers only by analysing the history of \ssps seen by the machine's head instead of considering entire configurations (\ie with full tape content information). This algorithm is also able to detect if a machine halts and in practice detects 99.99\% of all enumerated halting machines \ts{TS: link to section/table about stats or something and maybe link to the pipeline figure}.
+Deciding Cyclers reduces to the well-known mathematical problem of detecting the cycles of a function and standard detection algorithms exist \cite{wiki:Cycle_detection}, the simplest one consisting in memorizing each successive configuration of the machine until encountering one that has been already seen. Translated Cyclers, also known as \textit{Lin's recurrence}, have first been described and decided in Shen Lin's 1963 PhD thesis \cite{Lin1963}, other algorithms to detect them have been developed since then\footnote{\url{https://discuss.bbchallenge.org/t/decider-translated-cyclers/34}}.
+
+Here, we develop a new algorithm (Algorithm~\ref{alg:loops}) for deciding both \cyclers and \TCs. The particularity of this algorithm is that it detects \cyclers only by analysing the history of state, read-symbol and \headposs visited by the machine, instead of considering entire configurations (\ie with full tape content information).
+
+Let's call the \textit{transcript} of a machine the list of successive \ssps visited by the machine. For instance, the transcript of the \cycler in Figure~\ref{fig:loops}~(left) starts with \texttt{A0 B0 C0 D0 B1 E0 C0 D0 B0 C1 A0} and the transcript of the \TC in Figure~\ref{fig:loops}~(right) starts with \texttt{A0 B0 C1 A0 B1 C0 D0 E0 B1 C1 A1}. Surprisingly, it turns out that in order to detect loops, we only have to track when a transcript repeats the same sequence twice back-to-back, for instance, in the case of the Cycler in Figure~\ref{fig:loops}: \texttt{A0 B0 C0 D0 B1 E0 C0 D0 B0 C1 A0 B0 C1 A0 B0 C1 A0 B0 C0 D0 \textbf{\underline{B1 E1 C0 D1}} \textbf{\underline{B1 E1 C0 D1}}}. When such a repetition occurs, we use the extra information of \headpos to conclude: if the head goes back to the same position, then we have detected a \cycler and if the \headpos attains at least one local extremum in the second repetition (\textit{record-breaking} position), then we have detected a \TC. This logic is encoded in Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} and we prove that this algorithm is correct in Theorem~\ref{th:loops}.
 
 \newpage
 \begin{algorithm}
@@ -26,8 +32,7 @@ Here, we develop a new algorithm (Algorithm~\ref{alg:loops}) for deciding both \
     \State{\textbf{Output:} `NON-HALT' if the decider detects that the machine is a loop, `HALT' if the machine halts and `UNKNOWN' otherwise.}
 
     \State
-    \State Simulate $\mathcal{M}$ for $L$ steps and save the history of
-    each consecutive state, read-symbol and tape position reached, \ie consecutive $h_i = (s_i,m_i,d_i) \in \states \times \alphabet \times \Z$ for $0 \leq i \leq L$ and $h_0 = (\stateA,\symbolzero,0)$.
+    \State Simulate $\mathcal{M}$ for $L$ steps and save the history of each consecutive state, read-symbol and tape position reached, \ie consecutive $h_i = (s_i,m_i,d_i)\in\states\times\alphabet\times\Z$ for $0 \leq i \leq L$ and $h_0 = (\stateA,\symbolzero,0)$.
 
 
     \State \If{the machine has halted before $L$ steps}
@@ -51,7 +56,7 @@ Here, we develop a new algorithm (Algorithm~\ref{alg:loops}) for deciding both \
     \State $\text{recordbreak} = \text{true}$
     \EndIf
     \EndFor
-    \State \If{$\text{allseen}$ \textbf{and} ($d_L == d_K$ \textbf{or} $\text{recordbreak}$)}
+    \State \If{$\text{allseen}$ \textbf{and} ($d_L == d_K$ \textbf{or} $\text{recordbreak}$)}\label{alg:loops:test}
     \State \Return NON-HALT
     \EndIf
     \EndFor
