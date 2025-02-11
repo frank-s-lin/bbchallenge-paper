@@ -24,9 +24,11 @@ The decider for loops, Algorithm~\ref{alg:loops}, is implemented as part of Coq-
 \end{figure}
 
 
-The number of machines decided this decider in \CoqBB (\ie $175{,}373{,}810$, see Table~\ref{tab:paramsLoops}) is a lower bounds of the actual number of 5-state loops. Two examples:
+The number of nonhalting machines decided this decider in \CoqBB (\ie $126{,}994{,}099$, see Table~\ref{tab:paramsLoops}) is a lower bound of the actual number of 5-state loops. Two examples:
 
 \begin{enumerate}
   \item Figure~\ref{fig:translated-cyclers-more} gives a \TC that is decided by the $n$-gram Closed Position Set (NGramCPS) decider, see Section~\ref{sec:n-gramCPS}, this is because higher step-limit $L$ would have been needed to be detected by Algorithm~\ref{alg:loops}.
   \item Infamously, the Sporadic machine (\ie machine which required an individual proof of nonhalting) ``Skelet \#1'', see Section~\ref{sec:sporadic}, is a \TC but with enormous parameters: it does not start looping before $5.42 \times 10^{51}$ steps and has a period of more than 8 billion steps \cite{ShawnSkelet1}. There is no reasonable step-limit $L$ for which this machine would have been decided, neither in fact any of our deciders which could have decided it as they all more or less rely on step-by-step simulation. An individual proof of nonhalting was required \cite{busycoq}.
 \end{enumerate}
+
+\ts{TS: I'd like to say that nonetheless, this sample of $126{,}994{,}099$ suggests that there are X times more TCs than cyclers, but I don't have the actual number. I think that X is of order 10.}
