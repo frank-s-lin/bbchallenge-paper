@@ -49,6 +49,7 @@ This logic is encoded in Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} and w
     \item $d_L$ is not equal to $d_K$ but \headpos records were broken. Let's slightly modify $h_i$ to be $h_i = (s_i,m_i,b_i) \in \states \times \alphabet \times \mathbb{B}$ where $b_i$ being \texttt{true} iff $d_i$ broke a record (\ie if for all $0 \geq j < i$ we have $d_j < d_i$). We know that $h_{L-i} = h_{K-i}$ for all $i \in [0,l]$. Let's show that $h_{L+1}$ is defined and that $h_{L+1} = h_{K+1}$. Similarly as in the first case, because $s_K = s_L$ and $m_K = m_L$ we know that $h_{L+1}$ is defined and $s_{L+1} = s_{K+1}$. Two cases:
           \begin{itemize}
             \item If $h_{K}$ and $h_{L}$ are record-breaking. If $h_{K+1}$ is record-breaking then so is $h_{L+1}$ because the head move direction is the same from $h_{K}$ to $h_{K+1}$ and $h_{L}$ to $h_{L+1}$. Hence, $m_{L+1} = m_{K+1} = 0$ and we have  $h_{L+1} = h_{K+1}$. If $h_{K+1}$ is not record-breaking, then $h_{L+1}$ is not record-breaking either again because head move directions are the same. In that case, because the cell at position $d_{L+1}$ has already been seen, we can apply the same argument as in case 1 above ($d_L = d_K$) and conclude that $h_{L+1} = h_{K+1}$.
+            \item If $h_{K}$ and $h_{L}$ are not record-breaking. If $h_{K+1}$ is record-breaking then so is $h_{L+1}$. \ts{TS: TO FINISH}
           \end{itemize}
 
 
@@ -59,7 +60,7 @@ This logic is encoded in Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} and w
 
 \newpage
 \begin{algorithm}
-  \caption{{\sc decider-Loops}}\label{alg:loops}
+  \caption{{\sc decider-Loops}, reformulates the algorithm \texttt{loop1\_decider} of Coq-BB5.}\label{alg:loops}
 
   \begin{algorithmic}[1]
     \State{\textbf{Input:} A Turing machine `$\mathcal{M}$', a step limit parameter $L$.}
@@ -106,6 +107,8 @@ This logic is encoded in Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} and w
     \EndIf
     \EndFor
 
-
   \end{algorithmic}
+
 \end{algorithm}
+
+\include{sections/decider-0-loop-results}
