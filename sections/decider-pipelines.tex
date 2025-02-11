@@ -1,0 +1,50 @@
+\subsection{\CoqBB pipelines}\label{sec:pipelines}
+A \textit{pipeline} of deciders consists of applying several deciders in sequence: a machine is tested by each decider successively until one decider outputs \HALT or \NONHALT. Table~\ref{tab:pipelineBB5} gives an approximation of the pipeline of deciders used by \CoqBB in order to decide all the $\BBtheFifthTNF$ enumerated 5-state machines (see Section~\ref{sec:enum}) and that way, conclude that $S(5) = \BBtheFifth$ since any machine running more steps is decided \NONHALT, see Theorem~\ref{th:BB5}. Similarly, Table~\ref{tab:pipelineBB2x4} and Table~\ref{tab:pipelineBB4} repsectively approximations of the pipelines leading to $S(2,4) = \BBTxF$ and $S(4) = \BBtheFourth$ -- the latter confirming the result for $S(4)$ given in \cite{Brady83}.
+
+The exact pipelines are give in Appendix~\ref{app:pipelines} and only differ in that the precise parameters are given for each decider which are sometimes interleaved with each other (\eg the decider for loops is first called with a small step-count parameter, then other deciders are applied and later on it is called again with higher step-count parameter).
+
+\begin{table}[h!]
+
+    \begin{tabular}{llll}
+        Decider                                                                              & Nonhalt                         & Halt                           & Total decided \\
+        \hline
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & 126,994,099                     & 48,379,711                     & 175,373,810   \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} & 6,005,142                       & 0                              & 6,005,142     \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  & 6,577                           & 0                              & 6,577         \\
+        4. Finite Automata Reduction (FAR), see \textbf{Section~\ref{sec:FAR}}               & 32                              & 0                              & 32            \\
+        5. Weighted Finite Automata Reduction (WFAR), see \textbf{Section~\ref{sec:WFAR}}    & 31                              & 0                              & 31            \\
+        6. Long halters (simulation up to $\BBtheFifth$ steps)                               & 0                               & 183                            & 183           \\
+        7. Sporadic machines, individual proofs, see \textbf{Section~\ref{sec:sporadic}}     & 14                              & 0                              & 14            \\ \hline
+        Total                                                                                & \multicolumn{1}{r}{133,005,895} & \multicolumn{1}{r}{48,379,894} & 181,385,789
+    \end{tabular}
+    \caption{Approximation of the $S(5)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFifthTNF$ enumerated 5-state machines are decided by this pipeline, which solves $S(5) = \BBtheFifth$, see Theorem~\ref{th:BB5}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB5}
+\end{table}
+
+\begin{table}[h!]
+
+    \begin{tabular}{llll}
+        Decider                                                                              & Nonhalt & Halt & Total decided \\
+        \hline
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       &         &      &               \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} &         &      &               \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  &         &      &               \\
+        4. Long halters (simulation up to $\BBTxF$ steps)                                    &         &      &               \\
+        \\ \hline
+        Total                                                                                &         &      &
+    \end{tabular}
+    \caption{Approximation of the $S(2,4)$ decider pipeline as implemented in \CoqBB. All the $\BBTxFTNF$ enumerated 2-state 4-symbol machines are decided by this pipeline, which solves $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB2x4}
+\end{table}
+
+\begin{table}[h!]
+
+    \begin{tabular}{llll}
+        Decider                                                                              & Nonhalt & Halt & Total decided \\
+        \hline
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       &         &      &               \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} &         &      &               \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  &         &      &               \\
+        \\ \hline
+        Total                                                                                &         &      &
+    \end{tabular}
+    \caption{Approximation of the $S(4)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFourthTNF$ enumerated 4-state machines are decided by this pipeline, which brings confirmation that $S(4) = \BBtheFourth$ \cite{Brady83}, see Theorem~\ref{th:BB4}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB4}
+\end{table}
