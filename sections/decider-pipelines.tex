@@ -1,12 +1,12 @@
 \subsection{\CoqBB pipelines}\label{sec:pipelines}
-A \textit{pipeline} of deciders consists of applying several deciders in sequence: a machine is tested by each decider successively until one decider outputs \HALT or \NONHALT. Table~\ref{tab:pipelineBB5} gives an approximation of the pipeline of deciders used by \CoqBB in order to decide all the $\BBtheFifthTNF$ enumerated 5-state machines (see Section~\ref{sec:enum}) and that way, conclude that $S(5) = \BBtheFifth$ since any machine running more steps is decided \NONHALT, see Theorem~\ref{th:BB5}. Similarly, Table~\ref{tab:pipelineBB2x4} and Table~\ref{tab:pipelineBB4} repsectively approximations of the pipelines leading to $S(2,4) = \BBTxF$ and $S(4) = \BBtheFourth$ -- the latter confirming the result for $S(4)$ given in \cite{Brady83}.
+A \textit{pipeline} of deciders consists of applying several deciders in sequence: a machine is tested by each decider successively until one decider outputs \HALT or \NONHALT. Table~\ref{tab:pipelineBB5} gives an approximation of the pipeline of deciders implemented in \CoqBB in order to decide all the $\BBtheFifthTNF$ enumerated 5-state machines (see Section~\ref{sec:enum}) and that way, conclude that $S(5) = \BBtheFifth$ since any machine running more steps is decided \NONHALT, see Theorem~\ref{th:BB5}. Similarly, Table~\ref{tab:pipelineBB2x4} and Table~\ref{tab:pipelineBB4} repsectively approximations of the pipelines leading to $S(2,4) = \BBTxF$ and $S(4) = \BBtheFourth$ -- the latter confirming the result for $S(4)$ given in \cite{Brady83}.
 
 The exact pipelines are give in Appendix~\ref{app:pipelines} and only differ in that the precise parameters are given for each decider which are sometimes interleaved with each other (\eg the decider for loops is first called with a small step-count parameter, then other deciders are applied and later on it is called again with higher step-count parameter).
 
 \begin{table}[h!]
 
     \begin{tabular}{llll}
-        Decider                                                                              & Nonhalt                         & Halt                           & Total decided \\
+        $S(5)$ decider pipeline                                                              & Nonhalt                         & Halt                           & Total decided \\
         \hline
         1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & 126,994,099                     & 48,379,711                     & 175,373,810   \\
         2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} & 6,005,142                       & 0                              & 6,005,142     \\
@@ -23,7 +23,7 @@ The exact pipelines are give in Appendix~\ref{app:pipelines} and only differ in 
 \begin{table}[h!]
 
     \begin{tabular}{llll}
-        Decider                                                                              & Nonhalt & Halt & Total decided \\
+        $S(2,4)$ decider pipeline                                                            & Nonhalt & Halt & Total decided \\
         \hline
         1. Loops, see \textbf{Section~\ref{sec:loops}}                                       &         &      &               \\
         2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} &         &      &               \\
@@ -38,7 +38,7 @@ The exact pipelines are give in Appendix~\ref{app:pipelines} and only differ in 
 \begin{table}[h!]
 
     \begin{tabular}{llll}
-        Decider                                                                              & Nonhalt & Halt & Total decided \\
+        $S(4)$ decider pipeline                                                              & Nonhalt & Halt & Total decided \\
         \hline
         1. Loops, see \textbf{Section~\ref{sec:loops}}                                       &         &      &               \\
         2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} &         &      &               \\
