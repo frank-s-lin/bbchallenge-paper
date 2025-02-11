@@ -33,7 +33,7 @@ Let's call the \textit{transcript} of a machine the list of successive \ssps vis
 This logic is encoded in Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} and we prove that this algorithm is correct in Theorem~\ref{th:loops}.
 
 \begin{theorem}[Coq-BB5: \texttt{Lemma loop1\_decider\_WF}]\label{th:loops}
-  Let $\mathcal{M}$ be a Turing machine and $L \in \N^+$ a step limit. \textsc{decider-loops}($\mathcal{M}$, $L$) terminates and its result is correct -- see Algorithm~\ref{alg:loops}:
+  Let $\mathcal{M}$ be a Turing machine and $L \in \N^+$ a step-limit. \textsc{decider-loops}($\mathcal{M}$, $L$) terminates and its result is correct -- see Algorithm~\ref{alg:loops}:
   \begin{itemize}
     \item If the result is \texttt{HALT} then $\mathcal{M}$ halts from the all-zero tape
     \item If the result is \texttt{NONHALT} then $\mathcal{M}$ does not halt from the all-zero tape
@@ -63,7 +63,7 @@ This logic is encoded in Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} and w
   \caption{{\sc decider-Loops}, reformulates the algorithm \texttt{loop1\_decider} of Coq-BB5.}\label{alg:loops}
 
   \begin{algorithmic}[1]
-    \State{\textbf{Input:} A Turing machine `$\mathcal{M}$', a step limit parameter $L$.}
+    \State{\textbf{Input:} A Turing machine `$\mathcal{M}$', a step-limit parameter $L$.}
     \State{\textbf{Output:} `NONHALT' if the decider detects that the machine is a loop, `HALT' if the machine halts and `UNKNOWN' otherwise.}
 
     \State
