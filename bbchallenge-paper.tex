@@ -93,12 +93,14 @@
 
 \newcommand{\BBtheFourth}{107}
 \newcommand{\SigmaTheFourth}{13}
+\newcommand{\BBtheFourthTNF}{\ts{???}}
 
 \newcommand{\BBtheFifth}{47{,}176{,}870}
 \newcommand{\BBtheFifthTNF}{181{,}385{,}789}
 \newcommand{\SigmaTheFifth}{4{,}098}
 
 \newcommand{\BBTxF}{3{,}932{,}974}
+\newcommand{\BBTxFTNF}{\ts{???}}
 
 \newcommand{\radofull}{Tibor Rad\'o\xspace}
 \newcommand{\rado}{Rad\'o\xspace}
@@ -122,6 +124,12 @@
 
 \newcommand{\ssp}{state-symbol-pair\xspace}
 \newcommand{\ssps}{state-symbol-pairs\xspace}
+
+\newcommand{\HALT}{\texttt{HALT}\xspace}
+\newcommand{\NONHALT}{\texttt{NONHALT}\xspace}
+\newcommand{\UNKNOWN}{\texttt{UNKNOWN}\xspace}
+
+\newcommand{\CoqBB}{Coq-BB5\xspace}
 
 \begin{document}
 \date{}
@@ -176,9 +184,9 @@ Our main result is to prove this conjecture, using the \Coq theorem prover \cite
     $S(5) = \BBtheFifth$.
 \end{theorem}
 
-The function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, like, for instance, $S(2,3) = 38$ is the value of $S$ for 2-state, 3-symbol machines \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We also prove, using the Coq theorem prover \cite{the_coq_development_team_2024_14542673}, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB24}:
+The function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, like, for instance, $S(2,3) = 38$ is the value of $S$ for 2-state, 3-symbol machines \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We also prove, using the Coq theorem prover \cite{the_coq_development_team_2024_14542673}, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4}:
 
-\begin{theorem}\label{th:BB24}
+\begin{theorem}\label{th:BB2x4}
     $S(2,4) = \BBTxF$.
 \end{theorem}
 
@@ -215,7 +223,7 @@ The \BBfull problem was also studied in other models of computation than \rado's
 
 \paragraph{Method and structure of the proof.} Machines are enumerated arborescently in \textit{Tree Normal Form} (TNF) \cite{Brady64} which drastically reduces the search space's size -- \eg from ca. 10 trillion machines to $\BBtheFifthTNF$ for 5-state machines. The enumeration is presented in Section~\ref{sec:enum}.
 
-Each enumerated machine is fed through a sequence (or \textit{pipeline}) of \textit{deciders}, where a decider is an algorithm trying to decide whether the machine halts or not. Because of the noncomputability of the halting problem, there is no \textit{universal} decider able to decide any Turing machine. Hence, all the craft resides in creating deciders able to decide large families of machines, in reasonable time. The $S(5)$ pipeline of deciders is given in Figure~\ref{fig:pipelineS5} -- see Figure~\ref{fig:pipelineS2x4} for $S(2,4)$. Deciders are presented in Section~\ref{sec:deciders}. To the best of our knowledge, all the deciders we present are original.
+Each enumerated machine is fed through a sequence (or \textit{pipeline}) of \textit{deciders}, where a decider is an algorithm trying to decide whether the machine halts or not. Because of the noncomputability of the halting problem, there is no \textit{universal} decider able to decide any Turing machine. Hence, all the craft resides in creating deciders able to decide large families of machines, in reasonable time. The $S(5)$ pipeline of deciders is given in Table~\ref{tab:pipelineBB5} -- see Tab~\ref{tab:pipelineBB2x4} for $S(2,4)$. Deciders are presented in Section~\ref{sec:deciders}. To the best of our knowledge, all the deciders we present are original.
 
 In the case of 5-state machines, \numSporadic machines were not solved by deciders and required individual proofs of nonhalting. We call them \textit{sporadic} machines and they are presented in Section~\ref{sec:sporadic}.
 
@@ -228,8 +236,59 @@ In the case of 5-state machines, \numSporadic machines were not solved by decide
 
 
 
-\section{Enumeration}\label{sec:enum}
+\section{Turing machines enumeration}\label{sec:enum}
 \section{Deciders}\label{sec:deciders}
+
+A \textit{decider} is a program that takes as input a Turing machine $\mathcal{M}$ and that returns either \HALT, \NONHALT, \UNKNOWN whether it was able to detect that the machine's halting status (halt or nonhalt) or not. A \textit{pipeline} of deciders is several deciders applied in sequence: a machine is tested by each decider successively until one of them outputs \HALT or \NONHALT.
+
+\newpage
+\subsection{\CoqBB pipelines}\label{sec:pipelines}
+
+\begin{table}[h!]
+
+    \begin{tabular}{llll}
+        Decider                                                                              & Nonhalt                         & Halt                           & Total decided \\
+        \hline
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & 126,994,099                     & 48,379,711                     & 175,373,810   \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} & 6,005,142                       & 0                              & 6,005,142     \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  & 6,577                           & 0                              & 6,577         \\
+        4. Finite Automata Reduction (FAR), see \textbf{Section~\ref{sec:FAR}}               & 32                              & 0                              & 32            \\
+        5. Weighted Finite Automata Reduction (WFAR), see \textbf{Section~\ref{sec:WFAR}}    & 31                              & 0                              & 31            \\
+        6. Long halters (simulation up to $\BBtheFifth$ steps)                               & 0                               & 183                            & 183           \\
+        7. Sporadic machines, see \textbf{Section~\ref{sec:sporadic}}                        & 14                              & 0                              & 14            \\ \hline
+        Total                                                                                & \multicolumn{1}{r}{133,005,895} & \multicolumn{1}{r}{48,379,894} & 181,385,789
+    \end{tabular}
+    \caption{Approximation of the $S(5)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFifthTNF$ enumerated 5-state machines are decided by this pipeline, which solves $S(5) = \BBtheFifth$, see Theorem~\ref{th:BB5}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB5}
+\end{table}
+
+\begin{table}[h!]
+
+    \begin{tabular}{llll}
+        Decider                                                                              & Nonhalt & Halt & Total decided \\
+        \hline
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       &         &      &               \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} &         &      &               \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  &         &      &               \\
+        4. Long halters (simulation up to $\BBTxF$ steps)                                    &         &      &               \\
+        \\ \hline
+        Total                                                                                &         &      &
+    \end{tabular}
+    \caption{Approximation of the $S(2,4)$ decider pipeline as implemented in \CoqBB. All the $\BBTxFTNF$ enumerated 2-state 4-symbol machines are decided by this pipeline, which solves $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB2x4}
+\end{table}
+
+\begin{table}[h!]
+
+    \begin{tabular}{llll}
+        Decider                                                                              & Nonhalt & Halt & Total decided \\
+        \hline
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       &         &      &               \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} &         &      &               \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  &         &      &               \\
+        \\ \hline
+        Total                                                                                &         &      &
+    \end{tabular}
+    \caption{Approximation of the $S(4)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFourthTNF$ enumerated 4-state machines are decided by this pipeline, which brings confirmation that $S(4) = \BBtheFourth$ \cite{Brady83}, see Theorem~\ref{th:BB4}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB4}
+\end{table}
 
 
 \input{sections/decider-0-loops.tex}
