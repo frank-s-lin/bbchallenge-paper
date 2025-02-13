@@ -42,11 +42,8 @@ The \ngramcps decider becomes particularly powerful for deciding 5-state 2-symbo
 \begin{enumerate}
     \item \textbf{Fixed-length history.} In this variant, tape symbols encode the current binary symbol on a cell as well as a fixed-length list of previously seen (state,binary symbol) pairs seen on the cell. For instance, if the non-augmented machine currently reads binary symbol \texttt{1} and the machine has previously visited the cell in state \stateA reading symbol \texttt{0} and before that in state \stateB reading symbol \texttt{1}, in the augmented machine, the cell will contain the augmented symbol ``\texttt{1, [(A,0),(B,1)]}''. If the history length is set to 2 and the machine was in state \stateC when reading ``\texttt{1, [(A,0),(B,1)]}'' the cell will be updated to ``\texttt{0, [(C,1),(A,0)]}'', assuming the transition of the machine for reading a \texttt{1} in state \stateC requires to write symbol \texttt{0}. The zero-symbol for this augmentation $\alphabet_0$ is ``\texttt{0, []}''. Furthermore, it is easy to verify that if the decider returns `NON-HALT' for a fixed-length augmented machine, then the non-augmented machine does not halt.
     \item \textbf{Least Recent Usage history (LRU).} In this variant, tape symbols encode the set of state-symbol pairs seen at that cell,
-          in order of when it was seen last, the most recent first.  For instance, the non-augmented machine currently reads binary symbol \texttt{0} and the machine has previously visited the cell in state \stateD reading symbol \texttt{1} and before that in state \stateD reading symbol \texttt{0}, in the augmented machine, the cell will contain the augmented symbol ``\texttt{0, [(D,1),(D,0)]}''. If the machine was in state \stateD when reading ``\texttt{0, [(D,1),(D,0)]}'' the cell will be updated to ``\texttt{0, [(D,0),(D,1)]}'', assuming the transition of the machine for reading a \texttt{0} in state \stateD requires to write symbol \texttt{0}. The zero-symbol for this augmentation $\alphabet_0$ is also ``\texttt{0, []}''. Similarly to above, one can verify that if the decider returns `NON-HALT' for an LRU augmented machine, then the non-augmented machine does not halt. \ts{TS: This example does not allow to understand the difference between LRU and FL, we need a better one. Also show some machines solvable by one and not by the other.}
+          in order of when it was seen last, the most recent first.  For instance, if the non-augmented machine currently reads binary symbol \texttt{1} and the machine has previously visited the cell in state \stateD reading symbol \texttt{1} and before that in state \stateD reading symbol \texttt{0} and before that in state \stateC reading symbol \sone, in the augmented machine, the cell will contain the augmented symbol ``\texttt{1, [(D,1),(D,0),(C,1)]}''. If the machine was in state \stateC when reading ``\texttt{1, [(D,1),(D,0),(C,1)]}'' the cell will be updated to ``\texttt{0, [(C,1),(D,0),(D,1)]}'', (assuming the transition of the machine for reading a \texttt{1} in state \stateC writes symbol \texttt{0}) with pair \texttt{(C,1)} bubbling up to the beginning of the LRU history. The zero-symbol for this augmentation $\alphabet_0$ is also ``\texttt{0, []}''. Similarly to above, one can verify that if the decider returns `NON-HALT' for an LRU augmented machine, then the non-augmented machine does not halt. One fundamental difference with the fixed-length history augmentation is that here, the history is not of fixed length but is bounded by number of states times number of symbols, \ie 10 in the case of $S(5)$.
 \end{enumerate}
-
-In \CoqBB, the \ngramcps decider is used (a) without augmentations, (b) with the fixed-length history and, (c) with the LRU augmentation, using the exact same implementation of the decider (as sketched in Algorithm~\ref{alg:NGramCPS}) just changing the used symbol alphabet and read/write behavior of the machine on the augmented alphabets.
-
 
 \subsubsection{\ngramcps: results}\label{sec:n-gramCPS:results}
 \begin{table}[h!]
@@ -58,10 +55,25 @@ In \CoqBB, the \ngramcps decider is used (a) without augmentations, (b) with the
         NGram-CPS augmented using least Least Recent Usage history & 182                           \\ \hline
         Total decided                                              & \multicolumn{1}{r}{6,005,138}
     \end{tabular}
-    \caption{\ngramcps results on 5-state machines per variant (see Section~\ref{sec:n-gramCPS:augmentations}).}
+    \caption{\ngramcps results in the $S(5)$ pipeline (see Table~\ref{tab:pipelineBB5}) per variant (see Section~\ref{sec:n-gramCPS:augmentations}).}\label{tab:ngramcps:results}
 \end{table}
 
-\CoqBB implements \ngramcps (Algorithm~\ref{alg:NGramCPS}) in the three variants discussed here, (i) without augmentation (function \texttt{NGramCPS\_decider\_impl2}) -- \ie using standard binary alphabet $\alphabet=\{\szero,\sone\}$ (ii) fixed-length history (function \texttt{NGramCPS\_decider\_impl1}) and (iii) Least Recent Usage history (function \texttt{NGramCPS\_LRU\_decider}). Compared to Algorithm~\ref{alg:NGramCPS}, \CoqBB implementations integrate an additional \textit{gas parameter} allowing them to terminate early for the sake of performance.
+\CoqBB implements \ngramcps (Algorithm~\ref{alg:NGramCPS}) in the three variants discussed here, (i) without augmentation (function \texttt{NGramCPS\_decider\_impl2}) -- \ie using standard binary alphabet $\alphabet=\{\szero,\sone\}$ (ii) fixed-length history (function \texttt{NGramCPS\_decider\_impl1}) and (iii) Least Recent Usage history (function \texttt{NGramCPS\_LRU\_decider}). Compared to Algorithm~\ref{alg:NGramCPS}, \CoqBB implementations integrate an additional \textit{gas parameter} allowing them to terminate early for the sake of performance. The implementations for (ii) and (iii) use the same core implementation as for (i) just accordingly augmenting the tape-alphabet of the machine and its read/write behavior (see definitions \texttt{TM\_history} and \texttt{TM\_history\_LRU}).
+
+The number of machines decided by each \ngramcps variant in the $S(5)$ pipeline (Table~\ref{tab:pipelineBB5}) are given in Table~\ref{tab:ngramcps:results}. Augmentations allowed to decide machines that resisted all other methods -- see details in the full $S(5)$ pipeline, Appendix~\ref{app:pipelines}.
+
+Figure~\ref{fig:ngram-cps-more} gives an example of a ``fractal-looking'' 5-state Turing machines that is solved by the LRU augmentation but has no known solution with standard \ngramcps or the fixed-length history augmentation.
+
+\begin{figure}
+    \centering
+    % \includegraphics[width=0.5\textwidth]{figures/space-time-diagrams/translated_cycler_44394115.pdf}
+    % \hspace{2ex}
+    \includegraphics[width=0.5\textwidth]{figures/space-time-diagrams/ngramcps_LRU_35409542.png}
+
+    \caption{10,000-step space-time diagram of a ``fractal-looking'' 5-state Turing machines that is solved by the LRU augmentation but has no known solution with standard \ngramcps or the fixed-length history augmentation, see Section~\ref{sec:n-gramCPS:augmentations}. See \url{https://bbchallenge.org/1RB0RA_1LC---_1RC1LD_0LE1RA_0LC0LE}.}\label{fig:ngram-cps-more}
+\end{figure}
+
+
 
 
 \newcommand{\leftngram}{left\xspace}

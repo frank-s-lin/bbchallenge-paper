@@ -9,7 +9,7 @@
     1,050,000                & 2                               & 0                              & 2             \\ \hline
     Total                    & \multicolumn{1}{r}{126,994,099} & \multicolumn{1}{r}{48,379,711} & 175,373,810
   \end{tabular}
-  \caption{5-state machines decided by loops (Algorithm~\ref{alg:loops}) per step-limit parameter $L$.}\label{tab:paramsLoops}
+  \caption{Machines decided by loops (Algorithm~\ref{alg:loops}) in the $S(5)$ pipeline (Table~\ref{tab:pipelineBB5}) per step-limit parameter $L$.}\label{tab:paramsLoops}
 \end{table}
 
 The decider for loops, Algorithm~\ref{alg:loops}, is implemented as part of Coq-BB5 (function \texttt{loop1\_decider}). As advertised in the $S(5)$ pipeline (Table~\ref{tab:pipelineBB5}), it decides a very important proportion the enumerated 5-state Turing machines: 95.48\% of the nonhalting machines and more than 99.99\% of the halting ones and this with fairly low step-limit parameters, see Table~\ref{tab:paramsLoops}! This means, for instance, that 99.99\% of the enumerated 5-state halting machines halt before $4,100$ steps.
