@@ -6,8 +6,9 @@ The exact pipelines are give in Appendix~\ref{app:pipelines} and only differ in 
 \ts{TS: I'm hesitating to say this early that a subtlelty of the S(5) pipeline is that parameters (or, more "concerning" certificates) are given hardocded for approx 8k machines. Also questionning to say (or repeat) here that WFAR is irregular (as well as some sporadic), which makes a disctinction between S(5) and S(4)/S(2,4).}
 
 \begin{table}[h!]
-
-    \begin{tabular}{llll}
+    \centering
+    \begin{tabular}{|l|lll|}
+        \hline
         $S(5)$ decider pipeline                                                              & Nonhalt                         & Halt                           & Total decided \\
         \hline
         1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & 126,994,099                     & 48,379,711                     & 175,373,810   \\
@@ -17,36 +18,39 @@ The exact pipelines are give in Appendix~\ref{app:pipelines} and only differ in 
         5. Weighted Finite Automata Reduction (WFAR), see \textbf{Section~\ref{sec:WFAR}}    & 31                              & 0                              & 31            \\
         6. Long halters (simulation up to $\BBtheFifth$ steps)                               & 0                               & 183                            & 183           \\
         7. Sporadic machines, individual proofs, see \textbf{Section~\ref{sec:sporadic}}     & 14                              & 0                              & 14            \\ \hline
-        Total                                                                                & \multicolumn{1}{r}{133,005,895} & \multicolumn{1}{r}{48,379,894} & 181,385,789
+        Total                                                                                & \multicolumn{1}{r}{133,005,895} & \multicolumn{1}{r}{48,379,894} & 181,385,789   \\ \hline
     \end{tabular}
     \caption{Approximation of the $S(5)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFifthTNF$ enumerated 5-state machines are decided by this pipeline, which solves $S(5) = \BBtheFifth$, see Theorem~\ref{th:BB5}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB5}
 \end{table}
 
 \begin{table}[h!]
-
-    \begin{tabular}{llll}
-        $S(2,4)$ decider pipeline                                                            & Nonhalt & Halt & Total decided \\
+    \centering
+    \begin{tabular}{|l|lll|}
         \hline
-        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       &         &      &               \\
-        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} &         &      &               \\
-        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  &         &      &               \\
-        4. Long halters (simulation up to $\BBTxF$ steps)                                    &         &      &               \\
-        \\ \hline
-        Total                                                                                &         &      &
+        $S(2,4)$ decider pipeline                                                            & Nonhalt  & Halt     & Total decided \\
+        \hline
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & \ts{???} & \ts{???} & \ts{???}      \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} & \ts{???} & \ts{???} & \ts{???}      \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  & \ts{???} & \ts{???} & \ts{???}      \\
+        4. Long halters (simulation up to $\BBTxF$ steps)                                    & \ts{???} & \ts{???} & \ts{???}      \\
+        \hline
+        Total                                                                                & \ts{???} & \ts{???} & \ts{???}      \\ \hline
     \end{tabular}
     \caption{Approximation of the $S(2,4)$ decider pipeline as implemented in \CoqBB. All the $\BBTxFTNF$ enumerated 2-state 4-symbol machines are decided by this pipeline, which solves $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB2x4}
 \end{table}
 
 \begin{table}[h!]
-
-    \begin{tabular}{llll}
-        $S(4)$ decider pipeline                                                              & Nonhalt & Halt & Total decided \\
+    \centering
+    \begin{tabular}{|l|lll|}
         \hline
-        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       &         &      &               \\
-        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} &         &      &               \\
-        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  &         &      &               \\
-        \\ \hline
-        Total                                                                                &         &      &
+        $S(4)$ decider pipeline                                                              & Nonhalt  & Halt     & Total decided \\
+        \hline
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & \ts{???} & \ts{???} & \ts{???}      \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} & \ts{???} & \ts{???} & \ts{???}      \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  & \ts{???} & \ts{???} & \ts{???}      \\
+        \hline
+        Total                                                                                & \ts{???} & \ts{???} & \ts{???}      \\
+        \hline
     \end{tabular}
     \caption{Approximation of the $S(4)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFourthTNF$ enumerated 4-state machines are decided by this pipeline, which brings confirmation that $S(4) = \BBtheFourth$ \cite{Brady83}, see Theorem~\ref{th:BB4}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB4}
 \end{table}
