@@ -1,6 +1,6 @@
 % !TeX root = bbchallenge-paper.tex
 
-\title{Formal verification of the 5\textsuperscript{th} Busy Beaver value}
+\title{Determination of the 5\textsuperscript{th} Busy Beaver value}
 \author{
         bbchallenge's contributors
 }
@@ -179,13 +179,13 @@ In 1962, \radofull introduced \textit{the \BBfull game} in an effort to ``presen
 %This tight link to the halting problem makes $S$ more interesting and practical to us than $\Sigma$, hence we take the liberty (similarly to other authors \cite{BusyBeaverFrontier,otherexamples?}) to focus the busy beaver game on $S$ instead of $\Sigma$ and to call the $n$-state \textit{busy beaver winner} the machine achieving $S(n)$ running steps. 
 Prior to this work, only the four first values of $S$ had been proved: $S(1)=1$, $S(2)=6$ \cite{Rado_1962}, $S(3) = 21$ \cite{Lin1963}, $S(4) = 107$ \cite{Brady83}. With some early attempts in the 1960s and 1970s, the $S(5)$ quest seriously started in 1983 with a 2-day competition organised at the University of Dortmund\footnote{Report of the competition: \url{https://docs.bbchallenge.org/other/lud20.pdf}.} with the sole goal of finding new 5-state champions -- \ie 5-state machines achieving better $S$ scores than any machines previously known \cite{PMichel_website,michel2019busy}. The winning machine in Dortmund achieved $134,467$ steps, establishing $S(5) \geq 134,467$. A big step was then made in 1989 when Marxen and Buntrock found a new champion\footnote{\url{https://bbchallenge.org/1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA} \ts{TS: (to improve with table)}} achieving $\BBtheFifth$ steps \cite{Marxen_1990}, showing $S(5) \geq \BBtheFifth$. However, it remained unknown if no other machine could beat it, \ie whether Marxen and Buntrock's 5-state machine was the actual winner or not. In 2020, Aaronson conjectured that there is no better 5-state machine, \ie $S(5) = \BBtheFifth$ \cite{BusyBeaverFrontier}.
 
-Our main result is to prove this conjecture, using the \Coq theorem prover \cite{the_coq_development_team_2024_14542673}, see Theorem~\ref{th:BB5}. The winning machine for $S(5)$ is also the winning machine for $\Sigma(5)$. We prove $\Sigma(5) = \SigmaTheFifth$, see Theorem~\ref{th:BB5Sigma}.
+Our main result is to prove this conjecture, using the \Coq proof assistant \cite{the_coq_development_team_2024_14542673}, see Theorem~\ref{th:BB5}. The winning machine for $S(5)$ is also the winning machine for $\Sigma(5)$. We prove $\Sigma(5) = \SigmaTheFifth$, see Theorem~\ref{th:BB5Sigma}.
 
 \begin{theorem}\label{th:BB5}
     $S(5) = \BBtheFifth$.
 \end{theorem}
 
-The function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, like, for instance, $S(2,3) = 38$ is the value of $S$ for 2-state, 3-symbol machines \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We also prove, using the Coq theorem prover \cite{the_coq_development_team_2024_14542673}, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4}:
+The function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, like, for instance, $S(2,3) = 38$ is the value of $S$ for 2-state, 3-symbol machines \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We also prove, using Coq, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4}:
 
 \begin{theorem}\label{th:BB2x4}
     $S(2,4) = \BBTxF$.
@@ -204,7 +204,7 @@ The Coq proofs are available at \url{https://github.com/ccz181078/Coq-BB5}. The 
         4-symbol & $S(2,4) = \BBTxF \ssymbol{2}$                                 & $S(3,4) > 2 \uparrow^{15} 5 \ssymbol{1}\ $     &                                           &                                    &                                                            \\
         5-symbol & $S(2,5) > 10 \uparrow \uparrow {4 \ssymbol{1}} \ssymbol{3}\ $ &                                                &                                           &                                    &
     \end{tabular}
-    \caption{Landscape of small busy beaver values. $\ssymbol{2}\ $ proved in this work using the \Coq theorem prover. $\ssymbol{1}\ $ lower bounds, see Appendix~\ref{app:lowerbounds}. $\ssymbol{3}\ $ existence of a \textit{\cryptid}, see Appendix~\ref{app:cryptids}.}\label{table:landscape}
+    \caption{Landscape of small busy beaver values. $\ssymbol{2}\ $ proved in this work using the \Coq proof assistant. $\ssymbol{1}\ $ lower bounds, see Appendix~\ref{app:lowerbounds}. $\ssymbol{3}\ $ existence of a \textit{\cryptid}, see Appendix~\ref{app:cryptids}.}\label{table:landscape}
 \end{table}
 
 
@@ -214,7 +214,7 @@ Dauntingly, any $\Pi_1^0$ mathematical statement\footnote{A $\Pi_1^0$ statement 
 
 Hence, while 5-state halting machines were not feared, it remained unknown how hard non-halting 5-state machines could get. This article settles the question.
 
-\paragraph{Related Work.} The proof of $S(4) = \BBtheFourth$ was published in 1983 \cite{Brady83}. One of its main innovations was the introduction of a method to solve the halting problem of a category of machines the author calls \textit{XMas Trees}. A caveat of \cite{Brady83} resides in the following quote from the paper: ``All of the remaining holdouts were examined by means of voluminous printouts of their histories along with some program extracted features. It was determined to the author's satisfaction that none of these machines will ever stop.'' A \textit{holdout} is a machine still needing a proof of halting/nonhalting. Using the Coq theorem prover, we bring additional confirmation that $S(4) = \BBtheFourth$, see Theorem~\ref{th:BB4}.
+\paragraph{Related Work.} The proof of $S(4) = \BBtheFourth$ was published in 1983 \cite{Brady83}. One of its main innovations was the introduction of a method to solve the halting problem of a category of machines the author calls \textit{XMas Trees}. A caveat of \cite{Brady83} resides in the following quote from the paper: ``All of the remaining holdouts were examined by means of voluminous printouts of their histories along with some program extracted features. It was determined to the author's satisfaction that none of these machines will ever stop.'' A \textit{holdout} is a machine still needing a proof of halting/nonhalting. Using Coq, we bring additional confirmation that $S(4) = \BBtheFourth$, see Theorem~\ref{th:BB4}.
 
 \newcommand{\SkeletHoldoutsSporadic}{\ts{XX}\xspace}
 
@@ -230,7 +230,7 @@ In the case of 5-state machines, \numSporadic machines were not solved by decide
 
 \paragraph{Meta-method: bbchallenge.org.}
 
-\paragraph{Formal Verification (\CoqBB).} To the best of our knowledge, our work is the first to formally verify a \BBfull values.
+\paragraph{Formal Verification (\Coq and \CoqBB).} To the best of our knowledge, our work is the first to formally verify a \BBfull values.
 
 \subsection{Discussion}
 \subsection{Future Work}
