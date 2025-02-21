@@ -174,6 +174,8 @@
 \newcommand{\ie}{i.e.~}
 \newcommand{\eg}{e.g.~}
 
+What is the simplest open problem in mathematics?
+
 In 1962, \radofull introduced \textit{the \BBfull game} in an effort to ``present some very simple instances of \noncomput functions'' \cite{Rado_1962}. The game is as such: (i) run all $n$-state Turing machines\footnote{See Appendix~\ref{app:TMs} for Turing machines definitions and examples.} from the all-zero tape (ii) consider the set of machines that eventually halt (iii) the winner of the game is the halting machine that has the most \sone symbols on its tape when it halts. This maximum number of \sone symbols on halting tape among $n$-state machines is called $\Sigma(n)$. \rado also introduced $S(n)$, the maximum number of steps made by a halting $n$-state Turing machine from all-zero tape. Both functions $\Sigma$ and $S$ are \noncomput! This is most obvious in the case of $S$: if an $n$-state machine runs for more than $S(n)+1$ steps, we know it will never halt, giving an algorithm to decide Turing's halting problem if $S$ was computable. This tight link between $S$ and the halting problem makes it more interesting and practical to us than $\Sigma$, hence we take the liberty (similarly to other authors \cite{BusyBeaverFrontier,otherexamples?}) to concentrate more on $S$.
 
 %This tight link to the halting problem makes $S$ more interesting and practical to us than $\Sigma$, hence we take the liberty (similarly to other authors \cite{BusyBeaverFrontier,otherexamples?}) to focus the busy beaver game on $S$ instead of $\Sigma$ and to call the $n$-state \textit{busy beaver winner} the machine achieving $S(n)$ running steps. 
