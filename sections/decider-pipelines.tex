@@ -7,7 +7,7 @@ The exact pipelines are give in Appendix~\ref{app:pipelines} and only differ in 
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{|l|lll|}
+    \begin{tabular}{|l|rrr|}
         \hline
         $S(5)$ decider pipeline                                                              & Nonhalt                         & Halt                           & Total decided \\
         \hline
@@ -26,31 +26,31 @@ The exact pipelines are give in Appendix~\ref{app:pipelines} and only differ in 
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{|l|lll|}
+    \begin{tabular}{|l|rrr|}
         \hline
-        $S(2,4)$ decider pipeline                                                            & Nonhalt  & Halt     & Total decided \\
+        $S(2,4)$ decider pipeline                                                            & Nonhalt   & Halt    & Total decided \\
         \hline
-        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & \ts{???} & \ts{???} & \ts{???}      \\
-        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} & \ts{???} & \ts{???} & \ts{???}      \\
-        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  & \ts{???} & \ts{???} & \ts{???}      \\
-        4. Long halters (simulation up to $\BBTxF$ steps)                                    & \ts{???} & \ts{???} & \ts{???}      \\
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & 1,263,302 & 721,313 & 1,984,615     \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} & 163,500   & 0       & 163,500       \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  & 6,078     & 0       & 6,078         \\
+        4. Long halters (simulation up to $\BBTxF$ steps)                                    & 0         & 24      & 24            \\
         \hline
-        Total                                                                                & \ts{???} & \ts{???} & \ts{???}      \\ \hline
+        Total                                                                                & 1,432,880 & 721,337 & 2,154,217     \\ \hline
     \end{tabular}
     \caption{Approximation of the $S(2,4)$ decider pipeline as implemented in \CoqBB. All the $\BBTxFTNF$ enumerated 2-state 4-symbol machines are decided by this pipeline, which solves $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB2x4}
 \end{table}
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{|l|lll|}
+    \begin{tabular}{|l|rrr|}
         \hline
-        $S(4)$ decider pipeline                                                              & Nonhalt  & Halt     & Total decided \\
+        $S(4)$ decider pipeline                                                              & Nonhalt & Halt    & Total decided \\
         \hline
-        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & \ts{???} & \ts{???} & \ts{???}      \\
-        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} & \ts{???} & \ts{???} & \ts{???}      \\
-        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  & \ts{???} & \ts{???} & \ts{???}      \\
+        1. Loops, see \textbf{Section~\ref{sec:loops}}                                       & 588,373 & 249,693 & 838,066       \\
+        2. $n$-gram Closed Position Set (NGramCPS), see \textbf{Section~\ref{sec:n-gramCPS}} & 20,841  & 0       & 0             \\
+        3. Repeated Word List (RepWL), see \textbf{Section~\ref{sec:RepWL}}                  & 2       & 0       & 2             \\
         \hline
-        Total                                                                                & \ts{???} & \ts{???} & \ts{???}      \\
+        Total                                                                                & 609,216 & 249,693 & 858,909       \\
         \hline
     \end{tabular}
     \caption{Approximation of the $S(4)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFourthTNF$ enumerated 4-state machines are decided by this pipeline, which brings confirmation that $S(4) = \BBtheFourth$ \cite{Brady83}, see Theorem~\ref{th:BB4}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB4}
