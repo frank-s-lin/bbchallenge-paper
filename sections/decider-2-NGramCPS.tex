@@ -86,7 +86,7 @@ Figure~\ref{fig:ngram-cps-more} gives an example of a ``fractal-looking'' 5-stat
 
     \begin{algorithmic}[1]
         \State{\textbf{Input:} A Turing machine $\mathcal{M}$, the zero symbol of the alphabet $\alphabet_0$, the size of the n-grams $n > 0$.}
-        \State{\textbf{Output:} \NONHALT if the decider detects that the machine doesn't halt and `UNKNOWN' otherwise.}
+        \State{\textbf{Output:} \NONHALT if the decider detects that the machine doesn't halt and \UNKNOWN otherwise.}
 
         \State $g_0 = (\alphabet_0)^n$ \Comment{The zero n-gram consists of $n$ zero symbols}
         \State $L = \{ g_0 \}$ \Comment{The seen left n-grams}

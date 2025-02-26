@@ -24,4 +24,27 @@ We now need to deal with two cases: (i) \textit{block simulation} when the head 
 \end{enumerate}
 In both case, we've reduced to block simulation.
 
-\paragraph{RepWL decider.} Starting from the initial configuration (\ie $\texttt{A>}$, assuming that $0^\infty$ are treated as implicit border conditions), using block simulation and regex branching, we're creating a graph of regex configurations to explore -- nodes using regex branching have out-degree two. If this graph is eventually closed and contains no halting configuration then we know that the machine will never halt (Theorem~\ref{th:repwl}) since we have constructed a set of configurations bigger than the one it will visit and that does not contain any halting transition.
+\paragraph{RepWL decider.} Starting from the initial configuration (\ie $\texttt{A>}$, assuming that $0^\infty$ are treated as implicit border conditions), using block simulation and regex branching, we're creating a graph of regex configurations to explore -- nodes using regex branching have out-degree two. If this graph is eventually closed and contains no halting configuration then we know that the machine will never halt (Theorem~\ref{th:repwl}) since we have constructed a set of configurations bigger than the one it will visit and that does not contain any halting transition. Because there is no guarantee the graph is closed, we also need an additional gas parameter indicating how many distinct nodes we're willing to visit at most.
+
+
+\begin{algorithm}
+    \caption{{\sc decider-RepWL}}\label{alg:RepWL}
+
+    \begin{algorithmic}[1]
+        \State{\textbf{Input:} A Turing machine $\mathcal{M}$, block-length parameter $l>0$, minimum size of nonconstant blocks $T>0$, maximum number of steps allowed in block simulation $M \in \mathbb{N}$, maximum number of distinct nodes we're willing to visit $N\in \mathbb{N}$.}
+        \State{\textbf{Output:} \NONHALT if the decider detects that the machine doesn't halt and \UNKNOWN otherwise.}
+        \State
+        \State $\texttt{to\_visit} = [\texttt{A>}]$
+        \State $V = \{\}$ \Comment{Visited configurations}
+        \State \While{$|V| < N$ \textbf{and} $\texttt{to\_visit}.\textbf{len}() \neq 0$}
+        \State $\texttt{config} = \texttt{to\_visit}.\textbf{pop}()$
+        \State \If{head in \texttt{config} is facing a constant block}
+        \State $\texttt{new\_config} = \texttt{config}.\textbf{block\_simulation}(M)$
+        \State heyeeeds
+        \EndIf
+        \EndWhile
+
+
+
+    \end{algorithmic}
+\end{algorithm}
