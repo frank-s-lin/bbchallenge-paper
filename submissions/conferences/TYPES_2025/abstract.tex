@@ -104,7 +104,7 @@
 % into the list defined using \institute
 %
 \author{
-  Tristan Stérin\inst{1,2}\thanks{Presenting author} \and The bbchallenge collaboration\inst{1}
+  Tristan Stérin\thanks{Presenting author}\inst{~1,2} \and The bbchallenge collaboration\inst{1}
 }
 
 % Institutes for affiliations are also joined by \and,
@@ -149,13 +149,13 @@ prgm.dev,
 Introduced by \radofull in 1962 as part of the \textit{Busy Beaver game} \cite{Rado_1962}, $S(n)$ is the maximum number of steps that a halting $n$-state 2-symbol Turing machine\footnote{Turing machines with one bi-infinite tape.} can do from the all-0 tape before halting. The function $S$ is noncomputable as it would otherwise allow to solve the 
 halting problem: run an $n$-state machine for $S(n)+1$ steps and, if it has not halted by then, you know it will never halt.
 
-As $S$ in noncomputable, there is no algorithm that computes \textit{all} of its values, but one can still try to determine \textit{some} of them. We can get a sense of how hard this is by noting that, for instance, there is a 25-state 2-symbol Turing machine \cite{GoldbachTM27,GoldbachTM25} that iterates all natural numbers in search of a counterexample to Goldbach's conjecture\footnote{The conjecture states that every natural number $n>2$ can be written as the sum of two primes. This is one of the oldest open problems in mathematics.}, and halt iff one is found (\ie iff the conjecture is false), which means that proving the value of $S(\geq 25)$ is at least as hard as proving or disproving Goldbach's conjecture. Worse, this idea can be generalised to any other $\Pi_1$ statement\footnote{\ie a logical statement of the form ``For all $x$, $\phi(x)$'' with $\phi$ using only bounded quantifiers meaning that a computer can check $\phi(x)$ in finite time for any $x$.}, such as Riemann Hypothesis or ZF's consistency which have been respectively reduced to $S(744)$ and $S(748)$ \cite{RiemannTM,Yedidia2016,ZFTM,Yedidia2016,BusyBeaverFrontier,BB748Thesis}. 
+As $S$ in noncomputable, there is no algorithm that computes \textit{all} of its values, but one can still try to determine \textit{some} of them. We can get a sense of how hard this is by noting that, for instance, there is a 25-state 2-symbol Turing machine \cite{GoldbachTM27,GoldbachTM25} that iterates all even natural numbers in search of a counterexample to Goldbach's conjecture\footnote{The conjecture states that every even natural number $n>2$ can be written as the sum of two primes. This is one of the oldest open problems in mathematics.}, and halt iff one is found (\ie iff the conjecture is false), which means that proving the value of $S(\geq 25)$ is at least as hard as proving or disproving Goldbach's conjecture. Worse, this idea can be generalised to any other $\Pi_1$ statement\footnote{\ie a logical statement of the form ``For all $x$, $\phi(x)$'' with $\phi$ using only bounded quantifiers meaning that a computer can check $\phi(x)$ in finite time for any $x$.}, such as Riemann Hypothesis or ZF's consistency which have been respectively reduced to $S(744)$ and $S(748)$ \cite{RiemannTM,Yedidia2016,ZFTM,Yedidia2016,BusyBeaverFrontier,BB748Thesis}. 
 %Aaronson conjectures that as low as $S(10)$ is independent of Peano \cite{BusyBeaverFrontier}.
 
 Nonetheless, researchers have embarked on the quest of finding what is the biggest value of $S$ we can know. Motivation include: (i) trying to find the simplest open problem in mathematics on the Busy Beaver scale by exhibiting an $n$-state Turing machine for which it is unknown whether it halts or not but $S(n-1)$ is known (\ie the halting status of all $n-1$-state Turing machines is known) and (ii) studying compute \textit{in the wild} by having to understand (to some extent) the behavior of small, not human-engineered, Turing machines which often implement \textit{quirky} algorithms in a \textit{quirky} way.
 
 
-Prior to this work, only the four first values of $S$ had been proved: $S(1)=1$, $S(2)=6$ \cite{Rado_1962}, $S(3) = 21$ \cite{Lin1963}, $S(4) = 107$ \cite{Brady83}. After some early attempts in the 1960s and 1970s~\cite{PMichel_website,michel2019busy}, the search for $S(5)$ took a turn in 1989 when Marxen and Buntrock found a new 5-state champion\footnote{\url{https://bbchallenge.org/1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA}} achieving $\BBtheFifth$ steps \cite{Marxen_1990}, thus showing $S(5) \geq \BBtheFifth$. In 2020, after thirty years without improvements, Aaronson conjectured that there is no better 5-state machine, \ie $S(5) = \BBtheFifth$ \cite{BusyBeaverFrontier}.
+Prior to this work, only the four first values of $S$ had been proved: $S(1)=1$, $S(2)=6$ \cite{Rado_1962}, $S(3) = 21$ \cite{Lin1963}, $S(4) = 107$ \cite{Brady83}. After some early attempts in the 1960s and 1970s~\cite{PMichel_website,michel2019busy}, the search for $S(5)$ took a turn in 1989 when Marxen and Buntrock found a new 5-state champion\footnote{\url{https://bbchallenge.org/1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA}} achieving $\BBtheFifth$ steps \cite{Marxen_1990}, thus showing $S(5) \geq \BBtheFifth$. In 2020, after thirty years without improvements, Aaronson conjectured that there was no better 5-state machine, \ie $S(5) = \BBtheFifth$ \cite{BusyBeaverFrontier}.
 
 Our main result is to prove this conjecture, using the \Coq proof assistant\footnote{The \Coq proof assistant has been renamed Rocq.} \cite{Coq8.20}:
 
@@ -165,6 +165,24 @@ Our main result is to prove this conjecture, using the \Coq proof assistant\foot
 
 The proof, called \CoqBB, is available at \url{https://github.com/ccz181078/Coq-BB5}.
 
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{|l|rrr|}
+    \hline
+    $S(5)$ decider pipeline                                & Nonhalt                         & Halt                           & Total decided \\
+    \hline
+    1. Loops                                               & 126,994,099                     & 48,379,711                     & 175,373,810   \\
+    2. $n$-gram Closed Position Set (NGramCPS)             & 6,005,142                       & 0                              & 6,005,142     \\
+    3. Repeated Word List (RepWL)                          & 6,577                           & 0                              & 6,577         \\
+    4. Finite Automata Reduction (FAR)                     & 23                              & 0                              & 23            \\
+    5. Weighted Finite Automata Reduction (WFAR)           & 17                              & 0                              & 17            \\
+    6. Long halters (simulation up to $\BBtheFifth$ steps) & 0                               & 183                            & 183           \\
+    7. Sporadic machines, individual proofs                & 13                              & 0                              & 13            \\
+    8. Reduction to \texttt{1RB}                           & 14                              & 0                              & 14            \\ \hline
+    Total                                                  & \multicolumn{1}{r}{133,005,895} & \multicolumn{1}{r}{48,379,894} & 181,385,789   \\ \hline
+  \end{tabular}
+  \caption{Approximation of the $S(5)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFifthTNF$ enumerated 5-state machines are decided by this pipeline, which solves $S(5) = \BBtheFifth$. }\label{tab:pipelineBB5}
+\end{table}
 
 
 
