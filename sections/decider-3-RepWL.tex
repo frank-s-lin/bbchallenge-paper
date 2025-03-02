@@ -3,19 +3,21 @@
 \newpage
 \subsection{Repeated Word List (RepWL)}\label{sec:RepWL}
 
-The Repeated Word List (RepWL) technique is based on the following simple idea: if a word (or \textit{block}) of length $l > 0$ appears consecutively on the tape more than $T > 0$ times (with $T, l \in \mathbb{N}$ fixed) then, let's assume it will eventually repeat forever. In practice, it means we represent configurations as regular expressions. For instance, consider the following configuration:
+The Repeated Word List (RepWL) technique is based on the following simple idea: if a word (or \textit{block}) of length $l > 0$ appears consecutively on the tape more than $T > 0$ times (with $T, l \in \mathbb{N}$ fixed) then, we assume it will eventually repeat forever. In practice, it means we represent configurations as regular expressions. For instance, consider the following configuration:
 
-$$ \texttt{0}^\infty \; \texttt{1100 A> 111101010101000000} \; \texttt{0}^\infty$$
+$$ \texttt{0}^\infty \; \texttt{11100 A> 11110101010111111111} \; \texttt{0}^\infty$$
 
 Using $l=2$ and $T = 3$, we represent it as (treating $\texttt{0}^\infty$ as implicit border condition):
 
-$$ (\texttt{11})^2 \; (\texttt{00}) \; \texttt{A>} \; (\texttt{11})^2 \; (\texttt{01})^{3+} \; (\texttt{00})^{3+}$$
+$$ (\texttt{01}) \; (\texttt{11}) \; (\texttt{00}) \; \texttt{A>} \; (\texttt{11})^2 \; (\texttt{01})^{3+} \; (\texttt{11})^{3+}$$
 
-Where regular expression $(w)^{k+}$ means that the word $w$ is repeated at least $k$ times, with $w \in \{\szero,\sone\}^*$ and $k > 0$. Note that here, we use \textit{directional head notation} for Turing machines, where the head lives in between cells and points either right or left. This framework is equivalent to the Turing machines setup (Appendix~\ref{app:TMs}) used elsewhere in this work.
+Where blocks are constructed from the head onwards, and pumping symbols \szero out of $0^\infty$ if the number of symbols on either part of the tape is not a multiple of $l$. Any repetition of more than $T$ times the same word $w$ is replaced by the regular expression $(w)^{T+}$, hence the only exponents to ever be used in this representation are $\{1,2,\dots,T-1\}$ and $T+$. Note that here, we use \textit{directional head notation} for Turing machines, where the head lives in between cells and points either right or left. This framework is equivalent to the Turing machines setup (Appendix~\ref{app:TMs}) used elsewhere in this work.
 
-We now need to deal with two cases: (i) \textit{block simulation} when the head is facing a constant block (\ie block without a $+$), such as $\texttt{A>} \; (\texttt{11})^2$ and (ii) \textit{regex branching} when the head is facing a block with a $+$, \eg $\texttt{B>} \; (\texttt{01})^3+$.
+Using the rules explained below (\textit{block simulation} and \textit{regex branching}), {\sc decider-RepWL} (Algorithm~\ref{alg:RepWL}) simulates Turing machines directly on these regex configurations starting from the initial configuration (\ie $\texttt{A>}$), as to create a graph of such regex configurations to explore. If this graph is eventually closed (Algorithm~\ref{alg:RepWL}~l.\ref{alg:RepWL:closed}) and contains no halting configuration then we know that the machine will never halt (Theorem~\ref{th:repwl}) since we have constructed a set of configurations bigger than the one it will visit and that does not contain any halting transition. Because there is no guarantee the graph is closed, we also need an additional gas parameter (named $N$ in Algorithm~\ref{alg:RepWL}) indicating how many distinct nodes we're willing to visit at most.
 
-\paragraph{Block simulation.} When the head is facing a constant block, such as in the above example $\texttt{A>} \; (\texttt{11})^2$, we can proceed to \textit{block simulation}. Block simulation consists in simulating the Turing machine until the head potentially eventually leaves the block. We say potentially as the machine could enter a cycle inside the block and never leave it. In practice this is dealt with either using a gas parameter limiting how many steps we're willing to take in block simulation before giving up (option taken in \CoqBB), or to embed a decider for loops in the block simulator (Section~\ref{sec:loops}). For instance, block simulation from $\texttt{A>} \; (\texttt{11})^2$ could produce, for instance, $(\texttt{00})^2 \; \texttt{B>}$ or $\texttt{<C} \; \texttt{10} \; \texttt{11} $ or enter a cycle and never leave the block.
+For simulating Turing machines on regex configurations we need to deal with two cases: (i) \textit{block simulation} when the head is facing a constant block (\ie block without a $+$), such as $\texttt{A>} \; (\texttt{11})^2$ and (ii) \textit{regex branching} when the head is facing a block with a $+$, \eg $\texttt{B>} \; (\texttt{01})^3+$.
+
+\paragraph{Block simulation.} When the head is facing a constant block, such as in the above example $\texttt{A>} \; (\texttt{11})^2$ (or if the head is at the tape's extremity, we add constant block $\szero^l$), we can proceed to \textit{block simulation}. Block simulation consists in simulating the Turing machine until the head potentially eventually leaves the block. We say potentially as the machine could enter a cycle inside the block and never leave it. In practice this is dealt with either using a gas parameter limiting how many steps we're willing to take in block simulation before giving up (option taken in \CoqBB, parameter named $M$ in Algorithm~\ref{alg:RepWL}), or to embed a decider for loops in the block simulator (Section~\ref{sec:loops}). Depending upon which Turing machine is being simulated, block simulation from block simulation from $\texttt{A>} \; (\texttt{11})^2$ could produce, for instance, $(\texttt{00})^2 \; \texttt{B>}$ or $\texttt{<C} \; \texttt{10} \; \texttt{11} $ or enter a cycle and never leave the block.
 
 \paragraph{Regex branching.} When the head is facing a block with a $+$, for instance $\texttt{B>} \; (\texttt{01})^{3+}$, we add two configurations to the set of configurations to visit next:
 \begin{enumerate}
@@ -23,9 +25,6 @@ We now need to deal with two cases: (i) \textit{block simulation} when the head 
     \item A configuration where $\texttt{B>} \; (\texttt{01})^{3+}$ is replaced with  $\texttt{B>} \; (\texttt{01}) \; (\texttt{01})^{3+}$
 \end{enumerate}
 In both case, we've reduced to block simulation.
-
-\paragraph{RepWL decider.} Starting from the initial configuration (\ie $\texttt{A>}$, assuming that $0^\infty$ are treated as implicit border conditions), using block simulation and regex branching, we're creating a graph of regex configurations to explore -- nodes using regex branching have out-degree two. If this graph is eventually closed and contains no halting configuration then we know that the machine will never halt (Theorem~\ref{th:repwl}) since we have constructed a set of configurations bigger than the one it will visit and that does not contain any halting transition. Because there is no guarantee the graph is closed, we also need an additional gas parameter indicating how many distinct nodes we're willing to visit at most.
-
 
 \begin{algorithm}
     \caption{{\sc decider-RepWL}}\label{alg:RepWL}
@@ -35,16 +34,31 @@ In both case, we've reduced to block simulation.
         \State{\textbf{Output:} \NONHALT if the decider detects that the machine doesn't halt and \UNKNOWN otherwise.}
         \State
         \State $\texttt{to\_visit} = [\texttt{A>}]$
-        \State $V = \{\}$ \Comment{Visited configurations}
+        \State $V = \{\}$ \Comment{Visited regex configurations}
         \State \While{$|V| < N$ \textbf{and} $\texttt{to\_visit}.\textbf{len}() \neq 0$}
-        \State $\texttt{config} = \texttt{to\_visit}.\textbf{pop}()$
-        \State \If{head in \texttt{config} is facing a constant block}
-        \State $\texttt{new\_config} = \texttt{config}.\textbf{block\_simulation}(M)$
-        \State heyeeeds
+        \State $\texttt{regex\_config} = \texttt{to\_visit}.\textbf{pop}()$
+        \State \If{$\texttt{regex\_config}$ is in $V$}
+        \State \textbf{continue}
+        \EndIf
+        \State
+        \State Insert $\texttt{regex\_config}$ in $V$
+        \State \If{head is facing a constant block}
+        \State $\texttt{new\_regex\_config} = \texttt{regex\_config}.\textbf{block\_simulation}(M)$
+        \If{\texttt{new\_regex\_config} has halted (\ie undefined transition was met) \textbf{or} \\ $\quad \quad \quad \;\,\,\,$ limit $M$ was exceeded during block simulation}
+        \State \Return \UNKNOWN
+        \EndIf
+        \State $\texttt{to\_visit}.\textbf{append}(\texttt{new\_regex\_config})$
+        \Else \Comment{Head is facing a block with a $+$}
+        \State $\texttt{regex\_config\_1}, \; \texttt{regex\_config\_2} = \texttt{regex\_config}.\textbf{regex\_branching}(M)$
+        \State $\texttt{to\_visit}.\textbf{append}(\texttt{regex\_config\_1})$
+        \State $\texttt{to\_visit}.\textbf{append}(\texttt{regex\_config\_2})$
         \EndIf
         \EndWhile
 
-
-
+        \State \If{$|V| < N$}
+        \State \Return{\NONHALT}\label{alg:RepWL:closed}
+        \Else
+        \State \Return{\UNKNOWN}
+        \EndIf
     \end{algorithmic}
 \end{algorithm}
