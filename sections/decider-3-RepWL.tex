@@ -27,6 +27,17 @@ Block simulation consists of simulating the Turing machine until the head eventu
 \end{enumerate}
 In both case, we've reduced to block simulation.
 
+\ \\
+Finally, {\sc decider-RepWL} is correct:
+
+\begin{theorem}[\CoqBB: \texttt{Lemma RepWL\_ES\_decider\_spec}]\label{th:repwl}
+    Let $\mathcal{M}$ be a Turing machine $l\in \N^+$ the block-length parameter, $T \in \N^+$ the minimum size of nonconstant blocks, $B \in \N$ the maximum number of steps allowed in block simulation and $N \in \N$ the maximum number of nodes we are willing to visit. Then, \textsc{decider-RepWL}($\mathcal{M}$, $l$, $T$, $B$, $N$) terminates and its result is correct -- see Algorithm~\ref{alg:RepWL}: if it returns \NONHALT then $\mathcal{M}$ does not halt from the all-$0$ tape.
+\end{theorem}
+\begin{proof}
+
+\end{proof}
+
+
 \begin{algorithm}
     \caption{{\sc decider-RepWL}}\label{alg:RepWL}
 
@@ -63,3 +74,9 @@ In both case, we've reduced to block simulation.
         \EndIf
     \end{algorithmic}
 \end{algorithm}
+
+\subsection{RepWL: results}
+
+\CoqBB implements RepWL (Algorithm~\ref{alg:RepWL}), see function \texttt{RepWL\_ES\_decider}. Contrarily to previously presented deciders, RepWL is not applied in bulk using generic parameters. Instead, the ${6,577}$ machines it decides are hardcoded in the proof together with the specific $l$ and $T$ parameters that decide them -- see file \texttt{Decider\_RepWL\_Hardcoded\_Parameters.v}. These parameters were found using a grid search in C++.
+
+\ts{Add table / histogram of RepWL parameters, and efficiency reasons why parameters are hardcoded, and maybe talk about the 2 machines decided by it in BB4}.
