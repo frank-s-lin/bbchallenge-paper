@@ -98,7 +98,10 @@
 %%
 % Regular title as in the article class.
 %
-\title{Coq proof of the fifth Busy Beaver value}
+
+\title{
+  \vspace{-1em}  
+Coq proof of the fifth Busy Beaver value}
 
 % Authors are joined by \and. Their affiliations are given by \inst, which indexes
 % into the list defined using \institute
@@ -113,7 +116,7 @@
    \email{bbchallenge@bbchallenge.org}
 \and
 prgm.dev,
-  Paris, France\\
+  Paris, France
   \email{tristan@prgm.dev}\\
  }
 
@@ -130,12 +133,18 @@ prgm.dev,
 % will be rejected by EasyChair
 \titlerunning{Determination of the fifth Busy Beaver value}
 
+
+
+
 \begin{document}
 
+
 \maketitle
-
-\section*{Abstract}
-
+\vspace{-1em}
+\begin{abstract}
+  We prove that $S(5) = 47,176,870$. The Busy Beaver value $S(n)$ is the maximum~number of steps a halting n-state 2-symbol Turing machine can perform from the all-0 tape before halting and was historically introduced as one of the simplest examples of a noncomputable function.  Using the Coq proof assistant, we enumerate 181,385,789 5-state Turing machines, and for each, decide whether it halts or not. 
+  Our result marks the first determination of a new Busy Beaver value in over 40 years, leveraging Coq's computing capabilities and demonstrating the effectiveness of collaborative online research.
+\end{abstract}
 \newcommand{\ie}{i.e.~}
 \newcommand{\eg}{e.g.~}
 
@@ -187,12 +196,13 @@ The proof, called \CoqBB, is available at \url{https://github.com/ccz181078/Coq-
 
 \newpage
 
-In this talk, we will present \CoqBB and describe, at various technical levels, how the proof works. The overall structure of the proof is as follows: the proof enumerates 5-state machines in \textit{Tree Normal Form} (\textbf{TNF}) \cite{Brady64,Brady83,Marxen_1990}. Each enumerated machine is passed through a pipeline of \textit{deciders} which are algorithms trying to decide whether the machine halts or not\footnote{We don't use the word ``decider'' in the usual sense of theoretical computer science, formally we mean an algorithm that (i) takes as input a Turing machine, (ii) is guaranteed to finish, and (iii) returns either \texttt{HALT}, \texttt{NONHALT} or \texttt{UNKNOWN}. Proving that a decider is correct means that, if the decider returns \texttt{HALT}/\texttt{NONHALT} then, indeed, the machine halts/does not halt.}:
+In this talk, we will present \CoqBB and describe, at various technical levels, how the proof works. The overall structure of the proof is as follows: the proof enumerates 5-state machines in \textit{Tree Normal Form} (\textbf{TNF}) \cite{Brady64,Brady83,Marxen_1990}. Each enumerated machine is passed through a pipeline of \textit{deciders} which are algorithms trying to decide whether the machine halts or not
+\footnote{We don't use the word ``decider'' in the usual sense of theoretical computer science, formally we mean an algorithm that (i) takes as input a Turing machine, (ii) is guaranteed to finish, and (iii) returns either \texttt{HALT}, \texttt{NONHALT} or \texttt{UNKNOWN}. Proving that a decider is correct means that, if the decider returns \texttt{HALT}/\texttt{NONHALT} then, indeed, the machine halts/does not halt.}:
 \begin{enumerate}
   \item If the machine halts, i.e. meets an undefined transition, a new subtree of machines is visited for all the possible ways to fill the undefined transition
   \item If the machine does not halt, it is a leaf of the TNF tree
 \end{enumerate}
-The TNF enumeration terminates when all leafs have been reached, i.e. all the enumerated Turing machines have been decided and there are no more halting machines to expand into subtrees. The proof enumerates $181{,}385{,}789$ machines\footnote{The list of enumerated machines, with halting status and decider information is made available at: \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}.} in about 45 minutes\footnote{When compiled in parallel using \texttt{native\_compute}. Unparallelised compilation with \texttt{vm\_compute} takes about 13 hours.}, and runs the pipeline of deciders summarised in Table~\ref{tab:pipelineBB5} on each of them. All the algorithms (TNF enumeration and deciders) are programmed and proved correct in Coq.
+The TNF enumeration terminates when all leafs have been reached, i.e. all the enumerated Turing machines have been decided and there are no more halting machines to expand into subtrees. The proof enumerates $181{,}385{,}789$ machines\footnote{The list of enumerated machines, with halting status and decider information is made available at: \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}.} in about 45 minutes\footnote{When compiled in parallel using \texttt{native\_compute}. Unparallelised compilation with \texttt{vm\_compute} takes about 13 hours (on a Macbook Pro M3 Max).}, and runs the pipeline of deciders summarised in Table~\ref{tab:pipelineBB5} on each of them. All the algorithms (TNF enumeration and deciders) are programmed and proved correct in Coq.
 
 The deciders essentially leave 13 \textit{Sporadic Machines} undecided, for which we provide individual Coq proof of correctness \cite{busycoq,xu2024skelet17fifthbusy}. Among them, the monstruous \textit{Skelet \#1}\footnote{\url{https://bbchallenge.org/1RB1RD_1LC0RC_1RA1LD_0RE0LB_---1RC}}, which is a translated loop (\ie eventually repeats the same pattern translated in space) that only starts looping after $10^{51}$ steps with a period of more than $8$ billion steps \cite{ShawnSkelet1}. This machine is named after Georgi Georgiev (a.k.a Skelet) who first found this machine, as well as 42 other arduous ones, back in 2003 \cite{Skelet_bbfind}.
 
