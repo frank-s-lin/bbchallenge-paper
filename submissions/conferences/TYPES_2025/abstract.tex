@@ -92,6 +92,9 @@
 \newtheorem{remark}{Remark}[section]
 \newtheorem*{theorem*}{Theorem}
 
+% \usepackage[shortlabels]{enumitem}
+% \setlist[enumerate]{nosep}
+
 %\makeindex
 
 %% Front Matter
@@ -145,8 +148,8 @@ prgm.dev,
   We prove that $S(5) = 47,176,870$. The Busy Beaver value $S(n)$ is the maximum~number of steps a halting n-state 2-symbol Turing machine can perform from the all-0 tape before halting and $S$ was historically introduced as one of the simplest examples of a noncomputable function.  Using the Coq proof assistant, we enumerate 181,385,789 5-state Turing machines, and for each, decide whether it halts or not. 
   Our result marks the first determination of a new Busy Beaver value in over 40 years, leveraging Coq's computing capabilities and demonstrating the effectiveness of collaborative online research.
 \end{abstract}
-\newcommand{\ie}{i.e.~}
-\newcommand{\eg}{e.g.~}
+\newcommand{\ie}{i.e.\ }
+\newcommand{\eg}{e.g.\ }
 
 \newcommand{\noncomput}{noncomputable\xspace}
 \newcommand{\BBfull}{Busy Beaver\xspace}
@@ -164,7 +167,7 @@ As $S$ in noncomputable, there is no algorithm that computes \textit{all} of its
 Nonetheless, researchers have embarked on the quest of finding what is the biggest value of $S$ we can know. Motivation include: (i) trying to find the simplest open problem in mathematics on the Busy Beaver scale by exhibiting an $n$-state Turing machine for which it is unknown whether it halts or not but $S(n-1)$ is known (\ie the halting status of all $n-1$-state Turing machines is known) and (ii) studying compute \textit{in the wild} by having to understand (to some extent) the behavior of small, not human-engineered, Turing machines which often implement \textit{quirky} algorithms in a \textit{quirky} way.
 
 
-Prior to this work, only the four first values of $S$ had been proved: $S(1)=1$, $S(2)=6$ \cite{Rado_1962}, $S(3) = 21$ \cite{Lin1963}, $S(4) = 107$ \cite{Brady83}. After some early attempts in the 1960s and 1970s~\cite{PMichel_website,michel2019busy}, the search for $S(5)$ took a turn in 1989 when Marxen and Buntrock found a new 5-state champion\footnote{\url{https://bbchallenge.org/1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA}} achieving $\BBtheFifth$ steps \cite{Marxen_1990}, thus showing $S(5) \geq \BBtheFifth$. In 2020, after thirty years without improvements, Aaronson conjectured that there was no better 5-state machine, \ie $S(5) = \BBtheFifth$ \cite{BusyBeaverFrontier}.
+Prior to this work, only the four first values of $S$ had been proved: $S(1)=1$, $S(2)=6$ \cite{Rado_1962}, $S(3) = 21$ \cite{Lin1963}, $S(4) = 107$ \cite{Brady83}. After some early attempts in the 1960s and 1970s~\cite{PMichel_website,michel2019busy}, the search for $S(5)$ took a turn in 1989 when Marxen and Buntrock found a new 5-state champion\footnote{\url{https://bbchallenge.org/1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA}} (\ie a 5-state machine with bigger step-count than previously known ones) achieving $\BBtheFifth$ steps \cite{Marxen_1990}, thus showing $S(5) \geq \BBtheFifth$. In 2020, after thirty years without improvements, Aaronson conjectured that there was no better 5-state machine, \ie $S(5) = \BBtheFifth$ \cite{BusyBeaverFrontier}.
 
 Our main result is to prove this conjecture, using the \Coq proof assistant\footnote{The \Coq proof assistant has been renamed Rocq.} \cite{Coq8.20}:
 
@@ -196,17 +199,17 @@ The proof, called \CoqBB, is available at \url{https://github.com/ccz181078/Coq-
 
 \newpage
 
-In this talk, we will present \CoqBB and describe, at various technical levels, how the proof works. The overall structure of the proof is as follows: the proof enumerates 5-state machines in \textit{Tree Normal Form} (\textbf{TNF}) \cite{Brady64,Brady83,Marxen_1990}. Each enumerated machine is passed through a pipeline of \textit{deciders} which are algorithms trying to decide whether the machine halts or not
+In this talk, we will present \CoqBB and describe, at various technical levels, how the proof works. The overall structure of the proof is as follows: the proof enumerates 5-state machines in \textit{Tree Normal Form} (\textbf{TNF}) \cite{Brady64,Brady83,Marxen_1990}. TNF essentially consists in enumerating partially-defined Turing machines starting from a machine with no transitions defined, each enumerated machine is passed through a pipeline of \textit{deciders} which are algorithms trying to decide whether the machine halts or not
 \footnote{We don't use the word ``decider'' in the usual sense of theoretical computer science, formally we mean an algorithm that (i) takes as input a Turing machine, (ii) is guaranteed to finish, and (iii) returns either \texttt{HALT}, \texttt{NONHALT} or \texttt{UNKNOWN}. Proving that a decider is correct means that, if the decider returns \texttt{HALT}/\texttt{NONHALT} then, indeed, the machine halts/does not halt.}:
 \begin{enumerate}
-  \item If the machine halts, i.e. meets an undefined transition, a new subtree of machines is visited for all the possible ways to fill the undefined transition
-  \item If the machine does not halt, it is a leaf of the TNF tree
+  \item If the machine halts, \ie meets an undefined transition, a new subtree of machines is visited for all the possible ways to fill the undefined transition.
+  \item If the machine does not halt, it is a leaf of the TNF tree.
 \end{enumerate}
-The TNF enumeration terminates when all leafs have been reached, i.e. all the enumerated Turing machines have been decided and there are no more halting machines to expand into subtrees. The proof enumerates $181{,}385{,}789$ machines\footnote{The list of enumerated machines, with halting status and decider information is made available at: \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}.} in about 45 minutes\footnote{When compiled in parallel using \texttt{native\_compute}. Unparallelised compilation with \texttt{vm\_compute} takes about 13 hours (on a Macbook Pro M3 Max).}, and runs the pipeline of deciders summarised in Table~\ref{tab:pipelineBB5} on each of them. All the algorithms (TNF enumeration and deciders) are programmed and proved correct in Coq.
+The TNF enumeration terminates when all leafs have been reached, \ie all the enumerated Turing machines have been decided and there are no more halting machines to expand into subtrees. The proof enumerates $181{,}385{,}789$ machines\footnote{The list of enumerated machines, with halting status and decider information is made available at: \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}.} in about 45 minutes\footnote{When compiled in parallel using \texttt{native\_compute}. Unparallelised compilation with \texttt{vm\_compute} takes about 13 hours (on a Macbook Pro M3 Max).}, and runs the pipeline of deciders summarised in Table~\ref{tab:pipelineBB5} on each of them. All the algorithms (TNF enumeration and deciders) are programmed and proved correct in Coq.
 
 The deciders essentially leave 13 \textit{Sporadic Machines} undecided, for which we provide individual Coq proof of correctness \cite{busycoq,xu2024skelet17fifthbusy}. Among them, the monstruous \textit{Skelet \#1}\footnote{\url{https://bbchallenge.org/1RB1RD_1LC0RC_1RA1LD_0RE0LB_---1RC}}, which is a translated loop (\ie eventually repeats the same pattern translated in space) that only starts looping after $10^{51}$ steps with a period of more than $8$ billion steps \cite{ShawnSkelet1}. This machine is named after Georgi Georgiev (a.k.a Skelet) who first found this machine, as well as 42 other arduous ones, back in 2003 \cite{Skelet_bbfind}.
 
-The talk will also discuss meta aspects of this result such as how were proof assistants used in practice and how the research was conducted within The bbchallenge Collaboration, a self-organised, international, online community of scientists (not necessarily working in academia) gathered around the \url{bbchallenge.org} platform \cite{sterin_2022_14955828}.
+The talk will also discuss meta aspects of this result such as how were proof assistants used in practice and how the research was conducted within The bbchallenge Collaboration, a self-organised, international, online community of scientists (mostly not working in academia) gathered around the \url{bbchallenge.org} platform \cite{sterin_2022_14955828}.
 
 \newpage
 
