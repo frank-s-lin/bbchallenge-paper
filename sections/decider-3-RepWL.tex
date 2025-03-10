@@ -11,7 +11,7 @@
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.48]{figures/RepWL/RepWL_three_machines.pdf}
-    \caption{60,000-step space-time diagrams of three 5-state machines decided by the Repeated Word List (RepWL) decider, Algorithm~\ref{alg:RepWL}. Left: {\small \url{https://bbchallenge.org/1RB0RD_0LC0LA_0LD1LC_1RA0LE_0RC---}}. Center: {\small \url{https://bbchallenge.org/1RB0LC_1RC1RD_1LD1LE_1LA0RB_---1LA}}. Right: {\small \url{https://bbchallenge.org/1RB---_0RC1RD_0LD1RC_1LE0RA_1RA0LE}}. The RepWL graphs of these machines respectively have 42 and $1{,}231$ and $143{,}181$ nodes, ranging the entire distribution of RepWL node counts for 5-state machines, see Section~\ref{sec:RepWL:results}. RepWL parameters $(l,T)$ for these machines are respectively: $(5,2)$, $(16,2)$, and, $(20,2)$.
+    \caption{10,000-step space-time diagrams of three 5-state machines decided by the Repeated Word List (RepWL) decider, Algorithm~\ref{alg:RepWL}. Left: {\small \url{https://bbchallenge.org/1RB0RD_0LC0LA_0LD1LC_1RA0LE_0RC---}}. Center: {\small \url{https://bbchallenge.org/1RB---_1LB1RC_1RA1RD_1LE0RD_0LB0LC}}. Right: {\small \url{https://bbchallenge.org/1RB---_0RC1RD_0LD1RC_1LE0RA_1RA0LE}}. The RepWL graphs of these machines respectively have 42 and $845$ and $143{,}181$ nodes, ranging the entire distribution of RepWL node counts for 5-state machines, see Section~\ref{sec:RepWL:results}. RepWL parameters $(l,T)$ for these machines are respectively: $(5,2)$, $(2,3)$, and, $(20,2)$.
     }\label{fig:repWLThree}
 \end{figure}
 
@@ -114,7 +114,7 @@ Finally, {\sc decider-RepWL} is correct:
 
 \CoqBB implements RepWL (Algorithm~\ref{alg:RepWL}), see function \texttt{RepWL\_ES\_decider}. Contrarily to previously presented deciders, RepWL is not applied in bulk using generic parameters. Instead, the ${6,577}$ machines it decides are hardcoded in the proof together with the specific $l$ and $T$ parameters that decide them -- see file \texttt{Decider\_RepWL\_Hardcoded\_Parameters.v}. Figure~\ref{fig:RepWLpairs} displays the $(l,T)$ pairs used for these ${6,577}$ machines. These parameters were found using a grid search in C++. For all these machines, maximum block simulation parameters and maximum number of graph nodes parameters are respectively set to 451 and ${150,001}$.
 
-Figure~\ref{fig:RepWLhisto} gives the distribution of node counts of the ${6,577}$ RepWL graphs constructed by \CoqBB. The average number of nodes is $1{,}231$ while minimum and maximum are respectively 42 and $143{,}181$. Figure~\ref{fig:repWLThree} gives space-time diagrams for machines  achieving these node counts, \ie 42 (left), ${1,231}$ (center) and $143{,}181$ nodes. These three machines fit in the zoological category of \textit{Bouncers}, see Section~\ref{sec:zoo}.
+Figure~\ref{fig:RepWLhisto} gives the distribution of node counts of the ${6,577}$ RepWL graphs constructed by \CoqBB. The average number of nodes is $1{,}231$ while minimum and maximum are respectively 42 and $143{,}181$. Figure~\ref{fig:repWLThree} gives space-time diagrams for machines with RepWL graphs with 42 (left), ${845}$ (center) and $143{,}181$ nodes. \ts{The machine on the left and on the right fit in the zoological category of \textit{Bouncers}, see Section~\ref{sec:zoo}.}
 
 In the $S(4)$ pipeline (Table~\ref{tab:pipelineBB4}), RepWL is only used to decide two machines using parameters $l=4$ and $T=3$. These 4-state machines are given in Figure~\ref{fig:RepWLBB4}, and they respectively have $3{,}130$ and $3{,}076$ nodes in their RepWL graph.
 
