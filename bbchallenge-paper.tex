@@ -120,7 +120,7 @@
 \newcommand{\symbolzero}{\texttt{0}}
 \newcommand{\symbolone}{\texttt{1}}
 
-\newcommand{\numSporadic}{\ts{XX}\xspace}
+\newcommand{\numSporadic}{13\xspace}
 
 \newcommand{\ssp}{state-symbol-pair\xspace}
 \newcommand{\ssps}{state-symbol-pairs\xspace}
@@ -181,7 +181,7 @@ Introduced by \radofull in 1962, \textit{the \BBfull game} gives a framework to 
 %This tight link to the halting problem makes $S$ more interesting and practical to us than $\Sigma$, hence we take the liberty (similarly to other authors \cite{BusyBeaverFrontier,otherexamples?}) to focus the busy beaver game on $S$ instead of $\Sigma$ and to call the $n$-state \textit{busy beaver winner} the machine achieving $S(n)$ running steps. 
 While there is no algorithm to compute $S(n)$ for \textit{all} $n$ we can certainly try to compute $S(n)$ for \textit{some} $n$. Prior to this work, only the four first values of $S$ had been proved: $S(1)=1$, $S(2)=6$ \cite{Rado_1962}, $S(3) = 21$ \cite{Lin1963}, $S(4) = 107$ \cite{Brady83}. With some early attempts in the 1960s and 1970s, the $S(5)$ quest seriously started in 1983 with a 2-day competition organised at the University of Dortmund\footnote{Report of the competition: \url{https://docs.bbchallenge.org/other/lud20.pdf}.} with the sole goal of finding new 5-state champions -- \ie 5-state machines achieving better $S$ scores than any machines previously known \cite{PMichel_website,michel2019busy}. The winning machine in Dortmund achieved $134,467$ steps, establishing $S(5) \geq 134,467$. In 1989, a big step was made when Marxen and Buntrock found a new champion\footnote{\url{https://bbchallenge.org/1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA} \ts{TS: (to improve with table)}} achieving $\BBtheFifth$ steps \cite{Marxen_1990}, showing $S(5) \geq \BBtheFifth$. However, it remained unknown if no other machine could beat it, \ie whether Marxen and Buntrock's machine was the actual 5-state Busy Beaver winner or not. In 2020, Aaronson conjectured that there was no better 5-state machine, \ie $S(5) = \BBtheFifth$ \cite{BusyBeaverFrontier}.
 
-Our main result is to prove this conjecture, using the \Coq proof assistant \cite{the_coq_development_team_2024_14542673}, see Theorem~\ref{th:BB5}. The winning machine for $S(5)$ is also the winning machine for $\Sigma(5)$. We prove $\Sigma(5) = \SigmaTheFifth$, see Theorem~\ref{th:BB5Sigma}.
+Our main result is to prove this conjecture, using the \Coq proof assistant \cite{the_coq_development_team_2024_14542673}, see Theorem~\ref{th:BB5}. The winning machine for $S(5)$ is also the winning machine for $\Sigma(5)$. We also prove $\Sigma(5) = \SigmaTheFifth$, see Theorem~\ref{th:BB5Sigma}.
 
 \begin{theorem}\label{th:BB5}
     $S(5) = \BBtheFifth$.
@@ -193,7 +193,9 @@ The function $S$ can naturally be extended to Turing machines using more than tw
     $S(2,4) = \BBTxF$.
 \end{theorem}
 
-The Coq proofs are available at \url{https://github.com/ccz181078/Coq-BB5}. The goal of this paper is to present these proofs. As a result of our work, we now have a clearer view of the small Busy Beaver values landscape, see Table~\ref{table:landscape}.
+The Coq proofs for $S(5)$ and $S(2,4)$ --- as well as for previously known $S(2),\,S(3),\,S(4)$ and $S(2,3)$ --- are available at \url{https://github.com/ccz181078/Coq-BB5}. The lists of all the Turing machines evaluated by these proofs are available at \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}.
+
+The goal of this paper is to present these proofs. As a result of our work, we now have a clearer view of the landscape of small Busy Beaver values, see Table~\ref{table:landscape}.
 
 
 
@@ -214,7 +216,7 @@ The Coq proofs are available at \url{https://github.com/ccz181078/Coq-BB5}. The 
 
 Dauntingly, any $\Pi_1^0$ mathematical statement\footnote{A $\Pi_1^0$ statement is a statement of first-order logic of the form ``$\forall x, \phi(x)$'' where $\phi$ is a sentence with only bounded quantifiers (\ie $\phi(x)$ can always be verified by a computer in finite time).} can be encoded as the halting problem of a Turing machine (from all-zero tape). Such statements are common and include famous open problems in mathematics such as Goldbach's conjecture or the Riemann hypothesis. Goldbach's conjecture, formulated in 1742, is one of the oldest open problems in mathematics and states ``every even positive integer greater than 2 is the sum of two prime numbers.'' We can build a Turing machine that halts iff the conjecture is false: by enumerating all positive integers, then for each, test all sums of smaller primes and halt iff we do not find the sum. A (formally verified) machine performing this procedure has been built using only 25 states \cite{GoldbachTM27, GoldbachTM25}. This means that proving the value of $S(25)$ is at least as hard as solving Goldbach's conjecture because the proof of $S(25)$ must contain an argument as of why this particular 25-state machine does not (or, believed less likely, does) halt. Similarly, the Riemann hypothesis has been encoded in a 744-state machine \cite{RiemannTM,Yedidia2016,BusyBeaverFrontier}. As low as 15 states is enough to encode a hard number theoretical conjecture by Erd\H{o}s \cite{BB15}. Worst, the consistency of common axioms sets such as Peano's Arithmetic (PA) or Zermelo–Fraenkel set theory (ZF) is also $\Pi_1^0$ since one can enumerate proofs in these systems until the proof of a contradiction is found. This has been done for ZF, using 748 states \cite{ZFTM,Yedidia2016,BusyBeaverFrontier,BB748Thesis}. By G\"odel's second incompleteness theorem, this means that proving the value of $S(748)$ cannot be done using ZF. Aaronson conjectures that as low as $S(20)$ cannot be proven in ZF and as low as $S(10)$ cannot be proven in PA \cite{BusyBeaverFrontier}.
 
-Hence, while 5-state halting machines were not feared, it remained unknown how hard non-halting 5-state machines could get. This article settles the question.
+Hence, while 5-state halting machines were not feared, it remained unknown how hard non-halting 5-state machines could get. This article settles the question: the smallest open problem in mathematics (on the Busy Beaver scale) does not arise from 5-state machines -- but we have good contenders for 6-state machines, see Section~\ref{sec:cryptids}.
 
 \paragraph{Related Work.} The proof of $S(4) = \BBtheFourth$ was published in 1983 \cite{Brady83}. One of its main innovations was the introduction of a method to solve the halting problem of a category of machines the author calls \textit{XMas Trees}. A caveat of \cite{Brady83} resides in the following quote from the paper: ``All of the remaining holdouts were examined by means of voluminous printouts of their histories along with some program extracted features. It was determined to the author's satisfaction that none of these machines will ever stop.'' A \textit{holdout} is a machine still needing a proof of halting/nonhalting. Using Coq, we bring additional confirmation that $S(4) = \BBtheFourth$, see Theorem~\ref{th:BB4}.
 
@@ -224,11 +226,11 @@ We know of two attempts at solving $S(5)$: in 2003, Georgi Georgiev (also known 
 
 The \BBfull problem was also studied in other models of computation than \rado's (c.f. Appendix~\ref{app:TMs}), including the \textit{quadruple} variation of Turing machines where each transition may move or write a new symbol, but not both \cite{Ross2003,Ross2005}. For additional historical perspective on the \BBfull problem, we refer the reader to Pascal Michel's survey and website \cite{michel2019busy,PMichel_website}.
 
-\paragraph{Method and structure of the proof.} Machines are enumerated arborescently in \textit{Tree Normal Form} (TNF) \cite{Brady64} which drastically reduces the search space's size -- \eg from ca. 10 trillion machines to $\BBtheFifthTNF$ for 5-state machines. The enumeration is presented in Section~\ref{sec:enum}.
+\paragraph{Structure of the proof: overview.} Machines are enumerated arborescently in \textit{Tree Normal Form} (TNF) \cite{Brady64} which drastically reduces the search space's size -- \eg from ca. 10 trillion machines to $\BBtheFifthTNF$ for 5-state machines, see Section~\ref{sec:enum}.
 
-Each enumerated machine is fed through a sequence (or \textit{pipeline}) of \textit{deciders}, where a decider is an algorithm trying to decide whether the machine halts or not. Because of the noncomputability of the halting problem, there is no \textit{universal} decider able to decide any Turing machine. Hence, all the craft resides in creating deciders able to decide large families of machines, in reasonable time. The $S(5)$ pipeline of deciders is given in Table~\ref{tab:pipelineBB5} -- see Tab~\ref{tab:pipelineBB2x4} for $S(2,4)$. Deciders are presented in Section~\ref{sec:deciders}. To the best of our knowledge, all the deciders we present are original.
+Each enumerated machine is fed through a sequence (or \textit{pipeline}) of \textit{deciders}, where a decider is an algorithm trying to decide whether the machine halts or not. Because of the noncomputability of the halting problem, there is no \textit{universal} decider but all the craft resides in creating deciders able to decide large families of machines, in reasonable time. The $S(5)$ pipeline of deciders is given in Table~\ref{tab:pipelineBB5} -- see Tab~\ref{tab:pipelineBB2x4} for $S(2,4)$. Deciders are presented in Section~\ref{sec:deciders}. To the best of our knowledge, all the deciders we present are original.
 
-In the case of 5-state machines, \numSporadic machines were not solved by deciders and required individual proofs of nonhalting. We call them \textit{sporadic} machines and they are presented in Section~\ref{sec:sporadic}.
+In the case of 5-state machines, \numSporadic \textit{Sporadic Machines} were not solved by deciders and required individual proofs of nonhalting, see Section~\ref{sec:sporadic}. These machines include suprising behaviours, such as eventually-repeating chaos (machine ``Skelet \#1''), base-Fibonacci counters (machine ``Skelet \#10''), or obfuscated Gray code (machine ``Skelet \#17'') and they are beautiful examples of \textit{algorithms in the wild}: non-human-engineered algorithms that, like deep sea life, were only found by means of exploration.
 
 \paragraph{Meta-method: bbchallenge.org.}
 
