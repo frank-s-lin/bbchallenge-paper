@@ -19,11 +19,14 @@
 
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage{xcolor,colortbl,tikz}
 
 \usepackage{bold-extra}% bold texttt
 
 \usepackage{graphicx}
 \usepackage{mathtools}
+
+\usepackage{booktabs} 
 
 \usepackage{amsmath,amsfonts,amssymb,amsthm}
 
@@ -198,18 +201,49 @@ The Coq proofs for $S(5)$ and $S(2,4)$ --- as well as for previously known $S(2)
 The goal of this paper is to present these proofs. As a result of our work, we now have a clearer view of the landscape of small Busy Beaver values, see Table~\ref{table:landscape}.
 
 
-
-\begin{table}[]
+\setlength{\fboxrule}{1.2pt}
+\begin{table}[h]
     \centering
-    \begin{tabular}{llllll}
-                 & 2-state                                                       & 3-state                                        & 4-state                                   & 5-state                            & 6-state                                                    \\
-        2-symbol & $S(2) = 6$ \cite{Rado_1962}                                   & $S(3) = 21$ \cite{Lin1963}                     & $S(4) = 107$ \cite{Brady83}               & $S(5) = \BBtheFifth \ssymbol{2}\ $ & $S(6) > 10 \uparrow \uparrow 15 \ssymbol{1}\ \ssymbol{3} $ \\
-        3-symbol & $S(2,3) = 38$ \cite{LafittePapazian2007}                      & $S(3,3) > {10^{17}} \ssymbol{1}\ \ssymbol{3} $ & $S(4,3) > {10^{14{,}072}} \ssymbol{1}\  $ &                                    &                                                            \\
-        4-symbol & $S(2,4) = \BBTxF \ssymbol{2}$                                 & $S(3,4) > 2 \uparrow^{15} 5 \ssymbol{1}\ $     &                                           &                                    &                                                            \\
-        5-symbol & $S(2,5) > 10 \uparrow \uparrow {4 \ssymbol{1}} \ssymbol{3}\ $ &                                                &                                           &                                    &
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \setlength{\tabcolsep}{5pt}  % Adjust column spacing
+    \begin{tabular}{c|ccccc}
+        \hline
+        \textbf{Symbols} & \textbf{2-State}                                             & \textbf{3-State} & \textbf{4-State} & \textbf{5-State} & \textbf{6-State} \\
+        \hline
+        2                & \cellcolor{green!20}$S(2) = 6$ \cite{Rado_1962}
+                         & \cellcolor{green!20}$S(3) = 21$ \cite{Lin1963}
+                         & \cellcolor{green!20}$S(4) = 107$ \cite{Brady83}
+                         & \cellcolor{green!50}{$S(5) = \BBtheFifth$}
+                         & \cellcolor{orange!50}{$S(6) > 10 \uparrow \uparrow 15$}                                                                                  \\
+        \hline
+        3                & \cellcolor{green!20}$S(2,3) = 38$ \cite{LafittePapazian2007}
+                         & \cellcolor{orange!50}{$S(3,3) > 10^{17}$}
+                         & \cellcolor{orange!20}$S(4,3) > 10^{14{,}072} $
+                         & --                                                           & --                                                                        \\
+        \hline
+        4                & \cellcolor{green!50}{$S(2,4) = \BBTxF$}
+                         & \cellcolor{orange!20}$S(3,4) > 2 \uparrow^{15} 5 $
+                         & --                                                           & --               & --                                                     \\
+        \hline
+        5                & \cellcolor{orange!50}{$S(2,5) > 10 \uparrow \uparrow 4$}
+                         & --                                                           & --               & --               & --                                  \\
+        \hline
     \end{tabular}
-    \caption{Landscape of small busy beaver values. $\ssymbol{2}\ $ proved in this work using the \Coq proof assistant. $\ssymbol{1}\ $ lower bounds, see Appendix~\ref{app:lowerbounds}. $\ssymbol{3}\ $ existence of a \textit{\cryptid}, see Appendix~\ref{app:cryptids}.}\label{table:landscape}
+    \caption{Landscape of small busy beaver values.
+        \cellcolor{green!20}Cells highlighted in green corresponds to values for which we provide \Coq proofs. Bright green indicates the new results, $S(5)$ and $S(2,4)$, original to this work.
+        Cells highlighted in orange indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and believed mathematically hard), see Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. }
+    \label{table:landscape}
 \end{table}
+
+
+
+
+
+
+
+
+
 
 
 \paragraph{Challenges.} Proving $S(5) = \BBtheFifth$ required analyzing the behavior of $\BBtheFifthTNF$ Turing machines\footnote{This exact number can only be known after the proof is done, see Section~\ref{sec:TNF}.}-- evidently requiring computer assistance. The challenge for a halting machine is the case where it halts after a number of steps that is too enormous to be simulated step-by-step (e.g. the current 6-state champion halts after $10 \uparrow \uparrow 15$ steps \cite{Pavel_discorvery}, see Appendix~\ref{app:lowerbounds}), this challenge was not met for 5-state machines since they halt in at most $\BBtheFifth$ steps -- this could not have been known for certain in advance but was believed -- which is easy to simulate on modern computers. The challenge for a non-halting machine is that proving it does halt can be hard. How hard?
@@ -242,7 +276,7 @@ In the case of 5-state machines, \numSporadic \textit{Sporadic Machines} were no
 % \end{itemize}
 
 
-\paragraph{Formal Verification (\Coq and \CoqBB).} Our work is the first to formally verify a \BBfull value.
+\paragraph{Formal Verification (\Coq and \CoqBB).} To the best of our knowledge, our work is the first to formally verify a \BBfull value.
 
 \subsection{Discussion}\label{sec:intro:discuss}
 
