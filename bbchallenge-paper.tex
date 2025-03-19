@@ -209,30 +209,30 @@ The goal of this paper is to present these proofs. As a result of our work, we n
     \setlength{\tabcolsep}{5pt}  % Adjust column spacing
     \begin{tabular}{c|ccccc}
         \hline
-        \textbf{Symbols} & \textbf{2-State}                                             & \textbf{3-State} & \textbf{4-State} & \textbf{5-State} & \textbf{6-State} \\
+        \textbf{Symbols} & \textbf{2-State}                                                           & \textbf{3-State} & \textbf{4-State} & \textbf{5-State} & \textbf{6-State} \\
         \hline
         2                & \cellcolor{green!20}$S(2) = 6$ \cite{Rado_1962}
                          & \cellcolor{green!20}$S(3) = 21$ \cite{Lin1963}
                          & \cellcolor{green!20}$S(4) = 107$ \cite{Brady83}
                          & \cellcolor{green!50}{$S(5) = \BBtheFifth$}
-                         & \cellcolor{orange!50}{$S(6) > 10 \uparrow \uparrow 15$}                                                                                  \\
+                         & \cellcolor{orange!50}{$S(6) > 10 \uparrow \uparrow 15$}                                                                                                \\
         \hline
         3                & \cellcolor{green!20}$S(2,3) = 38$ \cite{LafittePapazian2007}
                          & \cellcolor{orange!50}{$S(3,3) > 10^{17}$}
-                         & \cellcolor{orange!20}$S(4,3) > 10^{14{,}072} $
-                         & --                                                           & --                                                                        \\
+                         & \cellcolor{orange!20}$S(4,3) > 2 \uparrow \uparrow \uparrow 2^{2^{{32}}} $
+                         & --                                                                         & --                                                                        \\
         \hline
         4                & \cellcolor{green!50}{$S(2,4) = \BBTxF$}
                          & \cellcolor{orange!20}$S(3,4) > 2 \uparrow^{15} 5 $
-                         & --                                                           & --               & --                                                     \\
+                         & --                                                                         & --               & --                                                     \\
         \hline
         5                & \cellcolor{orange!50}{$S(2,5) > 10 \uparrow \uparrow 4$}
-                         & --                                                           & --               & --               & --                                  \\
+                         & --                                                                         & --               & --               & --                                  \\
         \hline
     \end{tabular}
     \caption{Landscape of small busy beaver values.
         \cellcolor{green!20}Cells highlighted in green correspond to values for which we provide \Coq proofs. Bright green indicates the new results, $S(5)$ and $S(2,4)$, original to this work.
-        Cells highlighted in orange indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and believed mathematically hard), see Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. }
+        Cells highlighted in orange indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and believed to be mathematically hard), see Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. }
     \label{table:landscape}
 \end{table}
 
