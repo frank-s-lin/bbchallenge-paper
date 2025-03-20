@@ -135,6 +135,8 @@
 \newcommand{\CoqBB}{Coq-BB5\xspace}
 \newcommand{\CoqBBnospace}{Coq-BB5}
 
+\newcommand{\TMstep}{\to}
+
 \begin{document}
 \date{}
 \maketitle
@@ -345,8 +347,8 @@ In the \BBfull context, machines are always executed from the all-0 tape and sta
 
 
 
-A \textit{configuration} (also known as \textit{execution state}) of a Turing machine is defined by the 3-tuple: (i) state (ii) position of the head on the tape (iii) content of the memory tape. As mentioned above, here, \textit{the initial configuration} of a machine is always (i) state is A, i.e. the first state to appear in the machine's description (ii) head's position is 0 (iii) the initial tape is all-0 -- i.e. each memory cell is containing 0. We write $c_1 \to_\mathcal{M} c_2$ if a configuration $c_2$ is obtained from $c_1$ in one computation step of machine $\mathcal{M}$. We omit $\mathcal{M}$ if it is clear from context. We let $c_1 \to^s c_2$ denote a sequence of $s$ computation steps, and let $c_1 \to^* c_2$ denote zero or more computation steps. % exact same wording as in https://dna.hamilton.ie/assets/dw/NearyWoodsFCT09.pdf
-We write $c_1 \to \bot$ if the machine halts after executing one computation step from configuration $c_1$. Halting happens when an undefined machine transition is met i.e. no instruction is given for when the machine is in the state, tape position and tape corresponding to configuration $c_1$.
+A \textit{configuration} (also known as \textit{execution state}) of a Turing machine is defined by the 3-tuple: (i) state (ii) position of the head on the tape (iii) content of the memory tape. As mentioned above, here, \textit{the initial configuration} of a machine is always (i) state is A, i.e. the first state to appear in the machine's description (ii) head's position is 0 (iii) the initial tape is all-0 -- i.e. each memory cell is containing 0. We write $c_1 \TMstep_\mathcal{M} c_2$ if a configuration $c_2$ is obtained from $c_1$ in one computation step of machine $\mathcal{M}$. We omit $\mathcal{M}$ if it is clear from context. We let $c_1 \TMstep^s c_2$ denote a sequence of $s$ computation steps, and let $c_1 \TMstep^* c_2$ denote zero or more computation steps. % exact same wording as in https://dna.hamilton.ie/assets/dw/NearyWoodsFCT09.pdf
+We write $c_1 \TMstep \bot$ if the machine halts after executing one computation step from configuration $c_1$. Halting happens when an undefined machine transition is met i.e. no instruction is given for when the machine is in the state, tape position and tape corresponding to configuration $c_1$.
 
 % When discussing concrete configurations, we write
 % $0^\infty\; s_1\; \cdots\; s_{k-1}\; [s_k]_q\; s_{k+1}\; \cdots\; s_n\; 0^\infty$
