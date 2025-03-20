@@ -190,7 +190,7 @@ Our main result is to prove this conjecture, using the \Coq proof assistant \cit
     $S(5) = \BBtheFifth$.
 \end{theorem}
 
-The function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, like, for instance, $S(2,3) = 38$ is the value of $S$ for 2-state, 3-symbol machines \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We also prove, using Coq, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4}:
+The function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, like, for instance, $S(2,3) = 38$ is the value of $S$ for 2-state, 3-symbol machines \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We prove, using Coq, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4} and Figure~\ref{fig:bb2x4}:
 
 \begin{theorem}\label{th:BB2x4}
     $S(2,4) = \BBTxF$.
@@ -341,7 +341,7 @@ Trusting that \Coq itself is correct, the only elements to check in order to tru
 
 We consider Turing machines that use a single, discrete, bi-infinite tape -- \ie the tape can be thought of a function $t: \mathbb{Z} \to \alphabet$ with $\alphabet$ the alphabet of symbols used by the machine. Machine transitions are either undefined (the machine halts if it ever reaches an undefined transition) or given by (a) a symbol of $\alphabet$ to write (b) a direction to move (right or left) and (c) a state to go to -- \ie the transition table of a Turing machine is a partially defined function $\delta: \text{States} \times \alphabet \to \alphabet \times \{\text{L},\text{R}\} \times \text{States}$. Figure~(\ref{table:bb5}) gives the transition table of the 5-state 2-symbol \BBfull winner. The machine halts after 47,176,870 steps (starting from all-0 tape) when it reads a \szero in state \stateE (undefined transition).
 
-In the \BBfull context, machines are always executed from the all-0 tape and starting in state \stateA. Execution goes as follows: at each step, the machine which is in state $s$ looks at which symbol $\sigma$ is present on the tape cell the head is currently on and then, if defined, executes the instruction given by its transition table, \eg $\delta(s, \sigma) = 0\text{L}\text{\stateE}$ means that the machine will write a \szero, move the cell on the left of the current one and switch to state $\stateE$. If $\delta(s, \sigma)$ is not defined, the machine halts.
+In the \BBfull context, machines are always executed from the all-0 tape and starting in state \stateA. Execution goes as follows: at each step, the machine which is in state $s$ looks at which symbol $\sigma$ is present on the tape cell the head is currently on and then, if defined, executes the instruction given by its transition table, \eg $\delta(s, \sigma) = 0\text{L}\text{\stateE}$ means that the machine will write a \szero, move the cell on the left of the current one and switch to state \stateE. If $\delta(s, \sigma)$ is not defined, the machine halts.
 
 
 
@@ -368,6 +368,44 @@ We write $c_1 \to \bot$ if the machine halts after executing one computation ste
 \end{enumerate}
 
 Figure~(\ref{fig:bb5-diagram}) gives a 45-step space-time diagram for the 5-state 2-symbol \BBfull winner. We often use \textit{zoomed-out} space-time diagrams without state-coloring information, such as Figure~(\ref{fig:bb5-diagram-zoomout}) which gives the 20,000 first steps of the 5-state 2-symbol \BBfull winner.
+
+
+\paragraph*{Turing machine format.} We often communicate Turing machines using the following linear format: \\ \texttt{1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_---0LA} represents the transition table of Figure~\ref{table:bb5} where \texttt{\_} is used to separate states and transitions are given in read-symbol order. Note that, historically, the undefined transition reached by a halting machine was represented using \texttt{1RZ}, hence our format allows to use any letter outside of the state space to represent halting, \eg \texttt{1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_1RZ0LA}. Multi-symbols machines are represented in the same way, \eg the 2-state 4-symbol \BBfull winner is \texttt{1RB2LA1RA1RA\_1LB1LA3RB---} (also given by \texttt{1RB2LA1RA1RA\_1LB1LA3RB1RZ}), see Figure~\ref{fig:bb2x4}.
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \renewcommand{\arraystretch}{1.3} % Increase row height
+        \setlength{\tabcolsep}{12pt} % Increase column spacing
+        \vspace{10pt} % Adjust vertical alignment
+        \begin{tabular}{cccccc}
+            \toprule
+                    & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{3} \\
+            \midrule
+            \stateA & 1R\stateB  & 2L\stateA  & 1R\stateA  & 1R\stateA  \\
+            \stateB & 1L\stateB  & 1L\stateA  & 3R\stateB  & ---        \\
+            \bottomrule
+        \end{tabular}
+        \caption{Transition table of the 2-state 4-symbol \BBfull winner.}
+        \label{table:bb2x4}
+
+        \vspace{10pt} % Adjust spacing
+        \includegraphics[width=0.7\linewidth]{figures/space-time-diagrams/bb2x4_20k.png} % Adjust the path as needed
+        \caption{20,000-step \textit{zoomed out} space-time diagram of the 2-state 4-symbol winner.}\label{fig:bb2x4-diagram-zoomout}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \vspace{10pt} % Adjust vertical alignment
+        \includegraphics[width=0.7\linewidth]{figures/space-time-diagrams/bb5.pdf}
+        \caption{Space-time diagram of the first 45 steps of the 2-state 4-symbol winner.}
+        \label{fig:bb2x4-diagram}
+    \end{subfigure}
+    \caption{Transition table and space-time diagrams of the 2-state 4-symbol \BBfull winner, which halts after $\BBTxF$ steps.
+        \url{https://bbchallenge.org/https://bbchallenge.org/1RB2LA1RA1RA_1LB1LA3RB---}.}
+    \label{fig:bb2x4}
+\end{figure}
 
 \newpage
 \section{Tree Normal Form machine enumeration (TNF)}\label{sec:enum}
