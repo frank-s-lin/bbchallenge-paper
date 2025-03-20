@@ -284,6 +284,8 @@ In our case, with hundred of millions of Turing machines to study, the use of \C
 
 This totalistic use of \Coq in order to solve $S(5)$, where the TNF enumeration of the $\BBtheFifthTNF$ Turing machines itself is implemented and ran in \Coq, came as a surprise when \CoqBB was released in the spring of 2024 by contributor ``mxdys'' who embedded two years of work made by the bbchallenge collaboration as well as improving and introducing new deciders to finish the proof. \CoqBB relies on a previous formalisation, \texttt{busycoq} \cite{busycoq}, for 12 of the 13 Sporadic Machines \Coq proofs. \CoqBB initially compiled in about 13 hours on a standard laptop but the use of \Coq's faster computing engine, \texttt{native\_compute} \cite{nativecompute} and paralelisation of the proof (see Section~\ref{sec:enum}) brought compile time down to about 45 minutes on 13 cores.
 
+Trusting that \Coq itself is correct, the only elements to check in order to trust \CoqBB's results are the main theorem statement and the definitions it uses, which have been isolated in an individual file, \texttt{BB5\_Statement.v}, which is documented with comments, only 121 lines long, and that does not require \Coq expertise to be read. Independent \Coq experts have reviewed and validated it; they also ruled out the possibility that the proof would try to exploit a potential \Coq bug to falsely claim the results. Finally, after compilation, the proof prints the only axiom that it uses, called \texttt{functional\_extensionality\_dep} from \Coq's standard library, which claims that two functions are equal if they are equal in all points.
+
 %Hence, the proof heavily relies on the computing power of \Coq and it came as a surprise
 
 
