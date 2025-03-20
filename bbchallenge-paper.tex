@@ -289,7 +289,7 @@ Trusting that \Coq itself is correct, the only elements to check in order to tru
 % Maybe some of this will go in discussion, also, Dafny?
 
 
-
+\newpage
 \subsection{Discussion}\label{sec:intro:discuss}
 
 % massively online collab is young
@@ -372,6 +372,8 @@ Figure~(\ref{fig:bb5-diagram}) gives a 45-step space-time diagram for the 5-stat
 
 \paragraph*{Turing machine format.} We often communicate Turing machines using the following linear format: \\ \texttt{1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_---0LA} represents the transition table of Figure~\ref{table:bb5} where \texttt{\_} is used to separate states and transitions are given in read-symbol order. Note that, historically, the undefined transition reached by a halting machine was represented using \texttt{1RZ}, hence our format allows to use any letter outside of the state space to represent halting, \eg \texttt{1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_1RZ0LA}. Multi-symbols machines are represented in the same way, \eg the 2-state 4-symbol \BBfull winner is \texttt{1RB2LA1RA1RA\_1LB1LA3RB---} (also given by \texttt{1RB2LA1RA1RA\_1LB1LA3RB1RZ}), see Figure~\ref{fig:bb2x4}.
 
+This format can be used as URL for the \url{bbchallenge.org} website, \eg \url{https://bbchallenge.org/1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_1RZ0LA} will display the transition table, space-time diagrams and known information about the machine.
+
 \begin{figure}[h!]
     \centering
     \begin{subfigure}[t]{0.45\textwidth}
@@ -409,6 +411,8 @@ Figure~(\ref{fig:bb5-diagram}) gives a 45-step space-time diagram for the 5-stat
 
 \newpage
 \section{Tree Normal Form machine enumeration (TNF)}\label{sec:enum}
+
+\newpage
 \section{Deciders}\label{sec:deciders}
 
 A \textit{decider} is a program that takes as input a Turing machine $\mathcal{M}$ and that returns either \HALT, \NONHALT, \UNKNOWN whether it was able to detect that the machine's halting status (halt or nonhalt) or not.
@@ -428,7 +432,11 @@ A \textit{decider} is a program that takes as input a Turing machine $\mathcal{M
 \newpage
 \section{Sporadic 5-state machines}\label{sec:sporadic}
 
+\newpage
+\section{Results}\label{sec:sporadic}
 
+\newpage
+\section{Zoology}\label{sec:sporadic}
 
 
 \bibliographystyle{abbrv}
@@ -437,7 +445,6 @@ A \textit{decider} is a program that takes as input a Turing machine $\mathcal{M
 
 \appendix
 
-\section{Turing machines}\label{app:TMs}
 \section{Exact pipelines}\label{app:pipelines}
 \section{Lower bounds}\label{app:lowerbounds}
 \section{Cryptids}\label{app:cryptids}
