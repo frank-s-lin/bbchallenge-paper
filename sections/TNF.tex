@@ -31,10 +31,10 @@
             \node (root) at (0,0) {\turingTable{---}{---}};
 
             % First-level children (Ensuring proper spacing)
-            \node (child1) at (-6,-4.5) {\turingTable{0R\stateA}{---}};
-            \node (child2) at (-2,-4.5) {\turingTable{1R\stateA}{---}};
-            \node (child3) at (2,-4.5) {\turingTable{0R\stateB}{---}};
-            \node (child4) at (6,-4.5) {\turingTable{1R\stateB}{---}};
+            \node (child1) at (-6,-4) {\turingTable{0R\stateA}{---}};
+            \node (child2) at (-2,-4) {\turingTable{1R\stateA}{---}};
+            \node (child3) at (2,-4) {\turingTable{0R\stateB}{---}};
+            \node (child4) at (6,-4) {\turingTable{1R\stateB}{---}};
 
             % Straight downward arrows
             \draw[-latex, thick] (root.south) -- (child1.north);
@@ -59,6 +59,8 @@
             ($(child4.north west) + (1.08cm,-1.67cm)$)
             rectangle
             ($(child4.north west) + (1.88cm,-1.27cm)$);
+
+            \node at ($(root.north) + (0,0.1cm)$) {\textbf{TNF Root}};
 
             % Add "Does not halt!" below child1 and child2
             \node at ($(child1.south) + (0,-0.3cm)$) {\textbf{\textit{Does not halt!}}};
