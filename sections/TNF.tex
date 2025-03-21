@@ -108,7 +108,7 @@ Tree Normal Form (TNF) enumeration, introduced by Brady in 1963 in his PhD thesi
 \end{itemize}
 
 Hence, by design, TNF enumeration avoids machines with unreachable transitions and state/symbol permutations. One further optimization in the TNF algorithm is,
-at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 0 (or, in the case of 2-symbol machines, that first write a 1) is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}.
+at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 0 (or that first write a 1) is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}.
 
 \begin{table}[h!]
     \centering
@@ -130,16 +130,17 @@ at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines
     \caption{TNF metrics for $S(2),\dots,S(5)$: number of leafs in the TNF tree (nonhalting machines), number of internal nodes (halting machines), total number of TNF nodes and ratio between $(4n+1)^{2n}$ which is the syntactic number of $n$-state 2-symbol machines and the number of machines in the TNF enumeration.}\label{tab:TNF-numbers}
 \end{table}
 
-TNF is unreasonably effective, as shown on Table~\ref{tab:TNF-numbers}. In the case of 5-state 2-symbol Turing machines, the total number of machines in the TNF enumeration is $\BBtheFifthTNF$, which is $91{,}958$ times smaller than $16$ trillion, the number of synctatically correct machines. The variant of TNF that only enumerates machines that start by writing a $1$ was implemented in 1989 by Heiner and Buntrock in order to find the fifth \BBfull winner (Figure~\ref{fig:bb5}); at the time, this enumeration took about 10 days \cite{Marxen_1990}.
+TNF is unreasonably effective, as shown in Table~\ref{tab:TNF-numbers}. In the case of 5-state 2-symbol Turing machines, the total number of machines in the TNF enumeration is $\BBtheFifthTNF$, which is $91{,}958$ times smaller than $16$ trillion, the number of synctatically correct machines. The variant of TNF that only enumerates machines that start by writing a $1$ was implemented in 1989 by Heiner and Buntrock in order to find the fifth \BBfull winner (Figure~\ref{fig:bb5}); at the time, this enumeration took about 10 days \cite{Marxen_1990}.
 
 \paragraph{\CoqBB TNF implementation.} TNF enumeration, as described here, is implemented in \CoqBB for the proofs of $S(2),\dots,S(5)$, see file \texttt{TNF.v}. A \texttt{SearchQueue} abstraction with DFS capabilities is implemented, see function \texttt{SearchQueue\_upds}. The search queue is initialised with the TNF root (this is most obvious for $S(<5)$, \eg see file \texttt{BB4\_TNF\_Enumeration.v}) and deciders (see Section~\ref{sec:deciders}) are run on the enumerated Turing machines. Halting machines' children are added to the queue: the goal of the proof is to empty the queue. Taking advantage of the tree structure, compilation of the $S(5)$ proof was paralellised by isolating the 12 children of the rightmost machine in Figure~\ref{fig:TNF} in separate, independent files, see folder \texttt{BB5\_TNF\_Enumeration\_Roots/}. Parallelising the compilation made the proof compile in 3 hours (on 13 cores) instead of 13 hours. Switching to \Coq's more powerful \texttt{native\_compute} engine \cite{nativecompute} further brought parallel compilation time down to 45 minutes. This compilation time could be improved quasi-arbitrarily by splitting the tree in even more files.
 
 \CoqBB's proof of $S(2,4)$ implements TNF almost exactly in the way described here but for the fact that, for simplicity, it does not impose an order on non-0 symbols meaning that identical machines up to symbol renaming are enumerated. In this ``quasi-TNF'' setup, the proof of $S(2,4)$ enumerates 2,154,217 machines of which 1,432,880 are nonhalting.
 
+The ability of \Coq to perform the TNF enumeration of 5-state 2-symbol Turing machines came as a surprise for most \url{bbchallenge.org} collaborators when \CoqBB was released.
 
 
 
 % Explain algo
 % talk Coq-BB5 and parallelisation, quasi TNF for bb2x4, give number of enumerated machines for S(2 - 5)
 
-\paragraph{TNF Normalisation.} %order states in the order they are visited and L/R
+\paragraph{TNF Normalisation.} Given an arbitrary Turing machine, finding its TNF-equivalent machine is done by ordering its state in the order they are visited by the machine and changing all R moves to L and vice versa if the first transition uses L instead of R.  TNF Normalisation is not computable because we don't know if some states will ever be visited, hence we can't always reorder states without additional knowledge on the machine's behaviour. In practice, knowing $S(n-1)$ makes TNF Normalisation computable for all $n$-state machines.
