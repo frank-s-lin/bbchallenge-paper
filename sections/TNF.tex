@@ -108,7 +108,7 @@ Tree Normal Form (TNF) enumeration, introduced by Brady in 1963 in his PhD thesi
 \end{itemize}
 
 Hence, by design, TNF enumeration avoids machines with unreachable transitions and state/symbol permutations. One further optimization in the TNF algorithm is,
-at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 0 (or that first write a 1) is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}.
+at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 1 is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}.
 
 \begin{table}[h!]
     \centering
