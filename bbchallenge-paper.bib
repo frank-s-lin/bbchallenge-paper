@@ -426,3 +426,58 @@
   pages  = {},
   title  = {{A Proof of Strong Normalization For the Theory of Constructions Using a Kripke-Like Interpretation}}
 }
+
+@inproceedings{10.1145/581478.581501,
+  author    = {Gr\'{e}goire, Benjamin and Leroy, Xavier},
+  title     = {A compiled implementation of strong reduction},
+  year      = {2002},
+  isbn      = {1581134878},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/581478.581501},
+  doi       = {10.1145/581478.581501},
+  abstract  = {Motivated by applications to proof assistants based on dependent types, we develop and prove correct a strong reducer and \ss{}-equivalence checker for the λ-calculus with products, sums, and guarded fixpoints. Our approach is based on compilation to the bytecode of an abstract machine performing weak reductions on non-closed terms, derived with minimal modifications from the ZAM machine used in the Objective Caml bytecode interpreter, and complemented by a recursive "read back" procedure. An implementation in the Coq proof assistant demonstrates important speed-ups compared with the original interpreter-based implementation of strong reduction in Coq.},
+  booktitle = {Proceedings of the Seventh ACM SIGPLAN International Conference on Functional Programming},
+  pages     = {235–246},
+  numpages  = {12},
+  keywords  = {Coq, abstract machine, beta-equivalence, calculus of constructions, normalization by evaluation, strong reduction, virtual machine},
+  location  = {Pittsburgh, PA, USA},
+  series    = {ICFP '02}
+}
+
+
+@article{vmcompute,
+  author     = {Gr\'{e}goire, Benjamin and Leroy, Xavier},
+  title      = {A compiled implementation of strong reduction},
+  year       = {2002},
+  issue_date = {September 2002},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {37},
+  number     = {9},
+  issn       = {0362-1340},
+  url        = {https://doi.org/10.1145/583852.581501},
+  doi        = {10.1145/583852.581501},
+  abstract   = {Motivated by applications to proof assistants based on dependent types, we develop and prove correct a strong reducer and \ss{}-equivalence checker for the λ-calculus with products, sums, and guarded fixpoints. Our approach is based on compilation to the bytecode of an abstract machine performing weak reductions on non-closed terms, derived with minimal modifications from the ZAM machine used in the Objective Caml bytecode interpreter, and complemented by a recursive "read back" procedure. An implementation in the Coq proof assistant demonstrates important speed-ups compared with the original interpreter-based implementation of strong reduction in Coq.},
+  journal    = {SIGPLAN Not.},
+  month      = sep,
+  pages      = {235–246},
+  numpages   = {12},
+  keywords   = {Coq, abstract machine, beta-equivalence, calculus of constructions, normalization by evaluation, strong reduction, virtual machine}
+}
+
+@inproceedings{nativecompute,
+  author    = {Boespflug, Mathieu
+               and D{\'e}n{\`e}s, Maxime
+               and Gr{\'e}goire, Benjamin},
+  editor    = {Jouannaud, Jean-Pierre
+               and Shao, Zhong},
+  title     = {Full Reduction at Full Throttle},
+  booktitle = {Certified Programs and Proofs},
+  year      = {2011},
+  publisher = {Springer Berlin Heidelberg},
+  address   = {Berlin, Heidelberg},
+  pages     = {362--377},
+  abstract  = {Emerging trends in proof styles and new applications of interactive proof assistants exploit the computational facilities of the provided proof language, reaping enormous benefits in proof size and convenience to the user. However, the resulting proof objects really put the proof assistant to the test in terms of computational time required to check them. We present a novel translation of the terms of the full Calculus of (Co)Inductive Constructions to OCaml programs. Building on this translation, we further present a new fully featured version of Coq that offloads much of the computation required during proof checking to a vanilla, state of the art and fine tuned compiler. This modular scheme yields substantial performance improvements over existing systems at a reduced implementation cost.},
+  isbn      = {978-3-642-25379-9}
+}
