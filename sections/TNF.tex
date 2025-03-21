@@ -108,7 +108,7 @@ Tree Normal Form (TNF) enumeration, introduced by Brady in 1963 in his PhD thesi
 \end{itemize}
 
 Hence, by design, TNF enumeration avoids machines with unreachable transitions and state/symbol permutations. One further optimization in the TNF algorithm is,
-at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 1 is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}.
+at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 1 is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}. Leaves of the TNF tree that have all their transitions defined are discarded as obviously nonhalting.
 
 \begin{table}[h!]
     \centering
@@ -127,7 +127,7 @@ at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines
         \hline
     \end{tabular}
 
-    \caption{TNF metrics for $S(2),\dots,S(5)$: number of leafs in the TNF tree (nonhalting machines), number of internal nodes (halting machines), total number of TNF nodes and ratio between $(4n+1)^{2n}$ which is the syntactic number of $n$-state 2-symbol machines and the number of machines in the TNF enumeration.}\label{tab:TNF-numbers}
+    \caption{TNF metrics for $S(2),\dots,S(5)$: number of nonhalting and halting machines the TNF tree, total number of TNF-enumerated machines and ratio between $(4n+1)^{2n}$ which is the syntactic number of $n$-state 2-symbol machines and the number of machines in the TNF enumeration.}\label{tab:TNF-numbers}
 \end{table}
 
 TNF is unreasonably effective, as shown in Table~\ref{tab:TNF-numbers}. In the case of 5-state 2-symbol Turing machines, the total number of machines in the TNF enumeration is $\BBtheFifthTNF$, which is $91{,}958$ times smaller than $16$ trillion, the number of synctatically correct machines. The variant of TNF that only enumerates machines that start by writing a $1$ was implemented in 1989 by Heiner and Buntrock in order to find the fifth \BBfull winner (Figure~\ref{fig:bb5}); at the time, this enumeration took about 10 days \cite{Marxen_1990}.
