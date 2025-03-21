@@ -1,0 +1,103 @@
+\section{Enumerating Turing machines in Tree Normal Form (TNF)}\label{sec:enum}
+% Define a macro for the table with coloring
+\begin{figure}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{ % Rescale to fit horizontally
+        \begin{tikzpicture}[
+                level distance=45mm, % Increased vertical spacing
+                sibling distance=70mm, % Slightly increase horizontal spacing
+                every node/.style={align=center},
+                edge from parent/.style={draw, -latex, thick}
+            ]
+
+            % Define a macro for the table
+            \newcommand{\turingTable}[2]{
+                \adjustbox{valign=t}{
+                    \begin{tabular}{ccc}
+                        \toprule
+                                            & \textbf{0} & \textbf{1} \\
+                        \midrule
+                        {\color{red} A}     & #1         & #2         \\
+                        {\color{orange} B}  & ---        & ---        \\
+                        {\color{blue} C}    & ---        & ---        \\
+                        {\color{green} D}   & ---        & ---        \\
+                        {\color{magenta} E} & ---        & ---        \\
+                        \bottomrule
+                    \end{tabular}
+                }
+            }
+
+            % Root node
+            \node (root) at (0,0) {\turingTable{---}{---}};
+
+            % First-level children (Ensuring proper spacing)
+            \node (child1) at (-6,-4.5) {\turingTable{0R\stateA}{---}};
+            \node (child2) at (-2,-4.5) {\turingTable{1R\stateA}{---}};
+            \node (child3) at (2,-4.5) {\turingTable{0R\stateB}{---}};
+            \node (child4) at (6,-4.5) {\turingTable{1R\stateB}{---}};
+
+            % Straight downward arrows
+            \draw[-latex, thick] (root.south) -- (child1.north);
+            \draw[-latex, thick] (root.south) -- (child2.north);
+            \draw[-latex, thick] (root.south) -- (child3.north);
+            \draw[-latex, thick] (root.south) -- (child4.north);
+
+            % Highlight the first transition (0, A) in the root table
+            \draw[magenta, thick, line width=0.8mm]
+            ($(root.north west) + (0.9cm,-1.25cm)$)
+            rectangle
+            ($(root.north west) + (1.7cm,-0.85cm)$);
+
+            % Highlight the B0 transition in the child3 table
+            \draw[magenta, thick, line width=0.8mm]
+            ($(child3.north west) + (1.08cm,-1.67cm)$)
+            rectangle
+            ($(child3.north west) + (1.88cm,-1.27cm)$);
+
+            % Highlight the B0 transition in the child4 table
+            \draw[magenta, thick, line width=0.8mm]
+            ($(child4.north west) + (1.08cm,-1.67cm)$)
+            rectangle
+            ($(child4.north west) + (1.88cm,-1.27cm)$);
+
+            % Add "Does not halt!" below child1 and child2
+            \node at ($(child1.south) + (0,-0.3cm)$) {\textbf{\textit{Does not halt!}}};
+            \node at ($(child2.south) + (0,-0.3cm)$) {\textbf{\textit{Does not halt!}}};
+
+            % Fan of 12 dashed lines for child3 (wider)
+            \foreach \i in {240, 246, 252, 258, 264, 270, 276, 282, 288, 294, 300} {
+                    \draw[dashed, thick] ($(child3.south) + (0,0.1cm)$) -- ++(\i:1.5cm);
+                }
+
+            % Fan of 12 dashed lines for child4 (wider)
+            \foreach \i in {240, 246, 252, 258, 264, 270, 276, 282, 288, 294, 300} {
+                    \draw[dashed, thick] ($(child4.south) + (0,0.1cm)$) -- ++(\i:1.5cm);
+                }
+
+            % Add "12 children" below child3 and child4
+            \node at ($(child3.south) + (0,-1.7cm)$) {\textbf{\textit{12 children}}};
+            \node at ($(child4.south) + (0,-1.7cm)$) {\textbf{\textit{12 children}}};
+
+            % Add "12 children" below child3 and child4
+            \node at ($(child1.south) + (0,-0.9cm)$) {\textbf{\textit{No children}}};
+            \node at ($(child2.south) + (0,-0.9cm)$) {\textbf{\textit{No children}}};
+
+
+
+        \end{tikzpicture}
+    }
+    \caption{First-level children of the Tree Normal Form (TNF) enumeration of 5-state 2-symbol Turing machines: each node is a Turing machine, nonhalting machines are leaves of the tree. Internal nodes are halting machines, \ie machines eventually reaching an undefined transition (highlighted in magenta) and their children correspond to all the ways to define this undefined transition. By symmetry, at the first level of the TNF tree, we can ignore machines taking a left move. The two halting machines at the first-level of the tree have 12 children each corresponding to all the choices in $\{\szero,\sone\}\times\{\text{R},\text{L}\}\times\{\text{\stateA},\text{\stateB},\text{\stateC}\}$ for defining the magenta transition. Note that, in this case, the choice of states is reduced from $\{\text{\stateA},\text{\stateB},\text{\stateC},\text{\stateD},\text{\stateE}\}$ to $\{\text{\stateA},\text{\stateB},\text{\stateC}\}$ in order to prevent constructing machines that are only a permutation of one-another.}
+\end{figure}
+
+
+
+Syntactically, there are $(2sn + 1)^{ns}$ Turing machines (see Section~\ref{sec:TMs}) with $n$ states and $s$ symbols. This gives $21^{10} \simeq 1.67\times10^{13} \simeq 16 \text{ trillion}$ possible 5-state 2-symbol Turing machines. However, naively counting Turing machines that way does not account for two phenomenons:
+\begin{itemize}
+    \item \textbf{Unreachable transitions.} Take the 5-state 2-symbol machine where only the first transition (\ie reading a \szero in state \stateA) is defined, as \texttt{1RA}. This machine is the archetypal Turing machine equivalent of a ``while True'' infinite loop: the machine will never leave the transition, indefinitely drifting to the right of the tape. Hence, none of the $21^9$ machines that define the other 9 transitions are relevant since the transitions are never reached.
+    \item \textbf{State/symbol permutations.} Permuting non-\stateA states and non-zero symbols (\stateA and 0 are excluded because the initial configuration is all-0 tape in state \stateA) creates identical machines up to renaming, studying the halting of only one of them is enough. State/symbol permutation divides the syntactic space size by a factor $(n-1)! (s-1)!$.
+\end{itemize}
+
+Tree Normal Form (TNF) enumeration, introduced by Brady in 1963 in his PhD thesis \cite{Brady64} solves both of these problems.
+
+% Explain algo
+% talk Coq-BB5 and parallelisation, quasi TNF for bb2x4, give number of enumerated machines for S(2 - 5)
