@@ -2,10 +2,12 @@
 
 \newpage
 
+
+
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.77]{figures/RepWL/RepWL_graph.pdf}
-    \caption{{\small \textbf{RepWL graph.} Closed graph of regex configurations constructed by the Repeated Word List (RepWL) method for machine \url{https://bbchallenge.org/0RB0LC_1LA1RB_1RD0RE_1LC1LA_---0LD} with block size $l=2$ and block repeat threshold $T=3$. Block simulation and regex branching steps (see Section~\ref{sec:RepWL}) are illustrated using respectively green and blue arrows. As illustrated by its 300-step space-time diagram, the machine is a simple Translated Cycler which can be easily handled by Section~\ref{alg:loops}, but this machine has the pedagogical advantage of having a very small graph. Because the graph is closed and contains not halting configuration, the machine does not halt, Theorem~\ref{th:repwl}.}}\label{fig:repWL}
+    \includegraphics[scale=0.8]{figures/RepWL/RepWL_graph.pdf}
+    \caption{{\small \textbf{RepWL graph.} Closed graph of regex configurations constructed by the Repeated Word List (RepWL) method (Section~\ref{sec:RepWL}) for machine \url{https://bbchallenge.org/0RB0LC_1LA1RB_1RD0RE_1LC1LA_---0LD} with block size $l=2$ and block repeat threshold $T=3$. Block simulation and regex branching steps (see Section~\ref{sec:RepWL}) are illustrated using respectively green and blue arrows. As illustrated by its 300-step space-time diagram, the machine is a simple Translated Cycler which can be easily handled by Section~\ref{alg:loops}, but this machine has the pedagogical advantage of having a very small graph. Because the graph is closed and contains not halting configuration, the machine does not halt, Theorem~\ref{th:repwl}.}}\label{fig:repWL}
 \end{figure}
 
 \begin{figure}[h!]
@@ -19,6 +21,8 @@
 %, the machine's RepWL graph has $1{,}231$ nodes
 % , the machine's RepWL graph has $143{,}181$ nodes
 \subsection{Repeated Word List (RepWL)}\label{sec:RepWL}
+
+\subsubsection{Algorithm}
 
 The Repeated Word List (RepWL) technique is based on the following simple idea: if a word (or \textit{block}) of length $l > 0$ appears consecutively on the tape more than $T > 0$ times (with $l, T \in \mathbb{N}$ fixed) then, we assume it may repeat an unbounded number of times in the future. In practice, it means we represent configurations as regular expressions. For instance, consider the following configuration:
 
@@ -48,8 +52,6 @@ In both case, we've reduced to block simulation.
     Figure~\ref{fig:repWL} gives the RepWL graph for machine \url{https://bbchallenge.org/0RB0LC_1LA1RB_1RD0RE_1LC1LA_---0LD}. This machine was chosen to illustrate the method on a small RepWL graph but the machine is a simple Translated Cycler that be decided using Section~\ref{sec:loops}.
 \end{example}
 
-\ \\
-Finally, {\sc decider-RepWL} is correct:
 
 \begin{theorem}[\CoqBB: \texttt{Lemma RepWL\_ES\_decider\_spec}]\label{th:repwl}
     Let $\mathcal{M}$ be a Turing machine $l\in \N^+$ the block-length parameter, $T \in \N^+$ the block-repeat threshold, $B \in \N$ the maximum number of steps allowed in block simulation and $N \in \N$ the maximum number of nodes we are willing to visit. Then, \textsc{decider-RepWL}($\mathcal{M}$, $l$, $T$, $B$, $N$) terminates and its result is correct -- see Algorithm~\ref{alg:RepWL}: if it returns \NONHALT then $\mathcal{M}$ does not halt from the all-$0$ tape.
@@ -96,20 +98,20 @@ Finally, {\sc decider-RepWL} is correct:
     \end{algorithmic}
 \end{algorithm}
 
-\subsection{RepWL: results}\label{sec:RepWL:results}
+\subsubsection{Implementations and results}\label{sec:RepWL:results}
 
-\begin{figure}
-    \centering
-    \includegraphics[scale=0.6]{figures/RepWL/repwl_parameters_pairs_log_scale.pdf}
-    \caption{Block length and repeat threshold parameters pairs $(l,T)$ and their frequency of use for the ${6,577}$ machines decided by RepWL in \CoqBB (see Table~\ref{tab:pipelineBB5}).}\label{fig:RepWLpairs}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=0.6]{figures/RepWL/repwl_parameters_pairs_log_scale.pdf}
+%     \caption{Block length and repeat threshold parameters pairs $(l,T)$ and their frequency of use for the ${6,577}$ machines decided by RepWL in \CoqBB (see Table~\ref{tab:pipelineBB5}).}\label{fig:RepWLpairs}
+% \end{figure}
 
 
-\begin{figure}
-    \centering
-    \includegraphics[scale=0.6]{figures/RepWL/repwl_node_counts_histogram.pdf}
-    \caption{distribution of node counts of the ${6,577}$ RepWL graphs constructed by \CoqBB.}\label{fig:RepWLhisto}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=0.6]{figures/RepWL/repwl_node_counts_histogram.pdf}
+%     \caption{distribution of node counts of the ${6,577}$ RepWL graphs constructed by \CoqBB.}\label{fig:RepWLhisto}
+% \end{figure}
 
 
 \CoqBB implements RepWL (Algorithm~\ref{alg:RepWL}), see function \texttt{RepWL\_ES\_decider}. Contrarily to previously presented deciders, RepWL is not applied in bulk using generic parameters. Instead, the ${6,577}$ machines it decides are hardcoded in the proof together with the specific $l$ and $T$ parameters that decide them -- see file \texttt{Decider\_RepWL\_Hardcoded\_Parameters.v}. Figure~\ref{fig:RepWLpairs} displays the $(l,T)$ pairs used for these ${6,577}$ machines. These parameters were found using a grid search in C++. For all these machines, maximum block simulation parameters and maximum number of graph nodes parameters are respectively set to 451 and ${150,001}$.
@@ -118,7 +120,7 @@ Figure~\ref{fig:RepWLhisto} gives the distribution of node counts of the ${6,577
 
 In the $S(4)$ pipeline (Table~\ref{tab:pipelineBB4}), RepWL is only used to decide two machines using parameters $l=4$ and $T=3$. These 4-state machines are given in Figure~\ref{fig:RepWLBB4}, and they respectively have $3{,}130$ and $3{,}076$ nodes in their RepWL graph.
 
-\begin{figure}[h!]
+\begin{figure}
     \centering
     \includegraphics[scale=0.48]{figures/RepWL/RepWL_BB4_two_machines.pdf}
     \caption{10,000-step space-time diagrams of the two 4-state machines decided by the Repeated Word List (RepWL) decider in the $S(4)$ pipeline, Table~\ref{tab:pipelineBB4}. Left: {\small \url{https://bbchallenge.org/1RB1LA_1LA0RC_1LD1RC_---0LA}}. Right: {\small \url{https://bbchallenge.org/1RB0RB_1LC1RB_---0LD_1RA1LD}}. The RepWL graphs of these machines respectively have $3{,}130$ and $3{,}076$ nodes. Both machines are decided using $l=4$ and $T=3$.
