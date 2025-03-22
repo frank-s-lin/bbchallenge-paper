@@ -90,5 +90,6 @@ If such a set $C$ exists then the machine does not halt. The use of this framewo
 
 Interestingly, only regular deciders are needed to solve $S(4)$ and $S(2,4)$, see Tables~\ref{tab:pipelineBB2x4}~and~\ref{tab:pipelineBB4}, which, assuming $S(5)$ irregularity arguments are correct, draws a conceptual line between $S(5)$ and $S(4)$.
 
-\paragraph{Deciders vs. verifiers.} While we put all the methods under the decider umbrella it is worthwhile to mention that, in \CoqBB, only the \textit{verifier} part of FAR and WFAR are implemented. This means that instead of searching for a CTL set $C$ (see above), it is given and verified correct. That way, \CoqBB hardcodes a total $30$ FAR / WFAR certificates where CTL sets $C$ are described using FSAs / Weighted FSAs. See files \texttt{Verifier\_FAR\_Hardcoded\_Certificates.v} and \texttt{Verifier\_WFAR\_Hardcoded\_Certificates.v} in folder \texttt{BB5\_Deciders\_Hardcoded\_Parameters}.
+\paragraph{Deciders vs. verifiers.} While we put all the methods under the decider umbrella it is worthwhile to mention that, in \CoqBB, only the \textit{verifier} part of FAR and WFAR are implemented. This means that instead of searching for a CTL set $C$ (see above), it is given and verified correct. That way, \CoqBB hardcodes a total $30$ FAR /
+WFAR certificates where CTL sets $C$ are described using FSAs / Weighted FSAs. See files \texttt{Verifier\_FAR\_Hardcoded\_Certificates.v} and \texttt{Verifier\_WFAR\_Hardcoded\_Certificates.v} in folder \texttt{BB5\_Deciders\_Hardcoded\_Parameters}.
 
