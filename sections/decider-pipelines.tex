@@ -1,10 +1,12 @@
-\subsection{Pipelines}\label{sec:pipelines}
+\subsection{Pipelines and overview}\label{sec:pipelines}
+
+\subsubsection{Pipeliens}
 
 In this work, we call a \textit{decider} a program that takes as input a Turing machine $\mathcal{M}$ and that returns either \HALT, \NONHALT, or, \UNKNOWN depending on if it was able to detect the machine's halting status or not.
 
 A \textit{pipeline} of deciders consists of applying several deciders in sequence: a machine is tested by each decider successively until one decider outputs \HALT or \NONHALT. Table~\ref{tab:pipelineBB5} gives an approximation of the pipeline of deciders implemented in \CoqBB in order to prove $S(5) = \BBtheFifth$, see Theorem~\ref{th:BB5}. Similarly, Table~\ref{tab:pipelineBB2x4} and Table~\ref{tab:pipelineBB4} respectively give approximations of the pipelines leading to $S(2,4) = \BBTxF$ and $S(4) = \BBtheFourth$ -- the latter confirming the result for $S(4)$ originally given in \cite{Brady83}.
 
-The exact pipelines are provided in Appendix~\ref{app:pipelines}. They differ mainly in the specific parameters and, occasionally, the algorithmic variants used for each decider. In some cases, deciders are interleaved—for example, the loop decider is initially invoked with a small step-count parameter, followed by other deciders, and then called again later with a higher step-count. % SIA
+The exact pipelines -- as well as additional pipelines solving $S(2)$ and $S(3)$ -- are provided in Appendix~\ref{app:pipelines}. They differ mainly in the specific parameters and, occasionally, the algorithmic variants used for each decider. In some cases, deciders are interleaved—for example, the loop decider is initially invoked with a small step-count parameter, followed by other deciders, and then called again later with a higher step-count. % SIA
 
 % \ts{TS: I'm hesitating to say this early that a subtlelty of the S(5) pipeline is that parameters (or, more "concerning" certificates) are given hardocded for approx 8k machines. Also questionning to say (or repeat) here that WFAR is irregular (as well as some sporadic), which makes a disctinction between S(5) and S(4)/S(2,4).}
 
@@ -61,3 +63,32 @@ The exact pipelines are provided in Appendix~\ref{app:pipelines}. They differ ma
     \end{tabular}
     \caption{Approximation of the $S(4)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFourthTNF$ enumerated 4-state machines are decided by this pipeline, which brings confirmation that $S(4) = \BBtheFourth$ \cite{Brady83}, see Theorem~\ref{th:BB4}. The exact pipeline, with deciders parameters is given in Appendix~\ref{app:pipelines}. }\label{tab:pipelineBB4}
 \end{table}
+
+\newpage
+
+\subsubsection{Overview}
+
+There are essentially five deciders that were developed to solve $S(5)$, see Table~\ref{tab:pipelineBB5}: loops, $n$-gram Closed Position Word List (NGramCPS), Repeated Word List (RepWL), Finite Automata Reduction (FAR), Weighted Finite Automata Reduction (WFAR) and they are described in (Sections~\ref{sec:loops} to \ref{sec:WFAR}). All these deciders are orignal\footnote{There existed a previous algorithm to decide loops \cite{Lin1963}, but we present a new one.} and were developed by the bbchallenge collaboration. Loops, RepWL and augmentations of NGramCPS (see Section~\ref{sec:n-gramCPS}) are original to \CoqBB while the other deciders have been implemented in various programming languages before they were integrated in \CoqBB.
+
+Solving $S(2,4)$ and previously known $S(4)$ only used a subset of these deciders (see Tables~\ref{tab:pipelineBB2x4}~and~\ref{tab:pipelineBB4}) and required a lot less compute and overall effort -- \eg no individual nonhalting proofs, in contrast with 5-state sporadic machines, Section~\ref{sec:sporadic}.
+
+All these deciders can be expressed in the same general framework, known as Closed Tape Language (CTL) which is attributed to Marxen and Buntrock but was first documented by Ligocki \cite{ShawnCTL}:
+
+\paragraph{General framework: Closed Tape Language (CTL).} The CTL principle for proving that a Turing machine doesn't halt is to exhibit a set $C$ of configurations (as defined in Section~\ref{sec:TMs}):
+\begin{enumerate}
+    \item $C$ contains the all-0 initial configuration.
+    \item $C$ is \textit{closed} under transitions: for any $c \in C$, the configuration one step later belongs to $C$.
+    \item $C$ does not contain any halting configuration.
+\end{enumerate}
+
+
+If such a set $C$ exists then the machine does not halt. The use of this framework to justify nonhalting is particularly evident in all deciders but loops, see Sections~\ref{sec:n-gramCPS}~to~\ref{sec:WFAR}.
+
+\paragraph{Regularity.} All our deciders but WFAR are instances of \textit{regular} CTL, meaning that set $C$ is a regular language -- \ie $C$ is described using a Finite State Automaton (FSA) or, equivalently, a regular expression. Said otherwise, regular CTL approximates the set of configurations of a Turing machine using a regular language that is larger than the machine's set of configurations but on which it is easier (in practice, always trivial) to ensure CTL conditions, \ie (i) membership of the all-0 configuration (ii) closeness under Turing machines steps and (iii) absence of halting configurations. NGramCPS and RepWL each focus on specific types of regular languages and are good introductory examples to illustrate this method, while FAR generalises to arbitrary regular languages. We say that a machine is \textit{regular} if it can be proven nonhalting using regular CTL, otherwise we say it is \textit{irregular}.
+
+\paragraph{Irregularity.} WFAR is an analog of FAR, leveraging CTL using \textit{Weighted} FSAs \cite{WFSA} which are a nonregular generalisation of FSAs. Not all machines solved by WFAR are necessarily irregular but we strongly suspect that the 17 machines it solves in the $S(5)$ pipeline (Table~\ref{tab:pipelineBB5}) are irregular as intensive search did not allow to find regular CTL solutions for them. Informal irregularity arguments have been given for sporadic machines ``Finned~\#3'' and ``Skelet~\#17'' \cite{irregularFinned3, irregularSk17}, see Section~\ref{sec:sporadic}.
+
+Interestingly, only regular deciders are needed to solve $S(4)$ and $S(2,4)$, see Tables~\ref{tab:pipelineBB2x4}~and~\ref{tab:pipelineBB4}, which, assuming $S(5)$ irregularity arguments are correct, draws a conceptual line between $S(5)$ and $S(4)$.
+
+\paragraph{Deciders and verifiers.}
+
