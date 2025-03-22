@@ -10,7 +10,7 @@ The method is especially potent when augmenting the binary alphabet of Turing ma
 
 \CoqBBnospace's \ngramcps core algorithm, without augmentations, was first developed in the Rust programming language by bbchallenge's contributor Nathan Fenner \cite{ngramcps_fenner}. \tsm{It's unclear if we're gonna ack bbchallenge contributors like that or in an entire section dedicated to that purpose.}
 
-\subsubsection{\ngramcps algorithm}\label{sec:n-gramCPS:algo}
+\subsubsection{Algorithm}\label{sec:n-gramCPS:algo}
 
 Algorithm~\ref{alg:NGramCPS} gives a pseudo-code of the \ngramcps decider. The decider considers finite, \textit{local configurations} of a Turing machine consisting of: (i) the \textit{$n$-grams} (see after) respectively to the left and to the right of the head, (ii) the state the machine is in, and (iii) the symbol currently read by the head, referred to as \textit{middle} symbol (as opposed to the left and right part of the tape, modelled by the n-grams). By \textit{$n$-gram}, we mean a sequence of $n > 0$ symbols from the tape alphabet (for instance, the binary alphabet $\alphabet=\{\szero,\sone\}$).
 
@@ -46,15 +46,17 @@ The \ngramcps decider becomes particularly powerful for deciding 5-state 2-symbo
           in order of when it was seen last, the most recent first.  For instance, if the non-augmented machine currently reads binary symbol \texttt{1} and the machine has previously visited the cell in state \stateD reading symbol \texttt{1} and before that in state \stateD reading symbol \texttt{0} and before that in state \stateC reading symbol \sone, in the augmented machine, the cell will contain the augmented symbol ``\texttt{1, [(D,1),(D,0),(C,1)]}''. If the machine was in state \stateC when reading ``\texttt{1, [(D,1),(D,0),(C,1)]}'' the cell will be updated to ``\texttt{0, [(C,1),(D,0),(D,1)]}'', (assuming the transition of the machine for reading a \texttt{1} in state \stateC writes symbol \texttt{0}) with pair \texttt{(C,1)} bubbling up to the beginning of the LRU history. The zero-symbol for this augmentation $\alphabet_0$ is also ``\texttt{0, []}''. Similarly to above, one can verify that if the decider returns \NONHALT for an LRU augmented machine, then the non-augmented machine does not halt. One fundamental difference with the fixed-length history augmentation is that here, the history is not of fixed length but is bounded by number of states times number of symbols, \ie 10 in the case of $S(5)$.
 \end{enumerate}
 
-\subsubsection{\ngramcps: results}\label{sec:n-gramCPS:results}
+\subsubsection{Implementations and results}\label{sec:n-gramCPS:results}
 \begin{table}[h!]
     \centering
-    \begin{tabular}{ll}
-        Variant                                                    & Nonhalt                       \\  \hline
-        NGram-CPS without augmentation                             & 5,117,863                     \\
-        NGram-CPS augmented using fixed-length history             & 887,093                       \\
-        NGram-CPS augmented using least Least Recent Usage history & 182                           \\ \hline
-        Total decided                                              & \multicolumn{1}{r}{6,005,138}
+    \begin{tabular}{|l|r|}
+        \hline
+        Variant                                                    & Nonhalt   \\  \hline
+        NGram-CPS without augmentation                             & 5,117,863 \\
+        NGram-CPS augmented using fixed-length history             & 887,093   \\
+        NGram-CPS augmented using least Least Recent Usage history & 182       \\ \hline
+        Total decided                                              & 6,005,138 \\
+        \hline
     \end{tabular}
     \caption{\ngramcps results in the $S(5)$ pipeline (see Table~\ref{tab:pipelineBB5}) per variant (see Section~\ref{sec:n-gramCPS:augmentations}).}\label{tab:ngramcps:results}
 \end{table}
