@@ -111,21 +111,21 @@ We write $c_1 \TMstep \bot$ if the machine halts after executing one computation
     \item The position of the head is colored to give state information using the following colours for 5-state machines: \textcolor{colorA}{A},  \textcolor{colorB}{B},  \textcolor{colorC}{C},  \textcolor{colorD}{D},  \textcolor{colorE}{E} (you have to look at the row above to deduce what symbol is the head reading, unless it is the initial row, where a \szero is read).
 \end{enumerate}
 
-Figure~(\ref{fig:bb5-diagram}) gives a 45-step space-time diagram for the 5-state 2-symbol \BBfull winner. We often use \textit{zoomed-out} space-time diagrams without state-coloring information, such as Figure~(\ref{fig:bb5-diagram-zoomout}) which gives the 20,000 first steps of the 5-state 2-symbol \BBfull winner.
+Figure~\ref{fig:bb5win}(b) gives a 45-step space-time diagram for the 5-state 2-symbol \BBfull winner. We often use \textit{zoomed-out} space-time diagrams without state-coloring information, such as Figure~\ref{fig:bb5win}(c) which gives the 20,000 first steps of the 5-state 2-symbol \BBfull winner.
 
 
-\paragraph*{Turing machine format.} We often communicate Turing machines using the following linear format: \\ \texttt{1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_---0LA} represents the transition table of Figure~\ref{table:bb5} where \texttt{\_} is used to separate states and transitions are given in read-symbol order. Note that, historically, the undefined transition reached by a halting machine was represented using \texttt{1RZ}, hence our format allows to use any letter outside of the state space to represent halting, \eg \texttt{1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_1RZ0LA}. Multi-symbols machines are represented in the same way, \eg the 2-state 4-symbol \BBfull winner is \texttt{1RB2LA1RA1RA\_1LB1LA3RB---} (also given by \texttt{1RB2LA1RA1RA\_1LB1LA3RB1RZ}), see Figure~\ref{fig:bb2x4}.
+\paragraph*{Turing machine format.} We often communicate Turing machines using the following linear format: \\ \texttt{1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_---0LA} represents the transition table of Figure~\ref{fig:bb5win}(a) where \texttt{\_} is used to separate states and transitions are given in read-symbol order. Note that, historically, the undefined transition reached by a halting machine was represented using \texttt{1RZ}, hence our format allows to use any letter outside of the state space to represent halting, \eg \texttt{1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_1RZ0LA}. Multi-symbols machines are represented in the same way, \eg the 2-state 4-symbol \BBfull winner is \texttt{1RB2LA1RA1RA\_1LB1LA3RB---} (also given by \texttt{1RB2LA1RA1RA\_1LB1LA3RB1RZ}), see Figure~\ref{fig:bb2x4}.
 
 This format can be used as URL for the \url{bbchallenge.org} website, \eg \url{https://bbchallenge.org/1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_1RZ0LA} will display the transition table, space-time diagrams and known information about the machine.
 
-\begin{figure}[h!]
+\begin{figure}[ht]
     \centering
-    \begin{subfigure}[t]{0.45\textwidth}
+    \renewcommand{\arraystretch}{1.3}
+    \setlength{\tabcolsep}{6pt}
+
+    \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \renewcommand{\arraystretch}{1.3} % Increase row height
-        \setlength{\tabcolsep}{12pt} % Increase column spacing
-        \vspace{10pt} % Adjust vertical alignment
-        \begin{tabular}{cccccc}
+        \begin{tabular}{ccccc}
             \toprule
                     & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{3} \\
             \midrule
@@ -135,18 +135,20 @@ This format can be used as URL for the \url{bbchallenge.org} website, \eg \url{h
         \end{tabular}
         \caption{Transition table of the 2-state 4-symbol \BBfull winner found by Ligocki and Ligocki in 2005 \cite{PMichel_website}.}
         \label{table:bb2x4}
-
-        \vspace{10pt} % Adjust spacing
-        \includegraphics[width=0.7\linewidth]{figures/space-time-diagrams/bb2x4_20k.png} % Adjust the path as needed
-        \caption{20,000-step \textit{zoomed out} space-time diagram of the 2-state 4-symbol winner.}\label{fig:bb2x4-diagram-zoomout}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \vspace{10pt} % Adjust vertical alignment
-        \includegraphics[width=0.7\linewidth]{figures/space-time-diagrams/bb2x4.pdf}
+        \includegraphics[width=0.87\linewidth]{figures/space-time-diagrams/bb2x4.pdf}
         \caption{Space-time diagram of the first 45 steps of the 2-state 4-symbol winner.}
         \label{fig:bb2x4-diagram}
+    \end{subfigure}
+    \hfill
+
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/space-time-diagrams/bb2x4_20k.png} % Adjust the path as needed
+        \caption{20,000-step \textit{zoomed out} space-time diagram of the 2-state 4-symbol winner.}\label{fig:bb2x4-diagram-zoomout}
     \end{subfigure}
     \caption{Transition table and space-time diagrams of the 2-state 4-symbol \BBfull winner, which halts after $\BBTxF$ steps.
         \url{https://bbchallenge.org/https://bbchallenge.org/1RB2LA1RA1RA_1LB1LA3RB---}.}
