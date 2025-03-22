@@ -201,13 +201,13 @@ While there is no algorithm to compute $S(n)$ for \textit{all} $n$ we can certai
 
 Our main result is to prove this conjecture, using the \Coq proof assistant \cite{the_coq_development_team_2024_14542673}, see Theorem~\ref{th:BB5}. The winning machine for $S(5)$ is also the winning machine for $\Sigma(5)$. We also prove $\Sigma(5) = \SigmaTheFifth$, see Theorem~\ref{th:BB5Sigma}.
 
-\begin{theorem}\label{th:BB5}
+\begin{theorem}[\CoqBB: \texttt{Lemma BB5\_value}]\label{th:BB5}
     $S(5) = \BBtheFifth$.
 \end{theorem}
 
 The function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, like, for instance, $S(2,3) = 38$ is the value of $S$ for 2-state, 3-symbol machines \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We prove, using Coq, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4} and Figure~\ref{fig:bb2x4}:
 
-\begin{theorem}\label{th:BB2x4}
+\begin{theorem}[\CoqBB: \texttt{Lemma BB2x4\_value}]\label{th:BB2x4}
     $S(2,4) = \BBTxF$.
 \end{theorem}
 
@@ -326,7 +326,6 @@ Trusting that \Coq itself is correct, the only elements to check in order to tru
 \newpage
 \section{Deciders}\label{sec:deciders}
 
-A \textit{decider} is a program that takes as input a Turing machine $\mathcal{M}$ and that returns either \HALT, \NONHALT, \UNKNOWN whether it was able to detect that the machine's halting status (halt or nonhalt) or not.
 
 \input{sections/decider-pipelines.tex}
 

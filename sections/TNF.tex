@@ -110,18 +110,18 @@ Tree Normal Form (TNF) enumeration, introduced by Brady in 1963 in his PhD thesi
 
 
 Hence, by design, TNF enumeration avoids machines with unreachable transitions and state/symbol permutations. One further optimization in the TNF algorithm is,
-at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 1 is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}. In practice, and in the counts of Table~\ref{tab:TNF-numbers}, leaves of the TNF tree that have all their transitions defined are not enumerated because they arehave no ide obviously nonhalting.
+at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 1 is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}. In practice, and in the counts of Table~\ref{tab:TNF-numbers}, leaves of the TNF tree that have all their transitions defined are not enumerated because they are obviously nonhalting -- hence not relevant for computing $S$.
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{|l|r|r|r|l|}
+    \begin{tabular}{|l|r|r|r|r|}
         \hline
-        $S(n)$ & \makecell{TNF nonhalting                                                          \\ machines} & \makecell{TNF halting \\ machines} & TNF Total         & Syntactic/TNF ratio                 \\
+        $S(n)$ & Nonhalt     & Halt       & Total       & Syntactic/TNF ratio    \\
         \hline
-        $S(2)$ & 42                       & 19         & 61          & TNF is 107 times smaller    \\
-        $S(3)$ & 3,645                    & 1,772      & 5,417       & TNF is 891 times smaller    \\
-        $S(4)$ & 609,216                  & 249,693    & 858,909     & TNF is 8,121 times smaller  \\
-        $S(5)$ & 133,005,895              & 48,379,894 & 181,385,789 & TNF is 91,958 times smaller \\
+        $S(2)$ & 42          & 19         & 61          & $\times 107$ shrink    \\
+        $S(3)$ & 3,645       & 1,772      & 5,417       & $\times 891$ shrink    \\
+        $S(4)$ & 609,216     & 249,693    & 858,909     & $\times 8,121$ shrink  \\
+        $S(5)$ & 133,005,895 & 48,379,894 & 181,385,789 & $\times 91,958$ shrink \\
         % \hline
         % \vspace{-4mm}                                                                                               \\ % Add vertical spacing for visual separation
         % \hline
