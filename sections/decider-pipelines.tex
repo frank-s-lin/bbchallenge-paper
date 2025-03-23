@@ -84,7 +84,7 @@ All these deciders can be expressed in the same general framework, known as Clos
 \end{enumerate}
 
 
-Then, the machine does not halt. Although all our deciders fit this framework, its use to justify nonhalting is particularly evident in all deciders but Loops, see Sections~\ref{sec:n-gramCPS}~to~\ref{sec:WFAR}.
+Then, the machine does not halt. NGramCPS and RepWL are simple, yet, really potent direct instances of this idea, see Sections~\ref{sec:n-gramCPS}~and~\ref{sec:RepWL}.
 
 \paragraph{Regularity.} All our deciders but WFAR are instances of \textit{regular} CTL, meaning that set $C$ is a regular language -- \ie $C$ is described using a Finite State Automaton (FSA) or, equivalently, a regular expression. Said otherwise, regular CTL approximates the set of configurations of a Turing machine using a regular language that is larger than the machine's set of configurations but on which it is easier (in practice, always trivial) to ensure CTL conditions, \ie (i) membership of the all-0 configuration (ii) closure under Turing machines steps and (iii) absence of halting configurations. NGramCPS and RepWL each focus on specific types of regular languages and are good introductory examples to illustrate this method, while FAR generalises to arbitrary regular languages. We say that a machine is \textit{regular} if it can be proven nonhalting (from all-0 tape) using regular CTL, otherwise we say it is \textit{irregular}.
 
