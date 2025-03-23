@@ -23,7 +23,7 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
     Let $\mathcal{M}$ be a Turing machine. Let $l\in\N^+$, $t_0 \in \N$ and $p_i = (t_0+i, g(t_0+i))$ for $0 \leq i < l$. We say that $\mathcal{M}$ is a \textit{loop} of period $l$ and pre-period $t_0$ if for all $t > t_0$, $f(t,g(t)) = f(p_j)$ with $j = t-t_0 \text{ mod } t_0' - t_0$.
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}\label{lem:loopdonthalt}
     Loops do not halt.
 \end{lemma}
 \begin{proof} This is immediate, by Definition~\ref{def:loops}, the space-time diagram of a loop is infinite, the machine does not halt.
@@ -92,12 +92,24 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
                 \node[draw=black, draw opacity=0.6] (B0) at (0,0.8) {\stateEx\szero};
                 \node[draw=black, draw opacity=0.6] (D0) at (0.6,0.2) {\stateDx\szero};
 
+                % Fill 5 cells to the right of C1
+                \foreach \i in {1,...,4} {
+                        \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1)+(0.6*\i,0)$) {};
+                    }
+
+
+
                 \node[dashed, draw=red, thick] (red) at (1.2,2) {};
 
                 \node (C1') at (1.2, -0.4) {\stateCx\sone};
                 \node[draw=black, draw opacity=0.6] (A1') at (0.6, -1.0) {\stateAx\sone};
                 \node[draw=black, draw opacity=0.6] (B0') at (1.2, -1.6) {\stateEx\szero};
                 \node[draw=black, draw opacity=0.6] (D0') at (1.8, -2.2) {\stateDx\szero};
+
+                % Fill 5 cells to the right of C1'
+                \foreach \i in {1,...,4} {
+                        \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1')+(0.6*\i,0)$) {};
+                    }
 
                 \node[dashed, draw=red, thick] (red') at (2.4,-0.4) {};
 
@@ -121,6 +133,7 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
 
                 \node[draw=none] at ($(C1''.north east)+(0.6,0.3)+(0.2,0.05)$) {$p$};
                 \draw[-{Latex[length=1.8mm]}] ($(C1''.north east)+(0.6,0.3)$) -- ($(C1''.north east)-(-0.05,0.00)$);
+
 
                 % Eye to the right of C1
                 % Stylized eye to the right of C1
@@ -159,9 +172,9 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
     \begin{enumerate}
         \item If $g(t_0') = g(t_0)$, then $\mathcal{M}$ is a loop, more specifically called a \textit{Cycler}.\label{th:case1}
         \item If $g(t_0') \geq g(t_0)$ and the tape content to the right of $p_0$ is the same as to right of $p_0'$, \ie $\forall z \geq 0 \in  \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (positive) \textit{Translated Cycler}.\label{th:case2}
-        \item If $g(t_0') \leq g(t_0)$ and the tape content to the left of $p_0$ is the same as to left of $p_0'$, \ie $\forall z \leq 0 \in \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (negative) \textit{Translated Cycler}.
+        \item If $g(t_0') \leq g(t_0)$ and the tape content to the left of $p_0$ is the same as to left of $p_0'$, \ie $\forall z \leq 0 \in \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (negative) \textit{Translated Cycler}.\label{th:case3}
     \end{enumerate}
-    In these three cases the period of the loop is $l = t_0' - t_0$ and the pre-period is $t_0$.
+    In these three cases the period of the loop is $l = t_0' - t_0$ and the pre-period is $t_0$ and $\mathcal{M}$ does not halt.
 \end{theorem}
 
 \begin{proof}
@@ -172,14 +185,15 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
 
     We show that the read symbol at $p$ and $p'_0$ are also the same, \ie $f(p) = f(p'_0)$, three cases:
 
-    \begin{itemize}
+    \begin{enumerate}
         \item Case $g(t_0') = g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(left). Since $p-p_0' = p'_0 - p_0$ and that $g(t_0') = g(t_0)$, the space component of $p-p_0'$ is 0 and we have that $g(t) = g(t_0')$. Hence, we know that the cell at tape position $g(t)$ has been visited at least one between time steps $t_0'$ and $t_0'+l-1$, which, by Lemma~\ref{lem:past} implies that the head's read symbol at times $t_0'$ and $t = t_0'+l$ is the same, giving $f(p) = f(p'_0)$.
 
         \item Case $g(t_0') \geq g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(right). If there is a time step between $t_0'$ and $t_0'+l-1$ such that tape position $g(t)$ has been visited, we get that the head's read symbol at times $t$ and $t_0'$ is the same by Lemma~\ref{lem:past} implies, giving $f(p) = f(p'_0)$.
 
-              Let's assume there is no such time step, which implies that $f(p) = f(\overline{p_0'})$ with $\overline{p_0'} = (t_0',g(t))$, dashed red in Figure~\ref{fig:loop-proof}~(right). It also implies that there is no time step between $t_0$ and $t_0+l-1$ such that tape position $g(t_0')$ has been visited, otherwise, our hypothesis would be contradicted by translating by $p_0'-p_0$. Hence, we also get $f(p'_0) = f(\overline{p_0})$ with $\overline{p_0} = (t_0,g(t_0'))$. By hypothesis, tape content to the right of $p_0$ is the same as to the right of $p_0'$, and $p-p_0' = p'_0 - p_0$ implies that $g(t)-g(t_0') = g(t_0') - g(t_0)$, hence $f(\overline{p_0}) = f(\overline{p_0'})$ and, finally, $f(p) = f(p'_0)$.
-    \end{itemize}
-
+              Let's assume there is no such time step, which implies that $f(p) = f(\overline{p_0'})$ with $\overline{p_0'} = (t_0',g(t))$, dashed red in Figure~\ref{fig:loop-proof}~(right). It also implies that there is no time step between $t_0$ and $t_0+l-1$ such that tape position $g(t_0')$ has been visited, otherwise, our hypothesis would be contradicted by translating by $p_0'-p_0$. Hence, we also get $f(p'_0) = f(\overline{p_0})$ with $\overline{p_0} = (t_0,g(t_0'))$. By hypothesis, tape content to the right of $p_0$ is the same as to the right of $p_0'$, and $p-p_0' = p'_0 - p_0$ implies that $g(t)-g(t_0') = g(t_0') - g(t_0)$, hence $f(\overline{p_0}) = f(\overline{p_0'})$ and, finally, $f(p) = f(p'_0)$.\label{thm:proof:pt2}
+        \item Case $g(t_0') \leq g(t_0)$, handled symmetrically to~\ref{thm:proof:pt2}.
+    \end{enumerate}
+    From there, since $f(p) = f(p'_0)$, the argument can be repeated starting with $p_1,\, \dots,\, p_{l-1},\, p'_0$ acting as new $p_0,\,\dots,\,p_{l-1}$ and $p'_1,\, \dots,\, p_{l-1}',\, p$ as new $p_0',\,\dots,\,p_{l-1}'$ by noting that for cases~\ref{th:case2} and~\ref{th:case3}, the fact that the tape is the same after $p_0$ and $p_0'$ implies that it is also the same after $p_1$ and $p_1'$. Hence, inductively, $\mathcal{M}$ is a loop and, by Lemma~\ref{lem:loopdonthalt}, it does not halt.
 \end{proof}
 
 
