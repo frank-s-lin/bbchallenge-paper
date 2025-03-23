@@ -32,11 +32,14 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
 
 \begin{figure}[h!]
     \noindent
-    \begin{minipage}[t]{0.48\textwidth}
+    \begin{minipage}[t]{0.5\textwidth}
         \centering
-        \scalebox{0.9}{
+        \scalebox{0.85}{
             \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
 
+                % Axes: Time ↓ and Space →
+                \draw[->, thick] (-1.8,3.2) -- (-1.8,2.2) node[draw=none, midway, left] {\scriptsize time};
+                \draw[->, thick] (-1.8,3.2) -- (-0.8,3.2) node[draw=none,midway, above] {\scriptsize space};
                 % \node[draw=none] at (-1,2.7) {$p_0$};
                 % \draw[-{Latex[length=1.8mm]}] (-0.8,2.6) -- (-0.4,2.3);
                 \node (B0) at (0,2) {\stateBx\szero};
@@ -75,10 +78,12 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
         }
     \end{minipage}
     \hfill
-    \begin{minipage}[t]{0.48\textwidth}
+    \begin{minipage}[t]{0.5\textwidth}
         \centering
-        \scalebox{0.9}{
+        \scalebox{0.85}{
             \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
+
+
 
                 % \node[draw=none] at (-1,2.7) {$p_0$};
                 % \draw[-{Latex[length=1.8mm]}] (-0.8,2.6) -- (-0.4,2.3);
@@ -150,10 +155,12 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
 
 
 
-    Consider $p = (t, g(t))$ with $t=t_0'+l$ which corresponds to one time step after $p'_{l-1}$. Since $f(p_{l-1}) = f(p_{l-1}')$ we know that the same transition was taken at times $t_0+l-1$ and $t_0'+l-1$, hence $f(p)$ has the same state than $f(p'_0)$. This illustrated in Figure~\ref{fig:loop-proof}, $p$ is the coordinates of the dashed cell. We show that the read symbol is also the same, \ie $f(p) = f(p'_0)$, three cases:
+    Consider $p = (t, g(t))$ with $t=t_0'+l$ which corresponds to one time step after $p'_{l-1}$. Since $f(p_{l-1}) = f(p_{l-1}')$ we know that the same transition was taken at times $t_0+l-1$ and $t_0'+l-1$, hence $f(p)$ has the same state than $f(p'_0)$. This illustrated in Figure~\ref{fig:loop-proof}: both on the left and on the right, $p$ is the coordinates of the dashed cell. We show that the read symbol is also the same, \ie $f(p) = f(p'_0)$, three cases:
 
     \begin{itemize}
-        \item If $g(t_0') = g(t_0)$, let's first show that $g(t) = g(t_0')$. By Lemma~\ref{lem:vector} we have that $p'_{l-1} - p_{l-1} = p'_0 - p_0$. Since $g(t_0') = g(t_0)$ we know that $p'_0 - p_0$ is 0 on the space component, hence $g(t_0'+l-1) = g(t_0+l-1)$. Because the transition at $p_{l-1}$ and $p_{l-1}'$ is the same, the head move in the same direction, hence $g(t_0'+l) = g(t_0+l)$, which rewrites as $g(t) = g(t_0')$. Hence, we know that the cell at tape position $g(t)$ has been visited at least one between time steps $t_0'$ and $t_0'+l-1$, which, by Lemma~\ref{lem:past} implies that the head's read symbol at times $t$ and $t_0'$ is the same, giving $f(p) = f(p'_0)$.
+        \item Case $g(t_0') = g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(left). Let's first show that $g(t) = g(t_0')$. By Lemma~\ref{lem:vector} we have that $p'_{l-1} - p_{l-1} = p'_0 - p_0$. Since $g(t_0') = g(t_0)$ we know that $p'_0 - p_0$ is 0 on the space component, hence $g(t_0'+l-1) = g(t_0+l-1)$. Because the transition at $p_{l-1}$ and $p_{l-1}'$ is the same, the head move in the same direction, hence $g(t_0'+l) = g(t_0+l)$, which rewrites as $g(t) = g(t_0')$. Hence, we know that the cell at tape position $g(t)$ has been visited at least one between time steps $t_0'$ and $t_0'+l-1$, which, by Lemma~\ref{lem:past} implies that the head's read symbol at times $t$ and $t_0'$ is the same, giving $f(p) = f(p'_0)$.
+
+        \item Case $g(t_0') \geq g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(right). If there is a time step between $t_0'$ and $t_0'+l-1$ such that tape position $g(t)$ has been visited, Lemma~\ref{lem:past} implies that the head's read symbol at times $t$ and $t_0'$ is the same, giving $f(p) = f(p'_0)$. Let's assume there is no such time step, such as in Figure~\ref{fig:loop-proof}~(right). By negation, assume that the head's read symbol at time $t$ is not the same that time $t_0'$.
     \end{itemize}
 
 \end{proof}
