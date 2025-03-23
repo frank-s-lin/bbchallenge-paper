@@ -4,6 +4,8 @@
 
 \subsection{$n$-gram Closed Position Set (\ngramcps)}\label{sec:n-gramCPS}
 
+
+
 The $n$-gram Closed Position Set (\ngramcps) decider which we introduce here is a simplification of an earlier technique, Closed Position Set (CPS), itself introduced in \texttt{bbfind} \cite{Skelet_bbfind}, see Section~\ref{sec:intro:mainresults}. Surprisingly, \ngramcps is a relatively simple technique which makes a potent decider as it decides 99.89\% of all nonhalting enumerated 5-state machines excluding loops, see Table~\ref{tab:pipelineBB5}.
 
 The method is especially potent when augmenting the binary alphabet of Turing machines to record extra information on the tape, such as a fixed-length history of previously seen (state,symbol) pairs, see Section~\ref{sec:n-gramCPS:augmentations}.
