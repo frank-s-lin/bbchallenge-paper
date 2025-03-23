@@ -89,15 +89,28 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
                 % \draw[-{Latex[length=1.8mm]}] (-0.8,2.6) -- (-0.4,2.3);
                 \node (C1) at (0,2) {\stateCx\sone};
                 \node[draw=black, draw opacity=0.6] (A1) at (-0.6,1.4) {\stateAx\sone};
-                \node[draw=black, draw opacity=0.6] (B0) at (0,0.8) {\stateBx\szero};
+                \node[draw=black, draw opacity=0.6] (B0) at (0,0.8) {\stateEx\szero};
                 \node[draw=black, draw opacity=0.6] (D0) at (0.6,0.2) {\stateDx\szero};
+
+                \node[dashed, draw=red, thick] (red) at (1.2,2) {};
 
                 \node (C1') at (1.2, -0.4) {\stateCx\sone};
                 \node[draw=black, draw opacity=0.6] (A1') at (0.6, -1.0) {\stateAx\sone};
-                \node[draw=black, draw opacity=0.6] (B0') at (1.2, -1.6) {\stateBx\szero};
+                \node[draw=black, draw opacity=0.6] (B0') at (1.2, -1.6) {\stateEx\szero};
                 \node[draw=black, draw opacity=0.6] (D0') at (1.8, -2.2) {\stateDx\szero};
 
+                \node[dashed, draw=red, thick] (red') at (2.4,-0.4) {};
+
                 \node[dashed] (C1'') at (2.4,-2.8) {\stateCx?};
+
+                \draw[dashed, draw=red, thick] (red.south) -- (C1'.north);
+                \draw[dashed, draw=red, thick] (red'.south) -- (C1''.north);
+
+                \node[draw=none] at ($(red.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0}$};
+                \draw[-{Latex[length=1.8mm]}] ($(red.north east)+(0.6,0.3)$) -- ($(red.north east)-(-0.05,0.00)$);
+
+                \node[draw=none] at ($(red'.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0'}$};
+                \draw[-{Latex[length=1.8mm]}] ($(red'.north east)+(0.6,0.3)$) -- ($(red'.north east)-(-0.05,0.00)$);
 
                 % Arrow and label for p_1
                 \node[draw=none] at ($(C1.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0$};
@@ -111,27 +124,27 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
 
                 % Eye to the right of C1
                 % Stylized eye to the right of C1
-                \begin{scope}
-                    \coordinate (eyeC1) at ($(C1.east)+(0.3,0)$);
-                    \draw[thick] (eyeC1) ellipse (0.2 and 0.1);
-                    \fill ($(eyeC1)+(0.06,0)$) circle (0.035);
+                % \begin{scope}
+                %     \coordinate (eyeC1) at ($(C1.east)+(0.3,0)$);
+                %     \draw[thick] (eyeC1) ellipse (0.2 and 0.1);
+                %     \fill ($(eyeC1)+(0.06,0)$) circle (0.035);
 
-                    % Eyelashes (relative to the top arc)
-                    \draw[thick] ($(eyeC1)+(0.0,0.1)$) -- ++(0,0.08);
-                    \draw[thick] ($(eyeC1)+(-0.08,0.08)$) -- ++(-0.05,0.06);
-                    \draw[thick] ($(eyeC1)+(0.08,0.08)$) -- ++(0.05,0.06);
-                \end{scope}
+                %     % Eyelashes (relative to the top arc)
+                %     \draw[thick] ($(eyeC1)+(0.0,0.1)$) -- ++(0,0.08);
+                %     \draw[thick] ($(eyeC1)+(-0.08,0.08)$) -- ++(-0.05,0.06);
+                %     \draw[thick] ($(eyeC1)+(0.08,0.08)$) -- ++(0.05,0.06);
+                % \end{scope}
 
-                \begin{scope}
-                    \coordinate (eyeC1') at ($(C1'.east)+(0.3,0)$);
-                    \draw[thick] (eyeC1') ellipse (0.2 and 0.1);
-                    \fill ($(eyeC1')+(0.06,0)$) circle (0.035);
+                % \begin{scope}
+                %     \coordinate (eyeC1') at ($(C1'.east)+(0.3,0)$);
+                %     \draw[thick] (eyeC1') ellipse (0.2 and 0.1);
+                %     \fill ($(eyeC1')+(0.06,0)$) circle (0.035);
 
-                    % Eyelashes (same structure)
-                    \draw[thick] ($(eyeC1')+(0.0,0.1)$) -- ++(0,0.08);
-                    \draw[thick] ($(eyeC1')+(-0.08,0.08)$) -- ++(-0.05,0.06);
-                    \draw[thick] ($(eyeC1')+(0.08,0.08)$) -- ++(0.05,0.06);
-                \end{scope}
+                %     % Eyelashes (same structure)
+                %     \draw[thick] ($(eyeC1')+(0.0,0.1)$) -- ++(0,0.08);
+                %     \draw[thick] ($(eyeC1')+(-0.08,0.08)$) -- ++(-0.05,0.06);
+                %     \draw[thick] ($(eyeC1')+(0.08,0.08)$) -- ++(0.05,0.06);
+                % \end{scope}
 
 
             \end{tikzpicture}
@@ -144,8 +157,8 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
     Assume there is $t_0' > t_0 \in \N$ such that
     for all $0 \leq i < t_0'-t_0$: $$f(p_i) = f(p'_i)$$ with $p_i = (t_0+i, g(t_0+i))$ and $p_i' = (t_0'+i, g(t_0'+i))$. Then, three cases:
     \begin{enumerate}
-        \item If $g(t_0') = g(t_0)$, then $\mathcal{M}$ is a loop, more specifically called a \textit{Cycler}.
-        \item If $g(t_0') \geq g(t_0)$ and the tape content to the right of $p_0$ is the same as to right of $p_0'$, \ie $\forall z \geq 0 \in  \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (positive) \textit{Translated Cycler}.
+        \item If $g(t_0') = g(t_0)$, then $\mathcal{M}$ is a loop, more specifically called a \textit{Cycler}.\label{th:case1}
+        \item If $g(t_0') \geq g(t_0)$ and the tape content to the right of $p_0$ is the same as to right of $p_0'$, \ie $\forall z \geq 0 \in  \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (positive) \textit{Translated Cycler}.\label{th:case2}
         \item If $g(t_0') \leq g(t_0)$ and the tape content to the left of $p_0$ is the same as to left of $p_0'$, \ie $\forall z \leq 0 \in \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (negative) \textit{Translated Cycler}.
     \end{enumerate}
     In these three cases the period of the loop is $l = t_0' - t_0$ and the pre-period is $t_0$.
@@ -155,12 +168,16 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
 
 
 
-    Consider $p = (t, g(t))$ with $t=t_0'+l$ which corresponds to one time step after $p'_{l-1}$. Since $f(p_{l-1}) = f(p_{l-1}')$ we know that the same transition was taken at times $t_0+l-1$ and $t_0'+l-1$, hence $f(p)$ has the same state than $f(p'_0)$. This illustrated in Figure~\ref{fig:loop-proof}: both on the left and on the right, $p$ is the coordinates of the dashed cell. We show that the read symbol is also the same, \ie $f(p) = f(p'_0)$, three cases:
+    Consider $p = (t, g(t))$ with $t=t_0'+l$ which corresponds to one time step after $p'_{l-1}$. Since $f(p_{l-1}) = f(p_{l-1}')$ we know that the same transition was taken at times $t_0+l-1$ and $t_0'+l-1$, hence $f(p)$ has the same state than $f(p'_0)$ and we also get that $p-p_{l-1}' = p_0' - p_{l-1}'$ which, using Lemma~\ref{lem:vector}, gives $p-p_0' = p'_0 - p_0$. Figure~\ref{fig:loop-proof} illustrates the situation for the theorem's cases~\ref{th:case1} (on the left) and~\ref{th:case2} (on the right): $p$ is the coordinates of the black dashed cell.
+
+    We show that the read symbol at $p$ and $p'_0$ are also the same, \ie $f(p) = f(p'_0)$, three cases:
 
     \begin{itemize}
-        \item Case $g(t_0') = g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(left). Let's first show that $g(t) = g(t_0')$. By Lemma~\ref{lem:vector} we have that $p'_{l-1} - p_{l-1} = p'_0 - p_0$. Since $g(t_0') = g(t_0)$ we know that $p'_0 - p_0$ is 0 on the space component, hence $g(t_0'+l-1) = g(t_0+l-1)$. Because the transition at $p_{l-1}$ and $p_{l-1}'$ is the same, the head move in the same direction, hence $g(t_0'+l) = g(t_0+l)$, which rewrites as $g(t) = g(t_0')$. Hence, we know that the cell at tape position $g(t)$ has been visited at least one between time steps $t_0'$ and $t_0'+l-1$, which, by Lemma~\ref{lem:past} implies that the head's read symbol at times $t$ and $t_0'$ is the same, giving $f(p) = f(p'_0)$.
+        \item Case $g(t_0') = g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(left). Since $p-p_0' = p'_0 - p_0$ and that $g(t_0') = g(t_0)$, the space component of $p-p_0'$ is 0 and we have that $g(t) = g(t_0')$. Hence, we know that the cell at tape position $g(t)$ has been visited at least one between time steps $t_0'$ and $t_0'+l-1$, which, by Lemma~\ref{lem:past} implies that the head's read symbol at times $t_0'$ and $t = t_0'+l$ is the same, giving $f(p) = f(p'_0)$.
 
-        \item Case $g(t_0') \geq g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(right). If there is a time step between $t_0'$ and $t_0'+l-1$ such that tape position $g(t)$ has been visited, Lemma~\ref{lem:past} implies that the head's read symbol at times $t$ and $t_0'$ is the same, giving $f(p) = f(p'_0)$. Let's assume there is no such time step, such as in Figure~\ref{fig:loop-proof}~(right). By negation, assume that the head's read symbol at time $t$ is not the same that time $t_0'$.
+        \item Case $g(t_0') \geq g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(right). If there is a time step between $t_0'$ and $t_0'+l-1$ such that tape position $g(t)$ has been visited, we get that the head's read symbol at times $t$ and $t_0'$ is the same by Lemma~\ref{lem:past} implies, giving $f(p) = f(p'_0)$.
+
+              Let's assume there is no such time step, which implies that $f(p) = f(\overline{p_0'})$ with $\overline{p_0'} = (t_0',g(t))$, dashed red in Figure~\ref{fig:loop-proof}~(right). It also implies that there is no time step between $t_0$ and $t_0+l-1$ such that tape position $g(t_0')$ has been visited, otherwise, our hypothesis would be contradicted by translating by $p_0'-p_0$. Hence, we also get $f(p'_0) = f(\overline{p_0})$ with $\overline{p_0} = (t_0,g(t_0'))$. By hypothesis, tape content to the right of $p_0$ is the same as to the right of $p_0'$, and $p-p_0' = p'_0 - p_0$ implies that $g(t)-g(t_0') = g(t_0') - g(t_0)$, hence $f(\overline{p_0}) = f(\overline{p_0'})$ and, finally, $f(p) = f(p'_0)$.
     \end{itemize}
 
 \end{proof}
