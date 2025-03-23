@@ -76,7 +76,7 @@ Solving $S(2,4)$ (and previously known $S(4)$ \cite{Brady83}) only used  a subse
 
 All these deciders can be expressed in the same general framework, known as Closed Tape Language (CTL) which is attributed to Marxen and Buntrock and was first documented by Ligocki \cite{ShawnCTL}:
 
-\paragraph{General framework: Closed Tape Language (CTL).} CTL gives an argument that a Turing machine does not halt by exhibiting a set $C$ of configurations such that:
+\paragraph{General framework: Closed Tape Language (CTL).} For a given Turing machine, assume there is a set $C$ of configurations such that:
 \begin{enumerate}
     \item $C$ contains the all-0 initial configuration.
     \item $C$ is \textit{closed} under transitions: for any $c \in C$, the configuration one step later belongs to $C$.
@@ -84,7 +84,7 @@ All these deciders can be expressed in the same general framework, known as Clos
 \end{enumerate}
 
 
-If such a set $C$ exists then the machine does not halt. The use of this framework to justify nonhalting is particularly evident in all deciders but loops, see Sections~\ref{sec:n-gramCPS}~to~\ref{sec:WFAR}.
+Then, the machine does not halt. Although all our deciders fit this framework, its use to justify nonhalting is particularly evident in all deciders but loops, see Sections~\ref{sec:n-gramCPS}~to~\ref{sec:WFAR}.
 
 \paragraph{Regularity.} All our deciders but WFAR are instances of \textit{regular} CTL, meaning that set $C$ is a regular language -- \ie $C$ is described using a Finite State Automaton (FSA) or, equivalently, a regular expression. Said otherwise, regular CTL approximates the set of configurations of a Turing machine using a regular language that is larger than the machine's set of configurations but on which it is easier (in practice, always trivial) to ensure CTL conditions, \ie (i) membership of the all-0 configuration (ii) closure under Turing machines steps and (iii) absence of halting configurations. NGramCPS and RepWL each focus on specific types of regular languages and are good introductory examples to illustrate this method, while FAR generalises to arbitrary regular languages. We say that a machine is \textit{regular} if it can be proven nonhalting (from all-0 tape) using regular CTL, otherwise we say it is \textit{irregular}.
 
