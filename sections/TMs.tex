@@ -115,10 +115,6 @@ We write $c_1 \TMstep \bot$ if the machine halts after executing one computation
 Figure~\ref{fig:bb5win}(b) gives a 45-step space-time diagram for the 5-state 2-symbol \BBfull winner. We often use \textit{zoomed-out} space-time diagrams without state-coloring information, such as Figure~\ref{fig:bb5win}(c) which gives the 20,000 first steps of the 5-state 2-symbol \BBfull winner. Similarly, Figure~\ref{fig:bb2x4} showcases the 2-state 4-symbol \BBfull winner.
 
 
-
-
-This format can be used as URL for the \url{bbchallenge.org} website, \eg \url{https://bbchallenge.org/1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_1RZ0LA} will display the transition table, space-time diagrams and known information about the machine.
-
 \begin{figure}[ht]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -129,10 +125,13 @@ This format can be used as URL for the \url{bbchallenge.org} website, \eg \url{h
         \scalebox{0.93}{
             \begin{tabular}{ccccc}
                 \toprule
-                        & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{3} \\
+                        & \textbf{0}~\tikz\fill[black, draw=black] (0,0) rectangle (0.20,0.20);     & \textbf{1}~\tikz\fill[graySymb1, draw=black] (0,0) rectangle (0.20,0.20);
+
+
+                        & \textbf{2}~\tikz\fill[graySymb2, draw=black] (0,0) rectangle (0.20,0.20); & \textbf{3}~\tikz\fill[white, draw=black] (0,0) rectangle (0.20,0.20);                             \\
                 \midrule
-                \stateA & 1R\stateB  & 2L\stateA  & 1R\stateA  & 1R\stateA  \\
-                \stateB & 1L\stateB  & 1L\stateA  & 3R\stateB  & ---        \\
+                \stateA & 1R\stateB                                                                 & 2L\stateA                                                                 & 1R\stateA & 1R\stateA \\
+                \stateB & 1L\stateB                                                                 & 1L\stateA                                                                 & 3R\stateB & ---       \\
                 \bottomrule
             \end{tabular}
         }
