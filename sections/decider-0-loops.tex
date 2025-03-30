@@ -3,21 +3,51 @@
 \subsection{Loops}\label{sec:loops}
 \subsubsection{Algorithm}
 
-Let's represent the space-time diagram of a given Turing machine $\mathcal{M}$ (Section~\ref{sec:TMs}) as the partially defined function $f_\mathcal{M}$: $$f_\mathcal{M}: \N \hookrightarrow \Z \to \alphabet \cup (\text{States}\times\alphabet)$$
+Let's represent the space-time diagram of a given Turing machine $\mathcal{M}$ (Section~\ref{sec:TMs}) as the partially defined function $f_\mathcal{M}$: $$f_\mathcal{M}: \N \hookrightarrow \Z \to \alphabet$$
 
-Such that $f_\mathcal{M}(t)$ is only defined if $\mathcal{M}$ has not halted before time $t$ and $f_\mathcal{M}(t)$ gives the tape of the machine at step $t\in\N$ with head's state information, \ie for $z\in\Z$, $f_\mathcal{M}(t)(z)$ is either the tape symbol at position $z$, or, at the head's position, the head's state together with the symbol it is reading. For convenience, we write $f$ instead of $f_\mathcal{M}$ and we will also use notation $f(t,z)$ or $f(p)$ with $p \in \N \times \Z$ intead of $f(t)(z)$ when $f(t)$ is defined.
+Such that $f_\mathcal{M}(t)$ is only defined if $\mathcal{M}$ has not halted before time $t$ and $f_\mathcal{M}(t)$ gives the tape of the machine at step $t\in\N$ with head's state information, \ie for $z\in\Z$, $f_\mathcal{M}(t)(z)$ is either the tape symbol at position $z$, or, at the head's position, the head's state together with the symbol it is reading. For brevity, we may write $f$ instead of $f_\mathcal{M}$. We will also use notation $f(t,z)$ or $f(p)$ with $p \in \N \times \Z$ seen as a vector, instead of $f(t)(z)$ when $f(t)$ is defined.
 
-Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's position at step $t$, when defined, \ie $f(t,g(t))$ gives the head state and read symbol at time $t$ if the machine has not halted yet. In the following, when using hypotheses involving equalities of partial functions $f$ or $g$, we also implicitly assume that the functions are defined at the points used in these hypotheses, \eg if we assume $f(x) = f(y)$ for some $x,y \in \N \times \Z$ we also implicitly assume that $f$ is defined at $x$ and $y$.
+Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, $g$ for short, be the head's position at step $t$, when defined, \ie $f(t,g(t))$ gives the head state and read symbol at time $t$ if the machine has not halted yet. In the following, when using hypotheses involving equalities of partial functions $f$ or $g$, we also implicitly assume that the functions are defined at the points used in these hypotheses, \eg if we assume $f(x) = f(y)$ for some $x,y \in \N \times \Z$ we also implicitly assume that $f$ is defined at $x$ and $y$.
 
 
 \begin{lemma}\label{lem:vector} Let $\mathcal{M}$ be a Turing machine.
     Assume there is $t_0' > t_0 \in \N$ and $l \in \N^+$ such that
-    for all $0 \leq i < l$: $$f_\mathcal{M}(p_i) = f_\mathcal{M}(p'_i)$$ with $p_i = (t_0+i, g(t_0+i))$ and $p_i' = (t_0'+i, g(t_0'+i))$. Then, for all $0 \leq i < l$ we have: $ p'_i - p_i = p_0' - p_0 $.
+    for all $0 \leq i < l$: $$f_\mathcal{M}(p_i) = f_\mathcal{M}(p'_i)$$ with $p_i = (t_0+i, g(t_0+i))$ and $p_i' = (t_0'+i, g(t_0'+i))$. Then:
+    \begin{enumerate}
+        \item For all $0 \leq i < l$ we have: $ p'_i - p_i = p_0' - p_0 $ which gives $f(p_i + (p_0' - p_0)) = f(p_i')$.\label{lem:vector:pt1}
+        \item If there $t_0' \leq t^* < t$ such that $g(t^*) = g(t)$ then we have $f(p) = f(p'_0)$, with $p=(t,g(t))$ with $t=t'_0 + l$.\label{lem:vector:pt2}
+    \end{enumerate}
+    See Figure~\ref{fig:loop-proof} for illustration.
 \end{lemma}
 
 \begin{proof}
-    First note that by definition, all $p_i$ and $p_i'$ correspond to head positions. Then, because $f(p_0) = f(p'_0)$ we know that at times $t_0$ and $t_0'$ the head is in same state, reading the same symbol, hence the same transition executes and in particular both heads move in the same direction $m \in \{-1,1\}$, giving the existence of $u = (1, m)$ such that $p_1 = p_O + u$ and $p_1' = p_0' + u$. Hence, $p_1' - p_1 = p_0' + u - p_0 + u = p_0' - p_0$. Repeating the same argument for each $i$ gives $p_i' - p_i = p_0' - p_0$.
+    First note that by definition, all $p_i$ and $p_i'$ correspond to head positions.
+    \begin{enumerate}
+        \item Because $f(p_0) = f(p'_0)$ we know that at times $t_0$ and $t_0'$ the head is in same state, reading the same symbol, hence the same transition executes and in particular both heads move in the same direction $m \in \{-1,1\}$, giving the existence of $u = (1, m)$ such that $p_1 = p_O + u$ and $p_1' = p_0' + u$. Hence, $p_1' - p_1 = p_0' + u - p_0 + u = p_0' - p_0$. Repeating the same argument for each $i$ gives $p_i' - p_i = p_0' - p_0$. Finally, $f(p_i + (p_0' - p_0)) = f(p_i + (p_i' - p_i)) = f(p_i')$.
+        \item First, we know that $f(p)$ and $f(p'_0)$ share the same tape head state: this is because, by hypothesis, $f(p_{l-1}) = f(p_{l-1}')$, meaning that the same transition was applied from $p_{l-1}$ to $p'_0$ and from $p_{l-1}'$ to $p$. We have to prove that their read symbol is the same. By hypothesis, there is $t_0' \leq t^* < t$ such that $g(t^*) = g(t)$, and let's assume wlog that $t^*$ is maximal and have $k = t^* - t_0'$, \ie $(t^*,g(t^*)) = p'_k$. We also know that $t_k = t_0 + k$ is the last time step at which cell at position $g(t_0')$ was visited before time $t_0'$ as otherwise, using Point~\ref{lem:vector:pt1}, by translation, we would contradict the maximality of $t^*$. By hypothesis, $f(p_k) = f(p_k')$, meaning that at times $t_k$ and $t^*$, the machine took the same transition and hence wrote the same symbol on the tape, giving $f(t_k+1,g(t_k)) = f(t^*+1,g(t^*))$, .
+
+
+    \end{enumerate}
+
 \end{proof}
+
+% \begin{lemma}\label{lem:past}
+%     Let $\mathcal{M}$ be a Turing machine.
+%     Assume there is $t_0' > t_0 \in \N$ such that
+%     for all $0 \leq i < t_0'-t_0$: $$f_\mathcal{M}(p_i) = f_\mathcal{M}(p'_i)$$ with $p_i = (t_0+i, g(t_0+i))$ and $p_i' = (t_0'+i, g(t_0'+i))$. Call $p=(t,g(t))$ with $t=t'_0 + l$ which corresponds to one time step after $p'_{l-1}$, illustrated in Figure~\ref{fig:loop-proof}. Then, if there $t_0' \leq t^* < t$ such that $g(t^*) = g(t)$ then we have $f(p) = f(p'_0)$.
+% \end{lemma}
+% \begin{proof}
+%     First, we know that $f(p)$ and $f(p'_0)$ share the same tape head state: this is because, by hypothesis, $f(p_{l-1}) = f(p_{l-1}')$, meaning that the same transition was applied from $p_{l-1}$ to $p'_0$ and from $p_{l-1}'$ to $p$. We have to prove that their read symbol is the same. By hypothesis, there is $t_0' \leq t^* < t$ such that $g(t^*) = g(t)$, and let's assume wlog that $t^*$ is maximal and have $k = t^* - t_0'$, \ie $(t^*,g(t^*)) = p'_k$.
+
+
+
+
+%     % and call $p^* = (t^*,g(t^*)) = p'_k$ for some $0 \leq k < l$. Note that $p_k$ also corresponds to the last edit of cell at tape position $g(t_0')$ before time $t_0'$, otherwise, using Lemma~\ref{lem:vector} translating by $p_0'-p_0$ would contradict the maximality of $t^*$. By hypothesis, $f(p_k) = f(p_k')$ which implies that $f()$
+
+
+
+%     % Hence, the read symbol of $f(p'_0)$ is the symbol written by the machine after transitioning from $p_k$, which is the same as after transitioning from $p_k'$ since by hypothesis, $f(p_k) =f(p_k')$. Hence, $f(p)=f(p'_0)$.
+% \end{proof}
 
 \begin{definition}[Loops]\label{def:loops}
     Let $\mathcal{M}$ be a Turing machine. Let $l\in\N^+$, $t_0 \in \N$ and $p_i = (t_0+i, g(t_0+i))$ for $0 \leq i < l$. We say that $\mathcal{M}$ is a \textit{loop} of period $l$ and pre-period $t_0$ if for all $t > t_0$, $f(t,g(t)) = f(p_j)$ with $j = t-t_0 \text{ mod } t_0' - t_0$.
@@ -28,6 +58,7 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
 \end{lemma}
 \begin{proof} This is immediate, by Definition~\ref{def:loops}, the space-time diagram of a loop is infinite, the machine does not halt.
 \end{proof}
+
 \newpage
 
 \begin{figure}[h!]
@@ -166,9 +197,9 @@ Let's $g_\mathcal{M}: \N \hookrightarrow \Z$, just $g$ for short, be the head's 
     \caption{TODO}\label{fig:loop-proof}
 \end{figure}
 
-\begin{theorem} Let $\mathcal{M}$ be a Turing machine.
+\begin{theorem}[Loops] Let $\mathcal{M}$ be a Turing machine.
     Assume there is $t_0' > t_0 \in \N$ such that
-    for all $0 \leq i < t_0'-t_0$: $$f(p_i) = f(p'_i)$$ with $p_i = (t_0+i, g(t_0+i))$ and $p_i' = (t_0'+i, g(t_0'+i))$. Then, three cases:
+    for all $0 \leq i < t_0'-t_0$: $$f_\mathcal{M}(p_i) = f_\mathcal{M}(p'_i)$$ with $p_i = (t_0+i, g(t_0+i))$ and $p_i' = (t_0'+i, g(t_0'+i))$. Then, three cases:
     \begin{enumerate}
         \item If $g(t_0') = g(t_0)$, then $\mathcal{M}$ is a loop, more specifically called a \textit{Cycler}.\label{th:case1}
         \item If $g(t_0') \geq g(t_0)$ and the tape content to the right of $p_0$ is the same as to right of $p_0'$, \ie $\forall z \geq 0 \in  \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (positive) \textit{Translated Cycler}.\label{th:case2}
