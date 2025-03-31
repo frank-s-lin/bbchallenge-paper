@@ -199,7 +199,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 
         \item Let $0 \leq i < l$ such that $g(t_i) = g(t_0')$. Using Point~\ref{lem:vector:pt1}, we have $p_i' = p_i + (p_0' - p_0)$, meaning $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_i) + (p_0' - p_0)$ which rewrites as $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_0') + (p_0' - p_0)$. Point~\ref{lem:vector:pt1} again with $p^* = p_0' +(p_0' - p_0)$, we get $g(t_0') + (p_0' - p_0) = g(t)$ and $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t)$ as needed.
 
-        \item Without loss of generality, let's assume that $k$ is maximal. Using Point~\ref{lem:vector:pt3} we get that $g(t_k) = g(t_0')$ and, by maximality of $k$, there is no $s > k$ with $s <l$ such that $g(t_s) = g(t_0')$. Because $F(p_k) = F(p_k')$, the same symbol is outputted after $p_k$ and $p_k'$, giving $f(t_k+1,g(t_k)) = f(t_k'+1,g(t_k'))$ and by maximality ok $k$, the cells are not revisited respectively before $p_0$ and $p$, giving $f(p_0') = f(t_k+1,g(t_k))$ and $f(p) = f(t_k'+1,g(t_k'))$. Hence we have $f(p^*) = f(p_0')$ as needed.
+        \item Without loss of generality, let's assume that $k$ is maximal. Using Point~\ref{lem:vector:pt3} we get that $g(t_k) = g(t_0')$ and, by maximality of $k$, there is no $s > k$ with $s <l$ such that $g(t_s) = g(t_0')$. Because $F(p_k) = F(p_k')$, the same symbol is outputted after $p_k$ and $p_k'$, giving $f(t_k+1,g(t_k)) = f(t_k'+1,g(t_k'))$ and by maximality ok $k$, the cells are not revisited respectively before $p_0$ and $p^*$, giving $f(p_0') = f(t_k+1,g(t_k))$ and $f(p) = f(t_k'+1,g(t_k'))$. Hence we have $f(p^*) = f(p_0')$ as needed.
 
 
     \end{enumerate}
@@ -274,7 +274,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
                 % \draw[-{Latex[length=1.8mm]}] ($(A1'.north east)+(0.6,0.3)$) -- ($(A1'.north east)-(-0.05,0.00)$);
 
                 % Arrow and label for p_0'
-                \node[draw=none] at ($(B0''.north west)-(0.6,-0.3)+(-0.2,0.05)$) {$p$};
+                \node[draw=none] at ($(B0''.north west)-(0.6,-0.3)+(-0.2,0.05)$) {$p^*$};
                 \draw[-{Latex[length=1.8mm]}] ($(B0''.north west)-(0.6,-0.3)$) -- ($(B0''.north west)-(0.05,0.00)$);
 
             \end{tikzpicture}
@@ -334,7 +334,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
                 \node[draw=none] at ($(C1'.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0'$};
                 \draw[-{Latex[length=1.8mm]}] ($(C1'.north east)+(0.6,0.3)$) -- ($(C1'.north east)-(-0.05,0.00)$);
 
-                \node[draw=none] at ($(C1''.north east)+(0.6,0.3)+(0.2,0.05)$) {$p$};
+                \node[draw=none] at ($(C1''.north east)+(0.6,0.3)+(0.2,0.05)$) {$p^*$};
                 \draw[-{Latex[length=1.8mm]}] ($(C1''.north east)+(0.6,0.3)$) -- ($(C1''.north east)-(-0.05,0.00)$);
 
 
@@ -383,7 +383,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 
 \begin{proof}
 
-    Consider $p^* = (t^*, g(t^*))$ with $t^*=t_0'+l$ which corresponds to one time step after $p'_{l-1}$. Figure~\ref{fig:loop-proof} illustrates the situation for the theorem's cases~\ref{th:case1} (on the left) and~\ref{th:case2} (on the right): $p$ is the coordinates of the black dashed cell.
+    Consider $p^* = (t^*, g(t^*))$ with $t^*=t_0'+l$ which corresponds to one time step after $p'_{l-1}$. Figure~\ref{fig:loop-proof} illustrates the situation for the theorem's cases~\ref{th:case1} (on the left) and~\ref{th:case2} (on the right): $p^*$ is the coordinates of the black dashed cell.
 
     We show that $F(p) = F(p'_0)$. By Lemma~\ref{lem:vector} Point~\ref{lem:vector:pt2}, we know that $h(t^*) = h(t_0')$ hence we have to show that the read symbol at $p^*$ and $p'_0$ are also the same, \ie $f(p) = f(p'_0)$. Three cases:
 
