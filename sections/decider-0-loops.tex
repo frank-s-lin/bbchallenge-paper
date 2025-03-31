@@ -103,7 +103,7 @@ Proving the correctness of this decider is surprisingly nontrivial. Let's repres
 \newcommand{\baref}{F}
 
 At time $t\in\N$, $f_\mathcal{M}(t)$ gives the tape content (as a total function $\Z \to \alphabet$), $g_\mathcal{M}(t)$ gives the head position and $h_\mathcal{M}(t)$, the head state, assuming in each case that $\mathcal{M}$ has not halted before time $t$, otherwise values are not defined. For brevity, when the Turing machine is clear from context, we may write $f,g,h$. In the case of $f$, we will also use notation $f(t,z)$ or $f(p)$ with $p \in \N \times \Z$ seen as a vector, instead of $f(t)(z)$ when $f(t)$ is defined. Using same extended notations as for $f$, we also define $\baref_\mathcal{M}(t,z) = (f(t,z),h(t))$ which gives tape content with head state information at each time when $f$ and $h$ are defined.
-Finally, when assuming $f(x) = f(y)$ for some $x,y \in \N \times \Z$ we also implicitly assume that $f$ is defined at $x$ and $y$; same for $\baref$, $g$, and, $h$.
+Finally, when assuming/claiming $f(x) = f(y)$ for some $x,y \in \N \times \Z$ we also implicitly assume/claim that $f$ is defined at $x$ and $y$; same for $\baref$, $g$, and, $h$.
 
 Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences of the form $F_\mathcal{M}(t,g(t))$ with $t\in\N$.
 
