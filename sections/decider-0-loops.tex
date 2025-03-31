@@ -32,7 +32,7 @@ Let's call the \textit{transcript} of a machine the list of successive \ssps vis
 
 \end{enumerate}
 
-This logic is encoded in Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} and we prove that this algorithm is correct in Theorem~\ref{th:loops}.
+We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
 
 
 
@@ -42,48 +42,49 @@ This logic is encoded in Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} and w
 
     \begin{algorithmic}[1]
         \State{\textbf{Input:} A Turing machine `$\mathcal{M}$', a step-limit parameter $L$.}
-        \State{\textbf{Output:} `NONHALT' if the decider detects that the machine is a loop, `HALT' if the machine halts and \UNKNOWN otherwise.}
+        \State{\textbf{Output:} \NONHALT if the decider detects that the machine is a loop, \HALT if the machine halts and \UNKNOWN otherwise.}
 
         \State
-        \State Simulate $\mathcal{M}$ for $L$ steps and save the history of each consecutive state, read-symbol and tape position reached, \ie consecutive $h_i = (s_i,m_i,d_i)\in\states\times\alphabet\times\Z$ for $0 \leq i \leq L$ and $h_0 = (\stateA,\symbolzero,0)$.
+        \State Simulate $\mathcal{M}$ for $L$ steps and save the history of each consecutive state, read-symbol and position, \ie consecutive $T_i = (s_i,m_i,d_i)\in\states\times\alphabet\times\Z$ for $0 \leq i \leq L$ and $T_0 = (\stateA,\symbolzero,0)$.
 
 
         \State \If{the machine has halted before $L$ steps}
         \State \Return HALT \label{alg:loops:halt}
         \EndIf
-        \State \For{$l$ \textbf{in} $[0,+\infty[$ } \Comment{$l+1$ is the length of the potential loop}
-        \State \If{$2(l + 1) > L$} \Comment{The history does not contain two potential loops of size $l+1$}
+        \State \For{$l$ \textbf{in} $[1,+\infty[$ } \Comment{$l$ is the length of the potential loop}
+        \State \If{$2l > L$} \Comment{The history does not contain two transcript repetitions of size $l$}
         \State \Return UNKNOWN \label{alg:loops:terminate}
         \State \EndIf
         \State $K = L-l-1$
+        \State $o = 0$ \Comment{Offset in case we need to keep looking for local-extremum}
         \State $\text{allequal} = \text{true}$
-        \State $\text{recordbreak} = \text{false}$
-        \State \For{$i$ \textbf{in} $[0,l]$ } \Comment{Comparing \ssp equality at each step of both potential loops}
-        \State $s,m,d = h_{L-i}$
-        \State $s',m',d' = h_{K-i}$
+        \State \For{$i$ \textbf{in} $[0,l+o[$ }
+        \If{$K-i < 0$}
+        \State \textbf{break}
+        \State \EndIf
+        \State $s,m,d = T_{L-i}$
+        \State $s',m',d' = T_{K-i}$
         \State
-        \State $\text{recordbreak1} = \text{false}$
-        \State $\text{recordbreak2} = \text{false}$
-        \State \If{$s\neq s'$ \textbf{or} $m \neq m'$}\label{alg:loops:testeq}
-        \State $\text{allequal} = \text{false}$
+        \If{$s\neq s'$ \textbf{or} $m \neq m'$}\label{alg:loops:testeq} \Comment{Comparing \ssp equality at each step}
         \State \textbf{break}
         \EndIf
-        \State \If{$d > \text{max} \{d_j \, | \, j < L-i \}$ \textbf{or} $d < \text{min} \{d_j \, | \, j < L-i \}$}
-        \State $\text{recordbreak1} = \text{true}$
-        \State $\text{recordbreak} = \text{true}$
+
+        \State \If{$i = l+o-1$}
+        \If{$d = d'$}
+        \State \Return \NONHALT \Comment{We've detected a Cycler}
         \EndIf
-        \State \If{$d' > \text{max} \{d'_j \, | \, j < K-i \}$ \textbf{or} $d' < \text{min} \{d'_j \, | \, j < K-i \}$}
-        \State $\text{recordbreak2} = \text{true}$
+        \State \If{$d = \text{max} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{max} \{d_j \, | \, j < K-i \}$}
+        \State \Return \NONHALT \Comment{We've detected a (positive) Translated Cycler}
         \EndIf
-        \State \If{$\text{recordbreak1} \neq \text{recordbreak2}$}
-        \State $\text{allequal} = \text{false}$
-        \State \textbf{break}
+        \State \If{$d = \text{min} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{min} \{d_j \, | \, j < K-i \}$}
+        \State \Return \NONHALT \Comment{We've detected a (negative) Translated Cycler}
         \EndIf
+        \State $o = o + 1$
+        \State \EndIf
         \EndFor
-        \State \If{$\text{allequal}$ \textbf{and} ($d_L == d_K$ \textbf{or} $\text{recordbreak}$)}\label{alg:loops:test}
-        \State \Return NONHALT
-        \EndIf
         \EndFor
+
+        \State \Return \UNKNOWN
 
     \end{algorithmic}
 
@@ -405,7 +406,9 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
     \end{itemize}
 \end{theorem}
 \begin{proof}
-    The call to \textsc{decider-loops}($\mathcal{M}$, $L$) terminates because of Algorithm~\ref{alg:loops}, l.\ref{alg:loops:terminate}. The call returns \texttt{HALT} if and only if $\mathcal{M}$ halts within $L$ steps from the all-zero tape, see Algorithm~\ref{alg:loops}, l.\ref{alg:loops:halt}, hence if the call returns \texttt{HALT} we know that the machine halts. The interesting case is the loop-detection leading to \texttt{NONHALT}. Algorithm~\ref{alg:loops} finds $t_0$ and $l$ satisfying the hypotheses of Theorem~\ref{th:loops:theory} with $L = t'_{l-1}$ and $K = t_{l-1}$, and we have $F_\mathcal{M}(p_i)   = F_\mathcal{M}(p'_i)$ thanks to Algorithm~l.\ref{alg:loops:testeq}. The condition
+    The call to \textsc{decider-loops}($\mathcal{M}$, $L$) terminates because of Algorithm~\ref{alg:loops}, l.\ref{alg:loops:terminate}. The call returns \texttt{HALT} if and only if $\mathcal{M}$ halts within $L$ steps from the all-zero tape, see Algorithm~\ref{alg:loops}, l.\ref{alg:loops:halt}, hence if the call returns \texttt{HALT} we know that the machine halts. The interesting case is the loop-detection leading to \texttt{NONHALT}.
+
+    % Algorithm~\ref{alg:loops} finds $t_0$ and $l$ satisfying the hypotheses of Theorem~\ref{th:loops:theory} with $L = t'_{l-1}$ and $K = t_{l-1}$, and we have $F_\mathcal{M}(p_i)   = F_\mathcal{M}(p'_i)$ thanks to Algorithm~l.\ref{alg:loops:testeq}. The condition
 
     % We take the same terminology than Algorithm~\ref{alg:loops}: $h_i = (s_i,m_i,d_i) \in \states \times \alphabet \times \Z$ for $0 \leq i \leq L$ correspond the successive state, read-symbol and tape position reached. Let's assume the algorithm returns \texttt{NONHALT} for some loop length parameter $l \geq 0$: we have $s_{L-i} = s_{K-i}$ and $m_{L-i} = m_{K-i}$ for all $i \in [0,l]$ with $K = L-l-1$ and each $h_{L-i}$ is \textit{record-breaking} (\ie \headpos that is strictly bigger or smaller than any previously seen \headpos) iff $h_{K-i}$ is. Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} distinguishes two cases:
 
