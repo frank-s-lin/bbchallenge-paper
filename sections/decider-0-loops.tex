@@ -5,37 +5,113 @@
 
 Let's represent the space-time diagram of a given Turing machine $\mathcal{M}$ (Section~\ref{sec:TMs}) using partially defined functions $f_\mathcal{M},g_\mathcal{M},h_\mathcal{M}$:
 \begin{align*}
-    f_\mathcal{M} & : \N \hookrightarrow \Z \to \alphabet\text{, tape content} \\
-    g_\mathcal{M} & : \N \hookrightarrow \Z\text{, head position}              \\
-    h_\mathcal{M} & : \N \hookrightarrow \states\text{, head state}
+    f_\mathcal{M} & : \N \hookrightarrow \Z \to \alphabet\text{, tape content}                                \\
+    g_\mathcal{M} & : \N \hookrightarrow \Z\text{, head position}                                             \\
+    h_\mathcal{M} & : \N \hookrightarrow \states\text{, head state}                                           \\
+    F_\mathcal{M} & : \N \hookrightarrow \Z \to (\alphabet\times \states)\text{, tape content and head state}
 \end{align*}
 
 \newcommand{\baref}{F}
 
-At time $t\in\N$, $f_\mathcal{M}(t)$ gives the tape content (as a total function $\Z \to \alphabet$), $g_\mathcal{M}(t)$ gives the head position and $h_\mathcal{M}(t)$, the head state, assuming in each case that $\mathcal{M}$ has not halted before time $t$, otherwise values are not defined. For brevity, when the Turing machine is clear from context, we may write $f,g,h$. In the case of $f$, we will also use notation $f(t,z)$ or $f(p)$ with $p \in \N \times \Z$ seen as a vector, instead of $f(t)(z)$ when $f(t)$ is defined. For convenience, and using same notations as for $f$; we also define $\baref_\mathcal{M} : \N \hookrightarrow \Z \to \alphabet \times \states$ with $\baref_\mathcal{M}(t,z) = (f(t,z),h(t))$ which gives tape content with head state information at each time when $f$ and $h$ are defined.
+At time $t\in\N$, $f_\mathcal{M}(t)$ gives the tape content (as a total function $\Z \to \alphabet$), $g_\mathcal{M}(t)$ gives the head position and $h_\mathcal{M}(t)$, the head state, assuming in each case that $\mathcal{M}$ has not halted before time $t$, otherwise values are not defined. For brevity, when the Turing machine is clear from context, we may write $f,g,h$. In the case of $f$, we will also use notation $f(t,z)$ or $f(p)$ with $p \in \N \times \Z$ seen as a vector, instead of $f(t)(z)$ when $f(t)$ is defined. Using same extended notations as for $f$, we also define $\baref_\mathcal{M}(t,z) = (f(t,z),h(t))$ which gives tape content with head state information at each time when $f$ and $h$ are defined.
 Finally, when assuming $f(x) = f(y)$ for some $x,y \in \N \times \Z$ we also implicitly assume that $f$ is defined at $x$ and $y$; same for $\baref$, $g$, and, $h$.
+
+\begin{figure}[h!]
+    \noindent
+    \begin{minipage}[t]{1\textwidth}
+        \centering
+        \scalebox{0.85}{
+            \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
+
+
+
+                % \node[draw=none] at (-1,2.7) {$p_0$};
+                % \draw[-{Latex[length=1.8mm]}] (-0.8,2.6) -- (-0.4,2.3);
+                \node (C1) at (0,2) {\stateCx\sone};
+                \node[draw=black, draw opacity=0.6] (A1) at (0.6,1.4) {\stateAx\sone};
+                \node[draw=black, draw opacity=0.6] (B0) at (1.2,0.8) {\stateEx\szero};
+                \node[draw=black, draw opacity=0.6] (D0) at (0.6,0.2) {\stateDx\szero};
+
+                % % Fill 5 cells to the right of C1
+                % \foreach \i in {1,...,4} {
+                %         \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1)+(0.6*\i,0)$) {};
+                %     }
+
+
+
+                \node[dashed, draw=red, thick] (red) at (1.2,0.8) {};
+
+                \node (C1') at (1.2, -0.4) {\stateCx\sone};
+                \node[draw=black, draw opacity=0.6] (A1') at (1.8, -1.0) {\stateAx\sone};
+                \node[draw=black, draw opacity=0.6] (B0') at (2.4, -1.6) {\stateEx\szero};
+                \node[draw=black, draw opacity=0.6] (D0') at (1.8, -2.2) {\stateDx\szero};
+
+                % % Fill 5 cells to the right of C1'
+                % \foreach \i in {1,...,4} {
+                %         \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1')+(0.6*\i,0)$) {};
+                %     }
+
+                \node[dashed, draw=red, thick] (red') at (2.4,-1.6) {};
+
+                \node[dashed] (C1'') at (2.4,-2.8) {\stateCx?};
+
+                \draw[dashed, draw=red, thick, ->, >=stealth] (red.south) -- (C1'.north);
+                \draw[dashed, draw=red, thick, ->, >=stealth] (red'.south) -- (C1''.north);
+
+                % \node[draw=none] at ($(red.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0}$};
+                % \draw[-{Latex[length=1.8mm]}] ($(red.north east)+(0.6,0.3)$) -- ($(red.north east)-(-0.05,0.00)$);
+
+                % \node[draw=none] at ($(red'.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0'}$};
+                % \draw[-{Latex[length=1.8mm]}] ($(red'.north east)+(0.6,0.3)$) -- ($(red'.north east)-(-0.05,0.00)$);
+
+                % Arrow and label for p_1
+                \node[draw=none] at ($(C1.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0$};
+                \draw[-{Latex[length=1.8mm]}] ($(C1.north east)+(0.6,0.3)$) -- ($(C1.north east)-(-0.05,0.00)$);
+
+                \node[draw=none] at ($(C1'.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0'$};
+                \draw[-{Latex[length=1.8mm]}] ($(C1'.north east)+(0.6,0.3)$) -- ($(C1'.north east)-(-0.05,0.00)$);
+
+                \node[draw=none] at ($(C1''.north east)+(0.6,0.3)+(0.2,0.05)$) {$p^*$};
+                \draw[-{Latex[length=1.8mm]}] ($(C1''.north east)+(0.6,0.3)$) -- ($(C1''.north east)-(-0.05,0.00)$);
+
+                \node[draw=none] at ($(B0'.north east)+(0.6,0.3)+(0.2,0.05)$) {$p'_k$};
+                \draw[-{Latex[length=1.8mm]}] ($(B0'.north east)+(0.6,0.3)$) -- ($(B0'.north east)-(-0.05,0.00)$);
+
+                \node[draw=none] at ($(B0.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_k$};
+                \draw[-{Latex[length=1.8mm]}] ($(B0.north east)+(0.6,0.3)$) -- ($(B0.north east)-(-0.05,0.00)$);
+
+            \end{tikzpicture}
+        }
+    \end{minipage}
+    \caption{TODO}\label{fig:loop-lemma}
+\end{figure}
 
 
 \begin{lemma}\label{lem:vector} Let $\mathcal{M}$ be a Turing machine.
     Assume there is $ t_0 \in \N$ and $l \in \N^+$ such that
     for all $0 \leq i < l$: $$F_\mathcal{M}(p_i)   = F_\mathcal{M}(p'_i)$$
 
-    with $t_0' = t_0+l$ and $p_i = (t_0+i, g(t_0+i))$ and $p_i' = (t_0'+i, g(t_0'+i))$. Call $p=(t,g(t))$ with $t=t'_0 + l$, see Figure~\ref{fig:loop-proof} for illustration. Then:
+    with $t_i = t_0 + i$, $t_i' = t_i+l$ and $p_i = (t_i, g(t_i))$, $p_i' = (t_i', g(t_i'))$. Call $p^*=(t^*,g(t^*))$ with $t^*=t'_0 + l$. Then:
     \begin{enumerate}
-        \item For all $0 \leq i < l$ we have: $p'_i - p_i = p_0' - p_0$. We also have $p - p_0' = p_0' - p_0$. \label{lem:vector:pt1}
-        \item We have $h(t) = h(t')$.\label{lem:vector:pt2}
-        \item If there $t_0' \leq t^* < t$ such that $g(t^*) = g(t)$ then we have $f(p) = f(p'_0)$, with $p=(t,g(t))$ with $t=t'_0 + l$.\label{lem:vector:pt3}
+        \item For all $0 \leq i < l$ we have: $p'_i - p_i = p_0' - p_0$. We also have $p^* - p_0' = p_0' - p_0$. \label{lem:vector:pt1}
+        \item We have $h(t^*) = h(t'_0)$.\label{lem:vector:pt2}
+        \item For all  $0 \leq i < l$, $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t)$.\label{lem:vector:pt3}
+        \item If there is $0 \leq k < l$ such that $g(t_k') = g(t^*)$ then $f(p^*) = f(p_0')$, hence $F(p^*) = F(p_0')$.\label{lem:vector:pt4}
     \end{enumerate}
+    Figure~\ref{fig:loop-lemma} illustrates this Lemma and Point~\ref{lem:vector:pt4} in particular.
 \end{lemma}
-
 \begin{proof}
-    % First note that by definition, all $p_i$ and $p_i'$ correspond to head positions.
-    % \begin{enumerate}
-    %     \item Because $f(p_0) = f(p'_0)$ we know that at times $t_0$ and $t_0'$ the head is in same state, reading the same symbol, hence the same transition executes and in particular both heads move in the same direction $m \in \{-1,1\}$, giving the existence of $u = (1, m)$ such that $p_1 = p_O + u$ and $p_1' = p_0' + u$. Hence, $p_1' - p_1 = p_0' + u - p_0 + u = p_0' - p_0$. Repeating the same argument for each $i$ gives $p_i' - p_i = p_0' - p_0$. Finally, $f(p_i + (p_0' - p_0)) = f(p_i + (p_i' - p_i)) = f(p_i')$.
-    %     \item First, we know that $f(p)$ and $f(p'_0)$ share the same tape head state: this is because, by hypothesis, $f(p_{l-1}) = f(p_{l-1}')$, meaning that the same transition was applied from $p_{l-1}$ to $p'_0$ and from $p_{l-1}'$ to $p$. We have to prove that their read symbol is the same. By hypothesis, there is $t_0' \leq t^* < t$ such that $g(t^*) = g(t)$, and let's assume wlog that $t^*$ is maximal and have $k = t^* - t_0'$, \ie $(t^*,g(t^*)) = p'_k$. We also know that $t_k = t_0 + k$ is the last time step at which cell at position $g(t_0')$ was visited before time $t_0'$ as otherwise, using Point~\ref{lem:vector:pt1}, by translation, we would contradict the maximality of $t^*$. By hypothesis, $f(p_k) = f(p_k')$, meaning that at times $t_k$ and $t^*$, the machine took the same transition and hence wrote the same symbol on the tape, giving $f(t_k+1,g(t_k)) = f(t^*+1,g(t^*))$, .
+    First note that by definition, all $p_i$ and $p_i'$ correspond to head positions.
+    \begin{enumerate}
+        \item Because $F(p_0) = F(p'_0)$ we know that at times $t_0$ and $t_0'$ the head is in same state, reading the same symbol, hence the same transition executes and, in particular, both heads move in the same direction $m \in \{-1,1\}$, giving the existence of $u = (1, m)$ such that $p_1 = p_0 + u$ and $p_1' = p_0' + u$. Hence, $p_1' - p_1 = p_0' + u - p_0 + u = p_0' - p_0$. Repeating the same argument for each $i < l$ gives $p_i' - p_i = p_0' - p_0$. Finally, applying the same argument with $F(p_{l-1}) = F(p'_{l-1})$ gives $p-p_0' = p'_0 - p_0$ as $p$ corresponds to one time step after $p'_{l-1}$ and $p'_0$ one time step after $p_{l-1}$.
+        \item Similarly to above, $F(p_{l-1}) = F(p'_{l-1})$ implies that the machine will transition to the same state after $p_{l-1}$ and $p'_{l-1}$, giving $h(t) = h(t')$.
+
+        \item Let $0 \leq i < l$ such that $g(t_i) = g(t_0')$. Using Point~\ref{lem:vector:pt1}, we have $p_i' = p_i + (p_0' - p_0)$, meaning $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_i) + (p_0' - p_0)$ which rewrites as $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_0') + (p_0' - p_0)$. Point~\ref{lem:vector:pt1} again with $p = p_0' +(p_0' - p_0)$, we get $g(t_0') + (p_0' - p_0) = g(t)$ and $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t)$ as needed.
+
+        \item Without loss of generality, let's assume that $k$ is maximal. Using Point~\ref{lem:vector:pt3} we get that $g(t_k) = g(t_0')$ and, by maximality of $k$, there is no $s > k$ with $s <l$ such that $g(t_s) = g(t_0')$. Because $F(p_k) = F(p_k')$, the same symbol is outputted after $p_k$ and $p_k'$, giving $f(t_k+1,g(t_k)) = f(t_k'+1,g(t_k'))$ and by maximality, the cells are not revisited respectively before $p_0$ and $p$, giving $f(p_0') = f(t_k+1,g(t_k))$ and $f(p) = f(t_k'+1,g(t_k'))$. Hence we have $f(p) = f(p_0')$ as needed. Using Point~\ref{lem:vector:pt2} we get $F(p) = F(p_0')$.
 
 
-    % \end{enumerate}
+    \end{enumerate}
 
 \end{proof}
 
@@ -71,7 +147,7 @@ Finally, when assuming $f(x) = f(y)$ for some $x,y \in \N \times \Z$ we also im
 
 \begin{figure}[h!]
     \noindent
-    \begin{minipage}[t]{0.5\textwidth}
+    \begin{minipage}[t]{0.3\textwidth}
         \centering
         \scalebox{0.85}{
             \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
@@ -117,7 +193,73 @@ Finally, when assuming $f(x) = f(y)$ for some $x,y \in \N \times \Z$ we also im
         }
     \end{minipage}
     \hfill
-    \begin{minipage}[t]{0.5\textwidth}
+    \begin{minipage}[t]{0.3\textwidth}
+        \centering
+        \scalebox{0.85}{
+            \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
+
+
+
+                % \node[draw=none] at (-1,2.7) {$p_0$};
+                % \draw[-{Latex[length=1.8mm]}] (-0.8,2.6) -- (-0.4,2.3);
+                \node (C1) at (0,2) {\stateCx\sone};
+                \node[draw=black, draw opacity=0.6] (A1) at (0.6,1.4) {\stateAx\sone};
+                \node[draw=black, draw opacity=0.6] (B0) at (1.2,0.8) {\stateEx\szero};
+                \node[draw=black, draw opacity=0.6] (D0) at (0.6,0.2) {\stateDx\szero};
+
+                % % Fill 5 cells to the right of C1
+                % \foreach \i in {1,...,4} {
+                %         \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1)+(0.6*\i,0)$) {};
+                %     }
+
+
+
+                \node[dashed, draw=red, thick] (red) at (1.2,0.8) {};
+
+                \node (C1') at (1.2, -0.4) {\stateCx\sone};
+                \node[draw=black, draw opacity=0.6] (A1') at (1.8, -1.0) {\stateAx\sone};
+                \node[draw=black, draw opacity=0.6] (B0') at (2.4, -1.6) {\stateEx\szero};
+                \node[draw=black, draw opacity=0.6] (D0') at (1.8, -2.2) {\stateDx\szero};
+
+                % % Fill 5 cells to the right of C1'
+                % \foreach \i in {1,...,4} {
+                %         \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1')+(0.6*\i,0)$) {};
+                %     }
+
+                \node[dashed, draw=red, thick] (red') at (2.4,-1.6) {};
+
+                \node[dashed] (C1'') at (2.4,-2.8) {\stateCx?};
+
+                \draw[dashed, draw=red, thick] (red.south) -- (C1'.north);
+                \draw[dashed, draw=red, thick] (red'.south) -- (C1''.north);
+
+                % \node[draw=none] at ($(red.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0}$};
+                % \draw[-{Latex[length=1.8mm]}] ($(red.north east)+(0.6,0.3)$) -- ($(red.north east)-(-0.05,0.00)$);
+
+                % \node[draw=none] at ($(red'.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0'}$};
+                % \draw[-{Latex[length=1.8mm]}] ($(red'.north east)+(0.6,0.3)$) -- ($(red'.north east)-(-0.05,0.00)$);
+
+                % Arrow and label for p_1
+                \node[draw=none] at ($(C1.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0$};
+                \draw[-{Latex[length=1.8mm]}] ($(C1.north east)+(0.6,0.3)$) -- ($(C1.north east)-(-0.05,0.00)$);
+
+                \node[draw=none] at ($(C1'.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0'$};
+                \draw[-{Latex[length=1.8mm]}] ($(C1'.north east)+(0.6,0.3)$) -- ($(C1'.north east)-(-0.05,0.00)$);
+
+                \node[draw=none] at ($(C1''.north east)+(0.6,0.3)+(0.2,0.05)$) {$p$};
+                \draw[-{Latex[length=1.8mm]}] ($(C1''.north east)+(0.6,0.3)$) -- ($(C1''.north east)-(-0.05,0.00)$);
+
+                \node[draw=none] at ($(B0'.north east)+(0.6,0.3)+(0.2,0.05)$) {$p'_k$};
+                \draw[-{Latex[length=1.8mm]}] ($(B0'.north east)+(0.6,0.3)$) -- ($(B0'.north east)-(-0.05,0.00)$);
+
+                \node[draw=none] at ($(B0.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_k$};
+                \draw[-{Latex[length=1.8mm]}] ($(B0.north east)+(0.6,0.3)$) -- ($(B0.north east)-(-0.05,0.00)$);
+
+            \end{tikzpicture}
+        }
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.3\textwidth}
         \centering
         \scalebox{0.85}{
             \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
