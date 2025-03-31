@@ -78,7 +78,7 @@ We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
         \EndIf
         \State \If{$d = \text{min} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{min} \{d_j \, | \, j < K-i \}$}
         \State \Return \NONHALT \Comment{We've detected a (negative) Translated Cycler}
-        \EndIf
+        \State \EndIf
         \State $o = o + 1$
         \State \EndIf
         \EndFor
@@ -318,8 +318,8 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 
                 \node[dashed] (C1'') at (2.4,-2.8) {\stateCx?};
 
-                \draw[dashed, draw=red, thick] (red.south) -- (C1'.north);
-                \draw[dashed, draw=red, thick] (red'.south) -- (C1''.north);
+                \draw[dashed, draw=red, thick, ->, >=stealth] (red.south) -- (C1'.north);
+                \draw[dashed, draw=red, thick, ->, >=stealth] (red'.south) -- (C1''.north);
 
                 \node[draw=none] at ($(red.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0}$};
                 \draw[-{Latex[length=1.8mm]}] ($(red.north east)+(0.6,0.3)$) -- ($(red.north east)-(-0.05,0.00)$);
