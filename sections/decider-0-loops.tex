@@ -243,141 +243,6 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 \end{lemma}
 \begin{proof} This is immediate, by Definition~\ref{def:loops}, the space-time diagram of a loop is infinite, the machine does not halt.
 \end{proof}
-\begin{figure}[h!]
-    \noindent
-    \begin{minipage}[t]{0.5\textwidth}
-        \centering
-        \scalebox{0.85}{
-            \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
-
-                % Axes: Time ↓ and Space →
-                \draw[->, thick] (-1.8,3.2) -- (-1.8,2.2) node[draw=none, midway, left] {\scriptsize time};
-                \draw[->, thick] (-1.8,3.2) -- (-0.8,3.2) node[draw=none,midway, above] {\scriptsize space};
-                % \node[draw=none] at (-1,2.7) {$p_0$};
-                % \draw[-{Latex[length=1.8mm]}] (-0.8,2.6) -- (-0.4,2.3);
-                \node (B0) at (0,2) {\stateBx\szero};
-                \node[draw=black, draw opacity=0.6] (A1) at (0.6,1.4) {\stateAx\sone};
-                \node[draw=black, draw opacity=0.6] at (1.2,0.8) {\stateCx\szero};
-                \node[draw=black, draw opacity=0.6] at (0.6,0.2) {\stateDx\szero};
-
-                \node (B0') at (0,-0.4) {\stateBx\szero};
-                \node[draw=black, draw opacity=0.6] (A1') at (0.6,-1.0) {\stateAx\sone};
-                \node[draw=black, draw opacity=0.6] at (1.2,-1.6) {\stateCx\szero};
-                \node[draw=black, draw opacity=0.6] at (0.6,-2.2) {\stateDx\szero};
-
-                \node[dashed] (B0'') at (0,-2.8) {{\stateBx}?};
-
-                % Arrow and label for p_0
-                \node[draw=none] at ($(B0.north west)-(0.6,-0.3)+(-0.2,0.05)$) {$p_0$};
-                \draw[-{Latex[length=1.8mm]}] ($(B0.north west)-(0.6,-0.3)$) -- ($(B0.north west)-(0.05,0.00)$);
-
-                % % Arrow and label for p_1
-                % \node[draw=none] at ($(A1.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_1$};
-                % \draw[-{Latex[length=1.8mm]}] ($(A1.north east)+(0.6,0.3)$) -- ($(A1.north east)-(-0.05,0.00)$);
-
-                % Arrow and label for p_0'
-                \node[draw=none] at ($(B0'.north west)-(0.6,-0.3)+(-0.2,0.05)$) {$p_0'$};
-                \draw[-{Latex[length=1.8mm]}] ($(B0'.north west)-(0.6,-0.3)$) -- ($(B0'.north west)-(0.05,0.00)$);
-
-                % % Arrow and label for p_1'
-                % \node[draw=none] at ($(A1'.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_1'$};
-                % \draw[-{Latex[length=1.8mm]}] ($(A1'.north east)+(0.6,0.3)$) -- ($(A1'.north east)-(-0.05,0.00)$);
-
-                % Arrow and label for p_0'
-                \node[draw=none] at ($(B0''.north west)-(0.6,-0.3)+(-0.2,0.05)$) {$p^*$};
-                \draw[-{Latex[length=1.8mm]}] ($(B0''.north west)-(0.6,-0.3)$) -- ($(B0''.north west)-(0.05,0.00)$);
-
-            \end{tikzpicture}
-        }
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{0.5\textwidth}
-        \centering
-        \scalebox{0.85}{
-            \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
-
-
-
-                % \node[draw=none] at (-1,2.7) {$p_0$};
-                % \draw[-{Latex[length=1.8mm]}] (-0.8,2.6) -- (-0.4,2.3);
-                \node (C1) at (0,2) {\stateCx\sone};
-                \node[draw=black, draw opacity=0.6] (A1) at (-0.6,1.4) {\stateAx\sone};
-                \node[draw=black, draw opacity=0.6] (B0) at (0,0.8) {\stateEx\szero};
-                \node[draw=black, draw opacity=0.6] (D0) at (0.6,0.2) {\stateDx\szero};
-
-                % Fill 5 cells to the right of C1
-                \foreach \i in {1,...,4} {
-                        \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1)+(0.6*\i,0)$) {};
-                    }
-
-
-
-                \node[dashed, draw=red, thick] (red) at (1.2,2) {};
-
-                \node (C1') at (1.2, -0.4) {\stateCx\sone};
-                \node[draw=black, draw opacity=0.6] (A1') at (0.6, -1.0) {\stateAx\sone};
-                \node[draw=black, draw opacity=0.6] (B0') at (1.2, -1.6) {\stateEx\szero};
-                \node[draw=black, draw opacity=0.6] (D0') at (1.8, -2.2) {\stateDx\szero};
-
-                % Fill 5 cells to the right of C1'
-                \foreach \i in {1,...,4} {
-                        \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1')+(0.6*\i,0)$) {};
-                    }
-
-                \node[dashed, draw=red, thick] (red') at (2.4,-0.4) {};
-
-                \node[dashed] (C1'') at (2.4,-2.8) {\stateCx?};
-
-                \draw[dashed, draw=red, thick, ->, >=stealth] (red.south) -- (C1'.north);
-                \draw[dashed, draw=red, thick, ->, >=stealth] (red'.south) -- (C1''.north);
-
-                \node[draw=none] at ($(red.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0}$};
-                \draw[-{Latex[length=1.8mm]}] ($(red.north east)+(0.6,0.3)$) -- ($(red.north east)-(-0.05,0.00)$);
-
-                \node[draw=none] at ($(red'.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0'}$};
-                \draw[-{Latex[length=1.8mm]}] ($(red'.north east)+(0.6,0.3)$) -- ($(red'.north east)-(-0.05,0.00)$);
-
-                % Arrow and label for p_1
-                \node[draw=none] at ($(C1.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0$};
-                \draw[-{Latex[length=1.8mm]}] ($(C1.north east)+(0.6,0.3)$) -- ($(C1.north east)-(-0.05,0.00)$);
-
-                \node[draw=none] at ($(C1'.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0'$};
-                \draw[-{Latex[length=1.8mm]}] ($(C1'.north east)+(0.6,0.3)$) -- ($(C1'.north east)-(-0.05,0.00)$);
-
-                \node[draw=none] at ($(C1''.north east)+(0.6,0.3)+(0.2,0.05)$) {$p^*$};
-                \draw[-{Latex[length=1.8mm]}] ($(C1''.north east)+(0.6,0.3)$) -- ($(C1''.north east)-(-0.05,0.00)$);
-
-
-                % Eye to the right of C1
-                % Stylized eye to the right of C1
-                % \begin{scope}
-                %     \coordinate (eyeC1) at ($(C1.east)+(0.3,0)$);
-                %     \draw[thick] (eyeC1) ellipse (0.2 and 0.1);
-                %     \fill ($(eyeC1)+(0.06,0)$) circle (0.035);
-
-                %     % Eyelashes (relative to the top arc)
-                %     \draw[thick] ($(eyeC1)+(0.0,0.1)$) -- ++(0,0.08);
-                %     \draw[thick] ($(eyeC1)+(-0.08,0.08)$) -- ++(-0.05,0.06);
-                %     \draw[thick] ($(eyeC1)+(0.08,0.08)$) -- ++(0.05,0.06);
-                % \end{scope}
-
-                % \begin{scope}
-                %     \coordinate (eyeC1') at ($(C1'.east)+(0.3,0)$);
-                %     \draw[thick] (eyeC1') ellipse (0.2 and 0.1);
-                %     \fill ($(eyeC1')+(0.06,0)$) circle (0.035);
-
-                %     % Eyelashes (same structure)
-                %     \draw[thick] ($(eyeC1')+(0.0,0.1)$) -- ++(0,0.08);
-                %     \draw[thick] ($(eyeC1')+(-0.08,0.08)$) -- ++(-0.05,0.06);
-                %     \draw[thick] ($(eyeC1')+(0.08,0.08)$) -- ++(0.05,0.06);
-                % \end{scope}
-
-
-            \end{tikzpicture}
-        }
-    \end{minipage}
-    \caption{Illustration of Theorem~\ref{th:loops:theory}: Case 1, Cycler (left) and Case 2, positive Translated Cycler (right). In both cases, we show a head-only space-time diagram with one transcript repetition (see Section~\ref{sec:loops:algo}). Coordinates $p_0 = (t_0,g(t_0))$ correspond to the beginning of the first repetition, and $p'_0 = (t_0',g(t_0'))$ of the second. In both case, showing that cell at position $p^*$ shares the same state as cell at position $p_0'$ is rather easy (Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt2}) while showing that they share same read-symbol (depicted as \texttt{?}) requires more work, Theorem~\ref{th:loops:theory}. In the case of Translated Cyclers, this is either done using Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt4}, depicted in Figure~\ref{fig:loop-lemma} or, using the assumption that the tape content after $p_0$ and $p_0'$ is the same, here symbolised using grey shading (right). In that case, using $\overline{p_0}$ and $\overline{p_0'}$ we show that the read-symbol at $p^*$ is the same that at $\overline{p_0'}$.}\label{fig:loop-proof}
-\end{figure}
 
 \begin{theorem}[Loops]\label{th:loops:theory} Let $\mathcal{M}$ be a Turing machine.
     Assume there is $ t_0 \in \N$ and $l \in \N^+$ such that
@@ -392,6 +257,142 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 \end{theorem}
 
 \begin{proof}
+
+    \begin{figure}[h!]
+        \noindent
+        \begin{minipage}[t]{0.5\textwidth}
+            \centering
+            \scalebox{0.85}{
+                \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
+
+                    % Axes: Time ↓ and Space →
+                    \draw[->, thick] (-1.8,3.2) -- (-1.8,2.2) node[draw=none, midway, left] {\scriptsize time};
+                    \draw[->, thick] (-1.8,3.2) -- (-0.8,3.2) node[draw=none,midway, above] {\scriptsize space};
+                    % \node[draw=none] at (-1,2.7) {$p_0$};
+                    % \draw[-{Latex[length=1.8mm]}] (-0.8,2.6) -- (-0.4,2.3);
+                    \node (B0) at (0,2) {\stateBx\szero};
+                    \node[draw=black, draw opacity=0.6] (A1) at (0.6,1.4) {\stateAx\sone};
+                    \node[draw=black, draw opacity=0.6] at (1.2,0.8) {\stateCx\szero};
+                    \node[draw=black, draw opacity=0.6] at (0.6,0.2) {\stateDx\szero};
+
+                    \node (B0') at (0,-0.4) {\stateBx\szero};
+                    \node[draw=black, draw opacity=0.6] (A1') at (0.6,-1.0) {\stateAx\sone};
+                    \node[draw=black, draw opacity=0.6] at (1.2,-1.6) {\stateCx\szero};
+                    \node[draw=black, draw opacity=0.6] at (0.6,-2.2) {\stateDx\szero};
+
+                    \node[dashed] (B0'') at (0,-2.8) {{\stateBx}?};
+
+                    % Arrow and label for p_0
+                    \node[draw=none] at ($(B0.north west)-(0.6,-0.3)+(-0.2,0.05)$) {$p_0$};
+                    \draw[-{Latex[length=1.8mm]}] ($(B0.north west)-(0.6,-0.3)$) -- ($(B0.north west)-(0.05,0.00)$);
+
+                    % % Arrow and label for p_1
+                    % \node[draw=none] at ($(A1.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_1$};
+                    % \draw[-{Latex[length=1.8mm]}] ($(A1.north east)+(0.6,0.3)$) -- ($(A1.north east)-(-0.05,0.00)$);
+
+                    % Arrow and label for p_0'
+                    \node[draw=none] at ($(B0'.north west)-(0.6,-0.3)+(-0.2,0.05)$) {$p_0'$};
+                    \draw[-{Latex[length=1.8mm]}] ($(B0'.north west)-(0.6,-0.3)$) -- ($(B0'.north west)-(0.05,0.00)$);
+
+                    % % Arrow and label for p_1'
+                    % \node[draw=none] at ($(A1'.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_1'$};
+                    % \draw[-{Latex[length=1.8mm]}] ($(A1'.north east)+(0.6,0.3)$) -- ($(A1'.north east)-(-0.05,0.00)$);
+
+                    % Arrow and label for p_0'
+                    \node[draw=none] at ($(B0''.north west)-(0.6,-0.3)+(-0.2,0.05)$) {$p^*$};
+                    \draw[-{Latex[length=1.8mm]}] ($(B0''.north west)-(0.6,-0.3)$) -- ($(B0''.north west)-(0.05,0.00)$);
+
+                \end{tikzpicture}
+            }
+        \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.5\textwidth}
+            \centering
+            \scalebox{0.85}{
+                \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
+
+
+
+                    % \node[draw=none] at (-1,2.7) {$p_0$};
+                    % \draw[-{Latex[length=1.8mm]}] (-0.8,2.6) -- (-0.4,2.3);
+                    \node (C1) at (0,2) {\stateCx\sone};
+                    \node[draw=black, draw opacity=0.6] (A1) at (-0.6,1.4) {\stateAx\sone};
+                    \node[draw=black, draw opacity=0.6] (B0) at (0,0.8) {\stateEx\szero};
+                    \node[draw=black, draw opacity=0.6] (D0) at (0.6,0.2) {\stateDx\szero};
+
+                    % Fill 5 cells to the right of C1
+                    \foreach \i in {1,...,4} {
+                            \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1)+(0.6*\i,0)$) {};
+                        }
+
+
+
+                    \node[dashed, draw=red, thick] (red) at (1.2,2) {};
+
+                    \node (C1') at (1.2, -0.4) {\stateCx\sone};
+                    \node[draw=black, draw opacity=0.6] (A1') at (0.6, -1.0) {\stateAx\sone};
+                    \node[draw=black, draw opacity=0.6] (B0') at (1.2, -1.6) {\stateEx\szero};
+                    \node[draw=black, draw opacity=0.6] (D0') at (1.8, -2.2) {\stateDx\szero};
+
+                    % Fill 5 cells to the right of C1'
+                    \foreach \i in {1,...,4} {
+                            \node[minimum size=6mm, draw=none, fill=gray!20] at ($(C1')+(0.6*\i,0)$) {};
+                        }
+
+                    \node[dashed, draw=red, thick] (red') at (2.4,-0.4) {};
+
+                    \node[dashed] (C1'') at (2.4,-2.8) {\stateCx?};
+
+                    \draw[dashed, draw=red, thick, ->, >=stealth] (red.south) -- (C1'.north);
+                    \draw[dashed, draw=red, thick, ->, >=stealth] (red'.south) -- (C1''.north);
+
+                    \node[draw=none] at ($(red.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0}$};
+                    \draw[-{Latex[length=1.8mm]}] ($(red.north east)+(0.6,0.3)$) -- ($(red.north east)-(-0.05,0.00)$);
+
+                    \node[draw=none] at ($(red'.north east)+(0.6,0.3)+(0.2,0.05)$) {$\overline{p_0'}$};
+                    \draw[-{Latex[length=1.8mm]}] ($(red'.north east)+(0.6,0.3)$) -- ($(red'.north east)-(-0.05,0.00)$);
+
+                    % Arrow and label for p_1
+                    \node[draw=none] at ($(C1.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0$};
+                    \draw[-{Latex[length=1.8mm]}] ($(C1.north east)+(0.6,0.3)$) -- ($(C1.north east)-(-0.05,0.00)$);
+
+                    \node[draw=none] at ($(C1'.north east)+(0.6,0.3)+(0.2,0.05)$) {$p_0'$};
+                    \draw[-{Latex[length=1.8mm]}] ($(C1'.north east)+(0.6,0.3)$) -- ($(C1'.north east)-(-0.05,0.00)$);
+
+                    \node[draw=none] at ($(C1''.north east)+(0.6,0.3)+(0.2,0.05)$) {$p^*$};
+                    \draw[-{Latex[length=1.8mm]}] ($(C1''.north east)+(0.6,0.3)$) -- ($(C1''.north east)-(-0.05,0.00)$);
+
+
+                    % Eye to the right of C1
+                    % Stylized eye to the right of C1
+                    % \begin{scope}
+                    %     \coordinate (eyeC1) at ($(C1.east)+(0.3,0)$);
+                    %     \draw[thick] (eyeC1) ellipse (0.2 and 0.1);
+                    %     \fill ($(eyeC1)+(0.06,0)$) circle (0.035);
+
+                    %     % Eyelashes (relative to the top arc)
+                    %     \draw[thick] ($(eyeC1)+(0.0,0.1)$) -- ++(0,0.08);
+                    %     \draw[thick] ($(eyeC1)+(-0.08,0.08)$) -- ++(-0.05,0.06);
+                    %     \draw[thick] ($(eyeC1)+(0.08,0.08)$) -- ++(0.05,0.06);
+                    % \end{scope}
+
+                    % \begin{scope}
+                    %     \coordinate (eyeC1') at ($(C1'.east)+(0.3,0)$);
+                    %     \draw[thick] (eyeC1') ellipse (0.2 and 0.1);
+                    %     \fill ($(eyeC1')+(0.06,0)$) circle (0.035);
+
+                    %     % Eyelashes (same structure)
+                    %     \draw[thick] ($(eyeC1')+(0.0,0.1)$) -- ++(0,0.08);
+                    %     \draw[thick] ($(eyeC1')+(-0.08,0.08)$) -- ++(-0.05,0.06);
+                    %     \draw[thick] ($(eyeC1')+(0.08,0.08)$) -- ++(0.05,0.06);
+                    % \end{scope}
+
+
+                \end{tikzpicture}
+            }
+        \end{minipage}
+        \caption{Illustration of Theorem~\ref{th:loops:theory}: Case 1, Cycler (left) and Case 2, positive Translated Cycler (right). In both cases, we show a head-only space-time diagram with one transcript repetition (see Section~\ref{sec:loops:algo}). Coordinates $p_0 = (t_0,g(t_0))$ correspond to the beginning of the first repetition, and $p'_0 = (t_0',g(t_0'))$ of the second. In both case, showing that cell at position $p^*$ shares the same state as cell at position $p_0'$ is rather easy (Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt2}) while showing that they share same read-symbol (depicted as \texttt{?}) requires more work, Theorem~\ref{th:loops:theory}. In the case of Translated Cyclers, this is either done using Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt4}, depicted in Figure~\ref{fig:loop-lemma} or, using the assumption that the tape content after $p_0$ and $p_0'$ is the same, here symbolised using grey shading (right). In that case, using $\overline{p_0}$ and $\overline{p_0'}$ we show that the read-symbol at $p^*$ is the same that at $\overline{p_0'}$.}\label{fig:loop-proof}
+    \end{figure}
 
     Consider $p^* = (t^*, g(t^*))$ with $t^*=t_0'+l$ which corresponds to one time step after $p'_{l-1}$. Figure~\ref{fig:loop-proof} illustrates the situation for the theorem's cases~\ref{th:case1} (on the left) and~\ref{th:case2} (on the right): $p^*$ is the coordinates of the black dashed cell.
 
