@@ -9,7 +9,7 @@
     \hspace{10ex}
     \includegraphics[width=0.28\textwidth]{figures/space-time-diagrams/tc_1RB---_1LB1LC_0RD0RC_1LE1RE_1LA0LE.pdf}
     %\includegraphics[width=0.4\textwidth]{figures/space-time-diagrams/translated_cycler_59090563_2.png}
-    \caption{Space-time diagrams of the 30 first steps of a \textit{\cycler}, \href{https://bbchallenge.org/1RB---\_0RC0LE\_1LD0LA\_1LB1RB\_1LC1RC}{\texttt{1RB---\_0RC0LE\_1LD0LA\_1LB1RB\_1LC1RC}} (left) and of the 10,000 first steps of a \textit{\TC} \href{https://bbchallenge.org/1RB---\_1LB1LC\_0RD0RC\_1LE1RE\_1LA0LE}{\texttt{1RB---\_1LB1LC\_0RD0RC\_1LE1RE\_1LA0LE}} (right). \cyclers are machines that eventually repeat the same configuration forever. \TCs are machines that eventually repeats the same configuration forever, but translated in space. We refer to these two types of machines as \textit{loops}.}\label{fig:loops}
+    \caption{Space-time diagrams of the 30 first steps of a \textit{\cycler}, \href{https://bbchallenge.org/1RB---\_0RC0LE\_1LD0LA\_1LB1RB\_1LC1RC}{\texttt{1RB---\_0RC0LE\_1LD0LA\_1LB1RB\_1LC1RC}} (left) and of the 10,000 first steps of a \textit{\TC}, \href{https://bbchallenge.org/1RB---\_1LB1LC\_0RD0RC\_1LE1RE\_1LA0LE}{\texttt{1RB---\_1LB1LC\_0RD0RC\_1LE1RE\_1LA0LE}} (right). \cyclers are machines that eventually repeat the same configuration forever. \TCs are machines that eventually repeats the same configuration forever, but translated in space. We refer to these two types of machines as \textit{loops}.}\label{fig:loops}
 \end{figure}
 
 % \footnotetext{\url{https://bbchallenge.org/1RB---\_0RC0LE\_1LD0LA\_1LB1RB\_1LC1RC}}
@@ -70,13 +70,13 @@ We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
         \EndIf
 
         \State \If{$i = l+o-1$}
-        \If{$d = d'$}
+        \If{$d = d'$}\label{alg:loops:cycler}
         \State \Return \NONHALT \Comment{We've detected a Cycler}
         \EndIf
-        \State \If{$d = \text{max} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{max} \{d_j \, | \, j < K-i \}$}
+        \State \If{$d = \text{max} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{max} \{d_j \, | \, j < K-i \}$}\label{alg:loops:tcplus}
         \State \Return \NONHALT \Comment{We've detected a (positive) Translated Cycler}
         \EndIf
-        \State \If{$d = \text{min} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{min} \{d_j \, | \, j < K-i \}$}
+        \State \If{$d = \text{min} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{min} \{d_j \, | \, j < K-i \}$}\label{alg:loops:tcminus}
         \State \Return \NONHALT \Comment{We've detected a (negative) Translated Cycler}
         \State \EndIf
         \State $o = o + 1$
@@ -113,6 +113,16 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
         \centering
         \scalebox{0.85}{
             \begin{tikzpicture}[every node/.style={minimum size=6mm, draw, font=\scriptsize}, scale=1]
+
+                \draw[->, thick] (-1.3,2.7) -- (-1.3,1.7) node[draw=none, midway, left] {\scriptsize time};
+                \draw[->, thick] (-1.3,2.7) -- (-0.3,2.7) node[draw=none, midway, above] {\scriptsize space};
+
+
+
+
+
+
+
 
 
 
@@ -174,7 +184,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
             \end{tikzpicture}
         }
     \end{minipage}
-    \caption{TODO}\label{fig:loop-lemma}
+    \caption{Illustration of Lemma~\ref{lem:vector}: head-only space-time diagram showing transcript repetition \texttt{\textbf{\underline{C1 A1 E0 D0}} \textbf{\underline{C1 A1 E0 D0}}}. Coordinates $p_0 = (t_0,g(t_0))$ correspond to the beginning of the first repetition, and $p'_0 = (t_0',g(t_0'))$ of the second. At position $p^*$, we can easily show that the machine shares same state, \stateC, than at position $p_0'$, Lemma~\ref{lem:vector}~Point~\ref{lem:vector:pt2}. Less immediate, in this case, using $p_k$ and $p'_k$, we can show that positions $p^*$ and $p_0'$ also share same read-symbol (depicted as \texttt{?} to signify that it is less immediate to show), which is the symbol outputted after $p_k$ and $p_k'$, Lemma~\ref{lem:vector}~Point~\ref{lem:vector:pt4}. }\label{fig:loop-lemma}
 \end{figure}
 
 
@@ -366,7 +376,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
             \end{tikzpicture}
         }
     \end{minipage}
-    \caption{TODO}\label{fig:loop-proof}
+    \caption{Illustration of Theorem~\ref{th:loops:theory}: Case 1, Cycler (left) and Case 2, positive Translated Cycler (right). In both cases, we show a head-only space-time diagram with one transcript repetition (see Section~\ref{sec:loops:algo}). Coordinates $p_0 = (t_0,g(t_0))$ correspond to the beginning of the first repetition, and $p'_0 = (t_0',g(t_0'))$ of the second. In both case, showing that cell at position $p^*$ shares the same state as cell at position $p_0'$ is rather easy (Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt2}) while showing that they share same read-symbol (depicted as \texttt{?}) requires more work, Theorem~\ref{th:loops:theory}. In the case of Translated Cyclers, this is either done using Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt4}, depicted in Figure~\ref{fig:loop-lemma} or, using the assumption that the tape content after $p_0$ and $p_0'$ is the same, here symbolised using grey shading (right). In that case, using $\overline{p_0}$ and $\overline{p_0'}$ we show that the read-symbol at $p^*$ is the same that at $\overline{p_0'}$.}\label{fig:loop-proof}
 \end{figure}
 
 \begin{theorem}[Loops]\label{th:loops:theory} Let $\mathcal{M}$ be a Turing machine.
@@ -388,7 +398,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
     We show that $F(p) = F(p'_0)$. By Lemma~\ref{lem:vector} Point~\ref{lem:vector:pt2}, we know that $h(t^*) = h(t_0')$ hence we have to show that the read symbol at $p^*$ and $p'_0$ are also the same, \ie $f(p) = f(p'_0)$. Three cases:
 
     \begin{enumerate}
-        \item Case $g(t_0') = g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(left).  By Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt1}, we know that $p^*-p_0' = p'_0 - p_0$. Because $g(t_0') = g(t_0)$, the space component of $p^*-p_0'$ is 0 and we have that $g(t^*) = g(t_0')$. Hence, we know that the cell at tape position $g(t^*)$ has been visited at least onece between time steps $t_0'$ and $t_0'+l-1$, which, by Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt4}, gives that $f(p^*) = f(p'_0)$.
+        \item Case $g(t_0') = g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(left).  By Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt1}, we know that $p^*-p_0' = p'_0 - p_0$. Because $g(t_0') = g(t_0)$, the space component of $p^*-p_0'$ is 0 and we have that $g(t^*) = g(t_0')$. Hence, we know that the cell at tape position $g(t^*)$ has been visited at least once between time steps $t_0'$ and $t_0'+l-1$, which, by Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt4}, gives that $f(p^*) = f(p'_0)$.
 
         \item Case $g(t_0') > g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(right). If there is a time step between $t_0'$ and $t_0'+l-1$ such that tape position $g(t^*)$ has been visited, by Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt4}, we get that $f(p^*) = f(p'_0)$.
 
@@ -408,21 +418,8 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 \begin{proof}
     The call to \textsc{decider-loops}($\mathcal{M}$, $L$) terminates because of Algorithm~\ref{alg:loops}, l.\ref{alg:loops:terminate}. The call returns \texttt{HALT} if and only if $\mathcal{M}$ halts within $L$ steps from the all-zero tape, see Algorithm~\ref{alg:loops}, l.\ref{alg:loops:halt}, hence if the call returns \texttt{HALT} we know that the machine halts. The interesting case is the loop-detection leading to \texttt{NONHALT}.
 
-    % Algorithm~\ref{alg:loops} finds $t_0$ and $l$ satisfying the hypotheses of Theorem~\ref{th:loops:theory} with $L = t'_{l-1}$ and $K = t_{l-1}$, and we have $F_\mathcal{M}(p_i)   = F_\mathcal{M}(p'_i)$ thanks to Algorithm~l.\ref{alg:loops:testeq}. The condition
-
-    % We take the same terminology than Algorithm~\ref{alg:loops}: $h_i = (s_i,m_i,d_i) \in \states \times \alphabet \times \Z$ for $0 \leq i \leq L$ correspond the successive state, read-symbol and tape position reached. Let's assume the algorithm returns \texttt{NONHALT} for some loop length parameter $l \geq 0$: we have $s_{L-i} = s_{K-i}$ and $m_{L-i} = m_{K-i}$ for all $i \in [0,l]$ with $K = L-l-1$ and each $h_{L-i}$ is \textit{record-breaking} (\ie \headpos that is strictly bigger or smaller than any previously seen \headpos) iff $h_{K-i}$ is. Algorithm~\ref{alg:loops}, l.\ref{alg:loops:test} distinguishes two cases:
-
-    % \begin{enumerate}
-    %   \item $d_L$ is equal to $d_K$. In that case, let's show that $h_{L+1}$ is defined and that $h_{L+1} = h_{K+1}$. Because $s_K = s_L$ and $m_K = m_L$, the machine is in same state and reads same symbol at steps $K$ and $L$, hence the same transition is applied to go from $h_K$ to $h_{K+1}$ than from $h_L$ to $h_{L+1}$, meaning that $s_{L+1} = s_{K+1}$; furthermore, because $d_L = d_{K}$ we have $d_{L+1} = d_{K+1}$. Hence, $h_{L+1}$ is defined (\ie the machine has not halted), but it remains to prove that the read-symbol is the same, \ie $m_{L+1} = m_{K+1}$. First, let's notice than by the same argument we can conclude that $d_{L-i} = d_{K-i}$ for all $i \in [0,l]$. Then, let's consider $i_0 = \text{max}\{i \, | \, d_i = d_{K+1},\, i < L+1\}$. We know that $i_0$ is defined since $i_0 \geq K+1$. Piecing together what we know, we have that $h_{i_0} = h_{i_0 -l - 1}$ and therefore that $m_{L+1} = m_{K+1}$ since there is no step between $i_0$ and $L+1$ where position $d_{L+1}$ is reached, as well as no step between $i_0-l-1$ and $K+1$ where $d_{K+1} = d_{L+1}$ is reached, and the same transition was taken at $h_{i_0} = h_{i_0 -l - 1}$. Hence, $h_{L+1} = h_{K+1}$. Using this reasoning as induction step shows that, for all $i \in \N$ and $i' = i \text{ mod } l+1$, we have $h_{L+i} = h_{K+i'}$. The transcript of $\mathcal{M}$ is infinite, the machine does not halt from the all-zero tape.
-    %   \item $d_L$ is not equal to $d_K$ but \headpos records were broken. Let's slightly modify $h_i$ to be $h_i = (s_i,m_i,b_i) \in \states \times \alphabet \times \mathbb{B}$ where $b_i$ being \texttt{true} iff $d_i$ broke a record (\ie if for all $0 \geq j < i$ we have $d_j < d_i$). We know that $h_{L-i} = h_{K-i}$ for all $i \in [0,l]$. Let's show that $h_{L+1}$ is defined and that $h_{L+1} = h_{K+1}$. Similarly as in the first case, because $s_K = s_L$ and $m_K = m_L$ we know that $h_{L+1}$ is defined and $s_{L+1} = s_{K+1}$. Two cases:
-    %         \begin{itemize}
-    %           \item If $h_{K}$ and $h_{L}$ are record-breaking. If $h_{K+1}$ is record-breaking then so is $h_{L+1}$ because the head move direction is the same from $h_{K}$ to $h_{K+1}$ and $h_{L}$ to $h_{L+1}$. Hence, $m_{L+1} = m_{K+1} = 0$ and we have  $h_{L+1} = h_{K+1}$. If $h_{K+1}$ is not record-breaking, then $h_{L+1}$ is not record-breaking either again because head move directions are the same. In that case, because the cell at position $d_{L+1}$ has already been seen, we can apply the same argument as in case 1 above ($d_L = d_K$) and conclude that $h_{L+1} = h_{K+1}$.
-    %           \item If $h_{K}$ and $h_{L}$ are not record-breaking. If $h_{K+1}$ is record-breaking then so is $h_{L+1}$. \ts{TS: TO FINISH}
-    %         \end{itemize}
-
-
-    % \end{enumerate}
-
+    Algorithm~\ref{alg:loops} finds $t_0$ and $l$ satisfying the hypotheses of Theorem~\ref{th:loops:theory}: $t_0 = K-l-1-o$
+    and where $F_\mathcal{M}(p_i)   = F_\mathcal{M}(p'_i)$ is guaranteed thanks to Algorithm~l.\ref{alg:loops:testeq}. Theorem~\ref{th:loops:theory} Cases~1, 2, and, 3 are respectively handled by Algorithm~l.\ref{alg:loops:cycler}, l.\ref{alg:loops:tcplus}, and, l.\ref{alg:loops:tcminus}. In Case 2/Case 3, the condition of having tapes be the same to the right/left of $p_0$ and $p_0'$ is handled by making sure the head is at the maximum/minimum seen position of the tape in both cases, ensuring that there are only 0s to the right/left, and therefore satisfying the condition. Hence, we get that $\mathcal{M}$ does not halt.
 \end{proof}
 
 
