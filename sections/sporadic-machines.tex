@@ -1,0 +1,115 @@
+\section{5-state Sporadic Machines}\label{sec:sporadic}
+
+
+
+\begin{figure}[h!]
+    \centering
+
+    % First row: 3 images
+    \begin{minipage}{\textwidth}
+        \centering
+        \begin{subfigure}{0.3\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{figures/sporadic-machines/sk1.png}
+            \caption*{\href{https://bbchallenge.org/1RB1RD_1LC0RC_1RA1LD_0RE0LB_---1RC}{Skelet \#1}}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.3\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{figures/sporadic-machines/sk17.png}
+            \caption*{\href{https://bbchallenge.org/example2}{Skelet \#17}}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.3\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{figures/sporadic-machines/sk10.png}
+            \caption*{\href{https://bbchallenge.org/example3}{Skelet \#10}}
+        \end{subfigure}
+    \end{minipage}
+
+    \vspace{1.5em}
+
+    % Second row: Shift Overflow Counters
+    \begin{tikzpicture}
+        \node[draw=magenta, thick, rounded corners, inner sep=8pt] (box1) {
+            \begin{minipage}{0.95\textwidth}
+                \centering
+                \textbf{\textcolor{magenta}{Shift Overflow Counters}}\\[0.8em]
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/soc_sk15.png}
+                    \caption*{\href{https://bbchallenge.org/EX1}{Skelet \#15}}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/soc_sk26.png}
+                    \caption*{\href{https://bbchallenge.org/EX2}{Skelet \#26}}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/soc_sk33.png}
+                    \caption*{\href{https://bbchallenge.org/EX3}{Skelet \#33}}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/soc_sk34.png}
+                    \caption*{\href{https://bbchallenge.org/EX4}{Skelet \#34}}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/soc_sk35.png}
+                    \caption*{\href{https://bbchallenge.org/EX5}{Skelet \#35}}
+                \end{subfigure}
+            \end{minipage}
+        };
+    \end{tikzpicture}
+
+    \vspace{1.5em}
+
+    % Third row: Finned Machines
+    \begin{tikzpicture}
+        \node[draw=magenta, thick, rounded corners, inner sep=8pt] (box2) {
+            \begin{minipage}{0.95\textwidth}
+                \centering
+                \textbf{\textcolor{magenta}{Finned Machines}}\\[0.8em]
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/finned_1.png}
+                    \caption*{\href{https://bbchallenge.org/FIN1}{Finned \#1}}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/finned_2.png}
+                    \caption*{\href{https://bbchallenge.org/FIN2}{Finned \#2}}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/finned_3.png}
+                    \caption*{\href{https://bbchallenge.org/FIN3}{Finned \#3}}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/finned_4.png}
+                    \caption*{\href{https://bbchallenge.org/FIN4}{Finned \#4}}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}{0.17\textwidth}
+                    \centering
+                    \includegraphics[width=\linewidth]{figures/sporadic-machines/finned_5.png}
+                    \caption*{\href{https://bbchallenge.org/FIN5}{Finned \#5}}
+                \end{subfigure}
+            \end{minipage}
+        };
+    \end{tikzpicture}
+
+    \caption{Family picture of the 5-state Sporadic Machines (20,000-step space-time diagrams) which required individual \Coq nonhalting proofs. All Sporadic Machines were also identified by Skelet \cite{Skelet_bbfind}, either as unprovable using his \texttt{bbfind} program, or, for what we call ``Finned machines'' marked as ``easily provable by hand'' \cite{Skelet_bbfind_list}. For better visibility, diagrams of counters (Skelet \#10 and Shift Overflow Counters) have been represented using a tape of length 200 instead of 400, which gives a \textit{zoomed-in} effect.}
+    \label{fig:machine_overview}
+\end{figure}
+
