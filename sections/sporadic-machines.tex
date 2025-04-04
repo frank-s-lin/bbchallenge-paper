@@ -16,14 +16,14 @@
         \hfill
         \begin{subfigure}{0.3\textwidth}
             \centering
-            \includegraphics[width=\linewidth]{figures/sporadic-machines/sk17.png}
-            \caption*{\href{https://bbchallenge.org/1RB---_0LC1RE_0LD1LC_1RA1LB_0RB0RA}{Skelet \#17}}
+            \includegraphics[width=\linewidth]{figures/sporadic-machines/sk10.png}
+            \caption*{\href{https://bbchallenge.org/1RB0RA_0LC1RA_1RE1LD_1LC0LD_---0RB}{Skelet \#10}}
         \end{subfigure}
         \hfill
         \begin{subfigure}{0.3\textwidth}
             \centering
-            \includegraphics[width=\linewidth]{figures/sporadic-machines/sk10.png}
-            \caption*{\href{https://bbchallenge.org/1RB0RA_0LC1RA_1RE1LD_1LC0LD_---0RB}{Skelet \#10}}
+            \includegraphics[width=\linewidth]{figures/sporadic-machines/sk17.png}
+            \caption*{\href{https://bbchallenge.org/1RB---_0LC1RE_0LD1LC_1RA1LB_0RB0RA}{Skelet \#17}}
         \end{subfigure}
     \end{minipage}
 
@@ -118,5 +118,12 @@ Sporadic Machines are 13 nonhalting 5-state Turing machines that were not captur
 Interestingly all Sporadic Machines had been identified by Georgi Georgiev (also known as ``Skelet'', see Section~\ref{sec:intro:mainresults}) in 2003: either as part of his 43 unsolved machines\footnote{Apart from \cite{Skelet_bbfind_list}, these 43 machines are also listed here: \url{https://bbchallenge.org/skelet}.} which are named after him, \eg ``Skelet \#1'' (see Figure~\ref{fig:sporadic}), either, in the case of what we call ``Finned Machines'', marked by him as ``easily provable by hand'' \cite{Skelet_bbfind_list}. In 2010, an effort to mathematically prove Skelet's machines nonhalting was initiated by Briggs which influenced \texttt{busycoq}'s proof of machine ``Skelet \#10'' \cite{DanBriggs}. Sporadic Machines can be arranged in three buckets:
 \begin{itemize}
     \item \textbf{Finned Machines.} These are five akin machines that were solved by handcrafting nonhalting certificates similar in flavor to WFAR certificates (Section~\ref{sec:WFAR}). The certificates were crafted by Blanchard, translated in \Coq by mei, see \texttt{busycoq} files \texttt{Finned\{1-5\}.v}. An argument of irregularity (Section~\ref{sec:deciders-overview}) was given for machine ``Finned \#3'' \cite{irregularFinned3}. A later-developed irregular extension of RepWL (Section~\ref{sec:RepWL}) has been reported to solve these machines\footnote{\url{https://discuss.bbchallenge.org/t/bb5s-finned-machines-summary/234}}.
-    \item \textbf{Shift Overflow Counters.} This family concerns Skelet's machines 15, 26, 33, 34 and 35; Figure~\ref{fig:sporadic}. They were first analysed by Ligocki \cite{ShawnSOC} then proved in \Coq by Yuen and mei as part of \texttt{busycoq} \cite{busycoq}
+    \item \textbf{Shift Overflow Counters.} This family concerns Skelet's machines 15, 26, 33, 34 and 35; Figure~\ref{fig:sporadic}. These machines are similar: dividing the tape in two, they implement two independent binary counters, one on each side, and they undergo relatively complex behaviors when either counter overflows. They have been described in details by Ligocki, who first analysed them \cite{ShawnSOC}. They were then proved in \Coq by Yuen and mei as part of \texttt{busycoq} \cite{busycoq}.
+    \item \textbf{Skelet \#1, Skelet \#10, and, Skelet \#17.} These three machines have really unique behaviors which we detail below.
 \end{itemize}
+
+\paragraph{Skelet \#1.}
+
+\paragraph{Skelet \#10.}
+
+\paragraph{Skelet \#17.}
