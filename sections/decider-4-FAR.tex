@@ -8,7 +8,190 @@
 
 % \subsubsection{Method overview}\label{far-overview}
 
-% The core idea of the method presented in this section is to find, for a given Turing machine, a regular language that contains the set of the machine's eventually-halting configurations (with finitely many 1s). Then, provided that the all-0 configuration is not in the regular language, we know that the machine does not halt.
+% The core idea of Finite Automate Reduction (FAR) is to find, for a given Turing machine, a regular language that contains the set of the machine's eventually-halting configurations (with finitely many 1s). Then, provided that the all-0 configuration is not in the regular language, we know that the machine does not halt.
+
+% In this section, we limit ourselves to Turing machines configurations with finite support, \ie configurations with finitely many \texttt{1}s (or, more generally, finitely many non-\texttt{0} symbols) and, when we write \textit{configuration}, we mean, \textit{configuration with finite support}.
+
+\subsubsection{Overview}
+
+\newcommand{\M}{M}
+\newcommand{\T}{^{T}}
+
+Finite Automata Reduction (FAR) is a \textit{co-CTL} technique, \ie it is dual to the Closed Tape Language (CTL) framework given in Section~\ref{sec:deciders-overview}: for a given Turing machine, we are looking for a regular language that contains the set of the machine's eventually-halting configurations and, provided that the all-0 configuration is not in the regular language, we know that the machine does not halt.
+
+The specificity of FAR is to restrict regular languages to a class of Nondeterministic Finite Automata (NFA) -- those satisfying Theorem~\ref{far-main-theorem} -- for which it is computationally simple to verify that they have the co-CTL properties: (i) reject the all-0 initial configuration, (ii) closed under Turing machines transitions, (iii) accept all eventually-halting configurations.
+
+In \CoqBB, FAR is only used as a \textbf{verifier} meaning that specific Turing machines together with their FAR NFAs are directly hardcoded in the proof (in file \texttt{Verifier\_FAR\_Hardcoded\_Certificates.v}) and then verified using Theorem~\ref{far-main-theorem} -- see Section~\ref{sec:FAR:results} for results. FAR was originally developed by Blanchard as a fully-fledged decider -- \ie the verifier together with search algorithms for NFAs \cite{FAR}.
+
+We only present the verifier part of FAR, which is encompassed in Theorem~\ref{far-main-theorem}.
+
+\subsubsection{Verifier theorem}
+
+In the following, we limit ourselves to Turing machines configurations with finite support, \ie configurations with finitely many \texttt{1}s (or, more generally, finitely many non-\texttt{0} symbols) and, when we write \textit{configuration}, we mean, \textit{configuration with finite support}.
+
+A Turing machine configuration $c$ is represented as a finite word, called a \textit{word-representation} of $c$, by concatenating the tape content (from left to right, making sure to include all the \texttt{1}s) and adding the state (in our case, a letter from A to E) just before the position of the head. For instance, two word-representations of the configuration on the top row of Figure~\ref{fig:finite-automata-reduction}(c), are $\hat{c} = \texttt{00A001100}$ and $\hat{c}' = \texttt{000A00110000}$. Word-representations of the same configuration will only differ in the number of leading and trailing \texttt{0}s that they have.
+
+
+Then, a co-CTL regular language of word-represented configurations $\mathcal{L}$ for a Turing machine $\mathcal{M}$ satisfies:
+\begin{align}
+    u \in \mathcal{L}                               & \iff 0u \in \mathcal{L}           &  & \text{(leading zeros ignored)}
+    \label{eq:lzignore}
+    \\
+    u \in \mathcal{L}                               & \iff u0 \in \mathcal{L}           &  & \text{(trailing zeros ignored)}
+    \label{eq:tzignore}
+    \\
+    c\TMstep\bot                                    & \implies \hat{c} \in \mathcal{L}  &  & \text{(recognising halt, base case)} \nonumber \\
+    (c_1\TMstep c_2)\land \hat{c}_2 \in \mathcal{L} & \implies\hat{c}_1 \in \mathcal{L} &  & \text{(recognising halt, induction)} \nonumber
+\end{align}
+
+
+With $c, c_1, c_2$ configurations of $\mathcal{M}$ (with finite support) and $\hat{c}, \hat{c}_1, \hat{c}_2$ any of their word-representations.
+
+
+Given how word-representations are defined, the last two above conditions become:
+\begin{align}
+    \forall u,z\in\{0, 1\}^*: \; ufrz \in \mathcal{L},\;                                                           & \text{if $\delta(f,r)$ is undefined (\ie halting)} \label{eq:h0}
+    \\
+    \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: utbwz \in \mathcal{L} \implies ubfrz \in \mathcal{L},\;     & \text{if $\delta(f,r) = (w,\text{L},t)$} \label{eq:hnl}
+    \\
+    \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: u w t z \in \mathcal{L} \implies u f r z \in \mathcal{L},\; & \text{if $\delta(f,r) = (w,\text{R},t)$} \label{eq:hnr}
+\end{align}
+
+With $f,t \in \{\stateA,\stateB,\stateC,\stateD,\stateE\}$ the ``from'' and ``to'' states in a transition, $r,w,b \in \{0,1\}$ the bit ``read'', the bit ``written'', and just a bit, and $\delta$ the transition table (see Section~\ref{sec:TMs}) of $\mathcal{M}$.
+
+%\footnote{A semiring is a ring without the requirement to have additive inverses, e.g. the set of natural numbers $\N=\{0,1,2\dots\}$ is a semiring.}
+
+We now transform Conditions~\eqref{eq:lzignore}–\eqref{eq:hnr} into, sometimes stronger, conditions on the structure of NFAs -- using the usual linear-algebraic description of NFAs, which we first recall. Let $\mathbf{2}$ denote the Boolean semiring $\{0,1\}$ with operations $+$ and $\cdot$ respectively implemented by $\operatorname{OR}$ and $\operatorname{AND}$ \cite{CUNINGHAMEGREEN1991251}. Let $\M_{m,n}$ be the set of matrices with $m$ rows and $n$ columns over $\mathbf{2}$. We may define a Nondeterministic Finite Automaton (NFA) with $n$ states and alphabet $\mathcal{A}$ as a tuple $(q_0, \{T_\gamma\}_{\gamma \in \mathcal{A}}, a)$ where $q_0 \in \M_{1,n}$ and $a \in \M_{1,n}$ respectively represent the initial states and accepting states of the NFA. (i.e. if the $i^\text{th}$ state of the NFA is an initial state then the $i^\text{th}$ entry of $q_0$ is set to 1 and the rest are 0, and the $i^\text{th}$ entry of $a$ is set to 1 if and only if the $i^\text{th}$ state of the NFA is accepting), and where transitions are matrices $T_\gamma\in \M_{n,n}$ for each $\gamma\in\mathcal{A}$ (i.e. the entry $(i,j)$ of matrix $T_\gamma$ is set to 1 iff the NFA transitions from state $i$ to state $j$ when reading $\gamma$). Furthermore, for any word $u=\gamma_1\dots\gamma_\ell \in \mathcal{A}^*$, let $T_u = T_{\gamma_1} T_{\gamma_2} \dots T_{\gamma_\ell}$ be the state transformation resulting from reading word $u$ (Note: $T_\epsilon = I$). A word $u=\gamma_1\dots\gamma_\ell \in \mathcal{A}^*$ is accepted by the NFA iff there exists a path from an initial state to an accepting state that is labelled by the symbols of $u$, which algebraically translates to $q_0 T_u a\T = 1$ with $a\T \in \M_{n,1}$ the transposition of $a$.
+
+Using this algebraic framework, Conditions~\eqref{eq:lzignore}~and~\eqref{eq:tzignore} are implied by the following stronger conditions on transition matrix $T_0 \in \M_{n,n}$:
+\begin{align}
+    q_0 T_0 & = q_0
+    \label{far-cond-leading-0}
+    \\
+    T_0 a\T & = a\T
+    \label{far-cond-trailing-0}
+\end{align}
+
+Indeed, Condition~\eqref{far-cond-leading-0} transparently ignores leading zeros, Condition~\eqref{far-cond-trailing-0} means that for all accepting states of the NFA, reading a \szero is possible and leads to an accepting state since $T_0 a\T$ describes the set of NFA states that reach the set of accepting states $a$ after reading a \szero.
+
+Then, Conditions~\ref{eq:h0}--\eqref{eq:hnr} algebraically translate to:
+{\small
+\begin{align*}
+    \forall u,z\in\{0, 1\}^*: \; q_0 T_u T_f T_r T_z a\T = 1, \;                                                                           & \text{if $\delta(f,r)$ is undefined (\ie halting)}
+    \\
+    \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: q_0 T_{u} T_t T_b T_w T_{z} a\T = 1 \implies q_0 T_{u} T_b T_f T_r T_{z} a\T = 1,\; & \text{if $\delta(f,r) = (w,\text{L},t)$}
+    \\
+    \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: q_0 T_{u} T_w T_t T_{z} a\T = 1 \implies q_0 T_{u} T_f T_r T_{z} a\T = 1,\;         & \text{if $\delta(f,r) = (w,\text{R},t)$}
+\end{align*}
+}
+
+These conditions are unwiedly. We seek stronger (thus still sufficient) conditions which are simpler:
+
+\begin{itemize}
+
+    \item For machine transitions going left/right, simply require $T_t T_b T_w\preceq T_b T_f T_r$ and $T_w T_t\preceq T_f T_r$, respectively with $\preceq$ the following relation on same-size matrices: $M\preceq M'$ if $M_{ij}\le M'_{ij}$ element-wise, that is, if the second matrix has at least the same 1-entries as the first matrix.
+
+    \item To simplify the condition for halting machine transitions: define an \emph{accepted steady state-set} $s$ to be a row vector such that $sa\T = 1$, $s T_0\succeq s$, and $s T_1\succeq s$. Given such $s$, we have that: $\forall q\in\M_{1,n}\; q \succeq s\implies \forall z\in\{0, 1\}^*: qT_{z}a\T = 1$. Assuming that such $s$ exists we can simply require: $\forall u\in\{0, 1\}^*: q_0T_u T_f T_r \succeq s$ which is stronger than $\forall u,z\in\{0, 1\}^*: \; q_0 T_u T_f T_r T_z a\T = 1$ with $(f,r) \to \bot$ a halting transition.
+
+          % \footnote{\ts{Note that our new condition $\forall u\in\{0, 1\}^*: q_0T_u T_f T_r \succeq s$ requires that $\forall u\in\{0, 1\}^*: q_0T_u \neq 0$, i.e. that reading 0 and 1 from the initial states must always lead to some state. This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.}}
+
+          % assert that for all $u \in \{0, 1\}^*$, the sub-expression $q_0 T_{u}$ is not zero \ts{(this means that reading 0 and 1 from the initial states must always lead to some state\footnote{This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.})},
+          % and \tss{(for $q$ a nonzero combination of such vectors and $fr\TMstep\bot$ a halt rule)}{that $q_0 T_{u} T_f T_r$}
+          % is a vector $q'$ satisfying $\forall z\in\{0, 1\}^*: q' T_{z} a = 1$ \ts{(this means that the NFA will accept any word containing a halting transition independently of the bits written after the machine's head)}.
+
+          % Given such $s$, we have $q'\succeq s\implies \forall z\in\{0, 1\}^*: q'T_{z}a = 1$.
+\end{itemize}
+
+Combining the above, we get FAR:
+
+
+
+\begin{theorem}[\CoqBB: \texttt{Lemma dfa\_nfa\_verifier\_spec}\footnote{\CoqBB's lemma is slightly different, as it builds the NFA satisfying this theorem using a given ``precursor'' Deterministic Finite Automaton (DFA) -- as initially developed in \cite{FAR} -- see Section~\ref{sec:FAR:results}.}]
+    \label{far-main-theorem}
+    Machine $\mathcal{M}$, with transition table $\delta$ (see Section~\ref{sec:TMs}), doesn't halt from the initial all-0 configuration if there is a Nondeterministic Finite Automaton $(q_0, \{T_\gamma\}, a)$ and row vector $s$ satisfying the below:
+    \begin{align}
+        \label{far-cond-first}
+        q_0 T_0                                & = q_0
+                                               &                     & \text{(leading zeros ignored)}
+        \tag{\ref{far-cond-leading-0}}
+        \\
+        T_0a\T                                 & = a\T
+                                               &                     & \text{(trailing zeros ignored)}
+        \tag{\ref{far-cond-trailing-0}}
+        \\
+        sa\T                                   & = 1
+                                               &                     & \text{($s$ is accepted)}
+        \label{far-cond-ass-accepted}
+        \\
+        sT_0,sT_1                              & \succeq s
+                                               &                     & \text{($s$ is a steady state)}
+        \label{far-cond-ass-steady}
+        \\
+        \forall u\in\{0, 1\}^*: q_0T_u T_f T_r & \succeq s
+                                               &                     & \text{if $\delta(f,r)$ is undefined (\ie halting)}
+        \label{far-cond-halt}
+        \\
+        \forall b\in\{0, 1\}: T_b T_f T_r      & \succeq T_t T_b T_w
+                                               &                     & \text{if $\delta(f,r) = (w,\text{L},t)$}
+        \label{far-cond-left}
+        \\
+        T_f T_r                                & \succeq T_w T_t
+                                               &                     & \text{if $\delta(f,r) = (w,\text{R},t)$}
+        %\label{far-cond-right}
+        \label{far-cond-last}
+        \\
+        q_0 T_A a\T                            & = 0
+                                               &                     & \text{(initial configuration rejected)}
+        \label{far-cond-reject-start}
+    \end{align}
+\end{theorem}
+\begin{proof}
+    Conditions \eqref{far-cond-leading-0}--\eqref{far-cond-last} ensure that the NFA's language includes at least all eventually halting configurations of $\mathcal{M}$, see above. Condition~\eqref{far-cond-reject-start} ensures that the initial all-0 configuration of the machine is rejected, hence not eventually halting. Hence, if conditions \eqref{far-cond-leading-0}--\eqref{far-cond-reject-start} are satisfied, we can conclude that $\mathcal{M}$ does not halt from the initial all-0 configuration.
+\end{proof}
+
+\paragraph{Verifier.} Theorem~\ref{far-main-theorem} has the nice property of being easy to verify: given a Turing machine, an NFA and a vector $s$, the task of verifying that equations \eqref{far-cond-first}--\eqref{far-cond-reject-start} hold and thus that the machine does not halt, is computationally simple\footnote{Note that although equation~\eqref{far-cond-halt} has a $\forall u\in\{0, 1\}^*$ quantification, the set of NFA states reachable after reading an arbitrary $u \in \{0,1\}^*$ is computable, and we just have to consider one instance of equation~\eqref{far-cond-halt} replacing $q_0 T_u$ per such state.}.
+
+
+
+\subsubsection{Implementations and results}\label{sec:FAR:results}
+
+
+
+% The regular languages considered by FAR are described using Nondeterministic Finite Automata (NFA) and one important aspect of the technique is that, given a Turing machine and its FAR NFA, it is a computationally simple task to verify that the NFA's language does indeed recognise at least all the eventually-halting configurations of the machine.
+
+% Concretely, a Turing machine configuration $c$ is represented as a finite word, called a \textit{word-representation} of $c$, by concatenating the tape content (from left to right, making sure to include all the \texttt{1}s) and adding the state (in our case, a letter from A to E) just before the position of the head. For instance, two word-representations of the configuration on the top row of Figure~\ref{fig:finite-automata-reduction}(c), are $\hat{c} = \texttt{00A001100}$ and $\hat{c}' = \texttt{000A00110000}$. Word-representations of the same configuration will only differ in the number of leading and trailing \texttt{0}s that they have.
+
+% Then, given this encoding of configurations, for a given Turing machine $\mathcal{M}$, by definition, a co-CTL regular language $\mathcal{L}$ satisfies:
+% \begin{align}
+%     u \in \mathcal{L} \iff 0u \in \mathcal{L}                                         &  & \text{(leading zeros ignored)}
+%     \label{eq:lzignore}
+%     \\
+%     u \in \mathcal{L} \iff u0 \in \mathcal{L}                                         &  & \text{(trailing zeros ignored)}
+%     \label{eq:tzignore}
+%     \\
+%     c\TMstep\bot  \implies \hat{c} \in \mathcal{L}                                    &  & \text{(recognising halt, base case)}\label{eq:h0} \\
+%     (c_1\TMstep c_2)\land \hat{c}_2 \in \mathcal{L} \implies\hat{c}_1 \in \mathcal{L} &  & \text{(recognising halt, induction)}\label{eq:hn}
+% \end{align}
+
+
+% With $c, c_1, c_2$ configurations of $\mathcal{M}$ (with finite support) and $\hat{c}, \hat{c}_1, \hat{c}_2$ any of their word-representations. \\
+
+
+
+% FAR represents regular languages using Nondeterministic Finite Automata (NFA) and makes use of their algebraic presentation: let $\mathbf{2}$ denote the Boolean semiring\footnote{A semiring is a ring without the requirement to have additive inverses, e.g. the set of natural numbers $\N=\{0,1,2\dots\}$ is a semiring.} $\{0,1\}$ with operations $+$ and $\cdot$ respectively implemented by $\operatorname{OR}$ and $\operatorname{AND}$ \cite{CUNINGHAMEGREEN1991251}. Let $\M_{m,n}$ be the set of matrices with $m$ rows and $n$ columns over $\mathbf{2}$. We may define a Nondeterministic Finite Automaton (NFA) with $n$ states and alphabet $\mathcal{A}$ as a tuple $(q_0, \{T_\gamma\}_{\gamma \in \mathcal{A}}, a)$ where $q_0 \in \M_{1,n}$ and $a \in \M_{1,n}$ respectively represent the initial states and accepting states of the NFA. (i.e. if the $i^\text{th}$ state of the NFA is an initial state then the $i^\text{th}$ entry of $q_0$ is set to 1 and the rest are 0, and the $i^\text{th}$ entry of $a$ is set to 1 if and only if the $i^\text{th}$ state of the NFA is accepting), and where transitions are matrices $T_\gamma\in \M_{n,n}$ for each $\gamma\in\mathcal{A}$ (i.e. the entry $(i,j)$ of matrix $T_\gamma$ is set to 1 iff the NFA transitions from state $i$ to state $j$ when reading $\gamma$). Furthermore, for any word $u=\gamma_1\dots\gamma_\ell \in \mathcal{A}^*$, let $T_u = T_{\gamma_1} T_{\gamma_2} \dots T_{\gamma_\ell}$ be the state transformation resulting from reading word $u$ (Note: $T_\epsilon = I$). A word $u=\gamma_1\dots\gamma_\ell \in \mathcal{A}^*$ is accepted by the NFA iff there exists a path from an initial state to an accepting state that is labelled by the symbols of $u$, which algebraically translates to $q_0 T_u a\T = 1$ with $a\T \in \M_{n,1}$ the transposition of $a$.
+
+% Using this algebraic framework, Equations~\eqref{eq:lzignore}~and~\eqref{eq:tzignore} are implied by the following stronger conditions on transition matrix $T_0 \in \M_{n,n}$:
+% \begin{align}
+%     q_0 T_0 & = q_0
+%     \label{far-cond-leading-0}
+%     \\
+%     T_0 a\T & = a\T
+%     \label{far-cond-trailing-0}
+% \end{align}
+
+% Indeed, Equation~\eqref{far-cond-leading-0} means that reading a \szero in the initial state $q_0$ leads back to $q_0$, while Equation~\eqref{far-cond-trailing-0}, means that for all accepting states of the NFA, reading a \szero is possible and leads to an accepting state since $T_0 a\T$ describes the set of NFA states that reach the set of accepting states $a$ after reading a $0$.
+
+
 
 % A dual idea has been explored by other authors under the name Closed Tape Languages (CTL) as described in S. Ligocki's blog \cite{ShawnCTL} and credited to H. Marxen in collaboration with J. Buntrock.
 % The CTL technique for proving a Turing machine doesn't halt is to exhibit a set $C$ of configurations such that:
@@ -277,8 +460,8 @@
 
 % Then, we want our NFA's language $\mathcal{L}$ to include all eventually-halting configurations (with finitely many 1s) of a given Turing machine $\mathcal{M}$.  Inductively, we want that:
 % \begin{align*}
-%     c\vdash\bot                                    & \implies \hat{c} \in \mathcal{L}  \\
-%     (c_1\vdash c_2)\land \hat{c}_2 \in \mathcal{L} & \implies\hat{c}_1 \in \mathcal{L}
+%     c\TMstep\bot                                    & \implies \hat{c} \in \mathcal{L}  \\
+%     (c_1\TMstep c_2)\land \hat{c}_2 \in \mathcal{L} & \implies\hat{c}_1 \in \mathcal{L}
 % \end{align*}
 
 % With $c, c_1, c_2$ configurations of the TM (with finite support) and $\hat{c}, \hat{c}_1, \hat{c}_2$ any of their finite word-representations, see Definition~\ref{def:wordc}. Let $f,t \in \{A,B,C,D,E\}$ denote TM states (the ``from'' and ``to'' states in a TM transition), and $r,w,b \in \{0,1\}$ denote bits (a bit ``read'', a bit ``written'', and just a bit), then the above conditions turn into:
@@ -310,7 +493,7 @@
 %           % \footnote{\ts{Note that our new condition $\forall u\in\{0, 1\}^*: q_0T_u T_f T_r \succeq s$ requires that $\forall u\in\{0, 1\}^*: q_0T_u \neq 0$, i.e. that reading 0 and 1 from the initial states must always lead to some state. This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.}}
 
 %           % assert that for all $u \in \{0, 1\}^*$, the sub-expression $q_0 T_{u}$ is not zero \ts{(this means that reading 0 and 1 from the initial states must always lead to some state\footnote{This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.})},
-%           % and \tss{(for $q$ a nonzero combination of such vectors and $fr\vdash\bot$ a halt rule)}{that $q_0 T_{u} T_f T_r$}
+%           % and \tss{(for $q$ a nonzero combination of such vectors and $fr\TMstep\bot$ a halt rule)}{that $q_0 T_{u} T_f T_r$}
 %           % is a vector $q'$ satisfying $\forall z\in\{0, 1\}^*: q' T_{z} a = 1$ \ts{(this means that the NFA will accept any word containing a halting transition independently of the bits written after the machine's head)}.
 
 %           % Given such $s$, we have $q'\succeq s\implies \forall z\in\{0, 1\}^*: q'T_{z}a = 1$.
@@ -638,18 +821,18 @@
 % Note that any finitely supported configuration $c$ of $\mathcal{M}$ maps to a configuration $[c]$ of $\mathcal{M}/\sim_{\mathcal{L}}$, by sending the left-of-head contents to their equivalence class modulo $\sim_\mathcal{L}$.
 % This is a many-to-one mapping.
 
-% The \emph{transitions} of $\mathcal{M}/\sim_{\mathcal{L}}$ are the images of those of $\mathcal{M}$: that is, if $c_1\vdash_\mathcal{M} c_2$, $[c_1]\vdash_{\mathcal{M}/\sim_\mathcal{L}} [c_2]$. Since $c_1\mapsto[c_1]$ is a many-to-one mapping, this definition makes $\mathcal{M}/\sim_\mathcal{L}$ a nondeterministic machine.
-% In case $c_1\vdash_\mathcal{M}\bot$ (i.e., the $\mathcal{M}$-transition from $c_1$ is undefined), we also define $[c_1]\vdash_{\mathcal{M}/\sim_\mathcal{L}}\bot$.
+% The \emph{transitions} of $\mathcal{M}/\sim_{\mathcal{L}}$ are the images of those of $\mathcal{M}$: that is, if $c_1\TMstep_\mathcal{M} c_2$, $[c_1]\TMstep_{\mathcal{M}/\sim_\mathcal{L}} [c_2]$. Since $c_1\mapsto[c_1]$ is a many-to-one mapping, this definition makes $\mathcal{M}/\sim_\mathcal{L}$ a nondeterministic machine.
+% In case $c_1\TMstep_\mathcal{M}\bot$ (i.e., the $\mathcal{M}$-transition from $c_1$ is undefined), we also define $[c_1]\TMstep_{\mathcal{M}/\sim_\mathcal{L}}\bot$.
 
-% For any configurations $c_1,c_2$ of $\mathcal{M}$, if $[c_1]\vdash_\mathcal{M}/\sim_\mathcal{L} [c_2]$ and a word-representation of $c_2$ is in $\mathcal{L}$, observe that a word-representation of $c_1$ is also in $\mathcal{L}$.
-% This follows because the $\mathcal{M}/\sim_\mathcal{L}$-transition must come from some transition $c_1'\vdash_\mathcal{M}c'_2$ of $\mathcal{M}$, where $[c_1]=[c_1']$ and $[c_2]=[c_2']$. Now, $c'_2$ has a word-representation which differs from one of $c_2$ only by substituting a Nerode-congruent prefix, so $c'_2$ also has a word-representation in $\mathcal{L}$. By closure of $\mathcal{L}$, this is true of $c'_1$, and similarly by Nerode congruence this is true of $c_1$.
+% For any configurations $c_1,c_2$ of $\mathcal{M}$, if $[c_1]\TMstep_\mathcal{M}/\sim_\mathcal{L} [c_2]$ and a word-representation of $c_2$ is in $\mathcal{L}$, observe that a word-representation of $c_1$ is also in $\mathcal{L}$.
+% This follows because the $\mathcal{M}/\sim_\mathcal{L}$-transition must come from some transition $c_1'\TMstep_\mathcal{M}c'_2$ of $\mathcal{M}$, where $[c_1]=[c_1']$ and $[c_2]=[c_2']$. Now, $c'_2$ has a word-representation which differs from one of $c_2$ only by substituting a Nerode-congruent prefix, so $c'_2$ also has a word-representation in $\mathcal{L}$. By closure of $\mathcal{L}$, this is true of $c'_1$, and similarly by Nerode congruence this is true of $c_1$.
 
-% Similarly, if $[c_1]\vdash_\mathcal{M}/\sim_\mathcal{L}\bot$, $c_1$ has a word-representation in $\mathcal{L}$.
+% Similarly, if $[c_1]\TMstep_\mathcal{M}/\sim_\mathcal{L}\bot$, $c_1$ has a word-representation in $\mathcal{L}$.
 
 % Say that $\mathcal{M}/\sim_\mathcal{L}$ halts from its initial configuration (which is the image of $\mathcal{M}$'s initial configuration) if there exists a sequence of $\mathcal{M}/\sim_\mathcal{L}$-transitions from it to $\bot$.
 % The point of this is: if $\mathcal{L}$ is a closed language for $\mathcal{M}$, separating its initial configuration from all halting configurations, then that's impossible!
-% For that would imply a sequence $[c_0]\vdash_{\mathcal{M}/\sim_\mathcal{L}}\dots\vdash_{\mathcal{M}/\sim_\mathcal{L}}[c_n]\vdash_{\mathcal{M}/\sim_\mathcal{L}}\bot$, where $c_0$ is the initial configuration of $\mathcal{M}$ and $\{c_i\}_{i=1}^n$ is a sequence of other configurations.
-% By the above, this would imply that $c_0$ has a word-representation in $\mathcal{L}$, contrary to assumption that $\mathcal{L}$ provides a CTL proof that $c_0\not\vdash^*_\mathcal{M}\bot$.
+% For that would imply a sequence $[c_0]\TMstep_{\mathcal{M}/\sim_\mathcal{L}}\dots\TMstep_{\mathcal{M}/\sim_\mathcal{L}}[c_n]\TMstep_{\mathcal{M}/\sim_\mathcal{L}}\bot$, where $c_0$ is the initial configuration of $\mathcal{M}$ and $\{c_i\}_{i=1}^n$ is a sequence of other configurations.
+% By the above, this would imply that $c_0$ has a word-representation in $\mathcal{L}$, contrary to assumption that $\mathcal{L}$ provides a CTL proof that $c_0\not\TMstep^*_\mathcal{M}\bot$.
 
 % We now seek to recover $\mathcal{L}$, or another regular language which leads to a CTL proof, by studying the halting problem of $\mathcal{M}/\sim_\mathcal{L}$.
 % In fact, the work has been done already: observe that, just as any Turing machine $\mathcal{M}$ is equivalent to a PDA equipped with two stacks (corresponding to the strict left-hand side of the tape and the rest of it), the machine $\mathcal{M}/\sim_\mathcal{L}$ is equivalent to a  standard nondeterministic PDA. (The control-state space of the PDA to is simply $\{0,1\}^*/\sim_\mathcal{L} \times \{A,\ldots,E\}$---which is a finite set by the Myhill-Nerode theorem. A transition of $\mathcal{M}/\sim_\mathcal{L}$ corresponding to a leftward TM transition pushes the written bit onto the stack. A transition of $\mathcal{M}/\sim_\mathcal{L}$ corresponding to a rightward TM transition pops the read bit off the stack.)
@@ -725,15 +908,15 @@
 % Despite the new setting, we can write out closure conditions analogous to \S\ref{far-defs-recognizer}'s, each $\forall i\in[l],j\in[d]$:
 % \begin{align}
 %                                            & (i,f,r,j)\in A
-%                                            &                               & \text{if $\ldots fr\ldots\vdash_\mathcal{M}\bot$ is a halt rule}
+%                                            &                               & \text{if $\ldots fr\ldots\TMstep_\mathcal{M}\bot$ is a halt rule}
 %     \tag{\ref{far-cond-halt}''}
 %     \\
 %     (i, t, b, \delta_R(j,w))\in A \implies & (\delta_L(i,b), f, r, j)\in A
-%                                            &                               & \text{if $\ldots bfr\ldots\vdash_\mathcal{M}\ldots tbw\ldots$ is a left rule}
+%                                            &                               & \text{if $\ldots bfr\ldots\TMstep_\mathcal{M}\ldots tbw\ldots$ is a left rule}
 %     \tag{\ref{far-cond-left}''}
 %     \\
 %     (\delta_L(i,w), t, b, j)\in A \implies & (i, f, r, \delta_R(j,b))\in A
-%                                            &                               & \text{if $\ldots frb\ldots\vdash_\mathcal{M}\ldots wtb\ldots$ is a right rule}
+%                                            &                               & \text{if $\ldots frb\ldots\TMstep_\mathcal{M}\ldots wtb\ldots$ is a right rule}
 %     %\label{far-cond-right}
 %     \tag{\ref{far-cond-last}''}
 % \end{align}
