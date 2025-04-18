@@ -3,6 +3,31 @@
 \newpage
 \subsection{Finite automata reduction (FAR)}\label{sec:FAR}
 
+
+% 1RB0RA_1LC---_0LD0LC_0RE1RA_1RE1LD  * fractal
+% 1RB1LC_1LA1RB_1LD0LA_1RE0RD_---0RB  * counter
+% 1RB1LA_1LA1RC_---0RD_0LA0RE_0LD1RE  * counter
+% 1RB---_0RC0RB_1LC0LD_1RA0LE_0LA0LE  * fractal
+% 1RB1RA_1LC0LD_---1LD_1RE1LE_0RA0LB  * counter
+% 1RB1LB_0RC0LD_1RD1RC_1LE0LA_---1LA  * counter
+% 1RB1LA_1RC1RD_0LA0RE_---0RC_0LC1RE  * counter
+% 1RB1RA_1LC0LC_0LE0RD_0RA1LB_1LD---  * fractal
+% 1RB---_0RC0RB_0LD1LA_1LD1LE_0LA0LE  * fractal
+% 1RB0RD_1RC---_1LD1LE_1RE1LD_1RA0LC  * counter
+% 1RB0RA_1LC---_0LD0LC_0RE1RA_1RE0RA  * fractal
+% 1RB---_0LC1RD_1LD1LC_1RE0RE_0RA0LB  * fractal
+% 1RB0RB_0RC0LD_1RD---_0LE1RA_1LA1LE  * fractal
+% 1RB---_0RC0RB_0LD1LE_1LD0LE_1LA1RC  * fractal
+% 1RB1RC_1LC1RB_1LD0RA_1LE0LB_1LA---  * chaotic
+% 1RB1LD_1LC---_0LD0LC_0RE1RA_1RE0RA  * fractal
+% 1RB1LA_1RC0LE_1RD0RA_1RE---_1LA1LB  * chaotic
+% 1RB---_0RC0RB_0LD1LE_1LD0LE_1LA0LE  * fractal
+% 1RB0LE_1RC---_0RD0RC_1LD0LA_0LB0LE  * fractal
+% 1RB0RA_1LC---_0LC0LD_1RE0RB_0RE1RA  * fractal
+% 1RB---_1LC1LD_1RD1LC_1RE0LB_1RA0RC  * chaotic
+% 1RB---_0RC0RB_0LD1LE_1LD1RC_1LA0LE  * fractal
+% 1RB0LD_1RC0RE_1RD---_1LE1LA_1RA1LE  * chaotic
+
 % \paragraph{Acknowledgement.} Sincere thanks to bbchallenge's contributor Justin Blanchard who initially presented this method and the first implementation\footnote{See: \url{https://discuss.bbchallenge.org/t/decider-finite-automata-reduction/}.}. Others have contributed to this method by producing alternative implementations (see Section~\ref{sec:far-implem}) or discussing and writing the formal proof presented here: Tony Guilfoyle, Tristan Stérin (cosmo), Nathan Fenner, Mateusz Naściszewski (Mateon1), Konrad Deka, Iijil, Shawn Ligocki. %, savask.
 
 
@@ -220,6 +245,8 @@ Combining the above, we get FAR:
 \subsubsection{Implementations and results}\label{sec:FAR:results}
 
 \ts{TS: incorportate references to deciders writeup if decision is made to put on arxiv. Ask JB if need to cite somewhere the precursor paper to FAR and where.}
+
+\ts{TS: talk about generality}
 
 % The regular languages considered by FAR are described using Nondeterministic Finite Automata (NFA) and one important aspect of the technique is that, given a Turing machine and its FAR NFA, it is a computationally simple task to verify that the NFA's language does indeed recognise at least all the eventually-halting configurations of the machine.
 
