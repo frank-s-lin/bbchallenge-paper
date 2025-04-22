@@ -28,6 +28,8 @@ def main():
     initial_config = WFARConfig()
     to_add = [initial_config]
 
+    check_impossible_configs = set()
+
     while to_add:
         config = to_add.pop()
         print(f"Checking {config.format()}")
@@ -35,7 +37,9 @@ def main():
             print(f"  Child {next_config.format()}")
             matching_config = cert.find_matching_config(next_config)
             if matching_config is None:
-                raise ValueError(f"No matching config found for {next_config.format()}")
+                check_impossible_configs.add(next_config)
+                continue
+                # raise ValueError(f"No matching config found for {next_config.format()}")
 
             if matching_config in check_forward_closure_set:
                 continue
@@ -43,6 +47,10 @@ def main():
             check_forward_closure_set.add(matching_config)
             to_add.append(matching_config)
             print("    Adding matching ", matching_config.format())
+
+    print("Checking impossible configurations...")
+    for config in check_impossible_configs:
+        print(f"Checking {config.format()}")
 
 
 if __name__ == "__main__":

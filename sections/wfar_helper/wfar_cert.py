@@ -20,6 +20,30 @@ class WFARConfig:
         self.lower_bound = lower_bound
         self.upper_bound = upper_bound
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, WFARConfig):
+            return False
+        return (
+            self.tm_state == other.tm_state
+            and self.tm_read == other.tm_read
+            and self.left_wa_state == other.left_wa_state
+            and self.right_wa_state == other.right_wa_state
+            and self.lower_bound == other.lower_bound
+            and self.upper_bound == other.upper_bound
+        )
+
+    def __hash__(self) -> int:
+        return hash(
+            (
+                self.tm_state,
+                self.tm_read,
+                self.left_wa_state,
+                self.right_wa_state,
+                self.lower_bound,
+                self.upper_bound,
+            )
+        )
+
     def matches(self, other: "WFARConfig") -> bool:
         """Check if this config matches another, considering that None bounds are more general.
         Returns True if this config is more general than or equal to other."""
