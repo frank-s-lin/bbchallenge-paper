@@ -40,12 +40,19 @@
             \bottomrule
         \end{tabular}
 
-        \vspace{1em}
+        \vspace{0.8em}
         \raggedright
         (a') Space-time diagram \\
         \vspace{0.3em}
         \centering
         \includegraphics[width=1.1\linewidth]{figures/space-time-diagrams/counter_wfar.png}
+
+        % \vspace{0.8em}
+        % \raggedright
+        % (a') Space-time diagram \\
+        % \vspace{0.3em}
+        % \centering
+        % \includegraphics[width=1.1\linewidth]{figures/wfar/wfar_example.pdf}
     \end{minipage}
     \hfill
     \vrule
@@ -190,7 +197,7 @@
                     \end{tikzpicture}
                 \] \\
                 \vspace{-0.5em}
-                {\large Configuration accepted, see (e) }
+                {\large Configuration accepted, see (e), hence machine does not halt starting from $\texttt{10101}\; \texttt{\stateC}\sone\; \texttt{01}$, see Theorem~\ref{th:WFAR}. }
                 }
                 % \begin{tikzpicture}[->, >=Stealth, auto, node distance=2cm, every node/.style={scale=1}]
                 %     \tikzset{
@@ -226,64 +233,110 @@
         \centering
 
         \usetikzlibrary{positioning, shapes.multipart, fit}
-        \begin{tikzpicture}[node distance=0.2cm and 0.3cm, every node/.style={font=\footnotesize}, anchor=north]
+        \scalebox{0.8}{
+            \begin{tikzpicture}[node distance=0.2cm and 0.3cm, every node/.style={font=\normalsize}, anchor=north]
 
-            % Reference coordinate for top alignment
-            \coordinate (topref) at (0,0);
+                % Reference coordinate for top alignment
+                \coordinate (topref) at (0,0);
 
-            % W >= -1 group
-            \node[draw, rectangle, rounded corners, inner sep=3pt] (wmin1box)
-            {\begin{tabular}{l}
-                    $[p_2]\; \texttt{\stateE}\szero\; [q_0]$
-                \end{tabular}};
-            \node[above=0cm of wmin1box] {$W \geq$ -1};
+                % W >= -1 group
+                \node[draw, rectangle, rounded corners, inner sep=3pt] (wmin1box)
+                {\begin{tabular}{l}
+                        $[p_2]\; \texttt{\stateE}\szero\; [q_0]$
+                    \end{tabular}};
+                \node[above=0cm of wmin1box] {$W \geq$ -1};
 
-            % W = 0 group
-            \node[draw, rectangle, rounded corners, inner sep=3pt, right=of wmin1box] (w0box)
-            {\begin{tabular}{l}
-                    $[p_0]\; \texttt{\stateA}\szero\; [q_0]$ \\
-                    $[p_0]\; \texttt{\stateE}\szero\; [q_0]$ \\
-                    $[p_0]\; \texttt{\stateE}\sone\; [q_0]$
-                \end{tabular}};
-            \node[above=0cm of w0box] {$W = 0$};
+                % W = 0 group
+                \node[draw, rectangle, rounded corners, inner sep=3pt, right=of wmin1box] (w0box)
+                {\begin{tabular}{l}
+                        $[p_0]\; \texttt{\stateA}\szero\; [q_0]$ \\
+                        $[p_0]\; \texttt{\stateE}\szero\; [q_0]$ \\
+                        $[p_0]\; \texttt{\stateE}\sone\; [q_0]$
+                    \end{tabular}};
+                \node[above=0cm of w0box] {$W = 0$};
 
-            % W >= 0 group
-            \node[draw, rectangle, rounded corners, inner sep=3pt, right=of w0box] (w0plusbox)
-            {\begin{tabular}{l}
-                    $[p_2]\; \texttt{\stateB}\szero\; [q_0]$ \\
-                    $[p_2]\; \texttt{\stateE}\sone\; [q_0]$  \\
-                    $[p_3]\; \texttt{\stateE}\sone\; [q_0]$
-                \end{tabular}};
-            \node[above=0cm of w0plusbox] {$W\geq0$};
-            % W >= 1 group
-            \node[draw, rectangle, rounded corners, inner sep=3pt, below=0.6cm of w0box, xshift=1.4cm] (w1box)
-            {\begin{tabular}{ll}
-                    $[p_3]\; \texttt{\stateA}\szero\; [q_1]$                                             & $[p_2]\; \texttt{\stateC}\sone\; [q_1]$  \\
-                    $[p_2]\; \texttt{\stateB}\szero\; [q_1]$                                             & $[p_3]\; \texttt{\stateC}\sone\; [q_1]$  \\
-                    $[p_2]\; \texttt{\stateB}\sone\; [q_0]$                                              & $[p_2]\; \texttt{\stateD}\szero\; [q_0]$ \\
-                    $[p_2]\; \texttt{\stateB}\sone\; [q_1]$                                              & $[p_2]\; \texttt{\stateD}\szero\; [q_1]$ \\
-                    $[p_2]\; \texttt{\stateC}\szero\; [q_0]$                                             & $[p_2]\; \texttt{\stateE}\sone\; [q_1]$  \\
-                    $[p_3]\; \texttt{\stateC}\szero\; [q_0]$                                             & $[p_3]\; \texttt{\stateE}\sone\; [q_1]$  \\
-                    \rule{0pt}{3.3ex}\fcolorbox{red}{yellow!30}{$[p_2]\; \texttt{\stateC}\sone\; [q_0]$} &                                          \\
-                \end{tabular}};
-            \node[above=0cm of w1box] {$W \geq 1$};
+                % W >= 0 group
+                \node[draw, rectangle, rounded corners, inner sep=3pt, right=of w0box] (w0plusbox)
+                {\begin{tabular}{l}
+                        $[p_2]\; \texttt{\stateB}\szero\; [q_0]$ \\
+                        $[p_2]\; \texttt{\stateE}\sone\; [q_0]$  \\
+                        $[p_3]\; \texttt{\stateE}\sone\; [q_0]$
+                    \end{tabular}};
+                \node[above=0cm of w0plusbox] {$W\geq0$};
+                % W >= 1 group
+                \node[draw, rectangle, rounded corners, inner sep=3pt, below=0.6cm of w0box, xshift=1.4cm] (w1box)
+                {\begin{tabular}{ll}
+                        $[p_3]\; \texttt{\stateA}\szero\; [q_1]$                                             & $[p_2]\; \texttt{\stateC}\sone\; [q_1]$  \\
+                        $[p_2]\; \texttt{\stateB}\szero\; [q_1]$                                             & $[p_3]\; \texttt{\stateC}\sone\; [q_1]$  \\
+                        $[p_2]\; \texttt{\stateB}\sone\; [q_0]$                                              & $[p_2]\; \texttt{\stateD}\szero\; [q_0]$ \\
+                        $[p_2]\; \texttt{\stateB}\sone\; [q_1]$                                              & $[p_2]\; \texttt{\stateD}\szero\; [q_1]$ \\
+                        $[p_2]\; \texttt{\stateC}\szero\; [q_0]$                                             & $[p_2]\; \texttt{\stateE}\sone\; [q_1]$  \\
+                        $[p_3]\; \texttt{\stateC}\szero\; [q_0]$                                             & $[p_3]\; \texttt{\stateE}\sone\; [q_1]$  \\
+                        \rule{0pt}{3.3ex}\fcolorbox{red}{yellow!30}{$[p_2]\; \texttt{\stateC}\sone\; [q_0]$} &                                          \\
+                    \end{tabular}};
+                \node[above=0cm of w1box] {$W \geq 1$};
 
-            % W >= 2 group
-            \node[draw, rectangle, rounded corners, inner sep=6pt, below=0.7cm of wmin1box] (w2box)
-            {\begin{tabular}{l}
-                    $[p_3]\; \texttt{\stateA}\szero\; [q_0]$ \\
-                    $[p_2]\; \texttt{\stateC}\szero\; [q_1]$ \\
-                    $[p_3]\; \texttt{\stateC}\szero\; [q_1]$ \\
-                    $[p_3]\; \texttt{\stateC}\sone\; [q_0]$  \\
-                    $[p_2]\; \texttt{\stateD}\sone\; [q_0]$  \\
-                    $[p_2]\; \texttt{\stateD}\sone\; [q_1]$  \\
-                    $[p_3]\; \texttt{\stateD}\sone\; [q_1]$  \\
-                \end{tabular}};
-            \node[above=0cm of w2box] {$W \geq 2$};
+                % W >= 2 group
+                \node[draw, rectangle, rounded corners, inner sep=6pt, below=0.7cm of wmin1box] (w2box)
+                {\begin{tabular}{l}
+                        $[p_3]\; \texttt{\stateA}\szero\; [q_0]$ \\
+                        $[p_2]\; \texttt{\stateC}\szero\; [q_1]$ \\
+                        $[p_3]\; \texttt{\stateC}\szero\; [q_1]$ \\
+                        $[p_3]\; \texttt{\stateC}\sone\; [q_0]$  \\
+                        $[p_2]\; \texttt{\stateD}\sone\; [q_0]$  \\
+                        $[p_2]\; \texttt{\stateD}\sone\; [q_1]$  \\
+                        $[p_3]\; \texttt{\stateD}\sone\; [q_1]$  \\
+                    \end{tabular}};
+                \node[above=0cm of w2box] {$W \geq 2$};
 
-        \end{tikzpicture}
-
+            \end{tikzpicture}
+        }
     \end{minipage}
 
-    \caption{WFAR certificate of nonhalting for machine \tm{1RB---_0RC1LC_1RD1RC_1LE1LD_0RA0LE}: (a) transition table and space-time diagram, (b) left weighted automaton: processes symbols to the left of the head in the left-to-right direction, which results in a left end-state -- \eg state $p_2$ when processing \texttt{10101} -- and a left weight obtained by summing the weights of each transition -- \eg $W_l = 2$ when processing \texttt{10101} (c) right weighted automaton: processes symbols to the right of the head (excluding the symbol read by the head) in the right-to-left direction, which results in a right end-state -- \eg state $q_0$ when processing \texttt{01} right-to-left -- and a right weight -- \eg $W_r = -1$ when processing \texttt{01} right-to-left (d) example, the total weight of configuration \texttt{10101 C1 01} is $W=W_l+W_r = 1$ -- encoding configurations in the same way as Section~\ref{sec:FAR} -- and the right and left end-states are $p_2$ and $q_0$, this is in the set off accepted weighted configurations, denoted as $[p_2]\; \texttt{\stateC}\texttt{1}\; [q_0]$ with $W \geq 1$, see (e), hence the configuration is accepted and therefore we know that the machine does not halt from configuration \texttt{10101 C1 01}, Theorem~\ref{th:WFAR}. Similarly you can verify that configuration \texttt{A0} with weight $0$ (and any leading/trailing zeros) is accepted, which shows that the machine does not halt from the all-0 initial tape.}
+    \caption{{\small WFAR certificate of nonhalting for machine \tm{1RB---_0RC1LC_1RD1RC_1LE1LD_0RA0LE}: (a) transition table and 20,000-step space-time diagram, (b) left weighted automaton: processes symbols to the left of the head in the left-to-right direction, which results in a left end-state -- \eg state $p_2$ when processing \texttt{10101} -- and a left weight obtained by summing the weights of each transition -- \eg $W_l = 2$ when processing \texttt{10101} (c) right weighted automaton: processes symbols to the right of the head (excluding the symbol read by the head) in the right-to-left direction, which results in a right end-state -- \eg state $q_0$ when processing \texttt{01} right-to-left -- and a right weight -- \eg $W_r = -1$ when processing \texttt{01} right-to-left (d) example, the total weight of configuration $\texttt{10101}\; \texttt{\stateC}\sone\; \texttt{01}$ is $W=W_l+W_r = 1$, using same word-encoding of configurations as in Section~\ref{sec:FAR}, and the right and left end-states are $p_2$ and $q_0$. Weighted automaton configuration $[p_2]\; \texttt{\stateC}\texttt{1}\; [q_0]$ with $W = 1$ is in the set of accepted weighted configurations (under more general $W \geq 1$), see (e). Therefore we know that the machine does not halt from configuration $\texttt{10101}\; \texttt{\stateC}\sone\; \texttt{01}$, Theorem~\ref{th:WFAR}. Similarly, Turing machine configuration \texttt{A0}, which results in weighted configuration $[p_0]\;\texttt{\stateA}\texttt{0}\; [q_0]$ with $W=0$ is accepted, ensuring that the machine does not halt from the all-0 initial tape, Theorem~\ref{th:WFAR}.}}
+\end{figure}
+
+Weighted automata are an extension of usual finite state automata where each transition is given a weight in $\Z$: when a word is processed, total weight $W \in \Z$ is computed by summing the weights of all the encountered transitions. Accepted words are described by a set of pairs of final-state and weigth lower and upper bounds (potentially infinite) to satisfy: for instance, the archetypal nonregular language $\texttt{0}^n \texttt{1}^n$ is recognised by the weighted automaton of Figure~\ref{fig:ex_wa} using accept set $\{(q_1,0 \leq W \leq 0)\}$ which we can simplify as $\{(q_1,W=0)\}$ and we may add $(q_0,W=0)$ to the set if we want to include the empty word.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[->, >=Stealth, auto, node distance=2cm, every node/.style={scale=1}]
+        \tikzset{
+            state/.style={
+                    circle, draw, minimum size=1cm, inner sep=1pt
+                }
+        }
+
+        % % Upper isolated state
+        % \node[state] (1top) at (0,2.5) {1};
+        % \draw[->] (1top) edge[loop above] node{1} (1top);
+        % \draw[->] (1top) edge[loop left] node{0} (1top);
+
+        % Lower automaton
+        \node[state] (0) at (0,0) {$q_0$};
+        \node[state] (2) at (3,0) {$q_1$};
+        \node[state] (3) at (6,0) {$q_2$};
+
+        \draw[->, green!70!black, thick] (0) edge[loop above] node{\szero} (0);
+        \draw[->, red, thick] (2) edge[loop above] node{\sone} (2);
+        \draw[->] (3) edge[loop above] node{\szero,\sone} (3);
+
+        \draw[->, red, thick] (0) edge[bend left=10] node{\sone} (2);
+        \draw[->] (2) to node[below]{\szero} (3);
+
+        % Initial state arrow
+        \draw[->] (-1,0) -- (0);
+
+        % Compact and aligned legend
+        \node[draw, right=0.5cm of 3, inner sep=3pt, rounded corners] (legend) {
+            \scalebox{0.7}{
+                \begin{tabular}{@{}rl@{}}
+                    \tikz[baseline=-0.5ex]\draw[->, black, thick] (0,0) -- +(0.6,0);          & \;Weight 0    \\
+                    \tikz[baseline=-0.5ex]\draw[->, green!70!black, thick] (0,0) -- +(0.6,0); & \;Weight 1    \\
+                    \tikz[baseline=-0.5ex]\draw[->, red, thick] (0,0) -- +(0.6,0);            & \;Weight $-1$
+                \end{tabular}
+            }
+        };
+    \end{tikzpicture}
+    \caption{Weighted automaton recognising nonregular language $\texttt{0}^n \texttt{1}^n$, using accept set $\{(q_1,W=0)\}$.}\label{fig:ex_wa}
 \end{figure}
