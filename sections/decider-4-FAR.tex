@@ -139,20 +139,20 @@ With $c, c_1, c_2$ configurations of $\mathcal{M}$ (with finite support) and $\h
 
 Given how word-representations are defined, the last two above conditions become:
 \begin{align}
-    \forall u,z\in\{0, 1\}^*: \; ufrz \in \mathcal{L},\;                                                           & \text{if $\delta(f,r)$ is undefined (\ie halting)} \label{eq:h0}
+    \forall u,z\in\balphabet^*\!: \; ufrz \in \mathcal{L},\;                                                             & \text{if $\delta(f,r)$ is undefined (\ie halting)} \label{eq:h0}
     \\
-    \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: utbwz \in \mathcal{L} \implies ubfrz \in \mathcal{L},\;     & \text{if $\delta(f,r) = (w,\text{L},t)$} \label{eq:hnl}
+    \forall u,z\in\balphabet^*,\,\forall b \in \balphabet\!: utbwz \in \mathcal{L} \implies ubfrz \in \mathcal{L},\;     & \text{if $\delta(f,r) = (w,\text{L},t)$} \label{eq:hnl}
     \\
-    \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: u w t z \in \mathcal{L} \implies u f r z \in \mathcal{L},\; & \text{if $\delta(f,r) = (w,\text{R},t)$} \label{eq:hnr}
+    \forall u,z\in\balphabet^*,\,\forall b \in \balphabet\!: u w t z \in \mathcal{L} \implies u f r z \in \mathcal{L},\; & \text{if $\delta(f,r) = (w,\text{R},t)$} \label{eq:hnr}
 \end{align}
 
-With $f,t \in \{\stateA,\stateB,\stateC,\stateD,\stateE\}$ the ``from'' and ``to'' states in a transition, $r,w,b \in \{0,1\}$ the bit ``read'', the bit ``written'', and just a bit, and $\delta$ the transition table (see Section~\ref{sec:TMs}) of $\mathcal{M}$.
+With $f,t \in \{\stateA,\stateB,\stateC,\stateD,\stateE\}$ the ``from'' and ``to'' states in a transition, $r,w,b \in \balphabet$ the bit ``read'', the bit ``written'', and just a bit, and $\delta$ the transition table (see Section~\ref{sec:TMs}) of $\mathcal{M}$.
 
 %\footnote{A semiring is a ring without the requirement to have additive inverses, e.g. the set of natural numbers $\N=\{0,1,2\dots\}$ is a semiring.}
 
 We now transform Conditions~\eqref{eq:lzignore}–\eqref{eq:hnr} into, sometimes stronger, conditions on the structure of NFAs -- using the usual linear-algebraic description of NFAs, which we first recall. Let $\mathbf{2}$ denote the Boolean semiring $\{0,1\}$ with operations $+$ and $\cdot$ respectively implemented by $\operatorname{OR}$ and $\operatorname{AND}$ \cite{CUNINGHAMEGREEN1991251}. Let $\M_{m,n}$ be the set of matrices with $m$ rows and $n$ columns over $\mathbf{2}$. We may define a Nondeterministic Finite Automaton (NFA) with $n$ states and alphabet $\mathcal{A}$ as a tuple $(q_0, \{T_\gamma\}_{\gamma \in \mathcal{A}}, a)$ where $q_0 \in \M_{1,n}$ and $a \in \M_{1,n}$ respectively represent the initial states and accepting states of the NFA. (i.e. if the $i^\text{th}$ state of the NFA is an initial state then the $i^\text{th}$ entry of $q_0$ is set to 1 and the rest are 0, and the $i^\text{th}$ entry of $a$ is set to 1 if and only if the $i^\text{th}$ state of the NFA is accepting), and where transitions are matrices $T_\gamma\in \M_{n,n}$ for each $\gamma\in\mathcal{A}$ (i.e. the entry $(i,j)$ of matrix $T_\gamma$ is set to 1 iff the NFA transitions from state $i$ to state $j$ when reading $\gamma$). Furthermore, for any word $u=\gamma_1\dots\gamma_\ell \in \mathcal{A}^*$, let $T_u = T_{\gamma_1} T_{\gamma_2} \dots T_{\gamma_\ell}$ be the state transformation resulting from reading word $u$ (Note: $T_\epsilon = I$). A word $u=\gamma_1\dots\gamma_\ell \in \mathcal{A}^*$ is accepted by the NFA iff there exists a path from an initial state to an accepting state that is labelled by the symbols of $u$, which algebraically translates to $q_0 T_u a\T = 1$ with $a\T \in \M_{n,1}$ the transposition of $a$.
 
-Using this algebraic framework, Conditions~\eqref{eq:lzignore}~and~\eqref{eq:tzignore} are implied by the following stronger conditions on transition matrix $T_0 \in \M_{n,n}$:
+Using this algebraic framework\footnote{In the following, we limit ourselves to the binary tape alphabet $\balphabet$, but the results generalise transparently to arbitrary alphabets $\alphabet$.}, Conditions~\eqref{eq:lzignore}~and~\eqref{eq:tzignore} are implied by the following stronger conditions on transition matrix $T_0 \in \M_{n,n}$:
 \begin{align}
     q_0 T_0 & = q_0
     \label{far-cond-leading-0}
@@ -166,11 +166,11 @@ Indeed, Condition~\eqref{far-cond-leading-0} transparently ignores leading zeros
 Then, Conditions~\ref{eq:h0}--\eqref{eq:hnr} algebraically translate to:
 {\small
 \begin{align*}
-    \forall u,z\in\{0, 1\}^*: \; q_0 T_u T_f T_r T_z a\T = 1, \;                                                                           & \text{if $\delta(f,r)$ is undefined (\ie halting)}
+    \forall u,z\in\balphabet^*\!: \; q_0 T_u T_f T_r T_z a\T = 1, \;                                                                             & \text{if $\delta(f,r)$ is undefined (\ie halting)}
     \\
-    \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: q_0 T_{u} T_t T_b T_w T_{z} a\T = 1 \implies q_0 T_{u} T_b T_f T_r T_{z} a\T = 1,\; & \text{if $\delta(f,r) = (w,\text{L},t)$}
+    \forall u,z\in\balphabet^*,\,\forall b \in \balphabet\!: q_0 T_{u} T_t T_b T_w T_{z} a\T = 1 \implies q_0 T_{u} T_b T_f T_r T_{z} a\T = 1,\; & \text{if $\delta(f,r) = (w,\text{L},t)$}
     \\
-    \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: q_0 T_{u} T_w T_t T_{z} a\T = 1 \implies q_0 T_{u} T_f T_r T_{z} a\T = 1,\;         & \text{if $\delta(f,r) = (w,\text{R},t)$}
+    \forall u,z\in\balphabet^*,\,\forall b \in \balphabet\!: q_0 T_{u} T_w T_t T_{z} a\T = 1 \implies q_0 T_{u} T_f T_r T_{z} a\T = 1,\;         & \text{if $\delta(f,r) = (w,\text{R},t)$}
 \end{align*}
 }
 
@@ -180,15 +180,15 @@ These conditions are unwiedly. We seek stronger (thus still sufficient) conditio
 
     \item For machine transitions going left/right, simply require $T_t T_b T_w\preceq T_b T_f T_r$ and $T_w T_t\preceq T_f T_r$, respectively with $\preceq$ the following relation on same-size matrices: $M\preceq M'$ if $M_{ij}\le M'_{ij}$ element-wise, that is, if the second matrix has at least the same 1-entries as the first matrix.
 
-    \item To simplify the condition for halting machine transitions: define an \emph{accepted steady state-set} $s$ to be a row vector such that $sa\T = 1$, $s T_0\succeq s$, and $s T_1\succeq s$. Given such $s$, we have that: $\forall q\in\M_{1,n}\; q \succeq s\implies \forall z\in\{0, 1\}^*: qT_{z}a\T = 1$. Assuming that such $s$ exists we can simply require: $\forall u\in\{0, 1\}^*: q_0T_u T_f T_r \succeq s$ which is stronger than $\forall u,z\in\{0, 1\}^*: \; q_0 T_u T_f T_r T_z a\T = 1$ with $\delta(f,r)$ an undefined transition.
+    \item To simplify the condition for halting machine transitions: define an \emph{accepted steady state-set} $s$ to be a row vector such that $sa\T = 1$, $s T_0\succeq s$, and $s T_1\succeq s$. Given such $s$, we have that: $\forall q\in\M_{1,n}\; q \succeq s\implies \forall z\in\balphabet^*\!: qT_{z}a\T = 1$. Assuming that such $s$ exists we can simply require: $\forall u\in\balphabet^*\!: q_0T_u T_f T_r \succeq s$ which is stronger than $\forall u,z\in\balphabet^*\!: \; q_0 T_u T_f T_r T_z a\T = 1$ with $\delta(f,r)$ an undefined transition.
 
-          % \footnote{\ts{Note that our new condition $\forall u\in\{0, 1\}^*: q_0T_u T_f T_r \succeq s$ requires that $\forall u\in\{0, 1\}^*: q_0T_u \neq 0$, i.e. that reading 0 and 1 from the initial states must always lead to some state. This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.}}
+          % \footnote{\ts{Note that our new condition $\forall u\in\{0, 1\}^*\!: q_0T_u T_f T_r \succeq s$ requires that $\forall u\in\{0, 1\}^*\!: q_0T_u \neq 0$, i.e. that reading 0 and 1 from the initial states must always lead to some state. This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.}}
 
           % assert that for all $u \in \{0, 1\}^*$, the sub-expression $q_0 T_{u}$ is not zero \ts{(this means that reading 0 and 1 from the initial states must always lead to some state\footnote{This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.})},
           % and \tss{(for $q$ a nonzero combination of such vectors and $fr\TMstep\bot$ a halt rule)}{that $q_0 T_{u} T_f T_r$}
-          % is a vector $q'$ satisfying $\forall z\in\{0, 1\}^*: q' T_{z} a = 1$ \ts{(this means that the NFA will accept any word containing a halting transition independently of the bits written after the machine's head)}.
+          % is a vector $q'$ satisfying $\forall z\in\{0, 1\}^*\!: q' T_{z} a = 1$ \ts{(this means that the NFA will accept any word containing a halting transition independently of the bits written after the machine's head)}.
 
-          % Given such $s$, we have $q'\succeq s\implies \forall z\in\{0, 1\}^*: q'T_{z}a = 1$.
+          % Given such $s$, we have $q'\succeq s\implies \forall z\in\{0, 1\}^*\!: q'T_{z}a = 1$.
 \end{itemize}
 
 Combining the above, we get FAR:
@@ -200,37 +200,37 @@ Combining the above, we get FAR:
     Machine $\mathcal{M}$, with transition table $\delta$ (see Section~\ref{sec:TMs}), doesn't halt from the initial all-0 configuration if there is a Nondeterministic Finite Automaton $(q_0, \{T_\gamma\}, a)$ and row vector $s$ satisfying the below:
     \begin{align}
         \label{far-cond-first}
-        q_0 T_0                                & = q_0
-                                               &                     & \text{(leading zeros ignored)}
+        q_0 T_0                                    & = q_0
+                                                   &                     & \text{(leading zeros ignored)}
         \tag{\ref{far-cond-leading-0}}
         \\
-        T_0a\T                                 & = a\T
-                                               &                     & \text{(trailing zeros ignored)}
+        T_0a\T                                     & = a\T
+                                                   &                     & \text{(trailing zeros ignored)}
         \tag{\ref{far-cond-trailing-0}}
         \\
-        sa\T                                   & = 1
-                                               &                     & \text{($s$ is accepted)}
+        sa\T                                       & = 1
+                                                   &                     & \text{($s$ is accepted)}
         \label{far-cond-ass-accepted}
         \\
-        sT_0,sT_1                              & \succeq s
-                                               &                     & \text{($s$ is a steady state)}
+        sT_0,sT_1                                  & \succeq s
+                                                   &                     & \text{($s$ is a steady state)}
         \label{far-cond-ass-steady}
         \\
-        \forall u\in\{0, 1\}^*: q_0T_u T_f T_r & \succeq s
-                                               &                     & \text{if $\delta(f,r)$ is undefined (\ie halting)}
+        \forall u\in\balphabet^*\!: q_0T_u T_f T_r & \succeq s
+                                                   &                     & \text{if $\delta(f,r)$ is undefined (\ie halting)}
         \label{far-cond-halt}
         \\
-        \forall b\in\{0, 1\}: T_b T_f T_r      & \succeq T_t T_b T_w
-                                               &                     & \text{if $\delta(f,r) = (w,\text{L},t)$}
+        \forall b\in\balphabet\!: T_b T_f T_r      & \succeq T_t T_b T_w
+                                                   &                     & \text{if $\delta(f,r) = (w,\text{L},t)$}
         \label{far-cond-left}
         \\
-        T_f T_r                                & \succeq T_w T_t
-                                               &                     & \text{if $\delta(f,r) = (w,\text{R},t)$}
+        T_f T_r                                    & \succeq T_w T_t
+                                                   &                     & \text{if $\delta(f,r) = (w,\text{R},t)$}
         %\label{far-cond-right}
         \label{far-cond-last}
         \\
-        q_0 T_A a\T                            & = 0
-                                               &                     & \text{(initial configuration rejected)}
+        q_0 T_A a\T                                & = 0
+                                                   &                     & \text{(initial configuration rejected)}
         \label{far-cond-reject-start}
     \end{align}
 \end{theorem}
@@ -238,7 +238,7 @@ Combining the above, we get FAR:
     Conditions \eqref{far-cond-leading-0}--\eqref{far-cond-last} ensure that the NFA's language includes at least all eventually halting configurations of $\mathcal{M}$, see above. Condition~\eqref{far-cond-reject-start} ensures that the initial all-0 configuration of the machine is rejected, hence not eventually halting. Hence, if conditions \eqref{far-cond-leading-0}--\eqref{far-cond-reject-start} are satisfied, we can conclude that $\mathcal{M}$ does not halt from the initial all-0 configuration.
 \end{proof}
 
-\paragraph{Verifier.} Theorem~\ref{far-main-theorem} has the nice property of being easy to verify: given a Turing machine, an NFA and a vector $s$, the task of verifying that equations \eqref{far-cond-first}--\eqref{far-cond-reject-start} hold and thus that the machine does not halt, is computationally simple\footnote{Note that although equation~\eqref{far-cond-halt} has a $\forall u\in\{0, 1\}^*$ quantification, the set of NFA states reachable after reading an arbitrary $u \in \{0,1\}^*$ is computable, and we just have to consider one instance of equation~\eqref{far-cond-halt} replacing $q_0 T_u$ per such state.}. For instance, it is easy to check that the NFA given in Figure~\ref{fig:finite-automata-reduction} satisfies Theorem~\ref{far-main-theorem}, using accepted steady state-set $\{\bot\}$, for machine \tm{1RB0LD_1LC1RA_0RB0LC_---1LA} and hence, the NFA provides a certificate that the machine does not halt.
+\paragraph{Verifier.} Theorem~\ref{far-main-theorem} has the nice property of being easy to verify: given a Turing machine, an NFA and a vector $s$, the task of verifying that equations \eqref{far-cond-first}--\eqref{far-cond-reject-start} hold and thus that the machine does not halt, is computationally simple\footnote{Note that although equation~\eqref{far-cond-halt} has a $\forall u\in\balphabet^*$ quantification, the set of NFA states reachable after reading an arbitrary $u \in \balphabet^*$ is computable, and we just have to consider one instance of equation~\eqref{far-cond-halt} replacing $q_0 T_u$ per such state.}. For instance, it is easy to check that the NFA given in Figure~\ref{fig:finite-automata-reduction} satisfies Theorem~\ref{far-main-theorem}, using accepted steady state-set $\{\bot\}$, for machine \tm{1RB0LD_1LC1RA_0RB0LC_---1LA} and hence, the NFA provides a certificate that the machine does not halt.
 
 
 
@@ -557,7 +557,7 @@ Combining the above, we get FAR:
 
 % With $c, c_1, c_2$ configurations of the TM (with finite support) and $\hat{c}, \hat{c}_1, \hat{c}_2$ any of their finite word-representations, see Definition~\ref{def:wordc}. Let $f,t \in \{A,B,C,D,E\}$ denote TM states (the ``from'' and ``to'' states in a TM transition), and $r,w,b \in \{0,1\}$ denote bits (a bit ``read'', a bit ``written'', and just a bit), then the above conditions turn into:
 % \begin{align*}
-%     \forall u,z\in\{0, 1\}^*: \; ufrz \in \mathcal{L},\;                                                           & \text{if $(f,r) \to \bot$ is a halting transition of $\mathcal{M}$}
+%     \forall u,z\in\{0, 1\}^*\!: \; ufrz \in \mathcal{L},\;                                                           & \text{if $(f,r) \to \bot$ is a halting transition of $\mathcal{M}$}
 %     \\
 %     \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: utbwz \in \mathcal{L} \implies ubfrz \in \mathcal{L},\;     & \text{if $(f,r) \to (t,w,\text{left})$ is a transition of $\mathcal{M}$}
 %     \\
@@ -566,7 +566,7 @@ Combining the above, we get FAR:
 
 % Which algebraically becomes:
 % \begin{align*}
-%     \forall u,z\in\{0, 1\}^*: \; q_0 T_u T_f T_r T_z a\T = 1, \;                                                                           & \text{if $(f,r) \to \bot$ is a halting transition of $\mathcal{M}$}
+%     \forall u,z\in\{0, 1\}^*\!: \; q_0 T_u T_f T_r T_z a\T = 1, \;                                                                           & \text{if $(f,r) \to \bot$ is a halting transition of $\mathcal{M}$}
 %     \\
 %     \forall u,z\in\{0, 1\}^*,\,\forall b \in \{0, 1\}: q_0 T_{u} T_t T_b T_w T_{z} a\T = 1 \implies q_0 T_{u} T_b T_f T_r T_{z} a\T = 1,\; & \text{if $(f,r) \to (t,w,\text{left})$ is a transition of $\mathcal{M}$}
 %     \\
@@ -579,15 +579,15 @@ Combining the above, we get FAR:
 
 %     \item For machine transitions going left/right, simply require $T_t T_b T_w\preceq T_b T_f T_r$ and $T_w T_t\preceq T_f T_r$, respectively with $\preceq$ the following relation on same-size matrices: $M\preceq M'$ if $M_{ij}\le M'_{ij}$ element-wise, that is, if the second matrix has at least the same 1-entries as the first matrix.
 
-%     \item To simplify the condition for halting machine transitions: define an \emph{accepted steady state-set} $s$ to be a row vector such that $sa\T = 1$, $s T_0\succeq s$, and $s T_1\succeq s$. Given such $s$, we have that: $\forall q\in\M_{1,n}\; q \succeq s\implies \forall z\in\{0, 1\}^*: qT_{z}a\T = 1$. Assuming that such $s$ exists we can simply require: $\forall u\in\{0, 1\}^*: q_0T_u T_f T_r \succeq s$ which is stronger than $\forall u,z\in\{0, 1\}^*: \; q_0 T_u T_f T_r T_z a\T = 1$ with $(f,r) \to \bot$ a halting transition.
+%     \item To simplify the condition for halting machine transitions: define an \emph{accepted steady state-set} $s$ to be a row vector such that $sa\T = 1$, $s T_0\succeq s$, and $s T_1\succeq s$. Given such $s$, we have that: $\forall q\in\M_{1,n}\; q \succeq s\implies \forall z\in\{0, 1\}^*\!: qT_{z}a\T = 1$. Assuming that such $s$ exists we can simply require: $\forall u\in\{0, 1\}^*\!: q_0T_u T_f T_r \succeq s$ which is stronger than $\forall u,z\in\{0, 1\}^*\!: \; q_0 T_u T_f T_r T_z a\T = 1$ with $(f,r) \to \bot$ a halting transition.
 
-%           % \footnote{\ts{Note that our new condition $\forall u\in\{0, 1\}^*: q_0T_u T_f T_r \succeq s$ requires that $\forall u\in\{0, 1\}^*: q_0T_u \neq 0$, i.e. that reading 0 and 1 from the initial states must always lead to some state. This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.}}
+%           % \footnote{\ts{Note that our new condition $\forall u\in\{0, 1\}^*\!: q_0T_u T_f T_r \succeq s$ requires that $\forall u\in\{0, 1\}^*\!: q_0T_u \neq 0$, i.e. that reading 0 and 1 from the initial states must always lead to some state. This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.}}
 
 %           % assert that for all $u \in \{0, 1\}^*$, the sub-expression $q_0 T_{u}$ is not zero \ts{(this means that reading 0 and 1 from the initial states must always lead to some state\footnote{This assertion is not limiting since if it is not met by some NFA, adding an additional sink state to the NFA will not change the recognised language and will satisfy the assertion.})},
 %           % and \tss{(for $q$ a nonzero combination of such vectors and $fr\TMstep\bot$ a halt rule)}{that $q_0 T_{u} T_f T_r$}
-%           % is a vector $q'$ satisfying $\forall z\in\{0, 1\}^*: q' T_{z} a = 1$ \ts{(this means that the NFA will accept any word containing a halting transition independently of the bits written after the machine's head)}.
+%           % is a vector $q'$ satisfying $\forall z\in\{0, 1\}^*\!: q' T_{z} a = 1$ \ts{(this means that the NFA will accept any word containing a halting transition independently of the bits written after the machine's head)}.
 
-%           % Given such $s$, we have $q'\succeq s\implies \forall z\in\{0, 1\}^*: q'T_{z}a = 1$.
+%           % Given such $s$, we have $q'\succeq s\implies \forall z\in\{0, 1\}^*\!: q'T_{z}a = 1$.
 % \end{itemize}
 
 % Combining the above, we get our main result:
@@ -613,7 +613,7 @@ Combining the above, we get FAR:
 %                                                &                     & \text{($s$ is a steady state)}
 %         \label{far-cond-ass-steady}
 %         \\
-%         \forall u\in\{0, 1\}^*: q_0T_u T_f T_r & \succeq s
+%         \forall u\in\{0, 1\}^*\!: q_0T_u T_f T_r & \succeq s
 %                                                &                     & \text{if $(f,r) \to \bot$ is a halting transition of $\mathcal{M}$}
 %         \label{far-cond-halt}
 %         \\
