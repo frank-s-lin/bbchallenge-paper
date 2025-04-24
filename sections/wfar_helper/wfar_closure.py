@@ -51,6 +51,12 @@ def main():
     print("Checking impossible configurations...")
     for config in check_impossible_configs:
         print(f"Checking {config.format()}")
+        for next_config in cert.get_next_configs(config):
+            print(f"  Child {next_config.format()}")
+            for next_next_config in cert.get_next_configs(next_config):
+                print(f"    Child {next_next_config.format()}")
+                for next_next_next_config in cert.get_next_configs(next_next_config):
+                    print(f"      Child {next_next_next_config.format()}")
 
 
 if __name__ == "__main__":
