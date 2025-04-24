@@ -296,7 +296,7 @@
     \caption{{\small WFAR certificate of nonhalting for machine \tm{1RB---_0RC1LC_1RD1RC_1LE1LD_0RA0LE}: (a) transition table and 20,000-step space-time diagram, (b) left weighted automaton: processes symbols to the left of the head in the left-to-right direction, which results in a left end-state -- \eg state $p_2$ when processing \texttt{10101} -- and a left weight obtained by summing the weights of each transition -- \eg $W_l = 2$ when processing \texttt{10101} (c) right weighted automaton: processes symbols to the right of the head (excluding the symbol read by the head) in the right-to-left direction -- indicated with arrow --, which results in a right end-state -- \eg state $q_0$ when processing \texttt{01} right-to-left -- and a right weight -- \eg $W_r = -1$ when processing \texttt{01} right-to-left (d) example, the total weight of configuration $\texttt{10101}\; \texttt{\stateC}\sone\; \texttt{01}$ is $W=W_l+W_r = 1$, using same word-encoding of configurations as in Section~\ref{sec:FAR}, and the right and left end-states are $p_2$ and $q_0$. Weighted automaton configuration $[p_2]\; \texttt{\stateC}\texttt{1}\; [q_0]$ with $W = 1$ is in the set of accepted weighted configurations (under more general $W \geq 1$), see (e). Therefore we know that the machine does not halt from configuration $\texttt{10101}\; \texttt{\stateC}\sone\; \texttt{01}$, Theorem~\ref{th:WFAR}. Similarly, Turing machine configuration $\texttt{\stateA}\texttt{0}$, which results in weighted configuration $[p_0]\;\texttt{\stateA}\texttt{0}\; [q_0]$ with $W=0$ is accepted, ensuring that the machine does not halt from the all-0 initial tape, Theorem~\ref{th:WFAR}.}}\label{fig:WFAR}
 \end{figure}
 
-\subsubsection{Overview}
+\subsubsection{Overview}\label{sec:WFAR:overview}
 
 
 
@@ -364,14 +364,34 @@ WFAR is CTL technique -- see Section~\ref{sec:deciders-overview}: a WFAR automat
     \tag{\ref{eq:tzignore}}
     \\
     c\TMstep\bot                                    & \implies \hat{c} \not \in \mathcal{L} &  & \text{(reject halt)} \label{eq:rejecthalt}     \\
-    (c_1\TMstep c_2)\land \hat{c}_1 \in \mathcal{L} & \implies\hat{c}_2 \in \mathcal{L}     &  & \text{(forward closure)} \label{eq:rejecthalt}
+    (c_1\TMstep c_2)\land \hat{c}_1 \in \mathcal{L} & \implies\hat{c}_2 \in \mathcal{L}     &  & \text{(forward closure)} \label{eq:forwardclo}
 \end{align}
 
 Let's now show how to verify that a given WFAR automaton for a given Turing machine $\mathcal{M}$ accepts such $\mathcal{L}$, hence providing a certificate that $\mathcal{M}$ does not halt from the all-0 tape.
 
-In the following, $\delta_L: Q_L \times \balphabet \to Q_L$ and $\delta_R: Q_R \times \balphabet \to Q_R$ respectively refer to the transition functions of the deterministic left and right weighted automaton of a WFAR automaton, \eg Figure~\ref{fig:WFAR}~(b) and (c), with $Q_L = \{p_0, \, \dots, \, p_{n_L-1}\}$ and $Q_R = \{q_0, \, \dots, \, q_{n_R-1}\}$ their respective set of states with $n_L$ and $n_R$ the number of left/right states and $0$ is the initial state for both $Q_L$ and $Q_R$. Weights are given by $w_L: Q_L \times \balphabet \to \Z$ and $w_R: Q_R \times \balphabet \to \Z$. We write $\delta_\mathcal{M}:\states \times \balphabet \hookrightarrow \balphabet \times \{\text{L},\text{R}\} \times \states$ for the transition function of $\mathcal{M}$\footnote{In the following, we limit ourselves to the binary tape alphabet $\balphabet$, but the results generalise transparently to arbitrary alphabets $\alphabet$.}.
+In the following, $\delta_L: Q_L \times \balphabet \to Q_L$ and $\delta_R: Q_R \times \balphabet \to Q_R$ respectively refer to the transition functions of the deterministic left and right weighted automaton of a WFAR automaton, \eg Figure~\ref{fig:WFAR}~(b) and (c), with $Q_L = \{p_0, \, \dots, \, p_{n_L-1}\}$ and $Q_R = \{q_0, \, \dots, \, q_{n_R-1}\}$ their respective set of states with $n_L$ and $n_R$ the number of left/right states and $p_0$ and $q_0$ are the respective initial states of the left and right weighted automaton. Weights are given by $w_L: Q_L \times \balphabet \to \Z$ and $w_R: Q_R \times \balphabet \to \Z$. We write $\delta_\mathcal{M}:\states \times \balphabet \hookrightarrow \balphabet \times \{\text{L},\text{R}\} \times \states$ for the transition function of $\mathcal{M}$\footnote{In the following, we limit ourselves to the binary tape alphabet $\balphabet$, but the results generalise transparently to arbitrary alphabets $\alphabet$.}.
 
 \paragraph{Leading/trailing zeros.} Checking Conditions~\eqref{eq:lzignore} and \eqref{eq:tzignore} for a WFAR automaton is simple: thanks to the left-to-right and right-to-left respective read directions for the left and right weighted automaton, we simply have to check that $\delta_L(p_0,\szero) = p_0$ and $\delta_R(q_0,\szero) = q_0$ as well as $w_L(p_0,\szero) = w_R(q_0,\szero) = 0$ to ensure the convention that the weight of all word-representations of the initial all-0 configuration is 0.
+
+\paragraph{Forward closure, without weights.} First, let's reformulate forward closure for a WFAR automaton, ignoring weights computations. Forward closure concerns the WFAR automaton's accept state, let's consider an example first. The WFAR automaton of Figure~\ref{fig:WFAR} accepts the initial Turing machine configuration $\texttt{\stateA}\szero$: the WFAR configuration $[p_0] \; \texttt{\stateA}\szero\; [q_0]$ (ignoring $W=0$) is in the accept set given in Figure~\ref{fig:WFAR}~(e). To ensure forward closure, Condition~\ref{eq:forwardclo}, let's consider how $\delta_\mathcal{M}(\texttt{\stateA},\szero) = \texttt{1R\stateB}$ affects $[p_0] \; \texttt{\stateA}\szero\; [q_0]$; we get $[p_0] \; \texttt{1}\; \texttt{\stateB}\texttt{?}\; [\texttt{?}]$, which is $[p_2] \; \texttt{\stateB}\texttt{?}\; [\texttt{?}]$ given that $\delta_L(p_0,\sone) = p_2$, see Figure~\ref{fig:WFAR}~(b). In order to resolve $\texttt{?}$, we look at all the transitions in the right weighted automaton that lead to $q_0$, see Figure~\ref{fig:WFAR}~(c): there are two, both reading a \texttt{0}, giving $[p_2] \; \texttt{\stateB}\texttt{0}\; [q_0]$ and $[p_2] \; \texttt{\stateB}\texttt{0}\; [q_1]$.
+
+Ignoring weights, we want both in the accept set:\footnote{Which is the case here, with $W\geq 0$ and $W \geq 1$ in Figure~\ref{fig:WFAR}~(e).} that ensures that for any Turing machine configuration $c_1$ yielding WFAR configuration $[p_0] \; \texttt{\stateA}\szero\; [q_0]$, then $c_2$ is also accepted by the WFAR automaton with $c_1 \TMstep c_2$. Note that $c_1$ and $c_2$ are not necessarily reachable from the initial all-0 tape: CTL methods provide languages that over-estimate the language generated by Turing machines from the all-0 tape. In general, ignoring weights, forward closure means the following for WFAR automaton accept set $A$:
+\begin{align*}
+     & \forall q', r' \in Q_R \times \balphabet \text{ s.t. } \delta_R(q', r') = q,
+     &                                                                              & [p]\, fr\, [q] \in A \Rightarrow [\delta_L(p,b)]\, tr'\, [q'] \in A
+     &                                                                              & \text{if } \delta_{\mathcal{M}}(f,r) = (b, \text{R}, t)
+    \\[0.5em]
+     & \forall p', r' \in Q_L\times \balphabet \text{ s.t. } \delta_L(p', r') = p,
+     &                                                                              & [p]\, fr\, [q] \in A \Rightarrow [p']\, tr'\, [\delta_R(q,b)] \in A
+     &                                                                              & \text{if } \delta_{\mathcal{M}}(f,r) = (b, \text{L}, t)
+\end{align*}
+
+For all left/right weighted automata states $p,q \in Q_L \times Q_R$ and notations $f,t \in \{\stateA,\stateB,\stateC,\stateD,\stateE\}$ the ``from'' and ``to'' states in a transition, $r,b \in \balphabet$ respectively the bit read and the bit written in a transition.
+
+
+
+
+% Consider Figure~\ref{fig:WFAR}~(d) configuration $c_1 = \texttt{10101}\; \texttt{\stateC}\sone\; \texttt{01}$ which corresponds to WFAR configuration $c'_1 = [p_2] \; \texttt{\stateC}\sone\; [q_0]$ (ignoring weight $W=1$). Applying $\delta_\mathcal{M}(\stateC, \sone) = \texttt{1R\stateC}$ to $c'_1$ gives $[p_2] \; \sone \; \texttt{\stateC}\texttt{?}\; [\texttt{?}]$ which is $[p_2] \; \texttt{\stateC}?\; [?]$ since $\delta_(p_2,\sone) = p_2$. In order to resolve the $\texttt{?}$, we consider all the transitions leading to $q_0$: there are 2, both reading a $\texttt{0}$, see Figure~\ref{fig:WFAR}~(c).
 
 
 \subsubsection{Implementations and results}\label{sec:WFAR:results}
