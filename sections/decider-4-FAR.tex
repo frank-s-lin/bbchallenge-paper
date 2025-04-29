@@ -112,7 +112,7 @@ The specificity of FAR is to restrict regular languages to a class of Nondetermi
 
 In \CoqBB, FAR is only used as a \textbf{verifier} meaning that specific Turing machines together with their FAR NFAs are directly hardcoded in the proof (in file \texttt{Verifier\_FAR\_Hardcoded\_Certificates.v}) and then verified using Theorem~\ref{far-main-theorem} -- see Section~\ref{sec:FAR:results} for results. FAR was originally developed by Blanchard as a fully-fledged decider -- \ie the verifier together with search algorithms for NFAs \cite{FAR}.
 
-We only present the verifier part of FAR, which is encompassed in Theorem~\ref{far-main-theorem}. Figure~\ref{fig:finite-automata-reduction} (right) gives a FAR NFA (\ie satisfying\footnote{Using accepted steady state-set $\{\bot\}$, see Section~\ref{sec:FAR:theorem}.} Theorem~\ref{far-main-theorem}) for machine \tm{1RB0LD_1LC1RA_0RB0LC_---1LA}: the NFA accepts at least all the eventually-halting configurations\footref{fn:halting-caption} of the machine and rejects the initial all-0 configuration (\ie \texttt{A0} does not lead to an accept state), giving a certificate that the machine does not halt.
+Here, we only present the verifier part of FAR (Theorem~\ref{far-main-theorem}) while we present the decider and its variations in \cite{bbchallenge_part1}. Figure~\ref{fig:finite-automata-reduction} (right) gives a FAR NFA (\ie satisfying\footnote{Using accepted steady state-set $\{\bot\}$, see Section~\ref{sec:FAR:theorem}.} Theorem~\ref{far-main-theorem}) for machine \tm{1RB0LD_1LC1RA_0RB0LC_---1LA}: the NFA accepts at least all the eventually-halting configurations\footref{fn:halting-caption} of the machine and rejects the initial all-0 configuration (\ie \texttt{A0} does not lead to an accept state), giving a certificate that the machine does not halt.
 
 \subsubsection{FAR theorem}\label{sec:FAR:theorem}
 
@@ -244,9 +244,20 @@ Combining the above, we get FAR:
 
 \subsubsection{Implementations and results}\label{sec:FAR:results}
 
-\ts{TS: incorportate references to deciders writeup if decision is made to put on arxiv. Ask JB if need to cite somewhere the precursor paper to FAR and where.}
+\CoqBB implements Theorem~\ref{far-main-theorem} in the special case where the FAR NFA is computed from a \textit{precursor} Deterministic Finite State Automaton, as described in \cite{bbchallenge_part1} (``direct FAR algorithm''). Certificates, consisting of such DFAs are hardcoded in the proof for 23 machines (in file \texttt{Verifier\_FAR\_Hardcoded\_Certificates.v}) and then verified using \texttt{dfa\_nfa\_verifier} (see file \texttt{Verifier\_FAR.v}).
 
-\ts{TS: talk about generality}
+These certificates were either found using extensive compute (\eg several weeks of searching DFAs essentially by bruteforce) or translated from other, undocumented, regular co-CTL methods (see Section~\ref{sec:deciders-overview}); indeed, in \cite{bbchallenge_part1} we show that that FAR is an \textit{universal} regular co-CTL method: any regular co-CTL proof can be shoehorned in the framework of Theorem~\ref{far-main-theorem}.
+
+
+\ts{Question for JB: in this section do we need to cite [Bouajjani et al, 1997] and if yes, where?}
+
+\paragraph{Other implementations.} FAR has several other implementations:
+
+\begin{enumerate}
+    \item Justin Blanchard's original, optimised, Rust implementation \cite{FAR}
+    \item Tony Guilfoyle's C++ reproduction \cite{FAR_Tony}
+    \item Tristan Stérin's Python reproduction \cite{FAR_cosmo}
+\end{enumerate}
 
 % The regular languages considered by FAR are described using Nondeterministic Finite Automata (NFA) and one important aspect of the technique is that, given a Turing machine and its FAR NFA, it is a computationally simple task to verify that the NFA's language does indeed recognise at least all the eventually-halting configurations of the machine.
 
