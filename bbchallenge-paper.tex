@@ -342,7 +342,7 @@ In our case, with hundreds of millions of Turing machines to study, the use of \
 
 This totalistic use of \Coq in order to solve $S(5)$, where the TNF enumeration of the $\BBtheFifthTNF$ Turing machines itself is implemented and ran in \Coq, came as a surprise\tsm{discussion?} when \CoqBB was released in the spring of 2024 by contributor mxdys who embedded two years of work made by the bbchallenge collaboration as well as improving and introducing new deciders to finish the proof. Indeed, before \CoqBB, consensus within the bbchallenge collaboration  was that formally verifying the TNF enumeration was too arduous and, running it, too computationally intensive to be implemented within a proof assistant; at best, the belief was that formal verification efforts would rely on an external, trusted enumeration, such as bbchallenge's seed database (see above). \CoqBB relies on an earlier \Coq formalisation, \texttt{busycoq} \cite{busycoq}, for 12 of the 13 Sporadic Machines \Coq proofs. \CoqBB initially compiled in about 13 hours on a standard laptop but the use of \Coq's faster computing engine, \texttt{native\_compute} \cite{nativecompute} and paralelisation of the proof (see Section~\ref{sec:enum}) brought compile time down to about 45 minutes on 13 cores.
 
-Trusting that \Coq itself is correct, the only elements to check in order to trust \CoqBB's results are the main theorem statement and the definitions it uses, which have been isolated in an individual file, \texttt{BB5\_Statement.v}, which is documented with comments, only 121 lines long, and that does not require \Coq expertise to be read. Independent \Coq experts have reviewed and validated it; they also ruled out the possibility that the proof would try to exploit a potential \Coq bug to falsely claim the results. \ts{talk about the bug discovered by mxdys, or discussion?} Finally, after compilation, the proof prints the only axiom that it uses, called \texttt{functional\_extensionality\_dep} from \Coq's standard library, which claims that two functions are equal if they are equal in all points.
+Trusting that \Coq itself is correct, the only elements to check in order to trust \CoqBB's results are the main theorem statement and the definitions it uses, which have been isolated in an individual file, \texttt{BB5\_Statement.v}, which is documented with comments, only 121 lines long, and that does not require \Coq expertise to be read. Independent \Coq experts have reviewed and validated it; they also ruled out the possibility that the proof would try to exploit a potential \Coq bug to falsely claim the results. \ts{talk about the bug discovered by mxdys, or discussion?} Finally, after compilation, the proof prints the only axiom that it uses, called \texttt{functional\_extensionality\_dep} from \Coq's standard library, which claims that two functions are equal if they are equal in all points. \ts{Dafny?}
 
 % Maybe some of this will go in discussion, also, Dafny?
 
@@ -440,10 +440,86 @@ Additionally, as illustrated in Table~\ref{table:landscape}, \CoqBB also provide
 
 \newpage
 \section{Zoology}\label{sec:zoo}
+\vspace{-1em}
+\begin{figure}[htbp]
+    \centering
 
+    % First row
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/bouncer_1RB0LE_0RC1RE_1LD1RA_0LA---_0RC0LB.png}
+        \caption*{Bouncers}
+        {\scriptsize \tm{1RB0LE_0RC1RE_1LD1RA_0LA---_0RC0LB}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/counters_1RB1LA_0LA0RC_0LC1RD_1RE0LA_0RB---.png}
+        \caption*{Counters}
+        {\scriptsize \tm{1RB1LA_0LA0RC_0LC1RD_1RE0LA_0RB---}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/double_counter_2_3_1RB1LE_1LC0RB_1RD0LC_1LA1RB_1LB---.png}
+        \caption*{Double Counters}
+        {\scriptsize \tm{1RB1LE_1LC0RB_1RD0LC_1LA1RB_1LB---}}
+    \end{subfigure}
+
+    \vspace{0.5cm}
+
+    % Second row
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/fractals_1RB0RB_1LC0RA_1LD0LB_0LE---_1RE1LB.png}
+        \caption*{Fractals}
+        {\scriptsize \tm{1RB0RB_1LC0RA_1LD0LB_0LE---_1RE1LB}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/helices_1RB0RE_0RC0RA_1LD---_1LA0LB_1RA0LC.png}
+        \caption*{Helices}
+        {\scriptsize \tm{1RB0RE_0RC0RA_1LD---_1LA0LB_1RA0LC}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/bell_1RB0LD_1RC0RF_1LC1LA_0LE1RZ_1LF0RB_0RC0RE.png}
+        \caption*{Bells}
+        {\scriptsize \href{https://bbchallenge.org/1RB0LD_1RC0RF_1LC1LA_0LE1RZ_1LF0RB_0RC0RE}{Current 6-state champion \cite{Pavel_discorvery}}}
+    \end{subfigure}
+
+    \caption{Main zoological families that were identified among 5-state Turing machines, together with Cyclers and Translated Cyclers which are not illustrated here (see Section~\ref{sec:loops}). }
+    \label{fig:zoology}
+\end{figure}
+
+We identified several \textit{zoological families} among 5-state Turing machines:
+
+\begin{enumerate}
+    \item \textbf{Cyclers and Translated Cyclers}; Section~\ref{sec:loops}. Translated Cyclers are the most common \textit{species} among 5-state machines -- estimated to be about 80\% of TNF-enumerated machines.
+    \item \textbf{Bouncers}; Figure~\ref{fig:zoology}. This family consists of machines that populate the tape with linearly-expanding patterns while bouncing back and forth from tape extremities. Bouncers have been formally defined and efficient deciders (not used in \CoqBB) have been crafted to detect them \cite{bbchallenge_part1}.
+    \item \textbf{Counters}\footnote{Also referred to as \textit{exponential counters} because, since they count in a basis $> 1$, it takes them exponentially long to expand the tape of one digit.}; Figure~\ref{fig:zoology}. Counters are machines that enumerate machines in a basis bigger than $1$. There is a rich variety of 5-state counters, counting in all sorts of bases: base 2 (Figure~\ref{fig:finite-automata-reduction}), \href{https://bbchallenge.org/1RB1RB_1RC0LD_1LD1RA_---1LE_0RA0LE }{base 3}, \href{https://bbchallenge.org/1LB1RC_0LE0RA_1LD1RA_0RA1LB_0RD0LB}{base 3/2}, Fibonacci (Section~\ref{sec:sporadic}), \href{https://bbchallenge.org/1RB1RA_0LC1LC_0RD1LD_0RA0LB}{Fibonacci variants} $A(n) = A(n-1) + A(n-3)$ etc.\footnote{Classifying 5-state counters would be a beautiful project.}
+    \item \textbf{Double Counters}; Figure~\ref{fig:zoology}. Double Counters implement two independent counters, Skelet \#10 is an example (Section~\ref{sec:sporadic}). The example of Figure~\ref{fig:zoology} is a base-2 counter on the left-side of the tape and base-3 counter on the right-side.
+    \item \textbf{Fractals}; Figure~\ref{fig:zoology}. Fractal machines are loosely define as machines whose space-time diagrams draw a fractal pattern. There some hybrids, such as this \href{https://bbchallenge.org/1RB1RC_1RC1RB_1LD0RA_---1LE_0LD0LA&s=20000}{Sierpiński triangle} growing off the side of a bouncer.
+    \item \textbf{Helices}; Figure~\ref{fig:zoology}. Helices are loosely defined as Turing machines whose space-time diagrams resembles a double helix. Helices required big nonregular certificates of nonhalting, see Section~\ref{sec:WFAR}.
+    \item \textbf{Bells}; Figure~\ref{fig:zoology}. Helices are loosely defined as Turing machines whose space-time diagrams resembles a succession of bells. The 5-state winner (Figure~\ref{fig:bb5win}), the 2-state 4-symbol winner (Figure~\ref{fig:bb2x4}), and, the current 6-state champion (Figure~\ref{fig:zoology}) fit this category.
+\end{enumerate}
+
+Although useful for talking about Turing machines, these families, especially when there are loosely defined, are not to be taken too seriously: (i) widely different behaviors can be implemented while maintaining a similar space-time diagram \textit{silhouette} and (ii) the zoological effort can quickly become vain given all the possible hybrids (\eg \href{https://bbchallenge.org/1RB---_1LC1RE_0RD0LC_1LB1LA_0RA1RE}{bouncer-counter}) and variations within the same family, especially as the number of states increase. Attesting to the limits of a zoological effort, here are excentric 5-state machines: \href{https://bbchallenge.org/1RB0RA_1LC0LD_1RE1RD_1LA1LB_---1RC}{translated counter}, \href{https://bbchallenge.org/1RB0RD_1LC1LB_1RA0LB_0RE1RD_---1RA}{``pachinko''}, and, \href{https://bbchallenge.org/1RB0RC_0LC---_1RD1RC_0LE1RA_1RD1LE}{``toboggan''}.
+
+
+
+
+% fractals https://bbchallenge.org/9005190
+% not classified: https://bbchallenge.org/43374927?s=20000
+% https://bbchallenge.org/4446642
+% base 3/2 1LB1RC_0LE0RA_1LD1RA_0RA1LB_0RD0LB
+% 1RB1RA_0LC1LC_0RD1LD_0RA0LB base A(n) = A(n-1) + A(n-3)
+% translated coutners: 1RB0RA_1LC0LD_1RE1RD_1LA1LB_---1RC
 
 \bibliographystyle{abbrv}
-\newpage
+%\newpage
 \bibliography{bbchallenge-paper}
 
 \appendix
