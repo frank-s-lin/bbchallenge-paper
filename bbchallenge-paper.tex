@@ -300,7 +300,7 @@ The \BBfull problem was also studied in other models of computation than \rado's
 
 \paragraph{Structure of the proof.} Machines are enumerated arborescently in \textit{Tree Normal Form} (TNF) \cite{Brady64} which drastically reduces the search space's size: from ca. 10 trillion machines to ``only'' $\BBtheFifthTNF$ for 5-state machines, see Section~\ref{sec:enum}.
 
-Each enumerated machine is fed through a sequence (or \textit{pipeline}) of \textit{deciders}, where a decider is an algorithm trying to decide whether the machine halts or not. Because of the noncomputability of the halting problem, there is no \textit{universal} decider but all the craft resides in creating deciders able to decide large families of machines, in reasonable time. The $S(5)$ pipeline of deciders is given in Table~\ref{tab:pipelineBB5} -- see Tab~\ref{tab:pipelineBB2x4} for $S(2,4)$. Deciders are presented in Section~\ref{sec:deciders}. To the best of our knowledge, all the deciders we present are original. \ts{TS: Mention decider part 1? Footnote on decider terminology ambiguity?}
+Each enumerated machine is fed through a \textit{pipeline} of proof techniques, mostly consisting of \textit{deciders}, which are algorithms trying to decide whether the machine halts or not. Because of the noncomputability of the halting problem, there is no \textit{universal} decider and all the craft resides in creating deciders able to decide large families of machines, in reasonable time. The $S(5)$ pipeline is given in Table~\ref{tab:pipelineBB5} -- see Tab~\ref{tab:pipelineBB2x4} for $S(2,4)$. Deciders are presented in Section~\ref{sec:deciders}. To the best of our knowledge, all the deciders we present are original. \ts{TS: Mention decider part 1? Footnote on decider terminology ambiguity?}
 
 In the case of 5-state machines, \numSporadic \textit{Sporadic Machines} were not solved by deciders and required individual proofs of nonhalting, see Section~\ref{sec:sporadic}. These machines include suprising behaviours, such as eventually-repeating chaos (machine ``Skelet \#1''), base-Fibonacci counters (machine ``Skelet \#10''), or obfuscated Gray code (machine ``Skelet \#17'', \cite{xu2024skelet17fifthbusy}) and they are beautiful examples of \textit{algorithms in the wild}: non-human-engineered algorithms that, like deep sea life, were only found by means of exploration.
 
@@ -349,6 +349,7 @@ Trusting that \Coq itself is correct, the only elements to check in order to tru
 \input{sections/TNF.tex}
 
 % \newpage
+
 \section{Deciders}\label{sec:deciders}
 
 
