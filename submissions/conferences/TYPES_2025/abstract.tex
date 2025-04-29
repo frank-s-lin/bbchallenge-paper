@@ -74,7 +74,7 @@
 
 \newcommand{\CoqBB}{Coq-BB5\xspace}
 \newcommand{\CoqBBnospace}{Coq-BB5}
-
+\usepackage{enumitem}
 \usepackage{amsmath,amsfonts,amssymb,amsthm}
 
 \theoremstyle{definition} % don't use italics
@@ -164,7 +164,7 @@ halting problem: run an $n$-state machine for $S(n)+1$ steps and, if it has not 
 As $S$ in noncomputable, there is no algorithm that computes \textit{all} of its values, but one can still try to determine \textit{some} of them. We can get a sense of how hard this is by noting that, for instance, there is a 25-state 2-symbol Turing machine \cite{GoldbachTM27,GoldbachTM25} that iterates all even natural numbers in search of a counterexample to Goldbach's conjecture\footnote{The conjecture states that every even natural number $n>2$ can be written as the sum of two primes. This is one of the oldest open problems in mathematics.}, and halts iff one is found (\ie iff the conjecture is false), which means that proving the value of $S(\geq 25)$ is at least as hard as proving or disproving Goldbach's conjecture. Worse, this idea can be generalised to any other $\Pi_1$ statement\footnote{\ie a logical statement of the form ``For all $x$, $\phi(x)$'' with $\phi$ using only bounded quantifiers meaning that a computer can check $\phi(x)$ in finite time for any $x$.}, such as Riemann Hypothesis or ZF's consistency which have been respectively reduced to $S(744)$ and $S(748)$ \cite{RiemannTM,Yedidia2016,ZFTM,Yedidia2016,BusyBeaverFrontier,BB748Thesis}. 
 %Aaronson conjectures that as low as $S(10)$ is independent of Peano \cite{BusyBeaverFrontier}.
 
-Nonetheless, researchers have embarked on the quest of finding what is the biggest value of $S$ we can know. Motivation include: (i) trying to find the simplest open problem in mathematics on the Busy Beaver scale by exhibiting an $n$-state Turing machine for which it is unknown whether it halts or not but $S(n-1)$ is known (\ie the halting status of all $n-1$-state Turing machines is known) and (ii) studying compute \textit{in the wild} by having to understand (to some extent) the behavior of small, not human-engineered, Turing machines which often implement \textit{quirky} algorithms in a \textit{quirky} way.
+Nonetheless, researchers have embarked on the quest of finding what is the biggest value of $S$ we can know. Motivations include: (i) trying to find the simplest open problem in mathematics on the Busy Beaver scale by exhibiting an $n$-state Turing machine for which it is unknown whether it halts or not but $S(n-1)$ is known (\ie the halting status of all $n-1$-state Turing machines is known) and (ii) studying compute \textit{in the wild} by discovering non-human-engineered algorithms that do \textit{quirky things} in a \textit{quirky way}. 
 
 
 Prior to this work, only the four first values of $S$ had been proved: $S(1)=1$, $S(2)=6$ \cite{Rado_1962}, $S(3) = 21$ \cite{Lin1963}, $S(4) = 107$ \cite{Brady83}. After some early attempts in the 1960s and 1970s~\cite{PMichel_website,michel2019busy}, the search for $S(5)$ took a turn in 1989 when Marxen and Buntrock found a new 5-state champion\footnote{\url{https://bbchallenge.org/1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA}} (\ie a 5-state machine with bigger step-count than previously known ones) achieving $\BBtheFifth$ steps \cite{Marxen_1990}, thus showing $S(5) \geq \BBtheFifth$. In 2020, after thirty years without improvements, Aaronson conjectured that there was no better 5-state machine, \ie $S(5) = \BBtheFifth$ \cite{BusyBeaverFrontier}.
@@ -181,7 +181,7 @@ The proof, called \CoqBB, is available at \url{https://github.com/ccz181078/Coq-
   \centering
   \begin{tabular}{|l|rrr|}
     \hline
-    $S(5)$ decider pipeline                                & Nonhalt                         & Halt                           & Total decided \\
+    $S(5)$ pipeline                                        & Nonhalt                         & Halt                           & Total decided \\
     \hline
     1. Loops                                               & 126,994,099                     & 48,379,711                     & 175,373,810   \\
     2. $n$-gram Closed Position Set (NGramCPS)             & 6,005,142                       & 0                              & 6,005,142     \\
@@ -194,22 +194,21 @@ The proof, called \CoqBB, is available at \url{https://github.com/ccz181078/Coq-
     8. Reduction to \texttt{1RB}                           & 14                              & 0                              & 14            \\ \hline
     Total                                                  & \multicolumn{1}{r}{133,005,895} & \multicolumn{1}{r}{48,379,894} & 181,385,789   \\ \hline
   \end{tabular}
-  \caption{Approximation of the $S(5)$ decider pipeline as implemented in \CoqBB. All the $\BBtheFifthTNF$ enumerated 5-state machines are decided by this pipeline, which solves $S(5) = \BBtheFifth$. }\label{tab:pipelineBB5}
+  \caption{Approximation of the $S(5)$ pipeline as implemented in \CoqBB. All the $\BBtheFifthTNF$ enumerated 5-state machines are decided by this pipeline, which solves $S(5) = \BBtheFifth$. }\label{tab:pipelineBB5}
 \end{table}
 
 \newpage
-
-In this talk, we will present \CoqBB and describe, at various technical levels, how the proof works. The overall structure of the proof is as follows: the proof enumerates 5-state machines in \textit{Tree Normal Form} (\textbf{TNF}) \cite{Brady64,Brady83,Marxen_1990}. TNF essentially consists in enumerating partially-defined Turing machines starting from a machine with no transitions defined, each enumerated machine is passed through a pipeline of \textit{deciders} which are algorithms trying to decide whether the machine halts or not
+In this talk, we will present \CoqBB and describe, at various technical levels, how the proof works. The overall structure of the proof is as follows: the proof enumerates 5-state machines in \textit{Tree Normal Form} (\textbf{TNF}) \cite{Brady64,Brady83,Marxen_1990}. TNF essentially consists in enumerating partially-defined Turing machines starting from a machine with no transitions defined, each enumerated machine is passed through a pipeline of proof techniques mainly consisting of \textit{deciders} which are algorithms trying to decide whether the machine halts or not
 \footnote{We don't use the word ``decider'' in the usual sense of theoretical computer science, formally we mean an algorithm that (i) takes as input a Turing machine, (ii) is guaranteed to finish, and (iii) returns either \texttt{HALT}, \texttt{NONHALT} or \texttt{UNKNOWN}. Proving that a decider is correct means that, if the decider returns \texttt{HALT}/\texttt{NONHALT} then, indeed, the machine halts/does not halt.}:
-\begin{enumerate}
+\begin{enumerate}[noitemsep,topsep=0pt]
   \item If the machine halts, \ie meets an undefined transition, a new subtree of machines is visited for all the possible ways to fill the undefined transition.
   \item If the machine does not halt, it is a leaf of the TNF tree.
 \end{enumerate}
-The TNF enumeration terminates when all leafs have been reached, \ie all the enumerated Turing machines have been decided and there are no more halting machines to expand into subtrees. The proof enumerates $181{,}385{,}789$ machines\footnote{The list of enumerated machines, with halting status and decider information is made available at: \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}.} in about 45 minutes\footnote{When compiled in parallel using \texttt{native\_compute}. Unparallelised compilation with \texttt{vm\_compute} takes about 13 hours (on a Macbook Pro M3 Max).}, and runs the pipeline of deciders summarised in Table~\ref{tab:pipelineBB5} on each of them. All the algorithms (TNF enumeration and deciders) are programmed and proved correct in Coq.
+The TNF enumeration terminates when all leafs have been reached, \ie all the enumerated Turing machines have been decided and there are no more halting machines to expand into subtrees. The proof enumerates $181{,}385{,}789$ machines\footnote{The list of enumerated machines, with halting status and decider information is made available at: \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}.} in about 45 minutes\footnote{When compiled in parallel using \texttt{native\_compute}. Unparallelised compilation with \texttt{vm\_compute} takes about 13 hours (on a Macbook Pro M3 Max).}, and runs the pipeline summarised in Table~\ref{tab:pipelineBB5} on each of them. All the algorithms (TNF enumeration and deciders) are programmed and proved correct in Coq.
 
-The deciders essentially leave 13 \textit{Sporadic Machines} undecided, for which we provide individual Coq proof of correctness \cite{busycoq,xu2024skelet17fifthbusy}. Among them, the monstruous \textit{Skelet \#1}\footnote{\url{https://bbchallenge.org/1RB1RD_1LC0RC_1RA1LD_0RE0LB_---1RC}}, which is a translated loop (\ie eventually repeats the same pattern translated in space) that only starts looping after $10^{51}$ steps with a period of more than $8$ billion steps \cite{ShawnSkelet1}. This machine is named after Georgi Georgiev (a.k.a Skelet) who first found this machine, as well as 42 other arduous ones, back in 2003 \cite{Skelet_bbfind}.
+The deciders essentially leave 13 \textit{Sporadic Machines} undecided, for which we provide individual Coq proof of correctness \cite{busycoq,xu2024skelet17fifthbusy}. Among them, the monstruous \textit{Skelet \#1}\footnote{\url{https://bbchallenge.org/1RB1RD_1LC0RC_1RA1LD_0RE0LB_---1RC}}, which is a translated loop (\ie eventually repeats the same pattern translated in space) that only starts looping after $10^{51}$ steps with a period of more than $8$ billion steps \cite{ShawnSkelet1}. This machine is named after Georgi Georgiev (a.k.a Skelet) who first found it, as well as 42 other arduous ones, back in 2003 \cite{Skelet_bbfind}. After all the enumerated machines are proved halting/nonhalting, the proof concludes $S(5) = \BBtheFifth$: Marxen and Buntrock's champion is the winner of the fifth Busy Beaver competition.
 
-The talk will also discuss meta aspects of this result such as how were proof assistants used in practice and how the research was conducted within The bbchallenge Collaboration, a self-organised, international, online community of scientists (mostly not working in academia) gathered around the \url{bbchallenge.org} platform \cite{sterin_2022_14955828}.
+The talk will also discuss meta aspects of this result such as how were proof assistants used in practice and how the research was conducted within The bbchallenge Collaboration, a self-organised, international, online community of scientists (most without academic affiliation) gathered around the \url{bbchallenge.org} platform \cite{sterin_2022_14955828}.
 
 \newpage
 
@@ -218,7 +217,7 @@ The talk will also discuss meta aspects of this result such as how were proof as
 
 \bibliographystyle{abbrv}
 \newpage
-\paragraph{The bbchallenge Collaboration (credits).} Here we list the main contributions that resulted in the $S(5)$ proof: mxdys (\CoqBB); Nathan Fenner, Georgi Georgiev, savask (NGramCPS); Justin Blanchard, Mateusz Naściszewski, Konrad Deka (FAR); Iijil (WFAR); mei (\texttt{busycoq}); Shawn Ligocki, mei, Jason Yuen (Shift Overflow Counters); Shawn Ligocki, Pavel Kropitz, mei (Skelet \#1); Chris Xu, mxdys (Skelet \#17); Shawn Ligocki, Dan Briggs, mei (Skelet \#10); Justin Blanchard, mei (Finned machines); Yannick Forster (Coq proof review and optimisation); Tristan Stérin (bbchallenge.org).
+\paragraph{The bbchallenge Collaboration (credits).} The following contributions resulted in the determination of the fifth Busy Beaver value: mxdys (\CoqBB, Loops, RepWL); Nathan Fenner, Georgi Georgiev a.k.a~Skelet, savask, mxdys (NGramCPS); Justin Blanchard, Mateusz Naściszewski, Konrad Deka (FAR); Iijil (WFAR); mei (\texttt{busycoq}); Shawn Ligocki, Jason Yuen, mei (Sporadic Machines ``Shift Overflow Counters''); Shawn Ligocki, Pavel Kropitz, mei (Sporadic Machine ``Skelet \#1''); savask, Chris Xu, mxdys (Sporadic Machine ``Skelet \#17''); Shawn Ligocki, Dan Briggs, mei (Sporadic Machine ``Skelet \#10''); Justin Blanchard, mei (Sporadic Machines ``Finned Machines''); Shawn Ligocki, Daniel Yuan, mxdys, Rachel Hunter (``Cryptids''); Yannick Forster, Théo Zimmermann (Coq review); Yannick Forster (Coq {\small optimisation}); Tristan Stérin (bbchallenge.org); Tristan Stérin, Justin Blanchard (paper writing).
 \bibliography{abstract}
 
 \end{document}
