@@ -349,21 +349,30 @@ This totalistic use of \Coq in order to solve $S(5)$, where the TNF enumeration 
 
 \CoqBB initially compiled in about 13 hours on a standard laptop but the use of \Coq's faster computing engine, \texttt{native\_compute} \cite{nativecompute} and paralelisation of the proof (see Section~\ref{sec:enum}) brought compile time down to about 45 minutes on 13 cores. Trusting that \Coq itself is correct, the only elements to check in order to trust \CoqBB's results are the main theorem statement and the definitions it uses, which have been isolated in an individual file, \texttt{BB5\_Statement.v}, which is documented with comments, only 121 lines long, and that does not require \Coq expertise to be read. Independent \Coq experts have reviewed and validated it; they also ruled out the possibility that the proof would try to exploit a potential \Coq bug to falsely claim the results. Finally, after compilation, the proof prints the only axiom that it uses, called \texttt{functional\_extensionality\_dep} from \Coq's standard library, which claims that two functions are equal if they are equal in all points. This axiom is widely accepted.\footnote{It could be removed, at the cost of uunnecessarily complexifying the proof.}
 
-% Maybe some of this will go in discussion, also, Dafny?
-
 
 \newpage
 \subsection{Discussion}\label{sec:intro:discuss}
 
+
+\paragraph{So what?} The Busy Beaver problem is a relatively polarizing scientific topic: some love it, some hate it. Common arguments against studying this problem are of a utilitarian nature: what is the \textit{point}, what is the \textit{use}? We leave the floor to Scott Aaronson:
+
+\begin{quote}
+    \itshape
+    Why care about determining particular values of the Busy Beaver function? Isn’t this just a recreational programming exercise, analogous to code golf, rather than serious mathematical research?
+
+    I like to answer that question with another question: why care about humans landing on the moon, or Mars? Those otherwise somewhat arbitrary goals, you might say, serve as a hard-to-fake gauge of human progress against the vastness of the cosmos. In the same way, the quest to determine the Busy Beaver numbers is one concrete measure of human progress against the vastness of the arithmetical cosmos, a vastness that we learned from Gödel and Turing won’t succumb to any fixed procedure. The Busy Beaver numbers are just … there, Platonically, as surely as 13 was prime long before the first caveman tried to arrange 13 rocks into a nontrivial rectangle and failed. And yet we might never know the sixth of these numbers and only today learned the fifth.
+
+    \hfill --- Scott Aaronson \cite{SAblogquote}
+\end{quote}
+
 % massively online collab is young
+
+% S(4) vs S(5)
+
+
+% 
 % not open question : OK I'm gonna bet that there is a TC that beats Skelet #1 when using all transitions
 % c.f. Shawn's https://www.sligocki.com/2022/04/03/mother-of-giants.html 
-% S(4) vs S(5)
-% 1LB1RC_0LE0RA_1LD1RA_0RA1LB_0RD0LB base 3/2 counter
-% 1RB1RA_0LC1LC_0RD1LD_0RA0LB, A(n) = A(n-1) + A(n-3), Fib variation
-% 1RB0RA_1LC0LD_1RE1RD_1LA1LB_---1RC translated counter
-% 1RB1LE_1LC0RB_1RD0LC_1LA1RB_1LB--- (2,3)-bicounter
-% 1RB1LE_1LC1RD_1LA0RC_1RE---_1RC0LE (2,3)-bicounter
 
 \subsection{Future Work}
 
