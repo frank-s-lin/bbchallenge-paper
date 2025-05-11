@@ -92,7 +92,7 @@ We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
 
 
 \subsubsection{Correctness}
-Proving the correctness of this decider is surprisingly nontrivial. Let's represent the space-time diagram of a given Turing machine $\mathcal{M}$ (Section~\ref{sec:TMs}) using partially defined functions $f_\mathcal{M},g_\mathcal{M},h_\mathcal{M}$, and, $F_\mathcal{M}$:
+Proving the correctness of this decider is surprisingly nontrivial. In this work, $\N = \{0,1,\dots\}$ and $\N^+ = \{1,2,3\dots\}$. Let's represent the space-time diagram of a given Turing machine $\mathcal{M}$ (Section~\ref{sec:TMs}) using partially defined functions $f_\mathcal{M},g_\mathcal{M},h_\mathcal{M}$, and, $F_\mathcal{M}$:
 \begin{align*}
     f_\mathcal{M} & : \N \hookrightarrow \Z \to \alphabet\text{, tape content}                                \\
     g_\mathcal{M} & : \N \hookrightarrow \Z\text{, head position}                                             \\
