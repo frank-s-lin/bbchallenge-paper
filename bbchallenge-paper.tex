@@ -192,8 +192,8 @@ Théo Zimmermann
 \maketitle
 
 \begin{abstract}
-  We prove that $S(5) = 47,176,870$ using the Coq proof assistant. The Busy Beaver value $S(n)$ is the maximum~number of steps that an n-state 2-symbol Turing machine can perform from the all-0 tape before halting and $S$ was historically introduced by \radofull in 1962 as one of the simplest examples of a noncomputable function.  The proof enumerates 181,385,789 Turing machines with 5 states, and, for each machine, decides whether it halts or not.
-  Our result marks the first determination of a new Busy Beaver value in over 40 years and the first Busy Beaver value to ever be formally verified, attesting to the effectiveness of massively collaborative online research (\url{bbchallenge.org}).
+    We prove that $S(5) = 47,176,870$ using the Coq proof assistant. The Busy Beaver value $S(n)$ is the maximum~number of steps that an n-state 2-symbol Turing machine can perform from the all-0 tape before halting and $S$ was historically introduced by \radofull in 1962 as one of the simplest examples of a noncomputable function.  The proof enumerates 181,385,789 Turing machines with 5 states, and, for each machine, decides whether it halts or not.
+    Our result marks the first determination of a new Busy Beaver value in over 40 years and the first Busy Beaver value to ever be formally verified, attesting to the effectiveness of massively collaborative online research (\url{bbchallenge.org}).
 \end{abstract}
 
 
@@ -210,13 +210,13 @@ Théo Zimmermann
 
 
 \begin{figure}
-  \begin{quote}
-    ``In any case, even though skilled mathematicians and experienced programmers attempted to evaluate $\Sigma(3)$ and S(3), there is no evidence that any known approach will yield the answer, even if we avail ourselves of high-speed computers and elaborate programs. As regards $\Sigma(4)$, $S(4)$ the situation seems to be entirely hopeless at present.'' --- \radofull, 1963 \cite{Rado_1963}
-  \end{quote}
-  \begin{quote}
-    ``\textit{Prediction 5}. It will never be proved that $\Sigma(5) = \SigmaTheFifth$ and $S(5) = \BBtheFifth$.'' --- Allen H. Brady, 1990 \cite{BradyMeaningOfLife}
-  \end{quote}
-  \caption{\radofull, who invented the Busy Beaver game, proved the value of $S(2)$ in 1962 \cite{Rado_1962}, and was involved in the proof of $S(3)$ in 1963 \cite{Lin1963}, did not believe that $S(4)$ could be solved at his time. Allen H. Brady, who proved the value of $S(4)$ in 1983 \cite{Brady83}, did not believe that $S(5)$ could be solved at all. Amusingly, Brady opens his article on $S(4)$ with \rado's above quote \cite{Brady83}. Under that light, the knowledge of a (small) Busy Beaver value seems to be a reflection of the computing technology available at the time it was proved.}
+    \begin{quote}
+        ``In any case, even though skilled mathematicians and experienced programmers attempted to evaluate $\Sigma(3)$ and S(3), there is no evidence that any known approach will yield the answer, even if we avail ourselves of high-speed computers and elaborate programs. As regards $\Sigma(4)$, $S(4)$ the situation seems to be entirely hopeless at present.'' --- \radofull, 1963 \cite{Rado_1963}
+    \end{quote}
+    \begin{quote}
+        ``\textit{Prediction 5}. It will never be proved that $\Sigma(5) = \SigmaTheFifth$ and $S(5) = \BBtheFifth$.'' --- Allen H. Brady, 1990 \cite{BradyMeaningOfLife}
+    \end{quote}
+    \caption{\radofull, who invented the Busy Beaver game, proved the value of $S(2)$ in 1962 \cite{Rado_1962}, and was involved in the proof of $S(3)$ in 1963 \cite{Lin1963}, did not believe that $S(4)$ could be solved at his time. Allen H. Brady, who proved the value of $S(4)$ in 1983 \cite{Brady83}, did not believe that $S(5)$ could be solved at all. Amusingly, Brady opens his article on $S(4)$ with \rado's above quote \cite{Brady83}. Under that light, the knowledge of a (small) Busy Beaver value seems to be a reflection of the computing technology available at the time it was proved.}
 \end{figure}
 
 \vspace{-40pt}
@@ -244,13 +244,13 @@ While there is no algorithm to compute $S$ for \textit{all} $n$, we can certainl
 Our main result is to prove this conjecture, using the \Coq proof assistant \cite{the_coq_development_team_2024_14542673}, see Theorem~\ref{th:BB5}. The \Coq proof is called \CoqBB and is available at \href{https://github.com/ccz181078/Coq-BB5}{\texttt{github.com/ccz181078/Coq-BB5}}. We also prove $\Sigma(5) = \SigmaTheFifth$, see Section~\ref{sec:results}, Theorem~\ref{th:Sigma5}.
 
 \begin{restatable}[\CoqBB: \texttt{Lemma BB5\_value}]{theorem}{thBBTheFifth}\label{th:BB5}
-  $S(5) = \BBtheFifth$.
+    $S(5) = \BBtheFifth$.
 \end{restatable}
 
 The function $S$ can naturally be extended to Turing machines using more than two alphabet symbols \cite{BradyMeaningOfLife}, like, for instance, $S(2,3) = 38$ is the value of $S$ for 2-state, 3-symbol machines \cite{BradyMeaningOfLife, MICHEL200445, LafittePapazian2007}. We prove, using Coq, that $S(2,4) = \BBTxF$, see Theorem~\ref{th:BB2x4} and Figure~\ref{fig:bb2x4}:
 
 \begin{restatable}[\CoqBB: \texttt{Lemma BB2x4\_value}]{theorem}{thBBTxF}\label{th:BB2x4}
-  $S(2,4) = \BBTxF$.
+    $S(2,4) = \BBTxF$.
 \end{restatable}
 
 \CoqBB provides proofs for $S(5)$ and $S(2,4)$ --- as well as for previously known $S(2),\,S(3),\,S(4)$ and $S(2,3)$. The lists of all the Turing machines evaluated by these proofs are available at \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}.
@@ -260,41 +260,41 @@ The goal of this paper is to present these proofs: this paper serves as a ``huma
 
 \setlength{\fboxrule}{1.2pt}
 \begin{table}[h]
-  \centering
-  \small
-  \renewcommand{\arraystretch}{1.3}
-  \setlength{\tabcolsep}{5pt}  % Adjust column spacing
-  \begin{tabular}{c|ccccc}
-    \hline
-    \textbf{Symbols} & \textbf{2-State}                                                           & \textbf{3-State} & \textbf{4-State} & \textbf{5-State} & \textbf{6-State} \\
-    \hline
-    2                & \cellcolor{green!20}$S(2) = 6$ \cite{Rado_1962}
-                     & \cellcolor{green!20}$S(3) = 21$ \cite{Lin1963}
-                     & \cellcolor{green!20}$S(4) = 107$ \cite{Brady83}
-                     & \cellcolor{green!50}{$S(5) = \BBtheFifth$}
-                     & \cellcolor{orange!50}{$S(6) > 10 \uparrow \uparrow 15$}                                                                                                \\
-    \hline
-    3                & \cellcolor{green!20}$S(2,3) = 38$ \cite{LafittePapazian2007}
-                     & \cellcolor{orange!50}{$S(3,3) > 10^{17}$}
-                     & \cellcolor{orange!20}$S(4,3) > 2 \uparrow \uparrow \uparrow 2^{2^{{32}}} $
-                     & --                                                                         & --                                                                        \\
-    \hline
-    4                & \cellcolor{green!50}{$S(2,4) = \BBTxF$}
-                     & \cellcolor{orange!20}$S(3,4) > 2 \uparrow^{15} 5 $
-                     & --                                                                         & --               & --                                                     \\
-    \hline
-    5                & \cellcolor{orange!50}{$S(2,5) > 10 \uparrow \uparrow 4$}
-                     & --                                                                         & --               & --               & --                                  \\
-    \hline
-  \end{tabular}
-  \caption{Landscape of small busy beaver values.
-    \cellcolor{green!20}Cells highlighted in green correspond to values for which we provide \Coq proofs. Bright green indicates the new results, $S(5)$ and $S(2,4)$, original to this work.
-    Cells highlighted in orange indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and believed to be mathematically hard), see Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. Lower bounds (see Appendix~\ref{app:lowerbounds}), which come from exhibiting Turing machines achieving at least the given step-counts, are expressed using Knuth's ``up-arrow notation'' which is a way to express iterated exponentiation:
-    $a \uparrow b = a^b$ is exponentiation,
-    $a \uparrow\uparrow b = a^{a^{\dots^a}}$ is a tower of $b$ powers of $a$ (known as tetration),
-    and higher arrows indicate further levels of iteration.
-  }
-  \label{table:landscape}
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \setlength{\tabcolsep}{5pt}  % Adjust column spacing
+    \begin{tabular}{c|ccccc}
+        \hline
+        \textbf{Symbols} & \textbf{2-State}                                                           & \textbf{3-State} & \textbf{4-State} & \textbf{5-State} & \textbf{6-State} \\
+        \hline
+        2                & \cellcolor{green!20}$S(2) = 6$ \cite{Rado_1962}
+                         & \cellcolor{green!20}$S(3) = 21$ \cite{Lin1963}
+                         & \cellcolor{green!20}$S(4) = 107$ \cite{Brady83}
+                         & \cellcolor{green!50}{$S(5) = \BBtheFifth$}
+                         & \cellcolor{orange!50}{$S(6) > 10 \uparrow \uparrow 15$}                                                                                                \\
+        \hline
+        3                & \cellcolor{green!20}$S(2,3) = 38$ \cite{LafittePapazian2007}
+                         & \cellcolor{orange!50}{$S(3,3) > 10^{17}$}
+                         & \cellcolor{orange!20}$S(4,3) > 2 \uparrow \uparrow \uparrow 2^{2^{{32}}} $
+                         & --                                                                         & --                                                                        \\
+        \hline
+        4                & \cellcolor{green!50}{$S(2,4) = \BBTxF$}
+                         & \cellcolor{orange!20}$S(3,4) > 2 \uparrow^{15} 5 $
+                         & --                                                                         & --               & --                                                     \\
+        \hline
+        5                & \cellcolor{orange!50}{$S(2,5) > 10 \uparrow \uparrow 4$}
+                         & --                                                                         & --               & --               & --                                  \\
+        \hline
+    \end{tabular}
+    \caption{Landscape of small busy beaver values.
+        \cellcolor{green!20}Cells highlighted in green correspond to values for which we provide \Coq proofs. Bright green indicates the new results, $S(5)$ and $S(2,4)$, original to this work.
+        Cells highlighted in orange indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and believed to be mathematically hard), see Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. Lower bounds (see Appendix~\ref{app:lowerbounds}), which come from exhibiting Turing machines achieving at least the given step-counts, are expressed using Knuth's ``up-arrow notation'' which is a way to express iterated exponentiation:
+        $a \uparrow b = a^b$ is exponentiation,
+        $a \uparrow\uparrow b = a^{a^{\dots^a}}$ is a tower of $b$ powers of $a$ (known as tetration),
+        and higher arrows indicate further levels of iteration.
+    }
+    \label{table:landscape}
 \end{table}
 
 
@@ -393,7 +393,7 @@ Concerning difficult problems, in all the next Turing machines classes (orange h
 
 
 \begin{conjecture}[Antihydra does not halt]
-  Consider the Collatz-like map $H: \mathbb{N} \to \mathbb{N}$ defined by $H(x) = 3\frac{x}{2}$ if $x$ is even and $H(x) = 3\frac{x-1}{2}$ if $x$ is odd. Iterating $H$ from $x=8$, there are never (strictly) more than twice as many odd numbers as even numbers.
+    Consider the Collatz-like map $H: \mathbb{N} \to \mathbb{N}$ defined by $H(x) = 3\frac{x}{2}$ if $x$ is even and $H(x) = 3\frac{x-1}{2}$ if $x$ is odd. Iterating $H$ from $x=8$, there are never (strictly) more than twice as many odd numbers as even numbers.
 \end{conjecture}
 
 Using Conway's terminology, the conjecture \textit{probviously}\footnote{Portmanteau of the words probabilistic and obvious.} holds because a probabilistic \href{https://wiki.bbchallenge.org/w/index.php?title=Antihydra}{analysis} of the Turing machine suggests that its probability of ever halting is minuscule, namely, $\smash{\left(\frac{\sqrt{5}-1}{2}\right)}^{1073720885}\approx 4.841\times 10^{-224394395}$. However, properly proving that Antihydra does not halt is believed mathematically hard, because of resemblance with the notoriously hard Collatz conjecture \cite{LagariasCollatz}: Antihydra is a Cryptid. Also, the map $H$ was studied before Antihydra was discovered and is known to not generate Sturmian words \cite{DUBICKAS_2009}.
@@ -402,11 +402,10 @@ Antihydra is the \textit{smallest}\footnote{We refrained of saying the \textit{s
 
 \begin{problem}[BMO Problem 1]
 Let $(a_n)_{n \ge 1}$ and $(b_n)_{n \ge 1}$ be two sequences such that $(a_1, b_1) = (1, 2)$ and
-
 $$(a_{n+1}, b_{n+1}) = \begin{cases}
-    (a_n-b_n, 4b_n+2) & \text{if }a_n \ge b_n \\
-    (2a_n+1, b_n-a_n) & \text{if }a_n < b_n
-  \end{cases}$$
+        (a_n-b_n, 4b_n+2) & \text{if }a_n \ge b_n \\
+        (2a_n+1, b_n-a_n) & \text{if }a_n < b_n
+    \end{cases}$$
 
 for all positive integers $n$. Does there exist a positive integer $i$ such that $a_i = b_i$?
 \end{problem}
@@ -415,13 +414,13 @@ This problem is a reformulation of  ``does \tm{1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1R
 
 We also know of one probviously halting Cryptid: the 3-state 3-symbol machine \tm{1RB2LC1RC_2LC---2RB_2LA0LB0RA} probabilistically has 100\% chances of halting\footnote{See \href{https://wiki.bbchallenge.org/wiki/1RB2LC1RC_2LC---2RB_2LA0LB0RA}{probvisously halting analysis}.}, and would become the new 3-state 3-symbol champion (considerably extending the current $10^{17}$ bound) if proven to halt. The apparent contradiction between having 100\% chances of halting and not knowing whether it actually halts is solved by thinking of the analogy that there is 100\% chances for a random real number chosen between 0 and 1 not to be equal to $\pi/4$ but it can still turn out to be exactly  $\pi/4$. Other Cryptids are neither probviously halting or nonhalting, for instance \tm{1RB1LE_0LC0LB_1RD1LC_1RD1RA_1RF0LA_---1RE} is estimated to have 3/5 chances of nonhalting and 2/5 chances of halting.\footnote{See \href{https://wiki.bbchallenge.org/wiki/1RB1LE_0LC0LB_1RD1LC_1RD1RA_1RF0LA_---1RE}{analysis}.}
 
-Cryptids illustrate the inherent capacity of the Busy Beaver game at generating small, non-trivial, open mathematical problems, challenging our intelligence and the limits of mathematical knowledge.
+Cryptids illustrate the facility with which the Busy Beaver game generates small, non-trivial, open mathematical problems, challenging our intelligence and the limits of mathematical knowledge.
 
 \paragraph{Trends in collaborative research.} Massively collaborative online research in mathematics and theoretical computer science is a relatively new phenomenon, pioneered by the Polymath Project  which collaboratively solved several problems in mathematics \cite{Gowers2009}. A few differences with \texttt{bbchallenge} come to mind such as (i) our use of instant discussion instead of blog comments as main communication media and (ii) the non-academic affiliation of most of our contributors, see Section~\ref{sec:intro:mainresults}, but the essential philosophy of leveraging collective, distributed, intelligence to solve complex problems is the same. In many ways, \texttt{bbchallenge}'s effort was much closer to experimental open-source software project developement than to traditional research in mathematics or theoretical computer science: we mainly developed algorithms (deciders) and as a consequence, \CoqBB itself is essentially a collection of algorithms, proven correct.
 
 The current increasing popularity of proof assistants such as Coq (Rocq) or Lean within the mathematical and computer science communities naturally accelerates this convergence between collaborative research and opens-source software development: researchers can now leverage the same tools and processes as developers (version control, pull requests, issues, etc.) to massively collaborate on proofs in a scalable way -- \ie not requiring humans to check proofs nor trust.
 
-As a concrete example, shortly after we announced our $S(5)$ result, Tao launched a collaborative pilot project in universal algebra, called the "Equational Theories Project" (ETP), leveraging GitHub and Lean as means of collaboration, a \textit{Zulip} chat server for communication \cite{TaoBlog, ETPGithub, ETPpaper}. In contrast with \texttt{bbchallenge} which is a rather baroque assembly of many technologies with a ``late'' use of theorem provers, the ETP focused efforts on formal verification and Lean \textit{by design} and from the start. The project was extremely successful, attracted more than 50 contributors, and was completed in a few months only.\footnote{See Tao's \href{https://github.com/teorth/equational_theories/wiki/Terence-Tao's-personal-log}{personal log}.}
+As a concrete example, shortly after we announced our $S(5)$ result, Tao launched a collaborative pilot project in universal algebra, called the "Equational Theories Project" (ETP), requiring to prove or disprove $22,028,942$ implications. The ETP leveraged GitHub and Lean as means of collaboration, a \textit{Zulip} chat server for communication \cite{TaoBlog, ETPGithub, ETPpaper}. In contrast with \texttt{bbchallenge} which is a rather baroque assembly of many technologies with a ``late'' use of theorem provers, the ETP focused efforts on formal verification and Lean \textit{by design} and from the start. The project was extremely successful, attracted more than 50 contributors, and was completed in a few months only.\footnote{See Tao's \href{https://github.com/teorth/equational_theories/wiki/Terence-Tao's-personal-log}{personal log}.}
 
 In this context, AI seems to have a bright future: either as an enhanced project knowledge base or as a collaborator itself \cite{Trinh2024, wu2024internlm25stepproveradvancingautomatedtheorem}. \CoqBB has started being used as  benchmark for AI reasoning \cite{teodorescu2024nlir}.
 
@@ -516,8 +515,8 @@ In any case, we can say with absolute certainty that the value of $S(6)$ will ne
 
 \thBBTheFifth*
 \begin{proof}
-  The \Coq proof enumerates 5-state Turing machines in Tree Normal Form, Section~\ref{sec:enum} and Table~\ref{tab:TNF-numbers}. Each enumerated machine goes through the $S(5)$ pipeline, Table~\ref{tab:pipelineBB5}, where the halting problem from all-0 tape of each machine is solved using a decider (or verifier), Section~\ref{sec:deciders}, unless the machine is one of the \numSporadic Sporadic Machines, Section~\ref{sec:sporadic}, for which individual \Coq proofs of nonhalting are provided.
-  When encountering a halting machine, the proof checks that it halts before $47{,}176{,}870$ steps, giving $S(5) \leq 47{,}176{,}870$, see \texttt{Lemma BB5\_upperbound}, and, using the 5-state champion (Figure~\ref{fig:bb5win}), see \texttt{Lemma BB5\_lowerbound}, the proof concludes $S(5) = 47{,}176{,}870$. Thanks to this proof, the 5-state champion becomes the winner of the 5th Busy Beaver competition, Figure~\ref{fig:bb5win}.
+    The \Coq proof enumerates 5-state Turing machines in Tree Normal Form, Section~\ref{sec:enum} and Table~\ref{tab:TNF-numbers}. Each enumerated machine goes through the $S(5)$ pipeline, Table~\ref{tab:pipelineBB5}, where the halting problem from all-0 tape of each machine is solved using a decider (or verifier), Section~\ref{sec:deciders}, unless the machine is one of the \numSporadic Sporadic Machines, Section~\ref{sec:sporadic}, for which individual \Coq proofs of nonhalting are provided.
+    When encountering a halting machine, the proof checks that it halts before $47{,}176{,}870$ steps, giving $S(5) \leq 47{,}176{,}870$, see \texttt{Lemma BB5\_upperbound}, and, using the 5-state champion (Figure~\ref{fig:bb5win}), see \texttt{Lemma BB5\_lowerbound}, the proof concludes $S(5) = 47{,}176{,}870$. Thanks to this proof, the 5-state champion becomes the winner of the 5th Busy Beaver competition, Figure~\ref{fig:bb5win}.
 \end{proof}
 
 \paragraph{Extracting machines.} The essential output of The Busy Beaver Challenge is the list of all $\BBtheFifthTNF$ TNF-enumerated 5-state machines together with their halting status and method used to determine it. Find the list at \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}. This list was computed by \textit{extracting} the \Coq proof to OCaml, which means that all the \Coq-implemented algorithms where automatically transcribed  in a trusted way to OCaml by the \Coq engine. From there, print statements were added to the OCaml code which, once ran, produced the list. If given an arbitrary 5-state Turing machine, computing TNF normalisation (see Section~\ref{sec:enum}) and then performing lookup in the list allows to determine the halting status of the machine from all-0 tape.
@@ -525,21 +524,21 @@ In any case, we can say with absolute certainty that the value of $S(6)$ will ne
 Using this Coq-verified list, any ``observable'' metric on 5-state Turing machines such as \rado's $\Sigma$ (see Section~\ref{sec:intro}) can be computed:
 
 \begin{theorem}\label{th:Sigma5}
-  $\Sigma(5) = 4{,}098$.
+    $\Sigma(5) = 4{,}098$.
 \end{theorem}
 \begin{proof}
-  The winning machine for $\Sigma(5)$ is the same as for $S(5)$, Figure~\ref{fig:bb5win}.
-  This metric was computed from the Coq-extracted list of all TNF-enumerated 5-state Turing machines, see above. Three agreeing independent reproductions of the computation were asked to ensure there was no mistake made.
+    The winning machine for $\Sigma(5)$ is the same as for $S(5)$, Figure~\ref{fig:bb5win}.
+    This metric was computed from the Coq-extracted list of all TNF-enumerated 5-state Turing machines, see above. Three agreeing independent reproductions of the computation were asked to ensure there was no mistake made.
 \end{proof}
 
 Another similar observable, called $\text{space}(n)$ \cite{Ben-Amram1996} (also called $\text{BB}_{\text{SPACE}}(n)$ \cite{sterin_2022_14955828}) is the maximum number of tape cells that an $n$-state Turing machine may scan before it halts. This observable is similar to $S$ in the sense that, if a machine visits $\text{space}(n)+1$ tape cells, we know it will never halt (from the all-0 tape). We get:
 
 \begin{theorem}
-  $\text{space}(5) = 12{,}289$.
+    $\text{space}(5) = 12{,}289$.
 \end{theorem}
 \begin{proof}
-  The winning machine for $\text{space}(5)$ is the same as for $S(5)$, Figure~\ref{fig:bb5win}.
-  Same method as for $\Sigma$, Theorem~\ref{th:Sigma5}.
+    The winning machine for $\text{space}(5)$ is the same as for $S(5)$, Figure~\ref{fig:bb5win}.
+    Same method as for $\Sigma$, Theorem~\ref{th:Sigma5}.
 \end{proof}
 
 \CoqBB also computes $S$ for 2-state 4-symbol Turing machines:
@@ -547,84 +546,84 @@ Another similar observable, called $\text{space}(n)$ \cite{Ben-Amram1996} (also 
 \thBBTxF*
 
 \begin{proof}
-  Similarly to Theorem~\ref{th:BB5}, the \Coq proof enumerates 2-state 4-symbol machines in (almost) Tree Normal Form, see Section~\ref{sec:enum} and Table~\ref{tab:TNF-numbers}. Then the $S(2,4)$ pipeline, Table~\ref{tab:pipelineBB2x4}, which consists only of deciders (Section~\ref{sec:deciders}) is applied to solve the halting problem from all-0 tape of all the enumerated machines. The proof keeps track of the maximum number of steps reached by halting machines and eventually concludes $S(2,4) = \BBTxFTNF$. Thanks to this proof, the 2-state 4-symbol champion (Figure~\ref{fig:bb2x4}) becomes the winner among all 2-state 4-symbol machines.
+    Similarly to Theorem~\ref{th:BB5}, the \Coq proof enumerates 2-state 4-symbol machines in (almost) Tree Normal Form, see Section~\ref{sec:enum} and Table~\ref{tab:TNF-numbers}. Then the $S(2,4)$ pipeline, Table~\ref{tab:pipelineBB2x4}, which consists only of deciders (Section~\ref{sec:deciders}) is applied to solve the halting problem from all-0 tape of all the enumerated machines. The proof keeps track of the maximum number of steps reached by halting machines and eventually concludes $S(2,4) = \BBTxFTNF$. Thanks to this proof, the 2-state 4-symbol champion (Figure~\ref{fig:bb2x4}) becomes the winner among all 2-state 4-symbol machines.
 \end{proof}
 
 Additionally, as illustrated in Table~\ref{table:landscape}, \CoqBB also provide \Coq proofs for previously known values of $S$, including $S(4)$ of which original proof \cite{Brady83} had slight uncertainties -- see Section~\ref{sec:intro}:
 
 \begin{theorem}[Confirmation of Brady's result \cite{Brady83}]\label{th:BB4}
-  $S(4) = \BBtheFourth$.
+    $S(4) = \BBtheFourth$.
 \end{theorem}
 \begin{proof}
-  Same as Theorem~\ref{th:BB5}, using the $S(4)$ pipeline, Table~\ref{tab:pipelineBB4}, which consists only of deciders (Section~\ref{sec:deciders}), \ie no individual proofs of nonhalting.
+    Same as Theorem~\ref{th:BB5}, using the $S(4)$ pipeline, Table~\ref{tab:pipelineBB4}, which consists only of deciders (Section~\ref{sec:deciders}), \ie no individual proofs of nonhalting.
 \end{proof}
 
 \newpage
 \section{Zoology}\label{sec:zoo}
 \vspace{-1em}
 \begin{figure}[htbp]
-  \centering
+    \centering
 
-  % First row
-  \begin{subfigure}{0.3\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/zoology/bouncer_1RB0LE_0RC1RE_1LD1RA_0LA---_0RC0LB.png}
-    \caption*{Bouncers}
-    {\scriptsize \tm{1RB0LE_0RC1RE_1LD1RA_0LA---_0RC0LB}}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}{0.3\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/zoology/counters_1RB1LA_0LA0RC_0LC1RD_1RE0LA_0RB---.png}
-    \caption*{Counters}
-    {\scriptsize \tm{1RB1LA_0LA0RC_0LC1RD_1RE0LA_0RB---}}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}{0.3\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/zoology/double_counter_2_3_1RB1LE_1LC0RB_1RD0LC_1LA1RB_1LB---.png}
-    \caption*{Double Counters}
-    {\scriptsize \tm{1RB1LE_1LC0RB_1RD0LC_1LA1RB_1LB---}}
-  \end{subfigure}
+    % First row
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/bouncer_1RB0LE_0RC1RE_1LD1RA_0LA---_0RC0LB.png}
+        \caption*{Bouncers}
+        {\scriptsize \tm{1RB0LE_0RC1RE_1LD1RA_0LA---_0RC0LB}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/counters_1RB1LA_0LA0RC_0LC1RD_1RE0LA_0RB---.png}
+        \caption*{Counters}
+        {\scriptsize \tm{1RB1LA_0LA0RC_0LC1RD_1RE0LA_0RB---}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/double_counter_2_3_1RB1LE_1LC0RB_1RD0LC_1LA1RB_1LB---.png}
+        \caption*{Double Counters}
+        {\scriptsize \tm{1RB1LE_1LC0RB_1RD0LC_1LA1RB_1LB---}}
+    \end{subfigure}
 
-  \vspace{0.5cm}
+    \vspace{0.5cm}
 
-  % Second row
-  \begin{subfigure}{0.3\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/zoology/fractals_1RB0RB_1LC0RA_1LD0LB_0LE---_1RE1LB.png}
-    \caption*{Fractals}
-    {\scriptsize \tm{1RB0RB_1LC0RA_1LD0LB_0LE---_1RE1LB}}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}{0.3\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/zoology/helices_1RB0RE_0RC0RA_1LD---_1LA0LB_1RA0LC.png}
-    \caption*{Helices}
-    {\scriptsize \tm{1RB0RE_0RC0RA_1LD---_1LA0LB_1RA0LC}}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}{0.3\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/zoology/bell_1RB0LD_1RC0RF_1LC1LA_0LE1RZ_1LF0RB_0RC0RE.png}
-    \caption*{Bells}
-    {\scriptsize \href{https://bbchallenge.org/1RB0LD_1RC0RF_1LC1LA_0LE1RZ_1LF0RB_0RC0RE}{Current 6-state champion \cite{Pavel_discorvery}}}
-  \end{subfigure}
+    % Second row
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/fractals_1RB0RB_1LC0RA_1LD0LB_0LE---_1RE1LB.png}
+        \caption*{Fractals}
+        {\scriptsize \tm{1RB0RB_1LC0RA_1LD0LB_0LE---_1RE1LB}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/helices_1RB0RE_0RC0RA_1LD---_1LA0LB_1RA0LC.png}
+        \caption*{Helices}
+        {\scriptsize \tm{1RB0RE_0RC0RA_1LD---_1LA0LB_1RA0LC}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/zoology/bell_1RB0LD_1RC0RF_1LC1LA_0LE1RZ_1LF0RB_0RC0RE.png}
+        \caption*{Bells}
+        {\scriptsize \href{https://bbchallenge.org/1RB0LD_1RC0RF_1LC1LA_0LE1RZ_1LF0RB_0RC0RE}{Current 6-state champion \cite{Pavel_discorvery}}}
+    \end{subfigure}
 
-  \caption{Main zoological families that were identified among 5-state Turing machines, together with Cyclers and Translated Cyclers which are not illustrated here (see Section~\ref{sec:loops}). }
-  \label{fig:zoology}
+    \caption{Main zoological families that were identified among 5-state Turing machines, together with Cyclers and Translated Cyclers which are not illustrated here (see Section~\ref{sec:loops}). }
+    \label{fig:zoology}
 \end{figure}
 
 As we were \textit{computing in the wild}, we identified several \textit{zoological families} among 5-state Turing machines:
 
 \begin{enumerate}
-  \item \textbf{Cyclers and Translated Cyclers}; Section~\ref{sec:loops}. Translated Cyclers is the most common \textit{species} among 5-state machines -- estimated to be about 80\% of TNF-enumerated machines.
-  \item \textbf{Bouncers}; Figure~\ref{fig:zoology}. This family consists of machines that populate the tape with linearly-expanding patterns while bouncing back and forth from tape extremities. Bouncers have been formally defined and efficient deciders (not used in \CoqBB) have been crafted to detect them \cite{bbchallenge_part1}.
-  \item \textbf{Counters}\footnote{Also referred to as \textit{exponential counters} because, since they count in a basis $> 1$, it takes them exponentially long to expand the tape of one digit.}; Figure~\ref{fig:zoology}. Counters are machines that enumerate machines in a basis bigger than $1$. There is a rich variety of 5-state counters, counting in all sorts of bases: base 2 (Figure~\ref{fig:finite-automata-reduction}), \href{https://bbchallenge.org/1RB1RB_1RC0LD_1LD1RA_---1LE_0RA0LE }{base 3}, \href{https://bbchallenge.org/1LB1RC_0LE0RA_1LD1RA_0RA1LB_0RD0LB}{base 3/2}, base Fibonacci (Section~\ref{sec:sporadic}) and \href{https://bbchallenge.org/1RB1RA_0LC1LC_0RD1LD_0RA0LB}{Fibonacci variants} $A(n) = A(n-1) + A(n-3)$ etc.\footnote{Classifying 5-state counters would be a beautiful project.}
-  \item \textbf{Double Counters}; Figure~\ref{fig:zoology}. Double Counters implement two independent counters, Skelet \#10 is an example (Section~\ref{sec:sporadic}). The example of Figure~\ref{fig:zoology} is a base-2 counter on the left-side of the tape and base-3 counter on the right-side.
-  \item \textbf{Fractals}; Figure~\ref{fig:zoology}. Fractal machines are loosely define as machines whose space-time diagrams draw a fractal pattern. There some hybrids, such as this \href{https://bbchallenge.org/1RB1RC_1RC1RB_1LD0RA_---1LE_0LD0LA&s=20000}{Sierpiński triangle} growing off the side of a bouncer.
-  \item \textbf{Helices}; Figure~\ref{fig:zoology}. Helices are loosely defined as Turing machines whose space-time diagrams resembles a double helix. Helices required big nonregular certificates of nonhalting, see Section~\ref{sec:WFAR}.
-  \item \textbf{Bells}; Figure~\ref{fig:zoology}. Helices are loosely defined as Turing machines whose space-time diagrams resembles a succession of bells. The 5-state winner (Figure~\ref{fig:bb5win}), the 2-state 4-symbol winner (Figure~\ref{fig:bb2x4}), and, the current 6-state champion (Figure~\ref{fig:zoology}) fit this category.
+    \item \textbf{Cyclers and Translated Cyclers}; Section~\ref{sec:loops}. Translated Cyclers is the most common \textit{species} among 5-state machines -- estimated to be about 80\% of TNF-enumerated machines.
+    \item \textbf{Bouncers}; Figure~\ref{fig:zoology}. This family consists of machines that populate the tape with linearly-expanding patterns while bouncing back and forth from tape extremities. Bouncers have been formally defined and efficient deciders (not used in \CoqBB) have been crafted to detect them \cite{bbchallenge_part1}.
+    \item \textbf{Counters}\footnote{Also referred to as \textit{exponential counters} because, since they count in a basis $> 1$, it takes them exponentially long to expand the tape of one digit.}; Figure~\ref{fig:zoology}. Counters are machines that enumerate machines in a basis bigger than $1$. There is a rich variety of 5-state counters, counting in all sorts of bases: base 2 (Figure~\ref{fig:finite-automata-reduction}), \href{https://bbchallenge.org/1RB1RB_1RC0LD_1LD1RA_---1LE_0RA0LE }{base 3}, \href{https://bbchallenge.org/1LB1RC_0LE0RA_1LD1RA_0RA1LB_0RD0LB}{base 3/2}, base Fibonacci (Section~\ref{sec:sporadic}) and \href{https://bbchallenge.org/1RB1RA_0LC1LC_0RD1LD_0RA0LB}{Fibonacci variants} $A(n) = A(n-1) + A(n-3)$ etc.\footnote{Classifying 5-state counters would be a beautiful project.}
+    \item \textbf{Double Counters}; Figure~\ref{fig:zoology}. Double Counters implement two independent counters, Skelet \#10 is an example (Section~\ref{sec:sporadic}). The example of Figure~\ref{fig:zoology} is a base-2 counter on the left-side of the tape and base-3 counter on the right-side.
+    \item \textbf{Fractals}; Figure~\ref{fig:zoology}. Fractal machines are loosely define as machines whose space-time diagrams draw a fractal pattern. There some hybrids, such as this \href{https://bbchallenge.org/1RB1RC_1RC1RB_1LD0RA_---1LE_0LD0LA&s=20000}{Sierpiński triangle} growing off the side of a bouncer.
+    \item \textbf{Helices}; Figure~\ref{fig:zoology}. Helices are loosely defined as Turing machines whose space-time diagrams resembles a double helix. Helices required big nonregular certificates of nonhalting, see Section~\ref{sec:WFAR}.
+    \item \textbf{Bells}; Figure~\ref{fig:zoology}. Helices are loosely defined as Turing machines whose space-time diagrams resembles a succession of bells. The 5-state winner (Figure~\ref{fig:bb5win}), the 2-state 4-symbol winner (Figure~\ref{fig:bb2x4}), and, the current 6-state champion (Figure~\ref{fig:zoology}) fit this category.
 \end{enumerate}
 
 Although useful for talking about Turing machines, these families, especially when there are loosely defined, are not to be taken too seriously: (i) widely different behaviors can be implemented while maintaining a similar space-time diagram \textit{silhouette} and (ii) the zoological effort can quickly become vain given all the possible hybrids (\eg \href{https://bbchallenge.org/1RB---_1LC1RE_0RD0LC_1LB1LA_0RA1RE}{bouncer-counter}) and variations within the same family, especially as the number of states increases. Attesting to the limits of a zoological effort, here are excentric 5-state machines: \href{https://bbchallenge.org/1RB0RA_1LC0LD_1RE1RD_1LA1LB_---1RC}{translated counter}, \href{https://bbchallenge.org/1RB0RD_1LC1LB_1RA0LB_0RE1RD_---1RA}{``pachinko''}, and, \href{https://bbchallenge.org/1RB0RC_0LC---_1RD1RC_0LE1RA_1RD1LE}{``toboggan''}.
@@ -650,26 +649,26 @@ Although useful for talking about Turing machines, these families, especially wh
 \paragraph{The bbchallenge Collaboration: $S(5)$ credits.} The following contributions resulted in the determination of the fifth Busy Beaver value and in the better understanding of the landscape of small Busy Beaver values (Table~\ref{table:landscape}): mxdys (\CoqBB, Loops, RepWL); Nathan Fenner, Georgi Georgiev a.k.a~Skelet, savask, mxdys (NGramCPS); Justin Blanchard, Mateusz Naściszewski, Konrad Deka (FAR); Iijil (WFAR); mei (\texttt{busycoq}); Shawn Ligocki, Jason Yuen, mei (Sporadic Machines ``Shift Overflow Counters''); Shawn Ligocki, Pavel Kropitz, mei (Sporadic Machine ``Skelet \#1''); savask, Chris Xu, mxdys (Sporadic Machine ``Skelet \#17''); Shawn Ligocki, Dan Briggs, mei (Sporadic Machine ``Skelet \#10''); Justin Blanchard, mei (Sporadic Machines ``Finned Machines''); Shawn Ligocki, Daniel Yuan, mxdys, Matthew House, Rachel Hunter, Jason Yuen (``Cryptids''); Yannick Forster, Théo Zimmermann (Coq review); Yannick Forster (Coq optimisation); Tristan Stérin (bbchallenge.org); Tristan Stérin, Justin Blanchard (paper writing).
 
 \begin{itemize}
-  \item The bbchallenge Collaboration, \url{bbchallenge.org}, \texttt{bbchallenge@bbchallenge.org}
-  \item Justin Blanchard, \texttt{UncombedCoconut@gmail.com}
-  \item Dan Briggs, \ts{Affiliation?}, \ts{email?}
-  \item Konrad Deka, \texttt{deka.konrad@gmail.com}
-  \item Nathan Fenner, \texttt{nfenneremail@gmail.com}
-  \item Yannick Forster, INRIA Paris, \texttt{yannick.forster@inria.fr}
-  \item Georgi Georgiev (Skelet), Sofia University, Faculty of Mathematics and Informatics, \texttt{skeleta@gmail.com}
-  \item Rachel Hunter, \texttt{racheline@bbchallenge.org}
-  \item Matthew House, \ts{Affiliation?}, \ts{email?}
-  \item Iijil, \texttt{hheussen@web.de}
-  \item Maja Kądziołka, \texttt{bb@compilercrim.es}
-  \item Pavel Kropitz, \texttt{uni@bbchallenge.org}
-  \item Shawn Ligocki, \texttt{sligocki@gmail.com}
-  \item mxdys, \texttt{mxdys@bbchallenge.org}
-  \item Mateusz Na\'{s}ciszewski
-  \item savask
-  \item Tristan Stérin, PRGM DEV, \texttt{tristan@prgm.dev}
-  \item Chris Xu, UC San Diego, \texttt{chx007@ucsd.edu}
-  \item Jason Yuen, \texttt{jason\_yuen2007@hotmail.com}
-  \item Théo Zimmermann, LTCI, Télécom Paris, Institut Polytechnique de Paris, France, \\ \texttt{theo.zimmermann@telecom-paris.fr}.
+    \item The bbchallenge Collaboration, \url{bbchallenge.org}, \texttt{bbchallenge@bbchallenge.org}
+    \item Justin Blanchard, \texttt{UncombedCoconut@gmail.com}
+    \item Dan Briggs, \ts{Affiliation?}, \ts{email?}
+    \item Konrad Deka, \texttt{deka.konrad@gmail.com}
+    \item Nathan Fenner, \texttt{nfenneremail@gmail.com}
+    \item Yannick Forster, INRIA Paris, \texttt{yannick.forster@inria.fr}
+    \item Georgi Georgiev (Skelet), Sofia University, Faculty of Mathematics and Informatics, \texttt{skeleta@gmail.com}
+    \item Rachel Hunter, \texttt{racheline@bbchallenge.org}
+    \item Matthew House, \ts{Affiliation?}, \ts{email?}
+    \item Iijil, \texttt{hheussen@web.de}
+    \item Maja Kądziołka, \texttt{bb@compilercrim.es}
+    \item Pavel Kropitz, \texttt{uni@bbchallenge.org}
+    \item Shawn Ligocki, \texttt{sligocki@gmail.com}
+    \item mxdys, \texttt{mxdys@bbchallenge.org}
+    \item Mateusz Na\'{s}ciszewski
+    \item savask
+    \item Tristan Stérin, PRGM DEV, \texttt{tristan@prgm.dev}
+    \item Chris Xu, UC San Diego, \texttt{chx007@ucsd.edu}
+    \item Jason Yuen, \texttt{jason\_yuen2007@hotmail.com}
+    \item Théo Zimmermann, LTCI, Télécom Paris, Institut Polytechnique de Paris, France, \\ \texttt{theo.zimmermann@telecom-paris.fr}.
 \end{itemize}
 
 \paragraph{Acknowledgement.} The bbchallenge Collaboration is not limited to the above contributors but regroups all those who participated in the bbchallenge's discussions through all our channels (Discord chat, forum, wiki, GitHub, emails) and in particular we thank: Frans Faase, Tony Guilfoyle, Matthew House, Nick Howell, Alexandre Jouandin, Carl Kadie, Dawid Loranc, Terry J. Ligocki, Heiner Marxen, Pascal Michel, Milo Mighdoll (milomg), Sébastien Ohleyer, star, tomtom2357, Valentin, Daniel Yuan.
