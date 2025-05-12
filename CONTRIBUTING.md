@@ -1,4 +1,4 @@
-# 🧠 Contributing to the BB5 Pre-Preprint Review
+# 🦫 Contributing to the BB5 Pre-Preprint Review
 
 Thank you for helping us improve the **pre-preprint v0.9** of:
 
@@ -82,4 +82,4 @@ This is a collective effort — and your voice matters.
 
 _— The bbchallenge Collaboration_
 
- 🦫 🦫 🦫
+🦫 🦫 🦫
