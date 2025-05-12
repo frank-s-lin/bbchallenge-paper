@@ -64,7 +64,7 @@ If you're comfortable editing the LaTeX or Markdown source, you’re welcome to 
 
 Not using GitHub? Prefer something simpler?
 
-- 📬 Use our form: [Google Form](https://forms.gle/example)
+- 📬 Use our form: [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSdn9CoI7Mw_RRUwJ_T8-dF_yufGjst-IDMVtT9MPTj22u9H8Q/viewform?usp=header)
 - 📧 Or email us directly: `feedback@bbchallenge.org`
 
 We’ll triage and post your input to the relevant thread (unless you ask us not to).
