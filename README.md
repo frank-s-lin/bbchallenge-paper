@@ -11,6 +11,7 @@ Starting **May 12, 2025**, we are in an open review/feedback phase until **June 
 
 **Start here →** [🦫 Pre-Preprint Feedback Hub](https://github.com/bbchallenge/bbchallenge-paper/issues/9)
 
+📎 [Pre-Preprint Release PDF Link](https://github.com/bbchallenge/bbchallenge-paper/releases/download/pre-preprint-v0.9/bb5-pre-preprint-v0.9.pdf)  
 🚧 [Live version of the manuscript](https://github.com/bbchallenge/bbchallenge-paper/blob/build-paper-pdf/bbchallenge-paper.pdf) (<- includes continuously integrated Pre-Preprint feedback such as typo corrections etc.)
 
 ## Temporary BibTeX entry
