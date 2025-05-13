@@ -108,7 +108,7 @@
 
 Finite Automata Reduction (FAR) is a \textit{co-CTL} technique, \ie it is dual to the Closed Tape Language (CTL) framework given in Section~\ref{sec:deciders-overview}: for a given Turing machine, we are looking for a regular language that contains the set of the machine's eventually-halting configurations and, provided that the all-0 configuration is not in the regular language, we know that the machine does not halt.
 
-The specificity of FAR is to restrict regular languages to a class of Nondeterministic Finite Automata (NFA) -- those satisfying Theorem~\ref{far-main-theorem} -- for which it is computationally simple to verify that they have the co-CTL properties: (i) reject the all-0 initial configuration, (ii) closed under Turing machines transitions, (iii) accept all eventually-halting configurations.
+The specificity of FAR is to restrict regular languages to a class of Nondeterministic Finite Automata (NFA) -- those satisfying Theorem~\ref{far-main-theorem} -- for which it is computationally simple to verify that they have the co-CTL properties: (i) reject the all-0 initial configuration, (ii) closed under Turing machine transitions, (iii) accept all eventually-halting configurations.
 
 In \CoqBB, FAR is only used as a \textbf{verifier} meaning that specific Turing machines together with their FAR NFAs are directly hardcoded in the proof (in file \texttt{Verifier\_FAR\_Hardcoded\_Certificates.v}) and then verified using Theorem~\ref{far-main-theorem} -- see Section~\ref{sec:FAR:results} for results. FAR was originally developed by Blanchard as a fully-fledged decider -- \ie the verifier together with search algorithms for NFAs \cite{FAR}.
 
@@ -246,7 +246,7 @@ Combining the above, we get FAR:
 
 \CoqBB implements Theorem~\ref{far-main-theorem} in the special case where the FAR NFA is computed from a \textit{precursor} Deterministic Finite State Automaton, as described in \cite{bbchallenge_part1} (``direct FAR algorithm''). Certificates, consisting of such DFAs are hardcoded in the proof for 23 machines (in file \texttt{Verifier\_FAR\_Hardcoded\_Certificates.v}) and then verified using \texttt{dfa\_nfa\_verifier} (see file \texttt{Verifier\_FAR.v}).
 
-These certificates were either found using extensive compute (\eg several weeks of searching DFAs essentially by bruteforce) or translated from other, undocumented, regular co-CTL methods (see Section~\ref{sec:deciders-overview}); indeed, in \cite{bbchallenge_part1} we show that that FAR is an \textit{universal} regular co-CTL method: any regular co-CTL proof can be shoehorned in the framework of Theorem~\ref{far-main-theorem}.
+These certificates were either found using extensive compute (\eg several weeks of searching DFAs essentially by brute force) or translated from other, undocumented, regular co-CTL methods (see Section~\ref{sec:deciders-overview}); indeed, in \cite{bbchallenge_part1} we show that that FAR is an \textit{universal} regular co-CTL method: any regular co-CTL proof can be shoehorned in the framework of Theorem~\ref{far-main-theorem}.
 
 \paragraph{Other implementations.} FAR has several other implementations:
 

@@ -114,7 +114,9 @@ In both cases, we've reduced to block simulation.
 % \end{figure}
 
 
-\CoqBB implements RepWL (Algorithm~\ref{alg:RepWL}), see function \texttt{RepWL\_ES\_decider}. Contrarily to previously presented deciders, RepWL is not applied in bulk using generic parameters. Instead, the ${6,577}$ machines it decides are hardcoded in the proof together with the specific $l$ and $T$ parameters that decide them -- see file \texttt{Decider\_RepWL\_Hardcoded\_Parameters.v}. Figure~\ref{fig:RepWLpairs} displays the $(l,T)$ pairs used for these ${6,577}$ machines. These parameters were found using a grid search in C++. For all these machines, maximum block simulation parameters and maximum number of graph nodes parameters are respectively set to 451 and ${150,001}$.
+\CoqBB implements RepWL (Algorithm~\ref{alg:RepWL}), see function \texttt{RepWL\_ES\_decider}. Contrarily to previously presented deciders, RepWL is not applied in bulk using generic parameters. Instead, the ${6,577}$ machines it decides are hardcoded in the proof together with the specific $l$ and $T$ parameters that decide them -- see file \texttt{Decider\_RepWL\_Hardcoded\_Parameters.v}. These parameters were found using a grid search in C++. For all these machines, maximum block simulation parameters and maximum number of graph nodes parameters are respectively set to 451 and ${150,001}$.
+
+% Figure~\ref{fig:RepWLpairs} displays the $(l,T)$ pairs used for these ${6,577}$ machines.
 
 % Figure~\ref{fig:RepWLhisto} gives the distribution of node counts of the ${6,577}$ RepWL graphs constructed by \CoqBB. The average number of nodes is $1{,}231$ while minimum and maximum are respectively 42 and $143{,}181$. 
 Figure~\ref{fig:repWLThree} gives space-time diagrams for machines with RepWL graphs with 42 (left), ${845}$ (center) and $143{,}181$ nodes. The machines on the left and on the right fit in the zoological category of \textit{Bouncers}, see Section~\ref{sec:zoo}. We developed a dedicated decider for solving Bouncers, but it was not used in \CoqBB \cite{bbchallenge_part1}.
