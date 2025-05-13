@@ -1,4 +1,4 @@
-name: Build LaTeX PDF
+name: Build LaTeX PDF and diff with Pre-Preprint (v0.9)
 on:
   push:
     branches:
@@ -18,6 +18,31 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           add: '-f bbchallenge-paper.pdf'
+          default_author: github_actions
+          new_branch: build-paper-pdf
+          push: 'origin build-paper-pdf --set-upstream --force'
+      
+      - name: Install latexdiff
+        run: sudo apt-get install latexdiff
+
+      - name: Checkout pre-preprint version (v0.9)
+        run: |
+          git fetch origin refs/tags/pre-preprint-v0.9:refs/remotes/origin/pre-preprint-v0.9
+          git show origin/pre-preprint-v0.9:bbchallenge-paper.tex > old.tex
+
+      - name: Generate redline diff with latexdiff
+        run: latexdiff old.tex bbchallenge-paper.tex > bbchallenge-paper-diff.tex
+
+      - name: Compile diff PDF
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: bbchallenge-paper-diff.tex
+          work_in_root_file_dir: true
+
+      - name: Commit and push diff PDF
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '-f bbchallenge-paper-diff-with-v0.9.pdf'
           default_author: github_actions
           new_branch: build-paper-pdf
           push: 'origin build-paper-pdf --set-upstream --force'
