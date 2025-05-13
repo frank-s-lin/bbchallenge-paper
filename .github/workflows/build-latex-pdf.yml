@@ -31,12 +31,12 @@ jobs:
           git show origin/pre-preprint-v0.9:bbchallenge-paper.tex > old.tex
 
       - name: Generate redline diff with latexdiff
-        run: latexdiff old.tex bbchallenge-paper.tex > bbchallenge-paper-diff.tex
+        run: latexdiff old.tex bbchallenge-paper.tex > bbchallenge-paper-diff-with-v0.9.tex
 
       - name: Compile diff PDF
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: bbchallenge-paper-diff.tex
+          root_file: bbchallenge-paper-diff-with-v0.9.tex
           work_in_root_file_dir: true
 
       - name: Commit and push diff PDF
