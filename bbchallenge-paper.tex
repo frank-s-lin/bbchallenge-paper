@@ -150,7 +150,7 @@ Théo Zimmermann
 \newcommand{\BBtheFifthTNF}{181{,}385{,}789}
 \newcommand{\SigmaTheFifth}{4{,}098}
 
-\newcommand{\BBTxF}{3{,}932{,}974}
+\newcommand{\BBTxF}{3{,}932{,}964}
 \newcommand{\BBTxFTNF}{2{,}154{,}217}
 
 \newcommand{\radofull}{Tibor Rad\'o\xspace}
@@ -213,7 +213,7 @@ Théo Zimmermann
 
 \begin{figure}
     \begin{quote}
-        ``In any case, even though skilled mathematicians and experienced programmers attempted to evaluate $\Sigma(3)$ and S(3), there is no evidence that any known approach will yield the answer, even if we avail ourselves of high-speed computers and elaborate programs. As regards $\Sigma(4)$, $S(4)$ the situation seems to be entirely hopeless at present.'' --- \radofull, 1963 \cite{Rado_1963}
+        ``In any case, even though skilled mathematicians and experienced programmers attempted to evaluate $\Sigma(3)$ and S(3), there is no evidence that any presently known approach will yield the answer, even if we avail ourselves of high-speed computers and elaborate programs. As regards $\Sigma(4)$, $S(4)$ the situation seems to be entirely hopeless at present.'' --- \radofull, 1963 \cite{Rado_1963}
     \end{quote}
     \begin{quote}
         ``\textit{Prediction 5}. It will never be proved that $\Sigma(5) = \SigmaTheFifth$ and $S(5) = \BBtheFifth$.'' --- Allen H. Brady, 1990 \cite{BradyMeaningOfLife}
@@ -557,7 +557,7 @@ Another similar observable, called $\text{space}(n)$ \cite{Ben-Amram1996} (also 
 \thBBTxF*
 
 \begin{proof}
-    Similarly to Theorem~\ref{th:BB5}, the \Coq proof enumerates 2-state 4-symbol machines in (almost) Tree Normal Form, see Section~\ref{sec:enum} and Table~\ref{tab:TNF-numbers}. Then the $S(2,4)$ pipeline, Table~\ref{tab:pipelineBB2x4}, which consists only of deciders (Section~\ref{sec:deciders}) is applied to solve the halting problem from all-0 tape of all the enumerated machines. The proof keeps track of the maximum number of steps reached by halting machines and eventually concludes $S(2,4) = \BBTxFTNF$. Thanks to this proof, the 2-state 4-symbol champion (Figure~\ref{fig:bb2x4}) becomes the winner among all 2-state 4-symbol machines.
+    Similarly to Theorem~\ref{th:BB5}, the \Coq proof enumerates 2-state 4-symbol machines in (almost) Tree Normal Form, see Section~\ref{sec:enum} and Table~\ref{tab:TNF-numbers}. Then the $S(2,4)$ pipeline, Table~\ref{tab:pipelineBB2x4}, which consists only of deciders (Section~\ref{sec:deciders}) is applied to solve the halting problem from all-0 tape of all the enumerated machines. The proof keeps track of the maximum number of steps reached by halting machines and eventually concludes $S(2,4) = \BBTxF$. Thanks to this proof, the 2-state 4-symbol champion (Figure~\ref{fig:bb2x4}) becomes the winner among all 2-state 4-symbol machines.
 \end{proof}
 
 Additionally, as illustrated in Table~\ref{table:landscape}, \CoqBB also provide \Coq proofs for previously known values of $S$, including $S(4)$ of which original proof \cite{Brady83} had slight uncertainties -- see Section~\ref{sec:intro}:
