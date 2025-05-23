@@ -14,14 +14,6 @@ jobs:
         with:
           root_file: bbchallenge-paper.tex
           work_in_root_file_dir: true
-      - name: Create branch with PDF file
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: '-f bbchallenge-paper.pdf'
-          default_author: github_actions
-          new_branch: build-paper-pdf
-          push: 'origin build-paper-pdf --set-upstream --force'
-      
       - name: Install latexdiff
         run: sudo apt-get install latexdiff
 
@@ -39,10 +31,10 @@ jobs:
           root_file: bbchallenge-paper-diff-with-v0.9.tex
           work_in_root_file_dir: true
 
-      - name: Commit and push diff PDF
+      - name: Commit and push both PDFs
         uses: EndBug/add-and-commit@v9
         with:
-          add: '-f bbchallenge-paper-diff-with-v0.9.pdf'
+          add: '-f bbchallenge-paper.pdf -f bbchallenge-paper-diff-with-v0.9.pdf'
           default_author: github_actions
           new_branch: build-paper-pdf
           push: 'origin build-paper-pdf --set-upstream --force'
