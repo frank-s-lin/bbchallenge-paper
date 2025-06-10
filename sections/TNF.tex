@@ -105,12 +105,12 @@ Tree Normal Form (TNF) enumeration, introduced by Brady in 1963 in his PhD thesi
     \item \HALT. If the machine halts, such as the rightmost machine in Figure~\ref{fig:TNF}, it means that it has met an undefined transition and children of the machine correspond to all the possible ways of defining that undefined transition (highlighted in magenta in Figure~\ref{fig:TNF}). Avoiding redundant state/symbol permutations is dealt with at this point by imposing an order on the yet-to-be-seen states/symbols, \eg children of the rightmost machine in Figure~\ref{fig:TNF} will choose between states $\{\text{\stateA},\text{\stateB},\text{\stateC}\}$ instead of $\{\text{\stateA},\text{\stateB},\text{\stateC},\text{\stateD},\text{\stateE}\}$ since $\text{\stateC}$ is the next unseen state.
 
     \item  \NONHALT. If the machine does not halt, all its remaining undefined transitions are unreachable and the machine is a leaf of the TNF tree.
-    \item \UNKNOWN. If the halting status of a machine, it is put in the basket of \textit{holdouts}, \ie machines that remain to be decided. Having solved $S(5)$ means that there are no more 5-state holdouts.
+    \item \UNKNOWN. If the halting status of a machine remains unknown, it is put in the basket of \textit{holdouts}, \ie machines that remain to be decided. Having solved $S(5)$ means that there are no more 5-state holdouts.
 \end{itemize}
 
 
 Hence, by design, TNF enumeration avoids machines with unreachable transitions and state/symbol permutations. One further optimization in the TNF algorithm is,
-at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 1 is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}. In practice, and in the counts of Table~\ref{tab:TNF-numbers}, leaves of the TNF tree that have all their transitions defined are not enumerated because they are obviously nonhalting -- hence not relevant for computing $S$.
+at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left, as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 1 is enough to conclude on the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}. In practice, and in the counts of Table~\ref{tab:TNF-numbers}, leaves of the TNF tree that have all their transitions defined are not enumerated because they are obviously nonhalting -- hence not relevant for computing $S$.
 
 \begin{table}[h!]
     \centering
