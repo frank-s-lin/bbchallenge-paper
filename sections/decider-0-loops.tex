@@ -9,7 +9,7 @@
     \hspace{10ex}
     \includegraphics[width=0.28\textwidth]{figures/space-time-diagrams/tc_1RB---_1LB1LC_0RD0RC_1LE1RE_1LA0LE.pdf}
     %\includegraphics[width=0.4\textwidth]{figures/space-time-diagrams/translated_cycler_59090563_2.png}
-    \caption{Space-time diagrams of the 30 first steps of a \textit{\cycler}, \tm{1RB---_0RC0LE_1LD0LA_1LB1RB_1LC1RC} (left) and of the 10,000 first steps of a \textit{\TC}, \tm{1RB---_1LB1LC_0RD0RC_1LE1RE_1LA0LE} (right). \cyclers are machines that eventually repeat the same configuration forever. \TCs are machines that eventually repeats the same configuration forever, but translated in space. We refer to these two types of machines as \textit{loops}.}\label{fig:loops}
+    \caption{Space-time diagrams of the first 30 steps of a \textit{\cycler}, \tm{1RB---_0RC0LE_1LD0LA_1LB1RB_1LC1RC} (left) and of the first $10{,}000$ steps of a \textit{\TC}, \tm{1RB---_1LB1LC_0RD0RC_1LE1RE_1LA0LE} (right). \cyclers are machines that eventually repeat the same configuration forever. \TCs are machines that eventually repeats the same configuration forever, but translated in space. We refer to these two types of machines as \textit{loops}.}\label{fig:loops}
 \end{figure}
 
 % \footnotetext{\url{https://bbchallenge.org/1RB---\_0RC0LE\_1LD0LA\_1LB1RB\_1LC1RC}}
@@ -235,7 +235,8 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 % \end{proof}
 
 \begin{definition}[Loops]\label{def:loops}
-    Let $\mathcal{M}$ be a Turing machine. Let $l\in\N^+$, $t_0 \in \N$ and $p_i = (t_0+i, g(t_0+i))$ for $0 \leq i < l$. We say that $\mathcal{M}$ is a \textit{loop} of period $l$ and pre-period $t_0$ if for all $t > t_0$, $F_\mathcal{M}(t,g(t)) = F_\mathcal{M}(p_j)$ with $j = t-t_0 \text{ mod } t_0' - t_0$.
+    Let $M$ be a Turing machine and let $F_M$ and $g$ be the functions defined as above. Let $l \in \N^+$, $t_0 \in N$.
+    We say that $M$ is a loop of period $l$ and pre-period $t_0$ if for all $t > t_0$, $F_M(t,g(t)) = F_M(t_0 + j,g(t_0 + j))$ where j is the remainder in the division of $t - t_0$ by $l$.
 \end{definition}
 
 \begin{lemma}\label{lem:loopdonthalt}
