@@ -194,9 +194,9 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 
     \noindent with $t_i = t_0 + i$, $t_i' = t_i+l$ and $p_i = (t_i, g(t_i))$, $p_i' = (t_i', g(t_i'))$. Call $p^*=(t^*,g(t^*))$ with $t^*=t'_0 + l$. Then:
     \begin{enumerate}
-        \item For all $0 \leq i < l$ we have: $p'_i - p_i = p_0' - p_0$. We also have $p^* - p_0' = p_0' - p_0$. \label{lem:vector:pt1}
+        \item For all $0 \leq i < l$ we have: $p'_i - p_i = p_0' - p_0$. Also, $g(t^*)$ is defined and we have $p^* - p_0' = p_0' - p_0$. \label{lem:vector:pt1}
         \item We have $h(t^*) = h(t'_0)$.\label{lem:vector:pt2}
-        \item For all  $0 \leq i < l$, $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t)$.\label{lem:vector:pt3}
+        \item For all  $0 \leq i < l$, $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t^*)$.\label{lem:vector:pt3}
         \item If there is $0 \leq k < l$ such that $g(t_k') = g(t^*)$ then $f(p^*) = f(p_0')$.\label{lem:vector:pt4}
     \end{enumerate}
     Figure~\ref{fig:loop-lemma} illustrates this Lemma and Point~\ref{lem:vector:pt4} in particular.
@@ -204,10 +204,10 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 \begin{proof}
     First note that by definition, all $p_i$ and $p_i'$ correspond to head positions and the condition $F_\mathcal{M}(p_i)   = F_\mathcal{M}(p'_i)$ means that there is a repetition in the machine's transcript (see Section~\ref{sec:loops:algo}).
     \begin{enumerate}
-        \item Because $F(p_0) = F(p'_0)$ we know that at times $t_0$ and $t_0'$ the head is in same state, reading the same symbol, hence the same transition executes and, in particular, both heads move in the same direction $m \in \{-1,1\}$, giving the existence of $u = (1, m)$ such that $p_1 = p_0 + u$ and $p_1' = p_0' + u$. Hence, $p_1' - p_1 = p_0' + u - p_0 + u = p_0' - p_0$. Repeating the same argument for each $i < l$ gives $p_i' - p_i = p_0' - p_0$. Finally, applying the same argument with $F(p_{l-1}) = F(p'_{l-1})$ gives $p^*-p_0' = p'_0 - p_0$ as $p^*$ corresponds to one time step after $p'_{l-1}$ and $p'_0$ one time step after $p_{l-1}$.
+        \item Because $F(p_0) = F(p'_0)$ we know that at times $t_0$ and $t_0'$ the head is in same state, reading the same symbol, hence the same transition executes and, in particular, both heads move in the same direction $m \in \{-1,1\}$, giving the existence of $u = (1, m)$ such that $p_1 = p_0 + u$ and $p_1' = p_0' + u$. Hence, $p_1' - p_1 = p_0' + u - p_0 + u = p_0' - p_0$. Repeating the same argument for each $i < l$ gives $p_i' - p_i = p_0' - p_0$. Finally, applying the same argument with $F(p_{l-1}) = F(p'_{l-1})$ gives that $g(t^*)$ is defined: the machine has not halted between steps $t_{l-1}$ and $t'_0$ hence it does not halt between steps $t'_{l-1}$ and $t^*$. Furthermore, $p^*-p_0' = p'_0 - p_0$ as $p^*$ corresponds to one time step after $p'_{l-1}$ and $p'_0$ one time step after $p_{l-1}$.
         \item Similarly to above, $F(p_{l-1}) = F(p'_{l-1})$ implies that the machine will transition to the same state after $p_{l-1}$ and $p'_{l-1}$, giving $h(t^*) = h(t')$.
 
-        \item Let $0 \leq i < l$ such that $g(t_i) = g(t_0')$. Using Point~\ref{lem:vector:pt1}, we have $p_i' = p_i + (p_0' - p_0)$, meaning $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_i) + (p_0' - p_0)$ which rewrites as $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_0') + (p_0' - p_0)$. Point~\ref{lem:vector:pt1} again with $p^* = p_0' +(p_0' - p_0)$, we get $g(t_0') + (p_0' - p_0) = g(t)$ and $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t)$ as needed.
+        \item Let $0 \leq i < l$ such that $g(t_i) = g(t_0')$. Using Point~\ref{lem:vector:pt1}, we have $p_i' = p_i + (p_0' - p_0)$, meaning $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_i) + g(t_0') - g(t_0)$ which rewrites as $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_0') + g(t_0') - g(t_0) = g(t^*)$ because $g(t^*) = g(t_0') + g(t_0') - g(t_0)$ using Point~\ref{lem:vector:pt1} with $p^* = p_0' + (p_0' - p_0)$. In the end, we get $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t)$ as needed.
 
         \item Without loss of generality, let's assume that $k$ is maximal. Using Point~\ref{lem:vector:pt3} we get that $g(t_k) = g(t_0')$ and, by maximality of $k$, there is no $s > k$ with $s <l$ such that $g(t_s) = g(t_0')$. Because $F(p_k) = F(p_k')$, the same symbol is outputted after $p_k$ and $p_k'$, giving $f(t_k+1,g(t_k)) = f(t_k'+1,g(t_k'))$ and by maximality ok $k$, the cells are not revisited respectively before $p_0$ and $p^*$, giving $f(p_0') = f(t_k+1,g(t_k))$ and $f(p) = f(t_k'+1,g(t_k'))$. Hence we have $f(p^*) = f(p_0')$ as needed.
 
