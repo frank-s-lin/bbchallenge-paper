@@ -5,9 +5,9 @@
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.28\textwidth]{figures/space-time-diagrams/cycler_279081.pdf}
+    \includegraphics[width=0.25\textwidth]{figures/space-time-diagrams/cycler_279081.pdf}
     \hspace{10ex}
-    \includegraphics[width=0.28\textwidth]{figures/space-time-diagrams/tc_1RB---_1LB1LC_0RD0RC_1LE1RE_1LA0LE.pdf}
+    \includegraphics[width=0.25\textwidth]{figures/space-time-diagrams/tc_1RB---_1LB1LC_0RD0RC_1LE1RE_1LA0LE.pdf}
     %\includegraphics[width=0.4\textwidth]{figures/space-time-diagrams/translated_cycler_59090563_2.png}
     \caption{Space-time diagrams of the first 30 steps of a \textit{\cycler}, \tm{1RB---_0RC0LE_1LD0LA_1LB1RB_1LC1RC} (left) and of the first $10{,}000$ steps of a \textit{\TC}, \tm{1RB---_1LB1LC_0RD0RC_1LE1RE_1LA0LE} (right). \cyclers are machines that eventually repeat the same configuration forever. \TCs are machines that eventually repeats the same configuration forever, but translated in space. We refer to these two types of machines as \textit{loops}.}\label{fig:loops}
 \end{figure}
@@ -17,22 +17,28 @@
 
 The goal of this decider is to recognise two types of Turing machines: (i) \textit{\cyclers} (see Figure~\ref{fig:loops}~left) that eventually repeat the same configuration and therefore loop forever and (ii) \textit{\TCs} that also eventually repeat the same configuration, but translated in space (see Figure~\ref{fig:loops}~right), analogous to \textit{gliders} in cellular automata. We regroup both types of machines under the umbrella term of \textit{loops}.
 
-Deciding Cyclers reduces to the well-known mathematical problem of detecting the cycles of a function and standard detection algorithms exist \cite{wiki:Cycle_detection}, the simplest one consisting in memorizing each successive configuration of the machine until encountering one that has been already seen. Translated Cyclers, also known as \textit{Lin's recurrence}, have first been described and decided in Shen Lin's 1963 PhD thesis \cite{Lin1963}, other similar algorithms to detect them have been developed since then. \footnote{\url{https://discuss.bbchallenge.org/t/decider-translated-cyclers/34}}
+Deciding Cyclers reduces to the well-known mathematical problem of detecting the cycles of a function and standard detection algorithms exist \cite{wiki:Cycle_detection}, the simplest one consisting in memorizing each successive configuration of the machine until encountering one that has been already seen. Translated Cyclers, also known as \textit{Lin's recurrence}, have first been described and decided in Shen Lin's 1963 PhD thesis \cite{Lin1963}, other similar algorithms to detect them have been developed since then.\footnote{\url{https://discuss.bbchallenge.org/t/decider-translated-cyclers/34}}
 
-Here, we develop a completely different algorithm (Algorithm~\ref{alg:loops}) for deciding both \cyclers and \TCs at once. The particularity of this algorithm is that it detects loops only by analysing the history of state, read-symbol and \headposs visited by the machine, instead of considering entire configurations (\ie with full tape content information). Hence, in theory, Algorithm~\ref{alg:loops} can be implemented to use less memory than previously-known algorithms\footnote{In practice, for simplicity, the Coq implementation (see Section~\ref{sec:loops:results}) stores entire tapes (whereas it only uses the head's information), hence it does not avail of this potential memory optimisation.}. This algorithm was introduced by mxdys as part of \CoqBB.
+Here, we develop a completely different algorithm (Algorithm~\ref{alg:loops}) for deciding both \cyclers and \TCs at once. The particularity of this algorithm is that it detects loops only by analysing the history of state, read-symbol and \headposs visited by the machine, instead of considering entire configurations (\ie with full tape content information). Hence, in theory, Algorithm~\ref{alg:loops} can be implemented to use less memory than previously-known algorithms.\footnote{In practice, for simplicity, the Coq implementation (see Section~\ref{sec:loops:results}) stores entire tapes (whereas it only uses the head's information), hence it does not avail itself of this potential memory optimisation.} This algorithm was introduced by mxdys as part of \CoqBB.
 
-Let's call the \textit{transcript} of a machine the list of successive \ssps visited by the machine from the all-zero tape. For instance, the transcript of the \cycler in Figure~\ref{fig:loops}~(left) starts with \texttt{A0 B0 C0 D0 B1 E0 C0 D0 B0 C1 A0} and the transcript of the \TC in Figure~\ref{fig:loops}~(right) starts with \texttt{A0 B0 C0 A0 B1 D1 C1 E0 C0 A1 C1}. Surprisingly, it turns out that in order to detect loops, we only have to track when a transcript repeats the same sequence twice back-to-back, for instance, in the case of the Cycler in Figure~\ref{fig:loops}: \texttt{A0 B0 C0 D0 B1 E0 C0 D0 B0 C1 A0 B0 C1 A0 B0 C1 A0 B0 C0 D0 \textbf{\underline{B1 E1 C0 D1}} \textbf{\underline{B1 E1 C0 D1}}}. When such a repetition occurs, we use the extra information of \headpos to conclude:
+Let us call the \textit{transcript} of a machine the list of successive \ssps visited by the machine from the all-zero tape. For instance, the transcript of the \cycler in Figure~\ref{fig:loops}~(left) starts with \texttt{A0 B0 C0 D0 B1 E0 C0 D0 B0 C1 A0} and the transcript of the \TC in Figure~\ref{fig:loops}~(right) starts with \texttt{A0 B0 B1 C0 D1 E1 E1 E0 A0 B1 C1}. Surprisingly, it turns out that in order to detect loops, we only have to track when a transcript repeats the same sequence twice back-to-back, for instance, in the case of the Cycler in Figure~\ref{fig:loops}: \texttt{A0 B0 C0 D0 B1 E0 C0 D0 B0 C1 A0 B0 C1 A0 B0 C1 A0 B0 C0 D0 \textbf{\underline{B1 E1 C0 D1}} \textbf{\underline{B1 E1 C0 D1}}}. When such a repetition occurs, we use the extra information of \headpos to conclude:
 
 \begin{enumerate}
     \item If when entering the second repetition the head is at the same position it was at the beginning of the first repetition, then we have detected a \cycler, \eg for the \cycler in Figure~\ref{fig:loops}~(left), here is the end of the transcript with extra head-position information given after each \ssp: \texttt{\underline{\textbf{B1(-2)} E1(-3) C0(-2) D1(-3)} \underline{\textbf{B1(-2)} E1(-3) C0(-2) D1(-3)}}.
           %This case is covered by Theorem~\ref{th:loops:theory}, Case 1.
 
-    \item If, at the beginning of both repetitions, the head is at the same extremity of the tape (\ie both positions are either both a local maximum or both a local minimum) then we have detected a \TC. For the \TC in Figure~\ref{fig:loops}~(right):  \texttt{A0(0)* B0(1)* B1(0) C0(-1) D1(0) E1(1)* E1(0) E0(-1) A0(-2) B1(-1) C1(-2) C1(-1) C0(0) \\  \underline{\textbf{D0(1)* E0(0) A0(-1) B1(0) C1(-1) C1(0) C1(1)* C0(2)*}} \\ \underline{\textbf{D0(3)* E0(2) A0(1) B1(2) C1(1) C1(2) C1(3)* C0(4)*}}} where \texttt{*} indicates steps where the machine is at the right-extremity of the tape (\headpos local maximum).
+    \item If, at the beginning of both repetitions, the head is at the same extremity of the tape (\ie both positions are either both a local maximum or both a local minimum) then we have detected a \TC. For the \TC in Figure~\ref{fig:loops}~(right):
+          \begin{align*}
+               & \texttt{A0(0)* B0(1)* B1(0) C0(-1) D1(0) E1(1)* E1(0) E0(-1) A0(-2) B1(-1) C1(-2) C1(-1) C0(0)} \\
+               & \texttt{\underline{\textbf{D0(1)* E0(0) A0(-1) B1(0) C1(-1) C1(0) C1(1)* C0(2)*}}}              \\
+               & \texttt{\underline{\textbf{D0(3)* E0(2) A0(1) B1(2) C1(1) C1(2) C1(3)* C0(4)*}}}
+          \end{align*}
+          \noindent where \texttt{*} indicates steps where the machine is at the right-extremity of the tape (\headpos local maximum).
 
 
 \end{enumerate}
 
-We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
+Algorithm~\ref{alg:loops} first computes $L$ transcript steps, then, starting from the end of the transcript, it tries to detect two consecutive size-$l$ transcript repetitions, for all $l \leq L/2$. Once it has found two such repetitions, it tries to ``rewind'' them until they both start on positions that are on the (same) extremity of the tape. We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
 
 
 
@@ -51,14 +57,12 @@ We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
         \State \If{the machine has halted before $L$ steps}
         \State \Return HALT \label{alg:loops:halt}
         \EndIf
-        \State \For{$l$ \textbf{in} $[1,+\infty[$ } \Comment{$l$ is the length of the potential loop}
-        \State \If{$2l > L$} \Comment{The history does not contain two transcript repetitions of size $l$}
-        \State \Return UNKNOWN \label{alg:loops:terminate}
-        \State \EndIf
-        \State $K = L-l-1$
-        \State $o = 0$ \Comment{Offset in case we need to keep looking for local-extremum}
+        \State \For{$l$ \textbf{in} $[1,L/2]$ } \Comment{$l$ is the length of the potential loop}
+        \State $K = L-l$
+        \State $\text{offset} = 0$ \Comment{Offset in case we need to keep looking for extremal tape position}
         \State $\text{allequal} = \text{true}$
-        \State \For{$i$ \textbf{in} $[0,l+o[$ }
+        \State \For{$i$ \textbf{in} $[0,l+\text{offset}[$ }
+        \Comment{$\text{Offset}$ and therefore loop bounds may vary between iterations}
         \If{$K-i < 0$}
         \State \textbf{break}
         \State \EndIf
@@ -69,17 +73,17 @@ We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
         \State \textbf{break}
         \EndIf
 
-        \State \If{$i = l+o-1$}
+        \State \If{$i = l+\text{offset}-1$}
         \If{$d = d'$}\label{alg:loops:cycler}
-        \State \Return \NONHALT \Comment{We've detected a Cycler}
+        \State \Return \NONHALT \Comment{We have detected a Cycler}
         \EndIf
         \State \If{$d = \text{max} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{max} \{d_j \, | \, j < K-i \}$}\label{alg:loops:tcplus}
-        \State \Return \NONHALT \Comment{We've detected a (positive) Translated Cycler}
+        \State \Return \NONHALT \Comment{We have detected a (positive) Translated Cycler}
         \EndIf
         \State \If{$d = \text{min} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{min} \{d_j \, | \, j < K-i \}$}\label{alg:loops:tcminus}
-        \State \Return \NONHALT \Comment{We've detected a (negative) Translated Cycler}
+        \State \Return \NONHALT \Comment{We have detected a (negative) Translated Cycler}
         \State \EndIf
-        \State $o = o + 1$
+        \State $\text{offset} = \text{offset} + 1$
         \State \EndIf
         \EndFor
         \EndFor
@@ -92,7 +96,7 @@ We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
 
 
 \subsubsection{Correctness}
-Proving the correctness of this decider is surprisingly nontrivial. In this work, $\N = \{0,1,\dots\}$ and $\N^+ = \{1,2,3\dots\}$. Let's represent the space-time diagram of a given Turing machine $\mathcal{M}$ (Section~\ref{sec:TMs}) using partially defined functions $f_\mathcal{M},g_\mathcal{M},h_\mathcal{M}$, and, $F_\mathcal{M}$:
+Proving the correctness of this decider is surprisingly nontrivial. In this work, $\N = \{0,1,\dots\}$ and $\N^+ = \{1,2,3\dots\}$. Let us represent the space-time diagram of a given Turing machine $\mathcal{M}$ (Section~\ref{sec:TMs}) using partially defined functions $f_\mathcal{M},g_\mathcal{M},h_\mathcal{M}$, and, $F_\mathcal{M}$:
 \begin{align*}
     f_\mathcal{M} & : \N \hookrightarrow \Z \to \alphabet\text{, tape content}                                \\
     g_\mathcal{M} & : \N \hookrightarrow \Z\text{, head position}                                             \\
@@ -184,7 +188,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
             \end{tikzpicture}
         }
     \end{minipage}
-    \caption{Illustration of Lemma~\ref{lem:vector}: head-only space-time diagram showing transcript repetition \texttt{\textbf{\underline{C1 A1 E0 D0}} \textbf{\underline{C1 A1 E0 D0}}}. Coordinates $p_0 = (t_0,g(t_0))$ correspond to the beginning of the first repetition, and $p'_0 = (t_0',g(t_0'))$ of the second. At position $p^*$, we can easily show that the machine shares same state, \stateC, than at position $p_0'$, Lemma~\ref{lem:vector}~Point~\ref{lem:vector:pt2}. Less immediate, in this case, using $p_k$ and $p'_k$, we can show that positions $p^*$ and $p_0'$ also share same read-symbol (depicted as \texttt{?} to signify that it is less immediate to show), which is the symbol outputted after $p_k$ and $p_k'$, Lemma~\ref{lem:vector}~Point~\ref{lem:vector:pt4}. }\label{fig:loop-lemma}
+    \caption{Illustration of Lemma~\ref{lem:vector}: head-only space-time diagram showing transcript repetition \texttt{\textbf{\underline{C1 A1 E0 D0}} \textbf{\underline{C1 A1 E0 D0}}}. Coordinates $p_0 = (t_0,g(t_0))$ correspond to the beginning of the first repetition, and $p'_0 = (t_0',g(t_0'))$ of the second. We can easily show that the machine state is the same state, \stateC, at position $p^*$ and as at position $p_0'$, Lemma~\ref{lem:vector}~Point~\ref{lem:vector:pt2}. Less immediate, in this case, using $p_k$ and $p'_k$, we can show that positions $p^*$ and $p_0'$ also share same read-symbol (depicted as \texttt{?} to signify that it is less immediate to show), which is the symbol outputted after $p_k$ and $p_k'$, Lemma~\ref{lem:vector}~Point~\ref{lem:vector:pt4}. }\label{fig:loop-lemma}
 \end{figure}
 
 
@@ -194,9 +198,9 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 
     \noindent with $t_i = t_0 + i$, $t_i' = t_i+l$ and $p_i = (t_i, g(t_i))$, $p_i' = (t_i', g(t_i'))$. Call $p^*=(t^*,g(t^*))$ with $t^*=t'_0 + l$. Then:
     \begin{enumerate}
-        \item For all $0 \leq i < l$ we have: $p'_i - p_i = p_0' - p_0$. We also have $p^* - p_0' = p_0' - p_0$. \label{lem:vector:pt1}
+        \item For all $0 \leq i < l$ we have: $p'_i - p_i = p_0' - p_0$. Also, $g(t^*)$ is defined and we have $p^* - p_0' = p_0' - p_0$. \label{lem:vector:pt1}
         \item We have $h(t^*) = h(t'_0)$.\label{lem:vector:pt2}
-        \item For all  $0 \leq i < l$, $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t)$.\label{lem:vector:pt3}
+        \item For all  $0 \leq i < l$, $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t^*)$.\label{lem:vector:pt3}
         \item If there is $0 \leq k < l$ such that $g(t_k') = g(t^*)$ then $f(p^*) = f(p_0')$.\label{lem:vector:pt4}
     \end{enumerate}
     Figure~\ref{fig:loop-lemma} illustrates this Lemma and Point~\ref{lem:vector:pt4} in particular.
@@ -204,12 +208,12 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 \begin{proof}
     First note that by definition, all $p_i$ and $p_i'$ correspond to head positions and the condition $F_\mathcal{M}(p_i)   = F_\mathcal{M}(p'_i)$ means that there is a repetition in the machine's transcript (see Section~\ref{sec:loops:algo}).
     \begin{enumerate}
-        \item Because $F(p_0) = F(p'_0)$ we know that at times $t_0$ and $t_0'$ the head is in same state, reading the same symbol, hence the same transition executes and, in particular, both heads move in the same direction $m \in \{-1,1\}$, giving the existence of $u = (1, m)$ such that $p_1 = p_0 + u$ and $p_1' = p_0' + u$. Hence, $p_1' - p_1 = p_0' + u - p_0 + u = p_0' - p_0$. Repeating the same argument for each $i < l$ gives $p_i' - p_i = p_0' - p_0$. Finally, applying the same argument with $F(p_{l-1}) = F(p'_{l-1})$ gives $p^*-p_0' = p'_0 - p_0$ as $p^*$ corresponds to one time step after $p'_{l-1}$ and $p'_0$ one time step after $p_{l-1}$.
+        \item Because $F(p_0) = F(p'_0)$ we know that at times $t_0$ and $t_0'$ the head is in same state, reading the same symbol, hence the same transition executes and, in particular, both heads move in the same direction $m \in \{-1,1\}$, giving the existence of $u = (1, m)$ such that $p_1 = p_0 + u$ and $p_1' = p_0' + u$. Hence, $p_1' - p_1 = p_0' + u - p_0 - u = p_0' - p_0$. Repeating the same argument for each $i < l$ gives $p_i' - p_i = p_0' - p_0$. Finally, applying the same argument with $F(p_{l-1}) = F(p'_{l-1})$ gives that $g(t^*)$ is defined: the machine has not halted between steps $t_{l-1}$ and $t'_0$ hence it does not halt between steps $t'_{l-1}$ and $t^*$. Furthermore, $p^*-p_0' = p'_0 - p_0$ as $p^*$ corresponds to one time step after $p'_{l-1}$ and $p'_0$ one time step after $p_{l-1}$.
         \item Similarly to above, $F(p_{l-1}) = F(p'_{l-1})$ implies that the machine will transition to the same state after $p_{l-1}$ and $p'_{l-1}$, giving $h(t^*) = h(t')$.
 
-        \item Let $0 \leq i < l$ such that $g(t_i) = g(t_0')$. Using Point~\ref{lem:vector:pt1}, we have $p_i' = p_i + (p_0' - p_0)$, meaning $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_i) + (p_0' - p_0)$ which rewrites as $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_0') + (p_0' - p_0)$. Point~\ref{lem:vector:pt1} again with $p^* = p_0' +(p_0' - p_0)$, we get $g(t_0') + (p_0' - p_0) = g(t)$ and $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t)$ as needed.
+        \item Let $0 \leq i < l$ such that $g(t_i) = g(t_0')$. Using Point~\ref{lem:vector:pt1}, we have $p_i' = p_i + (p_0' - p_0)$, meaning $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_i) + g(t_0') - g(t_0)$ which rewrites as $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t_0') + g(t_0') - g(t_0) = g(t^*)$ because $g(t^*) = g(t_0') + g(t_0') - g(t_0)$ using Point~\ref{lem:vector:pt1} with $p^* = p_0' + (p_0' - p_0)$. In the end, we get $g(t_i) = g(t_0') \Leftrightarrow g(t_i') = g(t)$ as needed.
 
-        \item Without loss of generality, let's assume that $k$ is maximal. Using Point~\ref{lem:vector:pt3} we get that $g(t_k) = g(t_0')$ and, by maximality of $k$, there is no $s > k$ with $s <l$ such that $g(t_s) = g(t_0')$. Because $F(p_k) = F(p_k')$, the same symbol is outputted after $p_k$ and $p_k'$, giving $f(t_k+1,g(t_k)) = f(t_k'+1,g(t_k'))$ and by maximality ok $k$, the cells are not revisited respectively before $p_0$ and $p^*$, giving $f(p_0') = f(t_k+1,g(t_k))$ and $f(p) = f(t_k'+1,g(t_k'))$. Hence we have $f(p^*) = f(p_0')$ as needed.
+        \item Without loss of generality, let us assume that $k$ is maximal. Using Point~\ref{lem:vector:pt3} we get that $g(t_k) = g(t_0')$ and, by maximality of $k$, there is no $s > k$ with $s <l$ such that $g(t_s) = g(t_0')$. Because $F(p_k) = F(p_k')$, the same symbol is outputted after $p_k$ and $p_k'$, giving $f(t_k+1,g(t_k)) = f(t_k'+1,g(t_k'))$ and by maximality of $k$, the cells are not revisited respectively before $p_0'$ and $p^*$, giving $f(p_0') = f(t_k+1,g(t_k))$ and $f(p^*) = f(t_k'+1,g(t_k'))$. Hence we have $f(p^*) = f(p_0')$ as needed.
 
 
     \end{enumerate}
@@ -242,7 +246,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 \begin{lemma}\label{lem:loopdonthalt}
     Loops do not halt.
 \end{lemma}
-\begin{proof} This is immediate, by Definition~\ref{def:loops}, the space-time diagram of a loop is infinite, the machine does not halt.
+\begin{proof} By Definition~\ref{def:loops}, the space-time diagram of a loop is infinite, the machine does not halt.
 \end{proof}
 
 \begin{theorem}[Loops]\label{th:loops:theory} Let $\mathcal{M}$ be a Turing machine.
@@ -251,8 +255,8 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
     with $t_0' = t_0+l$ and $p_i = (t_0+i, g(t_0+i))$ and $p_i' = (t_0'+i, g(t_0'+i))$. Then, three cases:
     \begin{enumerate}
         \item If $g(t_0') = g(t_0)$, then $\mathcal{M}$ is a loop, more specifically called a \textit{Cycler}.\label{th:case1}
-        \item If $g(t_0') \geq g(t_0)$ and the tape content to the right of $p_0$ is the same as to right of $p_0'$, \ie $\forall z \geq 0 \in  \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (positive) \textit{Translated Cycler}.\label{th:case2}
-        \item If $g(t_0') \leq g(t_0)$ and the tape content to the left of $p_0$ is the same as to left of $p_0'$, \ie $\forall z \leq 0 \in \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (negative) \textit{Translated Cycler}.\label{th:case3}
+        \item If $g(t_0') \geq g(t_0)$ and the tape content to the right of $p_0$ is the same as to right of $p_0'$, \ie for all nonnegative integer $z$, $f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (positive) \textit{Translated Cycler}.\label{th:case2}
+        \item If $g(t_0') \leq g(t_0)$ and the tape content to the left of $p_0$ is the same as to left of $p_0'$, \ie for all nonnegative integer $z$, $f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (negative) \textit{Translated Cycler}.\label{th:case3}
     \end{enumerate}
     In these three cases, $\mathcal{M}$ has period $l$ and the pre-period $t_0$, and, does not halt.
 \end{theorem}
@@ -404,7 +408,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 
         \item Case $g(t_0') > g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(right). If there is a time step between $t_0'$ and $t_0'+l-1$ such that tape position $g(t^*)$ has been visited, by Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt4}, we get that $f(p^*) = f(p'_0)$.
 
-              If there is no such time step, we have $f(p^*) = f(\overline{p_0'})$ with $\overline{p_0'} = (t_0',g(t))$, dashed red in Figure~\ref{fig:loop-proof}~(right). By Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt3}, we also have that there is no time step between $t_0$ and $t_0+l-1$ such that tape position $g(t_0')$ has been visited. Hence, we  get $f(p'_0) = f(\overline{p_0})$ with $\overline{p_0} = (t_0,g(t_0'))$. By hypothesis, tape content to the right of $p_0$ is the same as to the right of $p_0'$, and $p^*-p_0' = p'_0 - p_0$ (Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt1}) implies that $g(t^*)-g(t_0') = g(t_0') - g(t_0)$, hence $f(\overline{p_0}) = f(\overline{p_0'})$ and, finally, $f(p^*) = f(p'_0)$.\label{thm:proof:pt2}
+              If there is no such time step, we have $f(p^*) = f(\overline{p_0'})$ with $\overline{p_0'} = (t_0',g(t))$, dashed red in Figure~\ref{fig:loop-proof}~(right). By Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt3}, there is no time step between $t_0$ and $t_0+l-1$ such that tape position $g(t_0')$ has been visited. Hence, we  get $f(p'_0) = f(\overline{p_0})$ with $\overline{p_0} = (t_0,g(t_0'))$. By hypothesis, tape content to the right of $p_0$ is the same as to the right of $p_0'$, and $p^*-p_0' = p'_0 - p_0$ (Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt1}) implies that $g(t^*)-g(t_0') = g(t_0') - g(t_0)$, hence $f(\overline{p_0}) = f(\overline{p_0'})$ and, finally, $f(p^*) = f(p'_0)$.\label{thm:proof:pt2}
         \item Case $g(t_0') < g(t_0)$, handled symmetrically to~\ref{thm:proof:pt2}.
     \end{enumerate}
     From there, we get $F(p^*) = F(p'_0)$, and the argument can be repeated starting with $p_1,\, \dots,\, p_{l-1},\, p'_0$ acting as new $p_0,\,\dots,\,p_{l-1}$ and $p'_1,\, \dots,\, p_{l-1}',\, p^*$ as new $p_0',\,\dots,\,p_{l-1}'$ by noting that for cases~\ref{th:case2} and~\ref{th:case3}, the fact that the tape is the same after $p_0$ and $p_0'$ implies that it is also the same after $p_1$ and $p_1'$. Hence, inductively, $\mathcal{M}$ is a loop and, by Lemma~\ref{lem:loopdonthalt}, it does not halt.

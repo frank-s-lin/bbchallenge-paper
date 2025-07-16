@@ -46,7 +46,7 @@ Block simulation consists of simulating the Turing machine until the head eventu
     \item \textbf{Regex branch 1.} We visit $\texttt{0}^\infty \; \texttt{01}^1 \; \texttt{D>} \; (\texttt{01})^1 \; (\texttt{01})^{2} \; \texttt{0}^\infty$.
     \item \textbf{Regex branch 2.} We visit $\texttt{0}^\infty \; \texttt{01}^1 \; \texttt{D>} \; (\texttt{01})^1 \; (\texttt{01})^{3+} \; \texttt{0}^\infty$.
 \end{enumerate}
-In both cases, we've reduced to block simulation.
+In both cases, we have reduced to block simulation.
 
 \begin{example}
     Figure~\ref{fig:repWL} gives the RepWL graph for machine \tm{0RB0LC_1LA1RB_1RD0RE_1LC1LA_---0LD}. This machine was chosen to illustrate the method on a small RepWL graph but the machine is a simple Translated Cycler that be decided using Section~\ref{sec:loops}.
@@ -66,7 +66,7 @@ In both cases, we've reduced to block simulation.
 
     \begin{algorithmic}[1]
         \State{\textbf{Input:} A Turing machine $\mathcal{M}$, block-length parameter $l>0$, minimum size of nonconstant blocks $T>0$, maximum number of steps allowed in block simulation $B \in \mathbb{N}$, maximum number of distinct nodes we're willing to visit $N\in \mathbb{N}$.}
-        \State{\textbf{Output:} \NONHALT if the decider detects that the machine doesn't halt and \UNKNOWN otherwise.}
+        \State{\textbf{Output:} \NONHALT if the decider detects that the machine does not halt and \UNKNOWN otherwise.}
         \State
         \State $\texttt{to\_visit} = [\texttt{A>}]$
         \State $V = \{\}$ \Comment{Visited regex configurations}

@@ -2,7 +2,7 @@
 
 \subsubsection{Pipelines}\label{sec:pipelines}
 
-In this work, we call a \textit{decider} a program that takes as input a Turing machine $\mathcal{M}$ and that returns in finite time either \HALT, \NONHALT, or, \UNKNOWN depending on if it was able to detect the machine's halting status or not.\footnote{Hence, we don't use the word ``decider'' in the traditional sense of theoretical computer science since, although our deciders finish, they are partial.}
+In this work, we call a \textit{decider} a program that takes as input a Turing machine $\mathcal{M}$ and that returns in finite time either \HALT, \NONHALT, or, \UNKNOWN depending on if it was able to detect the machine's halting status or not.\footnote{Hence, we do not use the word ``decider'' in the traditional sense of theoretical computer science since, although our deciders finish, they are partial.}
 
 A \textit{pipeline} consists of applying different proof techniques in sequence, mostly consisting of deciders: a machine is tested by each decider successively until one of them outputs \HALT or \NONHALT. We call \textit{Sporadic Machines} the \numSporadic machines that were not solved by any decider but using individual proofs of nonhalting instead, see Section~\ref{sec:sporadic}. Table~\ref{tab:pipelineBB5} gives an approximation of the pipeline implemented in \CoqBB in order to prove $S(5) = \BBtheFifth$, see Theorem~\ref{th:BB5}. Similarly, Table~\ref{tab:pipelineBB2x4} and Table~\ref{tab:pipelineBB4} respectively give approximations of the pipelines leading to $S(2,4) = \BBTxF$ and $S(4) = \BBtheFourth$ -- the latter confirming the result for $S(4)$ originally given in \cite{Brady83}.
 
