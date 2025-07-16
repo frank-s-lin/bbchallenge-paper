@@ -197,7 +197,7 @@ Combining the above, we get FAR:
 
 \begin{theorem}[\CoqBB: \texttt{Lemma dfa\_nfa\_verifier\_spec}\footnote{\CoqBB's lemma is slightly different, as it builds the NFA satisfying this theorem using a given ``precursor'' Deterministic Finite Automaton (DFA) -- as initially developed in \cite{FAR} -- see Section~\ref{sec:FAR:results}.}]
     \label{far-main-theorem}
-    Machine $\mathcal{M}$, with transition table $\delta$ (see Section~\ref{sec:TMs}), doesn't halt from the initial all-0 configuration if there is a Nondeterministic Finite Automaton $(q_0, \{T_\gamma\}, a)$ and row vector $s$ satisfying the below:
+    Machine $\mathcal{M}$, with transition table $\delta$ (see Section~\ref{sec:TMs}), does not halt from the initial all-0 configuration if there is a Nondeterministic Finite Automaton $(q_0, \{T_\gamma\}, a)$ and row vector $s$ satisfying the below:
     \begin{align}
         \label{far-cond-first}
         q_0 T_0                                    & = q_0

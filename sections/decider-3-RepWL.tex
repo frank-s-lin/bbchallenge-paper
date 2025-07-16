@@ -66,7 +66,7 @@ In both cases, we've reduced to block simulation.
 
     \begin{algorithmic}[1]
         \State{\textbf{Input:} A Turing machine $\mathcal{M}$, block-length parameter $l>0$, minimum size of nonconstant blocks $T>0$, maximum number of steps allowed in block simulation $B \in \mathbb{N}$, maximum number of distinct nodes we're willing to visit $N\in \mathbb{N}$.}
-        \State{\textbf{Output:} \NONHALT if the decider detects that the machine doesn't halt and \UNKNOWN otherwise.}
+        \State{\textbf{Output:} \NONHALT if the decider detects that the machine does not halt and \UNKNOWN otherwise.}
         \State
         \State $\texttt{to\_visit} = [\texttt{A>}]$
         \State $V = \{\}$ \Comment{Visited regex configurations}

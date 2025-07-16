@@ -18,7 +18,7 @@ Algorithm~\ref{alg:NGramCPS} gives a pseudo-code of the \ngramcps decider. The d
 
 The algorithm builds a set of local configurations \textit{potentially} reachable by the machine until either an undefined transition is met (Algorithm~\ref{alg:NGramCPS}, l.\ref{alg:NGramCPS:line:unknown}) or no new configurations are added to the set, i.e. the set is closed under Turing machine operations (Algorithm~\ref{alg:NGramCPS}, l.\ref{alg:NGramCPS:line:nonhalt}). In the first case, the decider cannot conclude and the machine is left undecided. In the second case, the decider concludes that the machine does not halt as no undefined transition (\ie where the machine could be asked to halt) can be reached.
 
-The central idea of this decider and the reason behind using the ``$n$-gram'' terminology (originating from \textit{$n$-gram models} in language analysis)  is better illustrated by the following example. Let $n=3$ and consider local configuration \texttt{011 [B0] 100}, meaning that the left $n$-gram is \texttt{011}, right $n$-gram is \texttt{100}, the machine is in \stateB and reading symbol \texttt{0}. Assume that the  machine's transition for reading a \texttt{0} in state \stateB is \texttt{1RC}, meaning that the machine writes \texttt{1}, moves right and transitions to state \stateC. The local configuration becomes \texttt{011 1 [C1] 00?}, where \texttt{?} means that we don't know which symbol to use. Then:
+The central idea of this decider and the reason behind using the ``$n$-gram'' terminology (originating from \textit{$n$-gram models} in language analysis)  is better illustrated by the following example. Let $n=3$ and consider local configuration \texttt{011 [B0] 100}, meaning that the left $n$-gram is \texttt{011}, right $n$-gram is \texttt{100}, the machine is in \stateB and reading symbol \texttt{0}. Assume that the  machine's transition for reading a \texttt{0} in state \stateB is \texttt{1RC}, meaning that the machine writes \texttt{1}, moves right and transitions to state \stateC. The local configuration becomes \texttt{011 1 [C1] 00?}, where \texttt{?} means that we do not know which symbol to use. Then:
 
 \begin{enumerate}
     \item \textbf{Left $n$-gram update.} We record the left $n$-gram \texttt{011} as seen (it is inserted in set $L$, Algorithm~\ref{alg:NGramCPS}, l.\ref{alg:NGramCPS:line:insertL}) and we discard its first bit, updating the left $n$-gram to \texttt{111}. The local configuration becomes \texttt{111 [C1] 00?}.
@@ -90,7 +90,7 @@ Figure~\ref{fig:ngram-cps-more} gives an example of a ``fractal-looking'' 5-stat
 
     \begin{algorithmic}[1]
         \State{\textbf{Input:} A Turing machine $\mathcal{M}$, the zero symbol of the alphabet $\alphabet_0$, the size of the n-grams $n > 0$.}
-        \State{\textbf{Output:} \NONHALT if the decider detects that the machine doesn't halt and \UNKNOWN otherwise.}
+        \State{\textbf{Output:} \NONHALT if the decider detects that the machine does not halt and \UNKNOWN otherwise.}
 
         \State $g_0 = (\alphabet_0)^n$ \Comment{The zero n-gram consists of $n$ zero symbols}
         \State $L = \{ g_0 \}$ \Comment{The seen left n-grams}
@@ -134,7 +134,7 @@ Figure~\ref{fig:ngram-cps-more} gives an example of a ``fractal-looking'' 5-stat
         \EndIf
         \EndWhile
         \State \If{\textbf{not} any\_updates}
-        \State \textbf{return} \NONHALT\label{alg:NGramCPS:line:nonhalt} \Comment{Set $C$ is closed, and does not include undefined transitions:\\ \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \space \space \space \space the machine doesn't halt}
+        \State \textbf{return} \NONHALT\label{alg:NGramCPS:line:nonhalt} \Comment{Set $C$ is closed, and does not include undefined transitions:\\ \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \space \space \space \space the machine does not halt}
         \EndIf
 
         \EndWhile
