@@ -38,7 +38,7 @@ Let us call the \textit{transcript} of a machine the list of successive \ssps vi
 
 \end{enumerate}
 
-Algorithm~\ref{alg:loops} first computes $L$ transcript steps, then, starting from the end of the transcript, it tries to detect two consecutive size-$l$ repetitions for all $l < L/2$. Once it has found two such repetitions, it tries to ``rewind'' them until they both start on positions that are on the (same) extremity of the tape. We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
+Algorithm~\ref{alg:loops} first computes $L$ transcript steps, then, starting from the end of the transcript, it tries to detect two consecutive size-$l$ transcript repetitions, for all $l \leq L/2$. Once it has found two such repetitions, it tries to ``rewind'' them until they both start on positions that are on the (same) extremity of the tape. We prove that Algorithm~\ref{alg:loops} is correct in Theorem~\ref{th:loops}.
 
 
 
