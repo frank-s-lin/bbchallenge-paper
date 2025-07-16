@@ -57,14 +57,12 @@ Algorithm~\ref{alg:loops} first computes $L$ transcript steps, then, starting fr
         \State \If{the machine has halted before $L$ steps}
         \State \Return HALT \label{alg:loops:halt}
         \EndIf
-        \State \For{$l$ \textbf{in} $[1,+\infty[$ } \Comment{$l$ is the length of the potential loop}
-        \State \If{$2l > L$} \Comment{The history does not contain two transcript repetitions of size $l$}
-        \State \Return UNKNOWN \label{alg:loops:terminate}
-        \State \EndIf
-        \State $K = L-l-1$
-        \State $o = 0$ \Comment{Offset in case we need to keep looking for local-extremum}
+        \State \For{$l$ \textbf{in} $[1,L/2]$ } \Comment{$l$ is the length of the potential loop}
+        \State $K = L-l$
+        \State $\text{offset} = 0$ \Comment{Offset in case we need to keep looking for extremal tape position}
         \State $\text{allequal} = \text{true}$
-        \State \For{$i$ \textbf{in} $[0,l+o[$ }
+        \State \For{$i$ \textbf{in} $[0,l+\text{offset}[$ }
+        \Comment{$\text{Offset}$ and therefore loop bounds may vary between iterations}
         \If{$K-i < 0$}
         \State \textbf{break}
         \State \EndIf
@@ -75,17 +73,17 @@ Algorithm~\ref{alg:loops} first computes $L$ transcript steps, then, starting fr
         \State \textbf{break}
         \EndIf
 
-        \State \If{$i = l+o-1$}
+        \State \If{$i = l+\text{offset}-1$}
         \If{$d = d'$}\label{alg:loops:cycler}
-        \State \Return \NONHALT \Comment{We've detected a Cycler}
+        \State \Return \NONHALT \Comment{We have detected a Cycler}
         \EndIf
         \State \If{$d = \text{max} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{max} \{d_j \, | \, j < K-i \}$}\label{alg:loops:tcplus}
-        \State \Return \NONHALT \Comment{We've detected a (positive) Translated Cycler}
+        \State \Return \NONHALT \Comment{We have detected a (positive) Translated Cycler}
         \EndIf
         \State \If{$d = \text{min} \{d_j \, | \, j < L-i \}$ \textbf{and} $d' = \text{min} \{d_j \, | \, j < K-i \}$}\label{alg:loops:tcminus}
-        \State \Return \NONHALT \Comment{We've detected a (negative) Translated Cycler}
+        \State \Return \NONHALT \Comment{We have detected a (negative) Translated Cycler}
         \State \EndIf
-        \State $o = o + 1$
+        \State $\text{offset} = \text{offset} + 1$
         \State \EndIf
         \EndFor
         \EndFor
