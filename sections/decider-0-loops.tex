@@ -246,7 +246,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 \begin{lemma}\label{lem:loopdonthalt}
     Loops do not halt.
 \end{lemma}
-\begin{proof} This is immediate, by Definition~\ref{def:loops}, the space-time diagram of a loop is infinite, the machine does not halt.
+\begin{proof} By Definition~\ref{def:loops}, the space-time diagram of a loop is infinite, the machine does not halt.
 \end{proof}
 
 \begin{theorem}[Loops]\label{th:loops:theory} Let $\mathcal{M}$ be a Turing machine.
@@ -255,8 +255,8 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
     with $t_0' = t_0+l$ and $p_i = (t_0+i, g(t_0+i))$ and $p_i' = (t_0'+i, g(t_0'+i))$. Then, three cases:
     \begin{enumerate}
         \item If $g(t_0') = g(t_0)$, then $\mathcal{M}$ is a loop, more specifically called a \textit{Cycler}.\label{th:case1}
-        \item If $g(t_0') \geq g(t_0)$ and the tape content to the right of $p_0$ is the same as to right of $p_0'$, \ie $\forall z \geq 0 \in  \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (positive) \textit{Translated Cycler}.\label{th:case2}
-        \item If $g(t_0') \leq g(t_0)$ and the tape content to the left of $p_0$ is the same as to left of $p_0'$, \ie $\forall z \leq 0 \in \Z \; f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (negative) \textit{Translated Cycler}.\label{th:case3}
+        \item If $g(t_0') \geq g(t_0)$ and the tape content to the right of $p_0$ is the same as to right of $p_0'$, \ie for all nonnegative integer $z$, $f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (positive) \textit{Translated Cycler}.\label{th:case2}
+        \item If $g(t_0') \leq g(t_0)$ and the tape content to the left of $p_0$ is the same as to left of $p_0'$, \ie for all nonnegative integer $z$, $f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (negative) \textit{Translated Cycler}.\label{th:case3}
     \end{enumerate}
     In these three cases, $\mathcal{M}$ has period $l$ and the pre-period $t_0$, and, does not halt.
 \end{theorem}
@@ -408,7 +408,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 
         \item Case $g(t_0') > g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(right). If there is a time step between $t_0'$ and $t_0'+l-1$ such that tape position $g(t^*)$ has been visited, by Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt4}, we get that $f(p^*) = f(p'_0)$.
 
-              If there is no such time step, we have $f(p^*) = f(\overline{p_0'})$ with $\overline{p_0'} = (t_0',g(t))$, dashed red in Figure~\ref{fig:loop-proof}~(right). By Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt3}, we also have that there is no time step between $t_0$ and $t_0+l-1$ such that tape position $g(t_0')$ has been visited. Hence, we  get $f(p'_0) = f(\overline{p_0})$ with $\overline{p_0} = (t_0,g(t_0'))$. By hypothesis, tape content to the right of $p_0$ is the same as to the right of $p_0'$, and $p^*-p_0' = p'_0 - p_0$ (Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt1}) implies that $g(t^*)-g(t_0') = g(t_0') - g(t_0)$, hence $f(\overline{p_0}) = f(\overline{p_0'})$ and, finally, $f(p^*) = f(p'_0)$.\label{thm:proof:pt2}
+              If there is no such time step, we have $f(p^*) = f(\overline{p_0'})$ with $\overline{p_0'} = (t_0',g(t))$, dashed red in Figure~\ref{fig:loop-proof}~(right). By Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt3}, there is no time step between $t_0$ and $t_0+l-1$ such that tape position $g(t_0')$ has been visited. Hence, we  get $f(p'_0) = f(\overline{p_0})$ with $\overline{p_0} = (t_0,g(t_0'))$. By hypothesis, tape content to the right of $p_0$ is the same as to the right of $p_0'$, and $p^*-p_0' = p'_0 - p_0$ (Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt1}) implies that $g(t^*)-g(t_0') = g(t_0') - g(t_0)$, hence $f(\overline{p_0}) = f(\overline{p_0'})$ and, finally, $f(p^*) = f(p'_0)$.\label{thm:proof:pt2}
         \item Case $g(t_0') < g(t_0)$, handled symmetrically to~\ref{thm:proof:pt2}.
     \end{enumerate}
     From there, we get $F(p^*) = F(p'_0)$, and the argument can be repeated starting with $p_1,\, \dots,\, p_{l-1},\, p'_0$ acting as new $p_0,\,\dots,\,p_{l-1}$ and $p'_1,\, \dots,\, p_{l-1}',\, p^*$ as new $p_0',\,\dots,\,p_{l-1}'$ by noting that for cases~\ref{th:case2} and~\ref{th:case3}, the fact that the tape is the same after $p_0$ and $p_0'$ implies that it is also the same after $p_1$ and $p_1'$. Hence, inductively, $\mathcal{M}$ is a loop and, by Lemma~\ref{lem:loopdonthalt}, it does not halt.
