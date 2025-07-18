@@ -117,6 +117,8 @@ Théo Zimmermann
 \definecolor{colorD}{RGB}{0,255,0}
 \definecolor{colorE}{RGB}{255,0,255}
 
+\usepackage{epigraph}
+
 \newcommand{\stateA}{{\textcolor{colorA}{A}}\xspace}
 \newcommand{\stateB}{{\textcolor{colorB}{B}}\xspace}
 \newcommand{\stateC}{{\textcolor{colorC}{C}}\xspace}
@@ -208,18 +210,19 @@ Théo Zimmermann
 \begin{center}
 
 \end{center}
+\setlength{\epigraphwidth}{0.7\textwidth}
+\epigraph{In any case, even though skilled mathematicians and experienced programmers attempted to evaluate $\Sigma(3)$ and S(3), there is no evidence that any presently known approach will yield the answer, even if we avail ourselves of high-speed computers and elaborate programs. As regards $\Sigma(4)$, $S(4)$ the situation seems to be entirely hopeless at present.}{\radofull, 1963 \cite{Rado_1963}}
+\epigraph{\textit{Prediction 5}. It will never be proved that $\Sigma(5) = \SigmaTheFifth$ and $S(5) = \BBtheFifth$.}{Allen H. Brady, 1990 \cite{BradyMeaningOfLife}}
 
-
-
-\begin{figure}
-    \begin{quote}
-        ``In any case, even though skilled mathematicians and experienced programmers attempted to evaluate $\Sigma(3)$ and S(3), there is no evidence that any presently known approach will yield the answer, even if we avail ourselves of high-speed computers and elaborate programs. As regards $\Sigma(4)$, $S(4)$ the situation seems to be entirely hopeless at present.'' --- \radofull, 1963 \cite{Rado_1963}
-    \end{quote}
-    \begin{quote}
-        ``\textit{Prediction 5}. It will never be proved that $\Sigma(5) = \SigmaTheFifth$ and $S(5) = \BBtheFifth$.'' --- Allen H. Brady, 1990 \cite{BradyMeaningOfLife}
-    \end{quote}
-    \caption{\rado, who invented the Busy Beaver game, proved the value of $S(2)$ in 1962 \cite{Rado_1962}, and helped his doctoral student Shen Lin prove $S(3)$ in 1963 \cite{Lin1963}, did not believe that $S(4)$ could be solved in his time. Brady, who proved the value of $S(4)$ in 1983 \cite{Brady83}, did not believe that $S(5)$ could be solved at all. Amusingly, Brady opens his article on $S(4)$ with \rado's above quote \cite{Brady83}. Under that light, the knowledge of a (small) Busy Beaver value seems to be a reflection of the computing technology available at the time it was proved.}\label{fig:hope}
-\end{figure}
+% \begin{figure}
+%     \begin{quote}
+%         ``In any case, even though skilled mathematicians and experienced programmers attempted to evaluate $\Sigma(3)$ and S(3), there is no evidence that any presently known approach will yield the answer, even if we avail ourselves of high-speed computers and elaborate programs. As regards $\Sigma(4)$, $S(4)$ the situation seems to be entirely hopeless at present.'' --- \radofull, 1963 \cite{Rado_1963}
+%     \end{quote}
+%     \begin{quote}
+%         ``\textit{Prediction 5}. It will never be proved that $\Sigma(5) = \SigmaTheFifth$ and $S(5) = \BBtheFifth$.'' --- Allen H. Brady, 1990 \cite{BradyMeaningOfLife}
+%     \end{quote}
+%     \caption{\rado, who invented the Busy Beaver game, proved the value of $S(2)$ in 1962 \cite{Rado_1962}, and helped his doctoral student Shen Lin prove $S(3)$ in 1963 \cite{Lin1963}, did not believe that $S(4)$ could be solved in his time. Brady, who proved the value of $S(4)$ in 1983 \cite{Brady83}, did not believe that $S(5)$ could be solved at all. Amusingly, Brady opens his article on $S(4)$ with \rado's above quote \cite{Brady83}. Under that light, the knowledge of a (small) Busy Beaver value seems to be a reflection of the computing technology available at the time it was proved.}\label{fig:hope}
+% \end{figure}
 
 \vspace{-40pt}
 
@@ -492,7 +495,11 @@ Concerning $S(6)$, the TNF enumeration of 6-state machines, which contains about
     \item A halting machine beating the current $10\uparrow\uparrow15$ champion (see Table~\ref{table:landscape} and Appendix~\ref{app:lowerbounds}) could be among these ca.~4,000 holdouts which could require significant analysis or accelerated simulator improvements to be detected.
 \end{itemize}
 
-Hence, we can say with absolute certainty that the value of $S(6)$ will never be proved. Nonetheless, \texttt{bbchallenge.org} welcomes all new contributors interested in the Busy Beaver game, irrespective of background, favorite programming language or proof assistant (including none)!
+% \rado, who proved the value of $S(2)$ \cite{Rado_1962} was skeptical about the possibility of knowing $S(3)$ and called $S(4)$ hopeless while Brady who proved the value of $S(4)$ (amusingly, Brady opens his article on $S(4)$ with \rado's quote about $S(4)$) predicted that $S(5)$ would never be proved, see quotes in incipit of this paper. 
+
+Hence, in perpetuating a longstanding tradition of hope (see \rado's and Brady's quotes in the incipit of this paper), we predict that $S(6)$ will never be proved.\footnote{Nonetheless, \texttt{bbchallenge.org} welcomes all new contributors interested in the Busy Beaver game!}
+
+% \caption{\rado, who invented the Busy Beaver game, proved the value of $S(2)$ in 1962 \cite{Rado_1962}, and helped his doctoral student Shen Lin prove $S(3)$ in 1963 \cite{Lin1963}, did not believe that $S(4)$ could be solved in his time. Brady, who proved the value of $S(4)$ in 1983 \cite{Brady83}, did not believe that $S(5)$ could be solved at all. Amusingly, Brady opens his article on $S(4)$ with \rado's above quote \cite{Brady83}. Under that light, the knowledge of a (small) Busy Beaver value seems to be a reflection of the computing technology available at the time it was proved.}\label{fig:hope}
 
 \input{sections/TMs.tex}
 
