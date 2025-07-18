@@ -12,6 +12,8 @@ The $n$-gram Closed Position Set (\ngramcps) decider which we introduce here, Al
 
 The method is especially potent when augmenting the binary alphabet of Turing machines to record extra information on the tape, such as a fixed-length history of previously seen (state,symbol) pairs, see Section~\ref{sec:n-gramCPS:augmentations}. \ngramcps was first developed without augmentations \cite{ngramcps_fenner} which were later introduced with \CoqBB.
 
+\subsubsection{Algorithm}\label{sec:n-gramCPS:algo}
+
 \begin{algorithm}
     \caption{{\sc decider-NGramCPS}}\label{alg:NGramCPS}
 
@@ -71,7 +73,7 @@ The method is especially potent when augmenting the binary alphabet of Turing ma
 
 
 
-\subsubsection{Algorithm}\label{sec:n-gramCPS:algo}
+
 
 Algorithm~\ref{alg:NGramCPS} gives a pseudo-code of the \ngramcps decider. The decider considers finite, \textit{local configurations} of a Turing machine consisting of: (i) the \textit{$n$-grams} (see after) respectively to the left and to the right of the head; (ii) the state the machine is in; (iii) the symbol currently read by the head, referred to as \textit{middle} symbol (as opposed to the left and right part of the tape, modelled by the n-grams). By \textit{$n$-gram}, we mean a sequence of $n > 0$ symbols from the tape alphabet (for instance, the binary alphabet $\alphabet=\{\szero,\sone\}$).
 
