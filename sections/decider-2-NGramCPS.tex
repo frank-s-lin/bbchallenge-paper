@@ -14,11 +14,11 @@ The method is especially potent when augmenting the binary alphabet of Turing ma
 
 \subsubsection{Algorithm}\label{sec:n-gramCPS:algo}
 
-Algorithm~\ref{alg:NGramCPS} gives a pseudo-code of the \ngramcps decider. The decider considers finite, \textit{local configurations} of a Turing machine consisting of: (i) the \textit{$n$-grams} (see after) respectively to the left and to the right of the head, (ii) the state the machine is in, and (iii) the symbol currently read by the head, referred to as \textit{middle} symbol (as opposed to the left and right part of the tape, modelled by the n-grams). By \textit{$n$-gram}, we mean a sequence of $n > 0$ symbols from the tape alphabet (for instance, the binary alphabet $\alphabet=\{\szero,\sone\}$).
+Algorithm~\ref{alg:NGramCPS} gives a pseudo-code of the \ngramcps decider. The decider considers finite, \textit{local configurations} of a Turing machine consisting of: (i) the \textit{$n$-grams} (see after) respectively to the left and to the right of the head; (ii) the state the machine is in; (iii) the symbol currently read by the head, referred to as \textit{middle} symbol (as opposed to the left and right part of the tape, modelled by the n-grams). By \textit{$n$-gram}, we mean a sequence of $n > 0$ symbols from the tape alphabet (for instance, the binary alphabet $\alphabet=\{\szero,\sone\}$).
 
 The algorithm builds a set of local configurations \textit{potentially} reachable by the machine until either an undefined transition is met (Algorithm~\ref{alg:NGramCPS}, l.\ref{alg:NGramCPS:line:unknown}) or no new configurations are added to the set, i.e. the set is closed under Turing machine operations (Algorithm~\ref{alg:NGramCPS}, l.\ref{alg:NGramCPS:line:nonhalt}). In the first case, the decider cannot conclude and the machine is left undecided. In the second case, the decider concludes that the machine does not halt as no undefined transition (\ie where the machine could be asked to halt) can be reached.
 
-The central idea of this decider and the reason behind using the ``$n$-gram'' terminology (originating from \textit{$n$-gram models} in language analysis)  is better illustrated by the following example. Let $n=3$ and consider local configuration \texttt{011 [B0] 100}, meaning that the left $n$-gram is \texttt{011}, right $n$-gram is \texttt{100}, the machine is in \stateB and reading symbol \texttt{0}. Assume that the  machine's transition for reading a \texttt{0} in state \stateB is \texttt{1RC}, meaning that the machine writes \texttt{1}, moves right and transitions to state \stateC. The local configuration becomes \texttt{011 1 [C1] 00?}, where \texttt{?} means that we do not know which symbol to use. Then:
+The central idea of this decider and the reason behind using the ``$n$-gram'' terminology (originating from \textit{$n$-gram models} in language analysis)  is better illustrated by the following example. Let $n=3$ and consider local configuration \texttt{011 [B0] 100}, meaning that the left $n$-gram is \texttt{011}, right $n$-gram is \texttt{100}, the machine is in state \stateB and reading symbol \texttt{0}. Assume that the  machine's transition for reading a \texttt{0} in state \stateB is \texttt{1RC}, meaning that the machine writes \texttt{1}, moves right and transitions to state \stateC. The local configuration becomes \texttt{011 1 [C1] 00?}, where \texttt{?} means that we do not know which symbol to use. Then:
 
 \begin{enumerate}
     \item \textbf{Left $n$-gram update.} We record the left $n$-gram \texttt{011} as seen (it is inserted in set $L$, Algorithm~\ref{alg:NGramCPS}, l.\ref{alg:NGramCPS:line:insertL}) and we discard its first bit, updating the left $n$-gram to \texttt{111}. The local configuration becomes \texttt{111 [C1] 00?}.
@@ -63,11 +63,11 @@ The \ngramcps decider becomes particularly powerful for deciding 5-state 2-symbo
     \caption{\ngramcps results in the $S(5)$ pipeline (see Table~\ref{tab:pipelineBB5}) per variant (see Section~\ref{sec:n-gramCPS:augmentations}).}\label{tab:ngramcps:results}
 \end{table}
 
-\CoqBB implements \ngramcps (Algorithm~\ref{alg:NGramCPS}) in the three variants discussed here, (i) without augmentation (function \texttt{NGramCPS\_decider\_impl2}) -- \ie using standard binary alphabet $\alphabet=\{\szero,\sone\}$ (ii) fixed-length history (function \texttt{NGramCPS\_decider\_impl1}) and (iii) Least Recent Usage history (function \texttt{NGramCPS\_LRU\_decider}). Compared to Algorithm~\ref{alg:NGramCPS}, \CoqBB implementations integrate an additional \textit{gas parameter} allowing them to terminate early for the sake of performance. The implementations for (ii) and (iii) use the same core implementation as for (i) just accordingly augmenting the tape-alphabet of the machine and its read/write behavior (see definitions \texttt{TM\_history} and \texttt{TM\_history\_LRU}).
+\CoqBB implements \ngramcps (Algorithm~\ref{alg:NGramCPS}) in the three variants discussed here, (i) without augmentation (function \texttt{NGramCPS\_decider\_impl2}) -- \ie using standard binary alphabet $\alphabet=\{\szero,\sone\}$; (ii) fixed-length history (function \texttt{NGramCPS\_decider\_impl1}); (iii) Least Recent Usage history (function \texttt{NGramCPS\_LRU\_decider}). Compared to Algorithm~\ref{alg:NGramCPS}, \CoqBB implementations integrate an additional \textit{gas parameter} allowing them to terminate early for the sake of performance. The implementations for (ii) and (iii) use the same core implementation as for (i) just accordingly augmenting the tape-alphabet of the machine and its read/write behavior (see definitions \texttt{TM\_history} and \texttt{TM\_history\_LRU}).
 
 Altogether, \ngramcps decides 99.89\% of all nonhalting enumerated 5-state machines excluding loops, see Table~\ref{tab:pipelineBB5}. The number of machines decided by each \ngramcps variant in the $S(5)$ pipeline (Table~\ref{tab:pipelineBB5}) are given in Table~\ref{tab:ngramcps:results}. Augmentations allowed to decide machines that resisted all other methods, without having to resort to individual proofs of nonhalting -- see details in the full $S(5)$ pipeline, Appendix~\ref{app:pipelines}.
 
-Figure~\ref{fig:ngram-cps-more} gives an example of a ``fractal-looking'' 5-state Turing machines that is solved by the LRU augmentation but has no known solution with standard \ngramcps or the fixed-length history augmentation.
+Figure~\ref{fig:ngram-cps-more} gives an example of a ``fractal-looking'' 5-state Turing machine that is solved by the LRU augmentation but has no known solution with standard \ngramcps or the fixed-length history augmentation.
 
 \begin{figure}
     \centering
@@ -75,7 +75,7 @@ Figure~\ref{fig:ngram-cps-more} gives an example of a ``fractal-looking'' 5-stat
     % \hspace{2ex}
     \includegraphics[width=0.35\textwidth]{figures/space-time-diagrams/ngramcps_LRU_35409542.png}
 
-    \caption{10,000-step space-time diagram of a ``fractal-looking'' 5-state Turing machines that is solved by the LRU augmentation but has no known solution with standard \ngramcps or the fixed-length history augmentation, see Section~\ref{sec:n-gramCPS:augmentations}. \tm{1RB0RA_1LC---_1RC1LD_0LE1RA_0LC0LE}}\label{fig:ngram-cps-more}
+    \caption{10,000-step space-time diagram of a ``fractal-looking'' 5-state Turing machine that is solved by the LRU augmentation but has no known solution with standard \ngramcps or the fixed-length history augmentation, see Section~\ref{sec:n-gramCPS:augmentations}. \tm{1RB0RA_1LC---_1RC1LD_0LE1RA_0LC0LE}}\label{fig:ngram-cps-more}
 \end{figure}
 
 
@@ -100,7 +100,7 @@ Figure~\ref{fig:ngram-cps-more} gives an example of a ``fractal-looking'' 5-stat
         \State $V = C$
         \State any\_updates $=$ false
         \While{$|V| \neq 0$}
-        \State $c = V.\textbf{pop}()$
+        \State $c = V.\textbf{pop}()$ \Comment{Remove an arbitrary element $c$ from $V$}
         \State $c' = c$
         \State $\{w,d,s\}$ $=$ $\mathcal{M}$(c.state, c.\middlesymbol) \Comment{Transition's write symbol, move direction, and next state}
         \State \If{$s$ is undefined} \Comment{Undefined transition is met, we cannot conclude}
