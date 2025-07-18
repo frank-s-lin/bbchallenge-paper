@@ -1,6 +1,9 @@
 % !TeX root = ../bbchallenge-paper.tex
 \newpage
 \subsection{Loops}\label{sec:loops}
+
+Arguably, one of the most elementary argument to prove that a Turing machine does not halt from a given input is to show that it enters a \textit{loop} by eventually repeating the same configuration, \ie same tape content, head position and state (see Section~\ref{sec:TMs}). Slightly less obvious, but extremely common, is the case where a configuration is repeated but translated in space (analogously to \textit{gliders} in cellular automata), also leading to nonhalting. This section presents Algorithm~\ref{alg:loops} which detects both these behaviors.
+
 \subsubsection{Algorithm}\label{sec:loops:algo}
 
 \begin{figure}[h!]
