@@ -116,12 +116,12 @@ at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines
     \centering
     \begin{tabular}{|l|r|r|r|r|}
         \hline
-        $S(n)$ & Nonhalt     & Halt       & Total       & Syntactic/TNF ratio    \\
+        $S(n)$ & Nonhalt     & Halt       & Total       & Syntactic/TNF ratio \\
         \hline
-        $S(2)$ & 42          & 19         & 61          & $\times 107$ shrink    \\
-        $S(3)$ & 3,645       & 1,772      & 5,417       & $\times 891$ shrink    \\
-        $S(4)$ & 609,216     & 249,693    & 858,909     & $\times 8,121$ shrink  \\
-        $S(5)$ & 133,005,895 & 48,379,894 & 181,385,789 & $\times 91,958$ shrink \\
+        $S(2)$ & 42          & 19         & 61          & $107$               \\
+        $S(3)$ & 3,645       & 1,772      & 5,417       & $891$               \\
+        $S(4)$ & 609,216     & 249,693    & 858,909     & $8,121$             \\
+        $S(5)$ & 133,005,895 & 48,379,894 & 181,385,789 & $91{,}958$          \\
         % \hline
         % \vspace{-4mm}                                                                                               \\ % Add vertical spacing for visual separation
         % \hline
@@ -132,11 +132,11 @@ at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines
     \caption{TNF metrics for $S(2),\dots,S(5)$: number of nonhalting and halting machines the TNF tree, total number of TNF-enumerated machines and ratio between $(4n+1)^{2n}$, which is the syntactic number of $n$-state 2-symbol machines, and the number of machines in the TNF enumeration.}\label{tab:TNF-numbers}
 \end{table}
 
-TNF is unreasonably effective (Table~\ref{tab:TNF-numbers}): for 5-state 2-symbol machines, it reduces the search-space from 16 trillion to just $\BBtheFifthTNF$ machines -- a $91{,}958\times$ shrink. The variant of TNF that only enumerates machines that start by writing a $1$ was implemented (with a step limit instead of deciders) by Marxen and Buntrock in 1989 to find the fifth \BBfull winner (Figure~\ref{fig:bb5win}), taking about 10 days to run at the time \cite{Marxen_1990}. This same variant (using a $\BBtheFifth$-step limit, no deciders) was implemented in 2022 for \url{bbchallenge.org}’s seed database (see Section~\ref{sec:intro:mainresults}), which yielded 88,664,064 holdouts  \cite{sterin_2022_14955828}. This database, which had to be trusted at the time, became obsolete with the release of \CoqBB. %SIA
+TNF is unreasonably effective (Table~\ref{tab:TNF-numbers}): for 5-state 2-symbol machines, it reduces the search-space from 16 trillion to just $\BBtheFifthTNF$ machines. The variant of TNF that only enumerates machines that start by writing a $1$ was implemented (with a step limit instead of deciders) by Marxen and Buntrock in 1989 to find the fifth \BBfull winner (Figure~\ref{fig:bb5win}), taking about 10 days to run at the time \cite{Marxen_1990}. This same variant (using a $\BBtheFifth$-step limit, no deciders) was implemented in 2022 for \url{bbchallenge.org}’s seed database (see Section~\ref{sec:intro:mainresults}), which yielded 88,664,064 holdouts  \cite{sterin_2022_14955828}. This database, which had to be trusted at the time, became obsolete with the release of \CoqBB. %SIA
 
-\paragraph{\CoqBB TNF implementation.} TNF enumeration, as described here, is implemented in \CoqBB for the proofs of $S(2),\dots,S(5)$; see file \texttt{TNF.v}. A \texttt{SearchQueue} abstraction with DFS capabilities is implemented, see function \texttt{SearchQueue\_upds}. The search queue is initialised with the TNF root (this is most obvious in the proofs of $S(<5)$, \eg see file \texttt{BB4\_TNF\_Enumeration.v}), and deciders (see Section~\ref{sec:deciders}) are run on the enumerated Turing machines. Halting machines' children are added to the queue: the goal of the proof is to empty the queue. Importantly, \texttt{Lemma\ SearchQueue\_upd\_spec} ensures that $S$ can be computed considering only TNF-enumerated machines.
+\paragraph{\CoqBB TNF implementation.} TNF enumeration, as described here, is implemented in \CoqBB for the proofs of $S(2),\dots,S(5)$; see file \texttt{TNF.v}. A \texttt{SearchQueue} abstraction with DFS capabilities is implemented, see function \texttt{SearchQueue\_upds}. The search queue is initialised with the TNF root (this is most obvious in the proofs of $S(<5)$, see file \texttt{BB4\_TNF\_Enumeration.v}), and deciders (see Section~\ref{sec:deciders}) are run on the enumerated Turing machines. Halting machines' children are added to the queue: the goal of the proof is to empty the queue. Importantly, \texttt{Lemma\ SearchQueue\_upd\_spec} ensures that $S$ can be computed considering only TNF-enumerated machines.
 
-Taking advantage of the tree structure, compilation of the $S(5)$ proof was paralellised by isolating the 12 children of the rightmost machine in Figure~\ref{fig:TNF} in separate, independent files; see folder \texttt{BB5\_TNF\_Enumeration\_Roots/}. Parallelising the compilation made the proof compile in 3 hours (on 13 cores) instead of 13 hours. Switching to \Coq's more powerful \texttt{native\_compute} engine \cite{nativecompute} further brought parallel compilation time down to 45 minutes. This compilation time could be improved arbitrarily by splitting the tree in even more files with only RAM and number of cores as limitant factors.
+Taking advantage of the tree structure, compilation of the $S(5)$ proof was paralellised by isolating the 12 children of the rightmost machine in Figure~\ref{fig:TNF} in separate, independent files; see folder \texttt{BB5\_TNF\_Enumeration\_Roots/}. Parallelising the compilation made the proof compile in 3 hours (on 13 cores) instead of 13 hours. Switching to \Coq's more powerful \texttt{native\_compute} engine \cite{nativecompute} further brought parallel compilation time down to 45 minutes. This compilation time could be improved further by splitting the tree in even more files with only RAM and number of cores as limitant factors.
 
 \CoqBB's proof of $S(2,4)$ implements TNF almost exactly in the way described here but for the fact that, for simplicity, it does not impose an order on non-0 symbols meaning that identical machines up to symbol renaming are enumerated. In this ``quasi-TNF'' setup, the proof of $S(2,4)$ enumerates 2,154,217 machines of which 1,432,880 are nonhalting.
 
