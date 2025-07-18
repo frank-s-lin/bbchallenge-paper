@@ -4,13 +4,72 @@
 
 \subsection{$n$-gram Closed Position Set (\ngramcps)}\label{sec:n-gramCPS}
 
+\newcommand{\leftngram}{left\xspace}
+\newcommand{\rightngram}{right\xspace}
+\newcommand{\middlesymbol}{middle\xspace}
+
+The $n$-gram Closed Position Set (\ngramcps) decider which we introduce here, Algorithm~\ref{alg:NGramCPS}, is a simplification of an earlier technique, Closed Position Set (CPS), itself introduced in \texttt{bbfind} \cite{Skelet_bbfind}, see Section~\ref{sec:intro:mainresults}. Surprisingly, \ngramcps is a relatively simple technique which makes a potent decider as it decides 99.89\% of all nonhalting enumerated 5-state machines excluding loops, see Table~\ref{tab:pipelineBB5}.
+
+The method is especially potent when augmenting the binary alphabet of Turing machines to record extra information on the tape, such as a fixed-length history of previously seen (state,symbol) pairs, see Section~\ref{sec:n-gramCPS:augmentations}. \ngramcps was first developed without augmentations \cite{ngramcps_fenner} which were later introduced with \CoqBB.
+
+\begin{algorithm}
+    \caption{{\sc decider-NGramCPS}}\label{alg:NGramCPS}
+
+    \begin{algorithmic}[1]
+        \State{\textbf{Input:} A Turing machine $\mathcal{M}$, the zero symbol of the alphabet $\alphabet_0$, the size of the n-grams $n > 0$.}
+        \State{\textbf{Output:} \NONHALT if the decider detects that the machine does not halt and \UNKNOWN otherwise.}
+
+        \State $g_0 = (\alphabet_0)^n$ \Comment{The zero n-gram consists of $n$ zero symbols}
+        \State $L = \{ g_0 \}$ \Comment{The seen left n-grams}
+        \State $R = \{ g_0 \}$ \Comment{The seen right n-grams}
+        \State $C =$ \{\{.\leftngram $=$ $g_0$, .\rightngram $=$ $g_0$, .state $=$ \stateA, .\middlesymbol $=$ $\alphabet_0$ \}\} \Comment{The seen local configurations}
+        \While{true}\label{alg:NGramCPS:line:whileTrue}
+        \State $V = C$
+        \State any\_updates $=$ false
+        \While{$|V| \neq 0$}
+        \State $c = V.\textbf{pop}()$ \Comment{Remove an arbitrary element $c$ from $V$}
+        \State $c' = c$
+        \State $\{w,d,s\}$ $=$ $\mathcal{M}$(c.state, c.\middlesymbol) \Comment{Transition's write symbol, move direction, and next state}
+        \State \If{$s$ is undefined} \Comment{Undefined transition is met, we cannot conclude}
+        \State \textbf{return} UNKNOWN\label{alg:NGramCPS:line:unknown}
+        \EndIf
+        \State \If{$d$ is Right}
+        \State Insert $c.\text{\leftngram}$ in $L$ \label{alg:NGramCPS:line:insertL}
+        \State Set $c'.\text{\leftngram}$ to the last $r-1$ symbols of $c.\text{\leftngram}$ followed by $w$
+        \State Set $c'.\text{\middlesymbol}$ to the first symbol of $c.\text{\rightngram}$
+        \For{each ngram $r\in R$ starting with the last $r-1$ symbols of $c.\text{\rightngram}$}
+        \State Set $c'.\text{\rightngram}$ to $r$
+        \If{$c'$ is not in $C$}
+        \State \tabi Insert $c'$ in $C$ \label{alg:NGramCPS:line:insertInConfSet}
+        \State \tabi Insert $c'$ in $V$ \label{alg:NGramCPS:line:insertInConfSetToVisit}
+        \State \tabi any\_updates $=$ true
+        \EndIf
+        \EndFor
+        \EndIf
+        \State \If{$d$ is Left} \label{alg:NGramCPS:line:moveLeft}
+        \State Insert $c.\text{\rightngram}$ in $R$
+        \State Set $c'.\text{\rightngram}$ to the first $r-1$ symbols of $c.\text{\rightngram}$ preceded by $w$
+        \State Set $c'.\text{\middlesymbol}$ to the last symbol of $c.\text{\leftngram}$
+        \For{each ngram $l \in L$ ending with the first $r-1$ symbols of $c.\text{\leftngram}$}
+        \State Set $c'.\text{\leftngram}$ to $l$
+        \If{$c'$ is not in $C$}
+        \State \tabi Insert $c'$ in $C$
+        \State \tabi Insert $c'$ in $V$
+        \State \tabi any\_updates $=$ true
+        \EndIf
+        \EndFor
+        \EndIf
+        \EndWhile
+        \State \If{\textbf{not} any\_updates}
+        \State \textbf{return} \NONHALT\label{alg:NGramCPS:line:nonhalt} \Comment{Set $C$ is closed, and does not include undefined transitions:\\ \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \space \space \space \space the machine does not halt}
+        \EndIf
+
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
 
 
-The $n$-gram Closed Position Set (\ngramcps) decider which we introduce here is a simplification of an earlier technique, Closed Position Set (CPS), itself introduced in \texttt{bbfind} \cite{Skelet_bbfind}, see Section~\ref{sec:intro:mainresults}. Surprisingly, \ngramcps is a relatively simple technique which makes a potent decider as it decides 99.89\% of all nonhalting enumerated 5-state machines excluding loops, see Table~\ref{tab:pipelineBB5}.
 
-The method is especially potent when augmenting the binary alphabet of Turing machines to record extra information on the tape, such as a fixed-length history of previously seen (state,symbol) pairs, see Section~\ref{sec:n-gramCPS:augmentations}.
-
-\CoqBBnospace's \ngramcps core algorithm, without augmentations, was first developed in the Rust programming language by bbchallenge's contributor Nathan Fenner \cite{ngramcps_fenner}. Augmentations were introduced by mxdys as part of \CoqBB.
 
 \subsubsection{Algorithm}\label{sec:n-gramCPS:algo}
 
@@ -81,62 +140,4 @@ Figure~\ref{fig:ngram-cps-more} gives an example of a ``fractal-looking'' 5-stat
 
 
 
-\newcommand{\leftngram}{left\xspace}
-\newcommand{\rightngram}{right\xspace}
-\newcommand{\middlesymbol}{middle\xspace}
 
-\begin{algorithm}
-    \caption{{\sc decider-NGramCPS}}\label{alg:NGramCPS}
-
-    \begin{algorithmic}[1]
-        \State{\textbf{Input:} A Turing machine $\mathcal{M}$, the zero symbol of the alphabet $\alphabet_0$, the size of the n-grams $n > 0$.}
-        \State{\textbf{Output:} \NONHALT if the decider detects that the machine does not halt and \UNKNOWN otherwise.}
-
-        \State $g_0 = (\alphabet_0)^n$ \Comment{The zero n-gram consists of $n$ zero symbols}
-        \State $L = \{ g_0 \}$ \Comment{The seen left n-grams}
-        \State $R = \{ g_0 \}$ \Comment{The seen right n-grams}
-        \State $C =$ \{\{.\leftngram $=$ $g_0$, .\rightngram $=$ $g_0$, .state $=$ \stateA, .\middlesymbol $=$ $\alphabet_0$ \}\} \Comment{The seen local configurations}
-        \While{true}\label{alg:NGramCPS:line:whileTrue}
-        \State $V = C$
-        \State any\_updates $=$ false
-        \While{$|V| \neq 0$}
-        \State $c = V.\textbf{pop}()$ \Comment{Remove an arbitrary element $c$ from $V$}
-        \State $c' = c$
-        \State $\{w,d,s\}$ $=$ $\mathcal{M}$(c.state, c.\middlesymbol) \Comment{Transition's write symbol, move direction, and next state}
-        \State \If{$s$ is undefined} \Comment{Undefined transition is met, we cannot conclude}
-        \State \textbf{return} UNKNOWN\label{alg:NGramCPS:line:unknown}
-        \EndIf
-        \State \If{$d$ is Right}
-        \State Insert $c.\text{\leftngram}$ in $L$ \label{alg:NGramCPS:line:insertL}
-        \State Set $c'.\text{\leftngram}$ to the last $r-1$ symbols of $c.\text{\leftngram}$ followed by $w$
-        \State Set $c'.\text{\middlesymbol}$ to the first symbol of $c.\text{\rightngram}$
-        \For{each ngram $r\in R$ starting with the last $r-1$ symbols of $c.\text{\rightngram}$}
-        \State Set $c'.\text{\rightngram}$ to $r$
-        \If{$c'$ is not in $C$}
-        \State \tabi Insert $c'$ in $C$ \label{alg:NGramCPS:line:insertInConfSet}
-        \State \tabi Insert $c'$ in $V$ \label{alg:NGramCPS:line:insertInConfSetToVisit}
-        \State \tabi any\_updates $=$ true
-        \EndIf
-        \EndFor
-        \EndIf
-        \State \If{$d$ is Left} \label{alg:NGramCPS:line:moveLeft}
-        \State Insert $c.\text{\rightngram}$ in $R$
-        \State Set $c'.\text{\rightngram}$ to the first $r-1$ symbols of $c.\text{\rightngram}$ preceded by $w$
-        \State Set $c'.\text{\middlesymbol}$ to the last symbol of $c.\text{\leftngram}$
-        \For{each ngram $l \in L$ ending with the first $r-1$ symbols of $c.\text{\leftngram}$}
-        \State Set $c'.\text{\leftngram}$ to $l$
-        \If{$c'$ is not in $C$}
-        \State \tabi Insert $c'$ in $C$
-        \State \tabi Insert $c'$ in $V$
-        \State \tabi any\_updates $=$ true
-        \EndIf
-        \EndFor
-        \EndIf
-        \EndWhile
-        \State \If{\textbf{not} any\_updates}
-        \State \textbf{return} \NONHALT\label{alg:NGramCPS:line:nonhalt} \Comment{Set $C$ is closed, and does not include undefined transitions:\\ \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \tabi \space \space \space \space the machine does not halt}
-        \EndIf
-
-        \EndWhile
-    \end{algorithmic}
-\end{algorithm}
