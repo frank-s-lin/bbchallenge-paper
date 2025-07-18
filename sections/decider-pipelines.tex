@@ -1,6 +1,5 @@
-\subsection{Pipelines and overview}
 
-\subsubsection{Pipelines}\label{sec:pipelines}
+\subsection{Pipelines}\label{sec:pipelines}
 
 In this work, we call a \textit{decider} a program that takes as input a Turing machine $\mathcal{M}$ and that returns in finite time either \HALT, \NONHALT, or, \UNKNOWN depending on if it was able to detect the machine's halting status or not.\footnote{Hence, we do not use the word ``decider'' in the traditional sense of theoretical computer science since, although our deciders finish, they are partial.}
 
@@ -66,7 +65,7 @@ The exact pipelines are provided in Appendix~\ref{app:pipelines}. They differ ma
 
 \newpage
 
-\subsubsection{Deciders overview}\label{sec:deciders-overview}
+\subsection{Deciders overview}\label{sec:deciders-overview}
 
 There are essentially five deciders that were developed to solve $S(5)$, see Table~\ref{tab:pipelineBB5}: Loops, $n$-gram Closed Position Set (NGramCPS), Repeated Word List (RepWL), Finite Automata Reduction (FAR) and Weighted Finite Automata Reduction (WFAR). They are individually described in Sections~\ref{sec:loops} to \ref{sec:WFAR}. All these deciders are original.\footnote{There existed a previous algorithm to decide loops \cite{Lin1963}, but we present a new one.} Solving $S(2,4)$ (and previously known $S(4)$ \cite{Brady83}) only used  a subset of these deciders (Tables~\ref{tab:pipelineBB2x4}) and required a lot less compute and overall effort -- \eg no individual nonhalting proofs, in contrast with 5-state sporadic machines, Section~\ref{sec:sporadic}.
 

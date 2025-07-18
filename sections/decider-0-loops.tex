@@ -103,10 +103,10 @@ Algorithm~\ref{alg:loops} first computes $L$ transcript steps, then, starting fr
 \subsubsection{Correctness}
 Proving the correctness of this decider is surprisingly nontrivial. Let us represent the space-time diagram of a given Turing machine $\mathcal{M}$ (Section~\ref{sec:TMs}) using partially defined functions $f_\mathcal{M},g_\mathcal{M},h_\mathcal{M}$, and, $F_\mathcal{M}$:
 \begin{align*}
-    f_\mathcal{M} & : \N \hookrightarrow \Z \to \alphabet\text{, tape content}                                \\
-    g_\mathcal{M} & : \N \hookrightarrow \Z\text{, head position}                                             \\
-    h_\mathcal{M} & : \N \hookrightarrow \states\text{, head state}                                           \\
-    F_\mathcal{M} & : \N \hookrightarrow \Z \to (\alphabet\times \states)\text{, tape content and head state}
+    f_\mathcal{M} & : \N \partialto \Z \to \alphabet\text{, tape content}                                \\
+    g_\mathcal{M} & : \N \partialto \Z\text{, head position}                                             \\
+    h_\mathcal{M} & : \N \partialto \states\text{, head state}                                           \\
+    F_\mathcal{M} & : \N \partialto \Z \to (\alphabet\times \states)\text{, tape content and head state}
 \end{align*}
 
 \newcommand{\baref}{F}
