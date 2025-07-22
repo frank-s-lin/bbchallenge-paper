@@ -7,7 +7,7 @@
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.8]{figures/RepWL/RepWL_graph.pdf}
-    \caption{{\small \textbf{RepWL graph.} Closed graph of regex configurations constructed by the Repeated Word List (RepWL) method (Section~\ref{sec:RepWL}) for machine \tm{0RB0LC_1LA1RB_1RD0RE_1LC1LA_---0LD} with block size $l=2$ and repeat threshold $T=3$. Block simulation and regex branching steps (see Section~\ref{sec:RepWL}) are illustrated using respectively green and blue arrows. As illustrated by its 300-step space-time diagram, the machine is a simple Translated Cycler which can be easily handled by Section~\ref{alg:loops}, but this machine has the pedagogical advantage of having a very small graph. Because the graph is closed and contains not halting configuration, the machine does not halt, Theorem~\ref{th:repwl}.}}\label{fig:repWL}
+    \caption{{\small \textbf{RepWL graph.} Closed graph of regex configurations constructed by the Repeated Word List (RepWL) method (Section~\ref{sec:RepWL}) for machine \tm{0RB0LC_1LA1RB_1RD0RE_1LC1LA_---0LD} with block length $l=2$ and repeat threshold $T=3$. Block simulation and regex branching steps (see Section~\ref{sec:RepWL}) are illustrated using respectively green and blue arrows. As illustrated by its 300-step space-time diagram, the machine is a simple Translated Cycler which can be easily handled by Section~\ref{alg:loops}, but this machine has the pedagogical advantage of having a very small graph. Because the graph is closed and contains not halting configuration, the machine does not halt, Theorem~\ref{th:repwl}.}}\label{fig:repWL}
 \end{figure}
 
 \begin{figure}[h!]
@@ -50,7 +50,7 @@ Block simulation consists of simulating the Turing machine until the head eventu
 In both cases, we have reduced to block simulation.
 
 \begin{example}\label{ex:repWL}
-    Figure~\ref{fig:repWL} gives the RepWL graph for machine \tm{0RB0LC_1LA1RB_1RD0RE_1LC1LA_---0LD}\footnote{This machine is a simple Translated Cycler (Section~\ref{sec:loops}), but it was chosen because its RepWL graph is small.} for block size $l=2$ and repeat threshold $T=3$. The first edge of the graph reads $0^\infty\; \texttt{A>}\;0^\infty$ goes to $0^\infty\; (\texttt{01})^1\; \texttt{B>}\; 0^\infty$ using block simulation, this is because, using our parameters, $0^\infty\; \texttt{A>}\;0^\infty$ rewrites as $0^\infty\; \texttt{A>}\; (\texttt{00})\;0^\infty$ and we have $0^\infty\; \texttt{A>}\; (\texttt{00})\;0^\infty \TMstep 0^\infty\;  \texttt{0}\; \texttt{B>}\;\texttt{0}\;0^\infty \TMstep 0^\infty\;  \texttt{A>}\texttt{0}\;\texttt{1}\;0^\infty \TMstep 0^\infty\;  \texttt{0}\;\texttt{B>}\texttt{1}\;0^\infty \TMstep  0^\infty\; (\texttt{01})^1\; \texttt{B>}\; 0^\infty$, as needed. The graph contains only one case of regex branching, on regex configuration $0^\infty\; (\texttt{01})^1\; \texttt{D>}\; (\texttt{10})^{3+}\; 0^\infty$, all the other edges are instances of block simulation. The graph is closed and contains no halting configuration, the machine does not halt, Theorem~\ref{th:repwl}.
+    Figure~\ref{fig:repWL} gives the RepWL graph for machine \tm{0RB0LC_1LA1RB_1RD0RE_1LC1LA_---0LD}\footnote{This machine is a simple Translated Cycler (Section~\ref{sec:loops}), but it was chosen because its RepWL graph is small.} for block length $l=2$ and repeat threshold $T=3$. The first edge of the graph reads $0^\infty\; \texttt{A>}\;0^\infty$ goes to $0^\infty\; (\texttt{01})^1\; \texttt{B>}\; 0^\infty$ using block simulation, this is because, using our parameters, $0^\infty\; \texttt{A>}\;0^\infty$ rewrites as $0^\infty\; \texttt{A>}\; (\texttt{00})\;0^\infty$ and we have $0^\infty\; \texttt{A>}\; (\texttt{00})\;0^\infty \TMstep 0^\infty\;  \texttt{0}\; \texttt{B>}\;\texttt{0}\;0^\infty \TMstep 0^\infty\;  \texttt{A>}\texttt{0}\;\texttt{1}\;0^\infty \TMstep 0^\infty\;  \texttt{0}\;\texttt{B>}\texttt{1}\;0^\infty \TMstep  0^\infty\; (\texttt{01})^1\; \texttt{B>}\; 0^\infty$, as needed. The graph contains only one case of regex branching, on regex configuration $0^\infty\; (\texttt{01})^1\; \texttt{D>}\; (\texttt{10})^{3+}\; 0^\infty$, all the other edges are instances of block simulation. The graph is closed and contains no halting configuration, the machine does not halt, Theorem~\ref{th:repwl}.
 \end{example}
 
 
@@ -66,7 +66,7 @@ In both cases, we have reduced to block simulation.
     \caption{{\sc decider-RepWL}}\label{alg:RepWL}
 
     \begin{algorithmic}[1]
-        \State{\textbf{Input:} A Turing machine $\mathcal{M}$, block-length parameter $l>0$, minimum size of nonconstant blocks $T>0$, maximum number of steps allowed in block simulation $B \in \mathbb{N}$, maximum number of distinct nodes we're willing to visit $N\in \mathbb{N}$.}
+        \State{\textbf{Input:} A Turing machine $\mathcal{M}$, block length parameter $l>0$, repeat threshold $T>0$, maximum number of steps allowed in block simulation $B \in \mathbb{N}$, maximum number of distinct nodes we're willing to visit $N\in \mathbb{N}$.}
         \State{\textbf{Output:} \NONHALT if the decider detects that the machine does not halt and \UNKNOWN otherwise.}
         \State
         \State $\texttt{to\_visit} = [\texttt{A>}]$
@@ -115,12 +115,14 @@ In both cases, we have reduced to block simulation.
 % \end{figure}
 
 
-\CoqBB implements RepWL (Algorithm~\ref{alg:RepWL}), see function \texttt{RepWL\_ES\_decider}. Contrarily to previously presented deciders, RepWL is not applied in bulk using generic parameters. Instead, the ${6,577}$ machines it decides are hardcoded in the proof together with the specific $l$ and $T$ parameters that decide them -- see file \texttt{Decider\_RepWL\_Hardcoded\_Parameters.v}. These parameters were found using a grid search in C++. For all these machines, maximum block simulation parameters and maximum number of graph nodes parameters are respectively set to 451 and ${150,001}$.
+\CoqBB implements RepWL (Algorithm~\ref{alg:RepWL}), see function \texttt{RepWL\_ES\_decider}. In the $S(5)$ pipeline (Table~\ref{tab:pipelineBB5}), contrarily to previously presented deciders, RepWL is not applied in bulk using generic parameters. Instead, the ${6,577}$ machines it decides are hardcoded in the proof together with the specific $l$ and $T$ parameters that decide them -- see file \texttt{Decider\_RepWL\_Hardcoded\_Parameters.v}. These parameters were found using a grid search in C++. Block length varies between 1 and 38, and repeat threshold between 2 and 4. For all these machines, maximum block simulation parameters and maximum number of graph nodes parameters are respectively set to 451 and ${150,001}$.
 
 % Figure~\ref{fig:RepWLpairs} displays the $(l,T)$ pairs used for these ${6,577}$ machines.
 
 % Figure~\ref{fig:RepWLhisto} gives the distribution of node counts of the ${6,577}$ RepWL graphs constructed by \CoqBB. The average number of nodes is $1{,}231$ while minimum and maximum are respectively 42 and $143{,}181$. 
-Figure~\ref{fig:repWLThree} gives space-time diagrams for machines with RepWL graphs with 42 (left), ${845}$ (center) and $143{,}181$ nodes. The machines on the left and on the right fit in the zoological category of \textit{Bouncers}, see Section~\ref{sec:zoo}. We developed a dedicated decider for solving Bouncers, but it was not used in \CoqBB \cite{bbchallenge_part1}.
+Figure~\ref{fig:repWLThree} gives space-time diagrams for machines with RepWL graphs with 42 (left), ${845}$ (center) and $143{,}181$ nodes which are respectively the minimum, average and maximum sizes of RepWL graphs constructed by \CoqBB for solving $S(5)$.
+
+The machines on the left and on the right fit in the zoological category of \textit{Bouncers}, see Section~\ref{sec:zoo}. We developed a dedicated decider for solving Bouncers, but it was not used in \CoqBB \cite{bbchallenge_part1}.
 
 In the $S(4)$ pipeline (Table~\ref{tab:pipelineBB4}), RepWL is only used to decide two machines using parameters $l=4$ and $T=3$. These 4-state machines are given in Figure~\ref{fig:RepWLBB4}, and they respectively have $3{,}130$ and $3{,}076$ nodes in their RepWL graph.
 
