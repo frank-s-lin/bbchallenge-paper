@@ -32,7 +32,7 @@
 
 The Repeated Word List (RepWL) technique, introduced in \CoqBB, is based on the following simple idea: if a word (or \textit{block}) of length $l > 0$ appears consecutively on the tape more than $T > 0$ times (with $l, T \in \mathbb{N}$ fixed) then, we assume it may repeat an unbounded number of times in the future. In practice, it means we represent configurations as regular expressions and call them \textit{regex configurations}. For instance, consider the following configuration:
 $$ \texttt{0}^\infty \; \texttt{11100 A> 111101010111111111} \; \texttt{0}^\infty$$
-Using block length $l=2$, by grouping symbols from the head outwards and pumping symbols $\szero$ out of $\texttt{0}^\infty$ if needed, we get:
+Using block length $l=2$, by grouping symbols from the head outwards and symbols $\szero$ drawn from $\texttt{0}^\infty$ if needed, we get:
 $$ \texttt{0}^\infty \; (\texttt{01}) \; (\texttt{11}) \; (\texttt{00}) \; \texttt{A>} \; (\texttt{11})^2 \; (\texttt{01})^{3} \; (\texttt{11})^{4} \; \texttt{0}^\infty $$
 And, using \textit{repeat threshold} $T=3$ we get the following regex configuration:
 $$ \texttt{0}^\infty \; (\texttt{01}) \; (\texttt{11}) \; (\texttt{00}) \; \texttt{A>} \; (\texttt{11})^2 \; (\texttt{01})^{3+} \; (\texttt{11})^{3+} \; \texttt{0}^\infty $$
