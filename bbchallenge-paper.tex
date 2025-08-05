@@ -199,6 +199,14 @@ Théo Zimmermann
 \usepackage{thm-restate}
 \usepackage{makecell}
 
+\newcommand{\topleftsymbolcell}[3]{% color, symbol, content
+  \cellcolor{#1}%
+  \begin{tikzpicture}[overlay, remember picture]
+    \node[anchor=north west, inner sep=1pt] at (0,1.7ex) {\small #2};
+  \end{tikzpicture}%
+  \hspace{1.5ex}#3%
+}
+
 \begin{document}
 \date{May 12, 2025}
 \maketitle
@@ -304,8 +312,8 @@ The goal of this paper is to present these proofs: this paper serves as a ``huma
         \hline
     \end{tabular}
     \caption{Landscape of small Busy Beaver values.
-        \cellcolor{green!20}Cells highlighted in green correspond to values for which we provide \Coq proofs. Bright green indicates the new results, $S(5)$ and $S(2,4)$, original to this work.
-        Cells highlighted in orange indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and we believe to be mathematically hard); see Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. Lower bounds (see Appendix~\ref{app:lowerbounds}), which come from exhibiting Turing machines achieving at least the given step-counts, are expressed using Knuth's ``up-arrow notation'' which is a way to express iterated exponentiation:
+        \cellcolor{green!20}Cells highlighted in green (that is, strictly to the left of $S(6)$, $S(3,3)$, and $S(3,4)$) correspond to values for which we provide \Coq proofs. Bright green indicates the new results: $S(5)$ and $S(2,4)$, original to this work.
+        Cells highlighted in orange (that is, all cells excluding the green ones) indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and we believe to be mathematically hard); see Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. Lower bounds (see Appendix~\ref{app:lowerbounds}), which come from exhibiting Turing machines achieving at least the given step-counts, are expressed using Knuth's ``up-arrow notation'' which is a way to express iterated exponentiation:
         $a \uparrow b = a^b$ is exponentiation,
         $a \uparrow\uparrow b = a^{a^{\dots^a}}$, called tetration, is a tower of powers of $a$ with $b$ occurrences of $a$,
         and higher arrows indicate further levels of iteration \cite{Knuth1976Coping}.
