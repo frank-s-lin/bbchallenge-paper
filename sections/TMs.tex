@@ -1,3 +1,5 @@
+\vspace{-1ex}
+\vspace{-1ex}
 \section{Turing machines}\label{sec:TMs}
 
 \vspace{-1.4em}
@@ -89,7 +91,7 @@ In the \BBfull context, machines are always executed from the all-0 tape and sta
 
 A \textit{configuration} (also known as \textit{execution state}) of a Turing machine is defined by the 3-tuple: (i) state; (ii) position of the head on the tape; (iii) content of the tape. As mentioned above, here, \textit{the initial configuration} of a machine is always (i) state is A, i.e. the first state to appear in the machine's description; (ii) head's position is 0; (iii) the initial tape is all-0 -- i.e. each tape cell is containing 0. We write $c_1 \TMstep_\mathcal{M} c_2$ if a configuration $c_2$ is obtained from $c_1$ in one computation step of machine $\mathcal{M}$. We omit $\mathcal{M}$ if it is clear from context. We let $c_1 \TMstep^s c_2$ denote a sequence of $s$ computation steps, and let $c_1 \TMstep^* c_2$ denote zero or more computation steps. % exact same wording as in https://dna.hamilton.ie/assets/dw/NearyWoodsFCT09.pdf
 
-
+\vspace{-1ex}
 \paragraph{Halting and step count convention.} Halting happens when the machine attempts to run an undefined transition. We write $c \TMstep \bot$ to signify that the machine halts after attempting to run one step from configuration $c$. The number of steps $s\in \N^+$ run by a halting Turing machine includes the final halting step, \eg $s = 1$ for a machine where $\delta(\stateA,\symbolzero)$ is not defined.
 
 % When discussing concrete configurations, we write
@@ -104,8 +106,10 @@ A \textit{configuration} (also known as \textit{execution state}) of a Turing ma
 % For example, $0^\infty\; [1]_A\; 0^\infty$ can be written as
 % $0^\infty\; 1 \lhead A 0^\infty$ or $0^\infty \rhead A 1\; 0^\infty$.
 
+\vspace{-1ex}
 \paragraph*{Turing machine format.} We often communicate Turing machines using the following linear format: \\ \verb|1RB1LC_1RC1RB_1RD0LE_1LA1LD_---0LA| represents the transition table of Figure~\ref{fig:bb5win}(a), where \texttt{\_} is used to separate states and transitions are given in read-symbol order. Note that, historically, the undefined transition reached by a halting machine was represented using \texttt{1RZ}, hence our format allows the use of any letter outside of the state space to represent halting, \eg \texttt{1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_1RZ0LA}. Multi-symbol machines are represented in the same way, \eg the 2-state 4-symbol \BBfull winner is \verb|1RB2LA1RA1RA_1LB1LA3RB---| (also given by \texttt{1RB2LA1RA1RA\_1LB1LA3RB1RZ}); see Figure~\ref{fig:bb2x4}. This format can be used as URL on \url{bbchallenge.org} to display space-time diagrams and known information about the machine, e.g. \url{https://bbchallenge.org/1RB1LC\_1RC1RB\_1RD0LE\_1LA1LD\_---0LA}.
 
+\vspace{-1ex}
 \paragraph*{Space-time diagrams.} We use space-time diagrams to give a visual representation of the behaviour of a given machine. The space-time diagram of machine $\mathcal{M}$ is an image where the $i^\text{th}$ row of the image gives:
 \begin{enumerate}
     \item The content of the tape after $i$ steps (for 2-symbol machines, black is 0 and white is 1, while for $n$ symbols, black is 0, white is symbol $n-1$ and linear gray-scaling is used in between, \eg~Figure~\ref{fig:bb2x4}).
