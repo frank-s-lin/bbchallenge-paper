@@ -321,16 +321,7 @@ The goal of this paper is to present these proofs: this paper serves as a ``huma
     \label{table:landscape}
 \end{table}
 
-
-
-
-
-
-
-
-
-
-
+\vspace{-2ex}
 \paragraph{Challenges.} Proving $S(5) = \BBtheFifth$ required analyzing the behaviour of $\BBtheFifthTNF$ Turing machines\footnote{Knowing this exact number is only possible after the proof is done: it is as hard as computing $S(5)$; see Section~\ref{sec:enum}.}-- evidently requiring computer assistance. The challenge for analysing a halting machine occurs when it halts after a number of steps that is too enormous to be simulated step-by-step (e.g. the current 6-state champion halts after $10 \uparrow \uparrow 15$ steps \cite{Pavel_discorvery}, see Appendix~\ref{app:lowerbounds}); this challenge was not encountered for 5-state machines since they halt in at most $\BBtheFifth$ steps -- this could not have been known for certain in advance but was believed -- which is easy to simulate on modern computers. The challenge for analysing a nonhalting machine is that proving that it does not halt can be hard. How hard?
 
 Dauntingly, any $\Pi_1^0$ mathematical statement\footnote{A $\Pi_1^0$ statement is a statement of first-order logic of the form ``$\forall x, \phi(x)$'' where $\phi$ is a sentence using only bounded quantifiers, implying that for a given $x$, $\phi(x)$ can always be verified by a computer in finite time.} can be encoded as the halting problem of a Turing machine (from all-zero tape). Such statements are common in mathematics and include famous open problems such as Goldbach's conjecture and the Riemann hypothesis. Goldbach's conjecture, formulated in 1742, is one of the oldest open problems in mathematics and states that ``every even positive integer greater than 2 is the sum of two prime numbers''. We can build a Turing machine that halts iff the conjecture is false: by enumerating all positive integers, and for each, testing all sums of smaller primes and halting iff we do not find the sum. A machine performing this procedure has been built using only 25 states, and the construction was formally verified using the Lean theorem prover \cite{GoldbachTM27, GoldbachTM25, DeMouraKongAvigadVanDoornvonRaumer}.
@@ -351,8 +342,7 @@ The \BBfull problem was also studied in models of computation other than \rado's
 
 In the case of 5-state machines, \numSporadic \textit{Sporadic Machines} were not solved by deciders and required individual proofs of nonhalting, see Section~\ref{sec:sporadic}. These machines include suprising behaviours, such as eventually reaching an infinite loop after more than $10^{51}$ steps of chaos (machine ``\href{https://bbchallenge.org/1RB1RD_1LC0RC_1RA1LD_0RE0LB_---1RC}{Skelet \#1}''), base-Fibonacci double counter (machine ``\href{https://bbchallenge.org/1RB0RA_0LC1RA_1RE1LD_1LC0LD_---0RB}{Skelet \#10}''), or obfuscated Gray code (machine ``\href{https://bbchallenge.org/1RB---_0LC1RE_0LD1LC_1RA1LB_0RB0RA}{Skelet \#17}'', \cite{xu2024skelet17fifthbusy}) and they are beautiful examples of \textit{algorithms in the wild}: non-human-engineered algorithms that, like deep sea life, were only found by means of exploration. In that spirit, a coarse \textit{zoology} of 5-state Turing machines is proposed in Section~\ref{sec:zoo}.
 
-
-
+\newpage
 \paragraph{Collaboratively solving the problem: bbchallenge.org.} In 2022, Stérin created ``The Busy Beaver Challenge'', \url{bbchallenge.org}, an online platform dedicated to collaboratively solving ``$S(5)=\BBtheFifth$'' \cite{sterin_2022_14955828}. Collaboration was motivated by the great amount of Turing machines to study in order to solve the problem. The bbchallenge platform essentially consists of the website, an instant chat \textit{Discord} server\footnote{\url{https://discord.gg/wuZhtTvYU3}}, and a wiki.\footnote{\url{wiki.bbchallenge.org}} The website serves as an entry-point to the problem and Turing machine visualisation tools both for studying purposes and for piquing the curiosity of visitors with ``eye candy''. The website also provided a browsable \textit{seed database}\footnote{\url{https://github.com/bbchallenge/bbchallenge-seed}} containing a sufficient set of 5-state Turing machines to prove nonhalting in order to solve $S(5)$. Using this database, the task of contributors was to design deciders (see above). For both the seed database and deciders, trust in the results required a strict validation process: (i) any algorithm had to be reproduced at least once by an independent contributor, with matching results; (ii) a proof of correctness had to be provided (in natural language, like a regular mathematical article). The use of proof assistants, such as Coq (see after), was merely dreamed of when the project started.
 
 
