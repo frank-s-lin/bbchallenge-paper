@@ -44,6 +44,8 @@ Théo Zimmermann
 \usepackage{tikz}
 \usepackage{mwe} % <-- for example-image placeholders
 
+\usepackage{wrapfig}
+
 \usetikzlibrary{calc}
 \usetikzlibrary{arrows.meta}
 
@@ -681,6 +683,14 @@ Although useful for talking about Turing machines, these families, especially wh
 
 \paragraph{The bbchallenge Collaboration: $S(5)$ credits.} The following contributions resulted in the determination of the fifth Busy Beaver value and in the better understanding of the landscape of small Busy Beaver values (Table~\ref{table:landscape}): mxdys (\CoqBB, Loops, RepWL); Nathan Fenner, Georgi Georgiev a.k.a~Skelet, savask, mxdys (NGramCPS); Justin Blanchard, Mateusz Naściszewski, Konrad Deka (FAR); Iijil (WFAR); mei (\texttt{busycoq}); Shawn Ligocki, Jason Yuen, mei (Sporadic Machines ``Shift Overflow Counters''); Shawn Ligocki, Pavel Kropitz, mei (Sporadic Machine ``Skelet \#1''); savask, Chris Xu, mxdys (Sporadic Machine ``Skelet \#17''); Shawn Ligocki, Dan Briggs, mei (Sporadic Machine ``Skelet \#10''); Justin Blanchard, mei (Sporadic Machines ``Finned Machines''); Shawn Ligocki, Daniel Yuan, mxdys, Matthew L. House, Rachel Hunter, Jason Yuen (``Cryptids''); Yannick Forster, Théo Zimmermann (Coq review); Yannick Forster (Coq optimisation); Tristan Stérin (bbchallenge.org); Tristan Stérin, Justin Blanchard (paper writing).
 
+% --- floating picture on the right starting above the list
+\begin{wrapfigure}[1]{r}{0.38\textwidth}
+    % [14] = number of lines to wrap around (adjust until it covers the list height you want)
+    \vspace{-22\baselineskip}
+    \centering
+    \includegraphics[width=\linewidth]{figures/bbchallenge_logo.png} % replace with your image
+\end{wrapfigure}
+
 \begin{itemize}
     \item The bbchallenge Collaboration, \url{bbchallenge.org}, \texttt{bbchallenge@bbchallenge.org}
     \item Justin Blanchard, \texttt{UncombedCoconut@gmail.com}
@@ -706,11 +716,11 @@ Although useful for talking about Turing machines, these families, especially wh
 
 \paragraph{Acknowledgement.} The bbchallenge Collaboration is not limited to the above contributors but regroups all those who participated in the bbchallenge's discussions through all our channels (Discord chat, forum, wiki, GitHub, emails) and in particular we thank:  Nick Drozd, Frans Faase, Tony Guilfoyle, Nick Howell, Jeffrey Huang, Alexandre Jouandin, Carl Kadie, Dawid Loranc, Terry J. Ligocki, Heiner Marxen, Pascal Michel, Milo Mighdoll (milomg), Sébastien Ohleyer, star, tomtom2357, Valentin, Daniel Yuan.
 
-We'd like to thank our sponsor, \texttt{prgm.dev} as well as the French state for funding this research (\textit{Crédit Impôt Recherche}).
+We'd like to thank our sponsor, \texttt{prgm.dev} as well as the French state for funding this research (\textit{Crédit Impôt Recherche}, \textit{Jeune Entreprise Innovante}).
 
 We'd also like to thank those who gave feedback on early versions of this paper, including the following GitHub users: desseim, frank-s-lin, Lysxia, XnoobSpeakable, ZhiqiuCao.
 
-We'd also like to thank the following people who helped disseminate the bbchallenge project: Damien Woods, Dave Doty, Eric E. Severson, Scott Aaronson, Ben Brubaker, and Léo Ramaën.
+We'd also like to thank the following people who helped disseminate the bbchallenge project: Damien Woods, Dave Doty, Eric E. Severson, Scott Aaronson, Jean-Claude Bermond, Luc Albert, Ben Brubaker, and Léo Ramaën.
 \newpage
 \section{Busy Beaver champions and winners}\label{app:lowerbounds}
 
