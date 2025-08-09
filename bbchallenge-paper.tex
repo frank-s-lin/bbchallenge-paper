@@ -499,7 +499,7 @@ As a concrete example, shortly after we announced our $S(5)$ result, Terence Tao
 % not open question : OK I'm gonna bet that there is a TC that beats Skelet #1 when using all transitions
 % c.f. Shawn's https://www.sligocki.com/2022/04/03/mother-of-giants.html 
 
-\subsection{Future Work}
+\subsection{Future Work}\label{sec:fw}
 
 Solving $S(5)$ does not solve all questions about $5$-state Turing machines, for instance we are interested in the following problems: (i) characterising all 5-state counters (see Section~\ref{sec:zoo}); (ii) finding the biggest loop among 5-state machines with no halting transitions\footnote{The TNF enumeration discards machines with no halting transitions as they are obviously nonhalting; see Section~\ref{sec:enum}.} -- we already know of some that are way bigger than ``Skelet \#1'' \cite{ligocki2022motherofgiants}; (iii) slightly less related but, is there a universal Turing machine with 5 states (which also brings the question of studying 5-state machines on other tapes than all-0)?
 
@@ -716,10 +716,36 @@ We'd also like to thank those who gave feedback on early versions of this paper,
 
 We'd also like to thank the following people who helped disseminate the bbchallenge project: Damien Woods, Dave Doty, Eric E. Severson, Scott Aaronson, Jean-Claude Bermond, Luc Albert, Ben Brubaker, and Léo Ramaën.
 \newpage
-\section{Busy Beaver champions and winners}\label{app:lowerbounds}
 
-\ts{TODO: essentially take from \url{https://wiki.bbchallenge.org/wiki/}Champions and from Pascal Michel's website \url{https://bbchallenge.org/~pascal.michel/index.html}.}
+\vspace*{-5em}
+\section{Busy Beaver winners and champions}\label{app:lowerbounds}
 
+\paragraph{Winners.} Below we give the Busy Beaver winners for known values of $S$ and $\Sigma$. We give all the machines that are \textit{ex aequo} for these metrics -- only considering machines in TNF; see Section~\ref{sec:enum}. Note that the use of \texttt{1RZ} in the Turing machines below instead of \verb|---| means that \textit{we know} that machines halt; see Section~\ref{sec:TMs}.
+\begin{itemize}
+    \item $S(2) = 6$ is achieved by 5 winners: \tm{1RB1LB_1LA1RZ}, \tm{1RB0LB_1LA1RZ}, \tm{1RB1RZ_1LB1LA}, \tm{1RB1RZ_0LB1LA}, and \tm{0RB1RZ_1LA1RB}; $\Sigma(2) = 4$ is only achieved by the first $S$ winner of the list.
+    \item $S(3) = 21$ is achieved by 1 winner: \tm{1RB1RZ_1LB0RC_1LC1LA}; $\Sigma(3) = 6$ is achieved by 5 winners: \tm{1RB1RZ_0RC1RB_1LC1LA}, \tm{1RB1RC_1LC1RZ_1RA0LB}, \tm{1RB1LC_1LA1RB_1LB1RZ}, \tm{1RB1RA_1LC1RZ_1RA1LB}, and \tm{1RB1RA_1LC1RZ_1RA1LB}. Note that this is the only known case where no $S$ winner is a $\Sigma$ winner. Originally proved in \cite{Lin1963}.
+    \item $S(4) = 107$ is achieved by 1 winner: \tm{1RB1LB_1LA0LC_1RZ1LD_1RD0RA}; $\Sigma(4) = 13$ is achieved by 2 winners: the winner for $S$ and \tm{1RB0RC_1LA1RA_1RZ1RD_1LD0LB}. Originally proved in \cite{Brady83}.
+    \item $S(5) = \BBtheFifth$ is achieved by 1 winner: \tm{1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA}; $\Sigma(5) = 4{,}098$ is achieved by 2 winners: the winner for $S$ and \tm{1RB1RA_1LC1LB_1RA1LD_1RA1LE_1RZ0LC}.
+    \item $S(2,3) = 38$ is achieved by 1 winner, \tm{1RB2LB1RZ_2LA2RB1LB}, which is also the only machine for $\Sigma(2,3) = 9$. Originally proved in \cite{LafittePapazian2007}.
+    \item $S(2,4) = \BBTxF$ is achieved by 1 winner, \tm{1RB2LA1RA1RA_1LB1LA3RB1RZ}, which is also the only winner for $\Sigma(2,4)=2{,}050$.
+\end{itemize}
+
+All these values have been verified in \CoqBB, see Section~\ref{sec:intro:discuss} and Section~\ref{sec:results}.
+
+\paragraph{Champions.} Below are the current Busy Beaver champions for some of the next Busy Beaver values that are still unknown, \ie machines achieving higher $S$ scores could be found in the future. Note that for most of these champions computing the exact $S$ is generally harder than proving that the machine halts which and most of these bounds do not correspond to an \textit{exact} number of steps.\footnote{Also, at these scales, $S$ and $\Sigma$ are believed to be roughly the same number since, experimentally, $\Sigma$ is always ``only'' quadratically smaller than $S$.}
+\begin{itemize}
+    \item $S(6) > 2 \uparrow \uparrow \uparrow 5$; this bound comes from \tm{1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE} which has been proven to halt in Coq\footnote{\url{https://github.com/ccz181078/busycoq/blob/3f302b87f5fb933c46e97672ffbb6907f373fb6e/verify/SOBCv5.v\#L10210-L11283}} and whose number of steps was then manually estimated using the machine's \Coq-verified abstracted rules of evolution.\footnote{\url{https://wiki.bbchallenge.org/wiki/1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE}}
+    \item $S(7) > 2 \uparrow^{11} 2 \uparrow^{11} 3$; this bound comes from \tm{1RB0RA_1LC1LF_1RD0LB_1RA1LE_1RZ0LC_1RG1LD_0RG0RF}, see analysis.\footnote{\url{https://wiki.bbchallenge.org/wiki/1RB0RA_1LC1LF_1RD0LB_1RA1LE_1RZ0LC_1RG1LD_0RG0RF}}
+    \item $S(3,3) \geq 119{,}112{,}334{,}170{,}342{,}541$; this bound is the exact number of stepped performed by \tm{0RB2LA1RA_1LA2RB1RC_1RZ1LB1LC}, yielding the simplified bound $S(3,3) > 10^{17}$. Only 6 unsolved 3-state 3-symbol Turing machines currently remain including \tm{1RB2LC1RC_2LC---2RB_2LA0LB0RA} which is believed to halt and which number of steps would largely surpass the current bound, see Section~\ref{sec:fw}.\footnote{https://wiki.bbchallenge.org/wiki/BB(3,3)}
+    \item $S(4,3) > 2 \uparrow \uparrow \uparrow 2^{2^{32}}$; this bound comes from \tm{0RB1RZ0RB_1RC1LB2LB_1LB2RD1LC_1RA2RC0LD}, see analysis.\footnote{\url{https://wiki.bbchallenge.org/wiki/0RB1RZ0RB_1RC1LB2LB_1LB2RD1LC_1RA2RC0LD}}
+    \item $S(3,4) > 2 \uparrow^{15} 5$; this bound comes from \tm{1RB3LB1RZ2RA_2LC3RB1LC2RA_3RB1LB3LC2RC}. For this machine it is possible to prove that the number of \sone symbols on final tape is \textit{exactly} $(2 \uparrow^{15} 5) + 14$, see \cite{ligocki2024bb34ack14}.
+    \item $S(2,5) > 10 \uparrow \uparrow 4$; this bound comes from \tm{1RB3LA4RB0RB2LA_1LB2LA3LA1RA1RZ}, see analysis.\footnote{\url{https://wiki.bbchallenge.org/wiki/1RB3LA4RB0RB2LA_1LB2LA3LA1RA1RZ}}
+\end{itemize}
+
+These bounds are subject to improvement as new champions are discovered. For the most up-to-date information, please refer to our wiki\footnote{\url{https://wiki.bbchallenge.org/wiki/Main_Page}} or Michel’s website \cite{PMichel_website}.
+
+
+\newpage
 \section{Exact pipelines}\label{app:pipelines}
 
 \ts{TODO: essentially take from \CoqBB READMEs "Results" sections, e.g. \url{https://github.com/ccz181078/Coq-BB5/tree/main/CoqBB5/BB5\#results}.}
