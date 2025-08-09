@@ -315,7 +315,7 @@ The goal of this paper is to present these proofs: this paper serves as a ``huma
     \end{tabular}
     \caption{Landscape of small Busy Beaver values.
         \cellcolor{green!20}Cells highlighted in green (that is, those strictly to the left of $S(6)$, $S(3,3)$, and $S(3,4)$) correspond to values for which we provide \Coq proofs. Bright green indicates the new results: $S(5)$ and $S(2,4)$, original to this work.
-        Cells highlighted in orange (that is, all cells excluding the green ones) indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and we believe to be mathematically hard); see Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. Lower bounds (see Appendix~\ref{app:lowerbounds}), which come from exhibiting Turing machines achieving at least the given step-counts, are expressed using Knuth's ``up-arrow notation'' which is a way to express iterated exponentiation:
+        Cells highlighted in orange (that is, all cells excluding the green ones) indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and we believe to be mathematically hard); see Section~\ref{sec:intro:discuss} and Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. Lower bounds (see Appendix~\ref{app:lowerbounds}), which come from exhibiting Turing machines achieving at least the given step-counts, are expressed using Knuth's ``up-arrow notation'' which is a way to express iterated exponentiation:
         $a \uparrow b = a^b$ is exponentiation,
         $a \uparrow\uparrow b = a^{a^{\dots^a}}$, called tetration, is a tower of powers of $a$ with $b$ occurrences of $a$,
         and higher arrows indicate further levels of iteration \cite{Knuth1976Coping}.
@@ -715,6 +715,12 @@ We'd like to thank our sponsor, \texttt{prgm.dev} as well as the French state fo
 We'd also like to thank those who gave feedback on early versions of this paper, including the following GitHub users: desseim, frank-s-lin, Lysxia, XnoobSpeakable, ZhiqiuCao.
 
 We'd also like to thank the following people who helped disseminate the bbchallenge project: Damien Woods, Dave Doty, Eric E. Severson, Scott Aaronson, Jean-Claude Bermond, Luc Albert, Ben Brubaker, and Léo Ramaën.
+
+\newpage
+\section{Exact pipelines}\label{app:pipelines}
+
+\ts{TODO: essentially take from \CoqBB READMEs "Results" sections, e.g. \url{https://github.com/ccz181078/Coq-BB5/tree/main/CoqBB5/BB5\#results}.}
+
 \newpage
 
 \vspace*{-5em}
@@ -744,11 +750,6 @@ All these values have been verified in \CoqBB, see Section~\ref{sec:intro:discus
 
 These bounds are subject to improvement as new champions are discovered. For the most up-to-date information, please refer to our wiki\footnote{\url{https://wiki.bbchallenge.org/wiki/Main_Page}} or Michel’s website \cite{PMichel_website}.
 
-
-\newpage
-\section{Exact pipelines}\label{app:pipelines}
-
-\ts{TODO: essentially take from \CoqBB READMEs "Results" sections, e.g. \url{https://github.com/ccz181078/Coq-BB5/tree/main/CoqBB5/BB5\#results}.}
 
 \section{Cryptids}\label{app:cryptids}
 
