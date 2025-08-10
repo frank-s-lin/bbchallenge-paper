@@ -907,7 +907,7 @@ Pipelines for $S(2,4)$ and $S(4)$ only use deciders, \ie there are no hardcoded 
     \end{tabular}
 \end{table}
 
-The $S(5)$ pipeline differs from $S(2,4)$ and $S(4)$ in the following ways: (i) for $8{,}045$ machines (marked as $\texttt{TABLE\_BASED}$), \CoqBB hardcodes either the parameters with which deciders should be called to solve them or their verifier certificates (see Section~\ref{sec:deciders-overview}). Also, the 13 Sporadic Machines are proven using individual \Coq proofs, see Section~\ref{sec:sporadic}. And, (ii) Machines marked \texttt{NORMAL\_FORM\_TABLE\_BASED} above are 24 machines which are proved using \texttt{1RB}-reduction (see Section~\ref{sec:deciders-overview}).
+The $S(5)$ pipeline differs from $S(2,4)$ and $S(4)$ in the following ways: for $8{,}045$ machines (marked as $\texttt{TABLE\_BASED}$), \CoqBB hardcodes either the parameters with which deciders should be called to solve them or their verifier certificates (see Section~\ref{sec:deciders-overview}); also, the 13 Sporadic Machines are proven using individual \Coq proofs, see Section~\ref{sec:sporadic}. Finally, machines marked \texttt{NORMAL\_FORM\_TABLE\_BASED} above are 24 machines which are proved using \texttt{1RB}-reduction (see Section~\ref{sec:deciders-overview}); we give the methods used to solve the \texttt{1RB} machines they reduce to.
 \begin{table}[h!]
     \centering
     \begin{minipage}{0.55\linewidth}
@@ -948,6 +948,7 @@ The $S(5)$ pipeline differs from $S(2,4)$ and $S(4)$ in the following ways: (i) 
     \end{minipage}
 \end{table}
 
+\vspace{-1em}
 \section{Use of AI}
 
 The $S(5)$ proof (2022--2024) is roughly concomitant with the striking progress of Large Language Models in AI. We disclose their use -- or lack thereof -- in our project:
