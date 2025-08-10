@@ -723,7 +723,90 @@ We'd also like to thank those who gave feedback on early versions of this paper,
 We'd also like to thank the following people who helped disseminate the bbchallenge project: Damien Woods, Dave Doty, Eric E. Severson, Scott Aaronson, Jean-Claude Bermond, Luc Albert, Ben Brubaker, and Léo Ramaën.
 
 \newpage
-\section{Exact pipelines}\label{app:pipelines}
+
+\vspace*{-5em}
+\section{Busy Beaver winners and champions}\label{app:lowerbounds}
+
+\paragraph{Winners.} Below we give the Busy Beaver winners for known values of $S$ and $\Sigma$. We give all the machines that are \textit{ex aequo} for these metrics -- only considering machines in TNF; see Section~\ref{sec:enum}. Note that the use of \texttt{1RZ} in the Turing machines below instead of \verb|---| means that \textit{we know} that machines halt; see Section~\ref{sec:TMs}.
+\begin{itemize}
+    \item $S(2) = 6$ is achieved by 5 winners: \tm{1RB1LB_1LA1RZ}, \tm{1RB0LB_1LA1RZ}, \tm{1RB1RZ_1LB1LA}, \tm{1RB1RZ_0LB1LA}, and \tm{0RB1RZ_1LA1RB}; $\Sigma(2) = 4$ is only achieved by the first $S$ winner of the list.
+    \item $S(3) = 21$ is achieved by 1 winner: \tm{1RB1RZ_1LB0RC_1LC1LA}; $\Sigma(3) = 6$ is achieved by 5 winners: \tm{1RB1RZ_0RC1RB_1LC1LA}, \tm{1RB1RC_1LC1RZ_1RA0LB}, \tm{1RB1LC_1LA1RB_1LB1RZ}, \tm{1RB1RA_1LC1RZ_1RA1LB}, and \tm{1RB1LC_1RC1RZ_1LA0LB}. Note that this is the only known case where no $S$ winner is a $\Sigma$ winner. Originally proved in \cite{Lin1963}.
+    \item $S(4) = 107$ is achieved by 1 winner: \tm{1RB1LB_1LA0LC_1RZ1LD_1RD0RA}; $\Sigma(4) = 13$ is achieved by 2 winners: the winner for $S$ and \tm{1RB0RC_1LA1RA_1RZ1RD_1LD0LB}. Originally proved in \cite{Brady83}.
+    \item $S(5) = \BBtheFifth$ is achieved by 1 winner: \tm{1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA}; $\Sigma(5) = 4{,}098$ is achieved by 2 winners: the winner for $S$ and \tm{1RB1RA_1LC1LB_1RA1LD_1RA1LE_1RZ0LC}.
+    \item $S(2,3) = 38$ is achieved by 1 winner, \tm{1RB2LB1RZ_2LA2RB1LB}, which is also the only winner for $\Sigma(2,3) = 9$. Originally proved in \cite{LafittePapazian2007}.
+    \item $S(2,4) = \BBTxF$ is achieved by 1 winner, \tm{1RB2LA1RA1RA_1LB1LA3RB1RZ}, which is also the only winner for $\Sigma(2,4)=2{,}050$.
+\end{itemize}
+
+All these values have been verified in \CoqBB, see Section~\ref{sec:intro:discuss} and Section~\ref{sec:results}.
+
+\paragraph{Champions.} Below are the current Busy Beaver champions for some of the next Busy Beaver values that are still unknown, \ie machines achieving higher $S$ scores could be found in the future. Note that, for most of these champions, determining the exact number of steps is harder than proving that the machine halts; consequently, most of these bounds are not \textit{exact} step counts but strict lower bounds of these counts.\footnote{Also, at these scales, $S$ and $\Sigma$ are believed to be roughly the same number since, experimentally, $\Sigma$ is always ``only'' quadratically smaller than $S$.}
+\begin{itemize}
+    \item $S(6) > 2 \uparrow \uparrow \uparrow 5$; this bound comes from \tm{1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE} which has been proved to halt in Coq\footnote{\url{https://github.com/ccz181078/busycoq/blob/3f302b87f5fb933c46e97672ffbb6907f373fb6e/verify/SOBCv5.v\#L10210-L11283}} and whose number of steps was then manually estimated using the machine's \Coq-verified abstracted rules of evolution.\footnote{\url{https://wiki.bbchallenge.org/wiki/1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE}}
+    \item $S(7) > 2 \uparrow^{11} 2 \uparrow^{11} 3$; this bound comes from \tm{1RB0RA_1LC1LF_1RD0LB_1RA1LE_1RZ0LC_1RG1LD_0RG0RF}, see analysis.\footnote{\url{https://wiki.bbchallenge.org/wiki/1RB0RA_1LC1LF_1RD0LB_1RA1LE_1RZ0LC_1RG1LD_0RG0RF}}
+    \item $S(3,3) \geq 119{,}112{,}334{,}170{,}342{,}541$; this bound is the exact number of steps performed by \tm{0RB2LA1RA_1LA2RB1RC_1RZ1LB1LC}, yielding the simplified bound $S(3,3) > 10^{17}$. Only 6 unsolved 3-state 3-symbol Turing machines currently remain, including \tm{1RB2LC1RC_2LC---2RB_2LA0LB0RA} which is believed to halt and which number of steps would significantly surpass the current bound, see Section~\ref{sec:fw}.\footnote{\url{https://wiki.bbchallenge.org/wiki/BB(3,3)}}
+    \item $S(4,3) > 2 \uparrow \uparrow \uparrow 2^{2^{32}}$; this bound comes from \tm{0RB1RZ0RB_1RC1LB2LB_1LB2RD1LC_1RA2RC0LD}, see analysis.\footnote{\url{https://wiki.bbchallenge.org/wiki/0RB1RZ0RB_1RC1LB2LB_1LB2RD1LC_1RA2RC0LD}}
+    \item $S(3,4) > 2 \uparrow^{15} 5$; this bound comes from \tm{1RB3LB1RZ2RA_2LC3RB1LC2RA_3RB1LB3LC2RC}. For this machine it is possible to prove that the number of \sone symbols on the final tape is \textit{exactly} $(2 \uparrow^{15} 5) + 14$, see \cite{ligocki2024bb34ack14}.
+    \item $S(2,5) > 10 \uparrow \uparrow 4$; this bound comes from \tm{1RB3LA4RB0RB2LA_1LB2LA3LA1RA1RZ}, see analysis.\footnote{\url{https://wiki.bbchallenge.org/wiki/1RB3LA4RB0RB2LA_1LB2LA3LA1RA1RZ}}
+\end{itemize}
+
+These bounds are subject to improvement as new champions are discovered. For the most up-to-date information, please refer to our wiki\footnote{\url{https://wiki.bbchallenge.org/wiki/Main_Page}} or Michel’s website \cite{PMichel_website}.
+
+
+\section{Cryptids}\label{app:cryptids}
+
+Cryptids are Turing machines whose halting problem from all-0 tape is believed to be mathematically hard; see Section~\ref{sec:intro:discuss}. Here we give Cryptids that were found for $S(6)$, $S(3,3)$, and $S(2,5)$; see Table~\ref{table:landscape} (bright orange cells).
+
+\begin{itemize}
+    \item $S(6)$: \tm{1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA}; \textbf{Antihydra}.\footnote{\label{note:antihydra}\url{https://wiki.bbchallenge.org/wiki/Antihydra}} Take the following parametrised configuration:
+          $$ A(a,b) = \szero^\infty\; \sone^a \szero \sone^b \texttt{E>} \;\szero^\infty$$
+
+          The following Collatz-like rules can be proved:
+          \[
+              \begin{array}{rcl}
+                  A(a,2b)     & \longrightarrow & A(a+2,3b+2)   \\
+                  A(0,2b+1)   & \longrightarrow & \texttt{Halt} \\
+                  A(a+1,2b+1) & \longrightarrow & A(a,3b+3)
+              \end{array}
+          \]
+
+          The machine reaches $A(0,4)$ after 11 steps and halts if and only if $(a,b)$ with $a=0$ and $b$ odd is ever reached. This can be reformulated as whether repeatedly applying the Collatz-like function defined by $f(2n) = 3n$ and $f(2n+1) = 3n+1$ starting from $n=8$ will ever reach a point where the number of reached odd values is greater than twice the number of reached even values \cite{ligocki2024bb6antis}. A probabilistic model\footnotemark[\getrefnumber{note:antihydra}] suggests that the chance of Antihydra ever halting are less than $\left( \frac{\sqrt{5} - 1}{2} \right)^{1073720885}$. The rules of a 6-state machine very similar to Antihydra have been proven in \Coq.\footnote{\url{https://github.com/ccz181078/busycoq/blob/BB6/verify/AntiHydra2.v}} A dozen other 6-state Cryptids have been identified to date.\footnote{\url{https://wiki.bbchallenge.org/wiki/BB(6)\#Cryptids}}
+
+
+    \item $S(3,3)$: \tm{1RB2RA1LC_2LC1RB2RB_---2LA1LA}; \textbf{Bigfoot}.\footnote{\label{note:bigfoot}\url{https://wiki.bbchallenge.org/wiki/Bigfoot}} Take the following parametrised configuration:
+          $$A(a,b,c) = \szero^\infty\; \sone \texttt{2}^a \sone \sone^b\; \texttt{<A}\; \sone\sone^c\; \szero^\infty$$
+
+          The following Collatz-like rules can be proved:
+          \[
+              \begin{array}{rclcl}
+                  A(a,\, 6k,\, c)   & \to & A(a,\, 8k + c - 1,\, 2)                       \\
+                  A(a,\, 6k+1,\, c) & \to & A(a+1,\, 8k + c - 1,\, 3)                     \\
+                  A(a,\, 6k+2,\, c) & \to & A(a-1,\, 8k + c + 3,\, 2) \text{ if } a\geq 1 \\
+                  A(a,\, 6k+3,\, c) & \to & A(a,\, 8k + c + 1,\, 5)                       \\
+                  A(a,\, 6k+4,\, c) & \to & A(a+1,\, 8k + c + 3,\, 2)                     \\
+                  A(a,\, 6k+5,\, c) & \to & A(a,\, 8k + c + 5,\, 3)                       \\
+              \end{array}
+          \]
+
+          The machine enters configuration $A(2,1,2)$ at step 69 and halts if and only if $a$ reaches $0$ in the case $b = 2 \text{ mod } 6$ \cite{sligocki2023bb33}. Bigfoot has also been compiled into a 7-state 2-symbol machine: \tm{0RB1RB_1LC0RA_1RE1LF_1LF1RE_0RD1RD_1LG0LG_---1LB}. A probabilistic model\footnotemark[\getrefnumber{note:bigfoot}] suggests that the chance of Bigfoot ever halting are less than $2^{-3999889}$.
+
+    \item $S(2,5)$: \tm{1RB3RB---3LA1RA_2LA3RA4LB0LB0LA}; \textbf{Hydra}.\footnote{\label{note:hydra}\url{https://wiki.bbchallenge.org/wiki/Hydra}} Take the following parametrised configuration:
+          $$A(a,b) = \szero^\infty\; \texttt{<A}\; \texttt{2} \szero^a \sone^b \texttt{2}\;\szero^\infty$$
+
+          The following Collatz-like rules can be proved:
+          \[
+              \begin{array}{rcl}
+                  A(2a,0)   & \longrightarrow & \texttt{Halt} \\
+                  A(2a,b+1) & \longrightarrow & A(3a+3,b)     \\
+                  A(2a+1,b) & \longrightarrow & A(3a+3,b+2)
+              \end{array}
+          \]
+
+          The machine reaches $A(3,0)$ after 20 steps and halts if and only if $(a,b)$ with $a$ even and $b=0$ is ever reached. This can be reformulated as whether repeatedly applying the function $f(n) = 3\lfloor\frac{n}{2}\rfloor +3$ from $n=4$ will eventually produce more even values of $n$ than twice the number of odd values. Both Hydra and Antihydra can be reformulated as iterations of \textit{the Hydra map}\footnote{\url{https://wiki.bbchallenge.org/wiki/Hydra_function}}: $H(n) = \lfloor \frac{3}{2}n\rfloor$. A probabilistic model\footnotemark[\getrefnumber{note:hydra}] suggests that the chance of Hydra ever halting are less than $\left( \frac{\sqrt{5} - 1}{2} \right)^{2005374}$.
+
+\end{itemize}
+
+\newpage
+\section{Exact \CoqBB pipelines}\label{app:pipelines}
 
 
 Tables~\ref{tab:pipelineBB5}, \ref{tab:pipelineBB2x4}, and~\ref{tab:pipelineBB4} give simplified descriptions of the proof technique (mainly, deciders) pipelines (see Section \ref{sec:pipelines}) implemented in \CoqBB.\footnote{\url{https://github.com/ccz181078/Coq-BB5/}} Here we give the exact pipelines that were used. The identifiers we use for identifying deciders are the same as used in the released\footnote{\url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}} \Coq-extracted lists of enumerated machines (in TNF, see Section~\ref{sec:enum}).
@@ -824,133 +907,46 @@ Pipelines for $S(2,4)$ and $S(4)$ only use deciders, \ie there are no hardcoded 
     \end{tabular}
 \end{table}
 
-The $S(5)$ pipeline differs from $S(2,4)$ and $S(4)$ in the following ways:
-
-\begin{enumerate}
-    \item \textbf{Hardcoded parameters, certificates and Sporadic Machines.} For $8{,}045$ machines (marked as $\texttt{TABLE\_BASED}$), \CoqBB hardcodes either the parameters with which deciders should be called to solve them or their verifier certificates (see Section~\ref{sec:deciders-overview}). Also, the 13 Sporadic Machines are proven using individual \Coq proofs, see Section~\ref{sec:sporadic}. Here is additional information about $\texttt{TABLE\_BASED}$ machines:
-          \begin{table}[h!]
-              \centering
-              \begin{tabular}{|lrr|}
-                  \hline
-                  \texttt{TABLE\_BASED} machines             & Nonhalt & Halt \\
-                  \hline
-                  \texttt{REP\_WL\_params\_custom}           & 6{,}576 & 0    \\
-                  \texttt{NGRAM\_CPS\_IMPL2\_params\_custom} & 795     & 0    \\
-                  \texttt{NGRAM\_CPS\_IMPL1\_params\_custom} & 436     & 0    \\
-                  \texttt{HALT\_DECIDER\_47176870}           & 0       & 183  \\
-                  \texttt{LOOP1\_params\_1050000}            & 2       & 0    \\
-                  \texttt{NGRAM\_CPS\_LRU\_params\_custom}   & 182     & 0    \\
-                  \texttt{REP\_WL\_params\_20\_2}            & 1       & 0    \\
-                  \texttt{FAR\_certificates}                 & 23      & 0    \\
-                  \texttt{WFAR\_certificates}                & 17      & 0    \\
-                  \texttt{Sporadic Machines}                 & 13      & 0    \\
-                  \hline
-                  Total                                      & 8{,}045 & 183  \\
-                  \hline
-              \end{tabular}
-          \end{table}
-
-
-    \item \textbf{Use of \texttt{1RB}-reduction.} Machines marked \texttt{NORMAL\_FORM\_TABLE\_BASED} in the above exact $S(5)$ pipeline are 24 machines which are proved using \texttt{1RB}-reduction (see Section~\ref{sec:deciders-overview}). Here are the techniques used to solve the \texttt{1RB} machines they reduce to:
-          \begin{table}[h!]
-              \centering
-              \begin{tabular}{|lr|}
-                  \hline
-                  \texttt{NORMAL\_FORM\_TABLE\_BASED} & Count \\
-                  \hline
-                  FAR                                 & 9     \\
-                  WFAR                                & 14    \\
-                  Sporadic Machine (Finned \#3)       & 1     \\
-                  \hline
-                  Total                               & 24    \\
-                  \hline
-              \end{tabular}
-          \end{table}
-
-\end{enumerate}
-
-\newpage
-
-\vspace*{-5em}
-\section{Busy Beaver winners and champions}\label{app:lowerbounds}
-
-\paragraph{Winners.} Below we give the Busy Beaver winners for known values of $S$ and $\Sigma$. We give all the machines that are \textit{ex aequo} for these metrics -- only considering machines in TNF; see Section~\ref{sec:enum}. Note that the use of \texttt{1RZ} in the Turing machines below instead of \verb|---| means that \textit{we know} that machines halt; see Section~\ref{sec:TMs}.
-\begin{itemize}
-    \item $S(2) = 6$ is achieved by 5 winners: \tm{1RB1LB_1LA1RZ}, \tm{1RB0LB_1LA1RZ}, \tm{1RB1RZ_1LB1LA}, \tm{1RB1RZ_0LB1LA}, and \tm{0RB1RZ_1LA1RB}; $\Sigma(2) = 4$ is only achieved by the first $S$ winner of the list.
-    \item $S(3) = 21$ is achieved by 1 winner: \tm{1RB1RZ_1LB0RC_1LC1LA}; $\Sigma(3) = 6$ is achieved by 5 winners: \tm{1RB1RZ_0RC1RB_1LC1LA}, \tm{1RB1RC_1LC1RZ_1RA0LB}, \tm{1RB1LC_1LA1RB_1LB1RZ}, \tm{1RB1RA_1LC1RZ_1RA1LB}, and \tm{1RB1LC_1RC1RZ_1LA0LB}. Note that this is the only known case where no $S$ winner is a $\Sigma$ winner. Originally proved in \cite{Lin1963}.
-    \item $S(4) = 107$ is achieved by 1 winner: \tm{1RB1LB_1LA0LC_1RZ1LD_1RD0RA}; $\Sigma(4) = 13$ is achieved by 2 winners: the winner for $S$ and \tm{1RB0RC_1LA1RA_1RZ1RD_1LD0LB}. Originally proved in \cite{Brady83}.
-    \item $S(5) = \BBtheFifth$ is achieved by 1 winner: \tm{1RB1LC_1RC1RB_1RD0LE_1LA1LD_1RZ0LA}; $\Sigma(5) = 4{,}098$ is achieved by 2 winners: the winner for $S$ and \tm{1RB1RA_1LC1LB_1RA1LD_1RA1LE_1RZ0LC}.
-    \item $S(2,3) = 38$ is achieved by 1 winner, \tm{1RB2LB1RZ_2LA2RB1LB}, which is also the only winner for $\Sigma(2,3) = 9$. Originally proved in \cite{LafittePapazian2007}.
-    \item $S(2,4) = \BBTxF$ is achieved by 1 winner, \tm{1RB2LA1RA1RA_1LB1LA3RB1RZ}, which is also the only winner for $\Sigma(2,4)=2{,}050$.
-\end{itemize}
-
-All these values have been verified in \CoqBB, see Section~\ref{sec:intro:discuss} and Section~\ref{sec:results}.
-
-\paragraph{Champions.} Below are the current Busy Beaver champions for some of the next Busy Beaver values that are still unknown, \ie machines achieving higher $S$ scores could be found in the future. Note that, for most of these champions, determining the exact number of steps is harder than proving that the machine halts; consequently, most of these bounds are not \textit{exact} step counts but strict lower bounds of these counts.\footnote{Also, at these scales, $S$ and $\Sigma$ are believed to be roughly the same number since, experimentally, $\Sigma$ is always ``only'' quadratically smaller than $S$.}
-\begin{itemize}
-    \item $S(6) > 2 \uparrow \uparrow \uparrow 5$; this bound comes from \tm{1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE} which has been proved to halt in Coq\footnote{\url{https://github.com/ccz181078/busycoq/blob/3f302b87f5fb933c46e97672ffbb6907f373fb6e/verify/SOBCv5.v\#L10210-L11283}} and whose number of steps was then manually estimated using the machine's \Coq-verified abstracted rules of evolution.\footnote{\url{https://wiki.bbchallenge.org/wiki/1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE}}
-    \item $S(7) > 2 \uparrow^{11} 2 \uparrow^{11} 3$; this bound comes from \tm{1RB0RA_1LC1LF_1RD0LB_1RA1LE_1RZ0LC_1RG1LD_0RG0RF}, see analysis.\footnote{\url{https://wiki.bbchallenge.org/wiki/1RB0RA_1LC1LF_1RD0LB_1RA1LE_1RZ0LC_1RG1LD_0RG0RF}}
-    \item $S(3,3) \geq 119{,}112{,}334{,}170{,}342{,}541$; this bound is the exact number of steps performed by \tm{0RB2LA1RA_1LA2RB1RC_1RZ1LB1LC}, yielding the simplified bound $S(3,3) > 10^{17}$. Only 6 unsolved 3-state 3-symbol Turing machines currently remain, including \tm{1RB2LC1RC_2LC---2RB_2LA0LB0RA} which is believed to halt and which number of steps would significantly surpass the current bound, see Section~\ref{sec:fw}.\footnote{\url{https://wiki.bbchallenge.org/wiki/BB(3,3)}}
-    \item $S(4,3) > 2 \uparrow \uparrow \uparrow 2^{2^{32}}$; this bound comes from \tm{0RB1RZ0RB_1RC1LB2LB_1LB2RD1LC_1RA2RC0LD}, see analysis.\footnote{\url{https://wiki.bbchallenge.org/wiki/0RB1RZ0RB_1RC1LB2LB_1LB2RD1LC_1RA2RC0LD}}
-    \item $S(3,4) > 2 \uparrow^{15} 5$; this bound comes from \tm{1RB3LB1RZ2RA_2LC3RB1LC2RA_3RB1LB3LC2RC}. For this machine it is possible to prove that the number of \sone symbols on the final tape is \textit{exactly} $(2 \uparrow^{15} 5) + 14$, see \cite{ligocki2024bb34ack14}.
-    \item $S(2,5) > 10 \uparrow \uparrow 4$; this bound comes from \tm{1RB3LA4RB0RB2LA_1LB2LA3LA1RA1RZ}, see analysis.\footnote{\url{https://wiki.bbchallenge.org/wiki/1RB3LA4RB0RB2LA_1LB2LA3LA1RA1RZ}}
-\end{itemize}
-
-These bounds are subject to improvement as new champions are discovered. For the most up-to-date information, please refer to our wiki\footnote{\url{https://wiki.bbchallenge.org/wiki/Main_Page}} or Michel’s website \cite{PMichel_website}.
-
-
-\section{Cryptids}\label{app:cryptids}
-
-Cryptids are Turing machines whose halting problem from all-0 tape is believed to be mathematically hard; see Section~\ref{sec:intro:discuss}. Here we give Cryptids that were found for $S(6)$, $S(3,3)$, and $S(2,5)$; see Table~\ref{table:landscape} (bright orange cells).
-
-\begin{itemize}
-    \item $S(6)$: \tm{1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA}; \textbf{Antihydra}.\footnote{\label{note:antihydra}\url{https://wiki.bbchallenge.org/wiki/Antihydra}} Take the following parametrised configuration:
-          $$ A(a,b) = \szero^\infty\; \sone^a \szero \sone^b \texttt{E>} \;\szero^\infty$$
-
-          The following Collatz-like rules can be proved:
-          \[
-              \begin{array}{rcl}
-                  A(a,2b)     & \longrightarrow & A(a+2,3b+2)   \\
-                  A(0,2b+1)   & \longrightarrow & \texttt{Halt} \\
-                  A(a+1,2b+1) & \longrightarrow & A(a,3b+3)
-              \end{array}
-          \]
-
-          The machine reaches $A(0,4)$ after 11 steps and halts if and only if $(a,b)$ with $a=0$ and $b$ odd is ever reached. This can be reformulated as whether repeatedly applying the Collatz-like function defined by $f(2n) = 3n$ and $f(2n+1) = 3n+1$ starting from $n=8$ will ever reach a point where the number of reached odd values is greater than twice the number of reached even values \cite{ligocki2024bb6antis}. A probabilistic model\footnotemark[\getrefnumber{note:antihydra}] suggests that the chance of Antihydra ever halting are less than $\left( \frac{\sqrt{5} - 1}{2} \right)^{1073720885}$. The rules of a 6-state machine very similar to Antihydra have been proven in \Coq.\footnote{\url{https://github.com/ccz181078/busycoq/blob/BB6/verify/AntiHydra2.v}} A dozen other 6-state Cryptids have been identified to date.\footnote{\url{https://wiki.bbchallenge.org/wiki/BB(6)\#Cryptids}}
-
-
-    \item $S(3,3)$: \tm{1RB2RA1LC_2LC1RB2RB_---2LA1LA}; \textbf{Bigfoot}.\footnote{\label{note:bigfoot}\url{https://wiki.bbchallenge.org/wiki/Bigfoot}} Take the following parametrised configuration:
-          $$A(a,b,c) = \szero^\infty\; \sone \texttt{2}^a \sone \sone^b\; \texttt{<A}\; \sone\sone^c\; \szero^\infty$$
-
-          The following Collatz-like rules can be proved:
-          \[
-              \begin{array}{rclcl}
-                  A(a,\, 6k,\, c)   & \to & A(a,\, 8k + c - 1,\, 2)                       \\
-                  A(a,\, 6k+1,\, c) & \to & A(a+1,\, 8k + c - 1,\, 3)                     \\
-                  A(a,\, 6k+2,\, c) & \to & A(a-1,\, 8k + c + 3,\, 2) \text{ if } a\geq 1 \\
-                  A(a,\, 6k+3,\, c) & \to & A(a,\, 8k + c + 1,\, 5)                       \\
-                  A(a,\, 6k+4,\, c) & \to & A(a+1,\, 8k + c + 3,\, 2)                     \\
-                  A(a,\, 6k+5,\, c) & \to & A(a,\, 8k + c + 5,\, 3)                       \\
-              \end{array}
-          \]
-
-          The machine enters configuration $A(2,1,2)$ at step 69 and halts if and only if $a$ reaches $0$ in the case $b = 2 \text{ mod } 6$ \cite{sligocki2023bb33}. Bigfoot has also been compiled into a 7-state 2-symbol machine: \tm{0RB1RB_1LC0RA_1RE1LF_1LF1RE_0RD1RD_1LG0LG_---1LB}. A probabilistic model\footnotemark[\getrefnumber{note:bigfoot}] suggests that the chance of Bigfoot ever halting are less than $2^{-3999889}$.
-
-    \item $S(2,5)$: \tm{1RB3RB---3LA1RA_2LA3RA4LB0LB0LA}; \textbf{Hydra}.\footnote{\label{note:hydra}\url{https://wiki.bbchallenge.org/wiki/Hydra}} Take the following parametrised configuration:
-          $$A(a,b) = \szero^\infty\; \texttt{<A}\; \texttt{2} \szero^a \sone^b \texttt{2}\;\szero^\infty$$
-
-          The following Collatz-like rules can be proved:
-          \[
-              \begin{array}{rcl}
-                  A(2a,0)   & \longrightarrow & \texttt{Halt} \\
-                  A(2a,b+1) & \longrightarrow & A(3a+3,b)     \\
-                  A(2a+1,b) & \longrightarrow & A(3a+3,b+2)
-              \end{array}
-          \]
-
-          The machine reaches $A(3,0)$ after 20 steps and halts if and only if $(a,b)$ with $a$ even and $b=0$ is ever reached. This can be reformulated as whether repeatedly applying the function $f(n) = 3\lfloor\frac{n}{2}\rfloor +3$ from $n=4$ will eventually produce more even values of $n$ than twice the number of odd values. Both Hydra and Antihydra can be reformulated as iterations of \textit{the Hydra map}\footnote{\url{https://wiki.bbchallenge.org/wiki/Hydra_function}}: $H(n) = \lfloor \frac{3}{2}n\rfloor$. A probabilistic model\footnotemark[\getrefnumber{note:hydra}] suggests that the chance of Hydra ever halting are less than $\left( \frac{\sqrt{5} - 1}{2} \right)^{2005374}$.
-
-\end{itemize}
+The $S(5)$ pipeline differs from $S(2,4)$ and $S(4)$ in the following ways: (i) for $8{,}045$ machines (marked as $\texttt{TABLE\_BASED}$), \CoqBB hardcodes either the parameters with which deciders should be called to solve them or their verifier certificates (see Section~\ref{sec:deciders-overview}). Also, the 13 Sporadic Machines are proven using individual \Coq proofs, see Section~\ref{sec:sporadic}. And, (ii) Machines marked \texttt{NORMAL\_FORM\_TABLE\_BASED} above are 24 machines which are proved using \texttt{1RB}-reduction (see Section~\ref{sec:deciders-overview}).
+\begin{table}[h!]
+    \centering
+    \begin{minipage}{0.55\linewidth}
+        \centering
+        \begin{tabular}{|lrr|}
+            \hline
+            \texttt{TABLE\_BASED} machines             & Nonhalt & Halt \\
+            \hline
+            \texttt{REP\_WL\_params\_custom}           & 6{,}576 & 0    \\
+            \texttt{NGRAM\_CPS\_IMPL2\_params\_custom} & 795     & 0    \\
+            \texttt{NGRAM\_CPS\_IMPL1\_params\_custom} & 436     & 0    \\
+            \texttt{HALT\_DECIDER\_47176870}           & 0       & 183  \\
+            \texttt{LOOP1\_params\_1050000}            & 2       & 0    \\
+            \texttt{NGRAM\_CPS\_LRU\_params\_custom}   & 182     & 0    \\
+            \texttt{REP\_WL\_params\_20\_2}            & 1       & 0    \\
+            \texttt{FAR\_certificates}                 & 23      & 0    \\
+            \texttt{WFAR\_certificates}                & 17      & 0    \\
+            \texttt{Sporadic Machines}                 & 13      & 0    \\
+            \hline
+            Total                                      & 8{,}045 & 183  \\
+            \hline
+        \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}{0.35\linewidth}
+        \centering
+        \begin{tabular}{|lr|}
+            \hline
+            \texttt{NORMAL\_FORM\_TABLE\_BASED} & Count \\
+            \hline
+            FAR                                 & 9     \\
+            WFAR                                & 14    \\
+            Sporadic Machine (Finned \#3)       & 1     \\
+            \hline
+            Total                               & 24    \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+\end{table}
 
 \section{Use of AI}
 
