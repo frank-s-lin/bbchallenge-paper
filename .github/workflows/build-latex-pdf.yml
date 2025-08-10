@@ -30,11 +30,12 @@ jobs:
 
       - name: Flatten old and new trees
         run: |
-          latexpand --keep-comments old/bbchallenge-paper.tex > old-flat.tex
           latexpand --keep-comments bbchallenge-paper.tex     > new-flat.tex
+          cd old
+          latexpand --keep-comments bbchallenge-paper.tex > old-flat.tex
 
       - name: Generate redline diff with latexdiff
-        run: latexdiff old-flat.tex new-flat.tex > bbchallenge-paper-diff-with-v0.9.tex
+        run: latexdiff old/old-flat.tex new-flat.tex > bbchallenge-paper-diff-with-v0.9.tex
 
       - name: Compile diff PDF
         uses: xu-cheng/latex-action@v3
