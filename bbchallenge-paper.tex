@@ -771,7 +771,7 @@ Cryptids are Turing machines whose halting problem from all-0 tape is believed t
           The machine reaches $A(0,4)$ after 11 steps and halts if and only if $(a,b)$ with $a=0$ and $b$ odd is ever reached. This can be reformulated as whether repeatedly applying the Collatz-like function defined by $f(2n) = 3n$ and $f(2n+1) = 3n+1$ starting from $n=8$ will ever reach a point where the number of reached odd values is greater than twice the number of reached even values \cite{ligocki2024bb6antis}. A probabilistic model\footnotemark[\getrefnumber{note:antihydra}] suggests that the chance of Antihydra ever halting are less than $\left( \frac{\sqrt{5} - 1}{2} \right)^{1073720885}$. The rules of a 6-state machine very similar to Antihydra have been proven in \Coq.\footnote{\url{https://github.com/ccz181078/busycoq/blob/BB6/verify/AntiHydra2.v}} A dozen other 6-state Cryptids have been identified to date.\footnote{\url{https://wiki.bbchallenge.org/wiki/BB(6)\#Cryptids}}
 
 
-    \item $S(3,3)$: \tm{1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA}; \textbf{Bigfoot}.\footnote{\label{note:bigfoot}\url{https://wiki.bbchallenge.org/wiki/Bigfoot}} Take the following parametrised configuration:
+    \item $S(3,3)$: \tm{1RB2RA1LC_2LC1RB2RB_---2LA1LA}; \textbf{Bigfoot}.\footnote{\label{note:bigfoot}\url{https://wiki.bbchallenge.org/wiki/Bigfoot}} Take the following parametrised configuration:
           $$A(a,b,c) = \szero^\infty\; \sone \texttt{2}^a \sone \sone^b\; \texttt{<A}\; \sone\sone^c\; \szero^\infty$$
 
           The following Collatz-like rules can be proved:
