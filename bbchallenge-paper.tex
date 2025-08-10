@@ -220,7 +220,10 @@ Théo Zimmermann
 
 
 \setcounter{tocdepth}{2}
+\begingroup
+\renewcommand{\baselinestretch}{0.9}\normalsize
 \tableofcontents
+\endgroup
 
 % \paragraph{The bbchallenge Collaboration (credits).} The following contributions resulted in the determination of the fifth Busy Beaver value: mxdys (\CoqBB, Loops, RepWL); Nathan Fenner, Georgi Georgiev a.k.a~Skelet, savask, mxdys (NGramCPS); Justin Blanchard, Mateusz Naściszewski, Konrad Deka (FAR); Iijil (WFAR); mei (\texttt{busycoq}); Shawn Ligocki, Jason Yuen, mei (Sporadic Machines ``Shift Overflow Counters''); Shawn Ligocki, Pavel Kropitz, mei (Sporadic Machine ``Skelet \#1''); savask, Chris Xu, mxdys (Sporadic Machine ``Skelet \#17''); Shawn Ligocki, Dan Briggs, mei (Sporadic Machine ``Skelet \#10''); Justin Blanchard, mei (Sporadic Machines ``Finned Machines''); Shawn Ligocki, Daniel Yuan, mxdys, Rachel Hunter (``Cryptids''); Yannick Forster, Théo Zimmermann (Coq review); Yannick Forster (Coq {\small optimisation}); Tristan Stérin (bbchallenge.org); Tristan Stérin, Justin Blanchard (paper writing).
 \newpage
@@ -672,7 +675,7 @@ Although useful for talking about Turing machines, these families, especially wh
 % base 3/2 1LB1RC_0LE0RA_1LD1RA_0RA1LB_0RD0LB
 % 1RB1RA_0LC1LC_0RD1LD_0RA0LB base A(n) = A(n-1) + A(n-3)
 % translated coutners: 1RB0RA_1LC0LD_1RE1RD_1LA1LB_---1RC
-
+\addcontentsline{toc}{section}{References}
 \bibliographystyle{abbrv}
 %\newpage
 \bibliography{bbchallenge-paper}
