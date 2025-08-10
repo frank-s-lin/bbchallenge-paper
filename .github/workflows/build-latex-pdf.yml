@@ -14,8 +14,11 @@ jobs:
         with:
           root_file: bbchallenge-paper.tex
           work_in_root_file_dir: true
-      - name: Install latexdiff
-        run: sudo apt-get install latexdiff
+          
+      - name: Install latexpand/latexdiff
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-extra-utils
 
       - name: Materialize old tag into ./old
         run: |
