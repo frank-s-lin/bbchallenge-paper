@@ -6,6 +6,7 @@ on:
 jobs:
   build_correctness_deciders:
     runs-on: ubuntu-latest
+    container: ghcr.io/xu-cheng/latex:2024  # Ensures TeX Live 2024
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v3
