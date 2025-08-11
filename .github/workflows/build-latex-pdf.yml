@@ -24,7 +24,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y perl wget xz-utils
           cd /tmp
-          wget http://ftp.tug.org/historic/systems/texlive/2024/install-tl-unx.tar.gz
+          # ✅ correct historic path includes tlnet-final
+          wget -q https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final/install-tl-unx.tar.gz
           tar -xzf install-tl-unx.tar.gz
           cd install-tl-*
           cat > profile.txt <<'EOF'
