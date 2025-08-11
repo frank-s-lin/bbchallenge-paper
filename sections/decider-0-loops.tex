@@ -261,7 +261,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
     \begin{enumerate}
         \item If $g(t_0') = g(t_0)$, then $\mathcal{M}$ is a loop, more specifically called a \textit{Cycler}.\label{th:case1}
         \item If $g(t_0') \geq g(t_0)$ and the tape content to the right of $p_0$ is the same as to right of $p_0'$, \ie for all nonnegative integer $z$, $f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (positive) \textit{Translated Cycler}.\label{th:case2}
-        \item If $g(t_0') \leq g(t_0)$ and the tape content to the left of $p_0$ is the same as to left of $p_0'$, \ie for all nonnegative integer $z$, $f(t_0,g(t_0)+z) = f(t_0',g(t_0')+z)$, then $\mathcal{M}$ is a loop, more specifically called a (negative) \textit{Translated Cycler}.\label{th:case3}
+        \item If $g(t_0') \leq g(t_0)$ and the tape content to the left of $p_0$ is the same as to left of $p_0'$, \ie for all nonnegative integer $z$, $f(t_0,g(t_0)-z) = f(t_0',g(t_0')-z)$, then $\mathcal{M}$ is a loop, more specifically called a (negative) \textit{Translated Cycler}.\label{th:case3}
     \end{enumerate}
     In these three cases, $\mathcal{M}$ has period $l$, pre-period $t_0$, and does not halt.
 \end{theorem}
@@ -406,7 +406,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
 
     Consider $p^* = (t^*, g(t^*))$ with $t^*=t_0'+l$ which corresponds to one time step after $p'_{l-1}$. Figure~\ref{fig:loop-proof} illustrates the situation for the theorem's cases~\ref{th:case1} (on the left) and~\ref{th:case2} (on the right): $p^*$ is the coordinates of the black dashed cell.
 
-    We show that $F(p) = F(p'_0)$. By Lemma~\ref{lem:vector} Point~\ref{lem:vector:pt2}, we know that $h(t^*) = h(t_0')$ hence we have to show that the read symbol at $p^*$ and $p'_0$ are also the same, \ie $f(p) = f(p'_0)$. Three cases:
+    We show that $F(p^*) = F(p'_0)$. By Lemma~\ref{lem:vector} Point~\ref{lem:vector:pt2}, we know that $h(t^*) = h(t_0')$ hence we have to show that the read symbol at $p^*$ and $p'_0$ are also the same, \ie $f(p^*) = f(p'_0)$. Three cases:
 
     \begin{enumerate}
         \item Case $g(t_0') = g(t_0)$, illustrated in Figure~\ref{fig:loop-proof}~(left).  By Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt1}, we know that $p^*-p_0' = p'_0 - p_0$. Because $g(t_0') = g(t_0)$, the space component of $p^*-p_0'$ is 0 and we have that $g(t^*) = g(t_0')$. Hence, we know that the cell at tape position $g(t^*)$ has been visited at least once between time steps $t_0'$ and $t_0'+l-1$, which, by Lemma~\ref{lem:vector}, Point~\ref{lem:vector:pt4}, gives that $f(p^*) = f(p'_0)$.
