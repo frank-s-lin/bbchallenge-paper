@@ -27,7 +27,7 @@ jobs:
           # ✅ correct historic path includes tlnet-final
           wget -q https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final/install-tl-unx.tar.gz
           tar -xzf install-tl-unx.tar.gz
-          cd install-tl-*
+          cd install-tl-20250308
           cat > profile.txt <<'EOF'
           selected_scheme scheme-full
           TEXDIR /opt/texlive/2024
@@ -39,7 +39,7 @@ jobs:
           sudo ./install-tl \
             -profile profile.txt \
             -repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final
-            
+
       - name: Add TeX Live 2024 to PATH
         run: echo "/opt/texlive/2024/bin/x86_64-linux" >> $GITHUB_PATH
 
