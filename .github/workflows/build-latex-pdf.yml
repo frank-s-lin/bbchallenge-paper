@@ -10,20 +10,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Restore TeX Live 2024 cache
-        id: tlcache
+      # (Optional but recommended) cache the installed TeX Live tree to speed up subsequent runs
+      - name: Cache TeX Live 2024
+        id: cache
         uses: actions/cache@v4
         with:
-          path: |
-            $HOME/texlive/2024
-            $HOME/.texlive2024
-          # tie the cache to your profile; bump if you change it
-          key: texlive-2024-linux-x86_64-${{ hashFiles('.github/texlive.profile') }}
-          restore-keys: |
-            texlive-2024-linux-x86_64-
+          path: /opt/texlive/2024
+          key: texlive-2024-ubuntu
 
       - name: Install TeX Live 2024 (frozen)
-        if: steps.tlcache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           set -euxo pipefail
           sudo apt-get update
@@ -46,7 +42,7 @@ jobs:
             -repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final
 
       - name: Add TeX Live 2024 to PATH
-        run: echo "$HOME/texlive/2024/bin/x86_64-linux" >> $GITHUB_PATH
+        run: echo "/opt/texlive/2024/bin/x86_64-linux" >> $GITHUB_PATH
 
       - name: Show TeX versions (sanity check)
         run: |
