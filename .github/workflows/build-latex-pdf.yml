@@ -38,8 +38,8 @@ jobs:
           EOF
           sudo ./install-tl \
             -profile profile.txt \
-            -repository http://ftp.tug.org/historic/systems/texlive/2024/tlnet-final
-
+            -repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final
+            
       - name: Add TeX Live 2024 to PATH
         run: echo "/opt/texlive/2024/bin/x86_64-linux" >> $GITHUB_PATH
 
