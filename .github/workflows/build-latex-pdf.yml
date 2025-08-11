@@ -4,17 +4,54 @@ on:
     branches:
       - main
 jobs:
-  build_correctness_deciders:
+  build:
     runs-on: ubuntu-latest
-    container: ghcr.io/xu-cheng/latex:2024  # Ensures TeX Live 2024
     steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v3
-      - name: Compile bbchallenge-paper.pdf
-        uses: xu-cheng/latex-action@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # (Optional but recommended) cache the installed TeX Live tree to speed up subsequent runs
+      - name: Cache TeX Live 2024
+        uses: actions/cache@v4
         with:
-          root_file: bbchallenge-paper.tex
-          work_in_root_file_dir: true
+          path: /opt/texlive/2024
+          key: texlive-2024-ubuntu
+
+      - name: Install TeX Live 2024 (frozen)
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y perl wget xz-utils
+          cd /tmp
+          wget http://ftp.tug.org/historic/systems/texlive/2024/install-tl-unx.tar.gz
+          tar -xzf install-tl-unx.tar.gz
+          cd install-tl-*
+          cat > profile.txt <<'EOF'
+          selected_scheme scheme-full
+          TEXDIR /opt/texlive/2024
+          TEXMFCONFIG ~/.texlive2024/texmf-config
+          TEXMFVAR ~/.texlive2024/texmf-var
+          option_doc 0
+          option_src 0
+          EOF
+          sudo ./install-tl \
+            -profile profile.txt \
+            -repository http://ftp.tug.org/historic/systems/texlive/2024/tlnet-final
+
+      - name: Add TeX Live 2024 to PATH
+        run: echo "/opt/texlive/2024/bin/x86_64-linux" >> $GITHUB_PATH
+
+      - name: Show TeX versions (sanity check)
+        run: |
+          pdftex --version
+          kpsewhich --version
+          latexmk -v
+
+      - name: Build bbchallenge-paper.pdf
+        run: |
+          latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error \
+            -shell-escape bbchallenge-paper.tex
       
       - name: Install latexdiff
         run: sudo apt-get install latexdiff
