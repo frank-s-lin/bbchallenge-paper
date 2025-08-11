@@ -50,6 +50,19 @@ jobs:
           kpsewhich --version
           latexmk -v
 
+      - name: Warm up TeX filename DB + font maps
+        run: |
+          set -eux
+          mktexlsr
+          # Use user-level updmap if TL is under $HOME; otherwise use -sys
+          if [ -x "$HOME/texlive/2024/bin/x86_64-linux/updmap" ]; then
+            updmap
+          else
+            sudo /opt/texlive/2024/bin/x86_64-linux/updmap-sys
+          fi
+          # sanity check: this must print a path, not be empty
+          kpsewhich pdftex.map
+
       - name: Build bbchallenge-paper.pdf
         run: |
           latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error \
