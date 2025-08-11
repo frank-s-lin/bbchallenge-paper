@@ -681,7 +681,7 @@ Although useful for talking about Turing machines, these families, especially wh
 \bibliography{bbchallenge-paper}
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.28]{figures/bbchallenge_logo.png}
+    \includegraphics[scale=0.27]{figures/bbchallenge_logo.png}
     \caption{\texttt{bbchallenge} logo; credits: Léo Ramaën (\url{https://leoramaen.com/}).}
 \end{figure}
 
@@ -766,9 +766,9 @@ Cryptids are Turing machines whose halting problem from all-0 tape is believed t
           The following Collatz-like rules can be proved:
           \[
               \begin{array}{llcll}
-                  A(a, & 2k)   & \longrightarrow & A(a+2, 3k+2)                        \\
-                  A(0, & 2k+1) & \longrightarrow & \texttt{Halt}                       \\
-                  A(a, & 2k+1) & \longrightarrow & A(a-1, 3k+3) & \text{ if } a \geq 1 \\
+                  A(a, & 2k)   & \longrightarrow & A(a+2, 3k+2)                         \\
+                  A(0, & 2k+1) & \longrightarrow & \texttt{Halt}                        \\
+                  A(a, & 2k+1) & \longrightarrow & A(a-1, 3k+3)  & \text{ if } a \geq 1 \\
               \end{array}
           \]
 
@@ -798,9 +798,9 @@ Cryptids are Turing machines whose halting problem from all-0 tape is believed t
           The following Collatz-like rules can be proved:
           \[
               \begin{array}{llcll}
-                  C(2k,   & 0) & \longrightarrow & \texttt{Halt}                       \\
-                  C(2k,   & b) & \longrightarrow & C(3k+3, b-1) & \text{ if } b \geq 1 \\
-                  C(2k+1, & b) & \longrightarrow & C(3k+3, b+2)                        \\
+                  C(2k,   & 0) & \longrightarrow & \texttt{Halt}                        \\
+                  C(2k,   & b) & \longrightarrow & C(3k+3, b-1)  & \text{ if } b \geq 1 \\
+                  C(2k+1, & b) & \longrightarrow & C(3k+3, b+2)                         \\
               \end{array}
           \]
 
