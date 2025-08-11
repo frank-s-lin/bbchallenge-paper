@@ -46,7 +46,7 @@ jobs:
             -repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final
 
       - name: Add TeX Live 2024 to PATH
-        run: echo "/opt/texlive/2024/bin/x86_64-linux" >> $GITHUB_PATH
+        run: echo "$HOME/texlive/2024/bin/x86_64-linux" >> $GITHUB_PATH
 
       - name: Show TeX versions (sanity check)
         run: |
