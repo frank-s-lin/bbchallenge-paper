@@ -761,50 +761,50 @@ Cryptids are Turing machines whose halting problem from all-0 tape is believed t
 
 \begin{itemize}
     \item $S(6)$: \tm{1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA}; \textbf{Antihydra}.\footnote{\label{note:antihydra}\url{https://wiki.bbchallenge.org/wiki/Antihydra}} Take the following parametrised configuration:
-          $$ A(a,b) = \szero^\infty\; \sone^a \szero \sone^b \texttt{E>} \;\szero^\infty$$
+          $$ A(a,b) = \szero^\infty \; \sone^a \; \szero \; \sone^b \; \texttt{E>} \; \szero^\infty$$
 
           The following Collatz-like rules can be proved:
           \[
-              \begin{array}{rcl}
-                  A(a,2b)     & \longrightarrow & A(a+2,3b+2)   \\
-                  A(0,2b+1)   & \longrightarrow & \texttt{Halt} \\
-                  A(a+1,2b+1) & \longrightarrow & A(a,3b+3)
+              \begin{array}{llcll}
+                  A(a, & 2b)   & \longrightarrow & A(a+2, 3b+2)                        \\
+                  A(0, & 2b+1) & \longrightarrow & \texttt{Halt}                       \\
+                  A(a, & 2b+1) & \longrightarrow & A(a-1, 3b+3) & \text{ if } a \geq 1 \\
               \end{array}
           \]
 
-          The machine reaches $A(0,4)$ after 11 steps and halts if and only if $(a,b)$ with $a=0$ and $b$ odd is ever reached. This can be reformulated as whether repeatedly applying the Collatz-like function defined by $f(2n) = 3n$ and $f(2n+1) = 3n+1$ starting from $n=8$ will ever reach a point where the number of reached odd values is greater than twice the number of reached even values \cite{ligocki2024bb6antis}. A probabilistic model\footnotemark[\getrefnumber{note:antihydra}] suggests that the chance of Antihydra ever halting are less than $\left( \frac{\sqrt{5} - 1}{2} \right)^{1073720885}$. The rules of a 6-state machine very similar to Antihydra have been proven in \Coq.\footnote{\url{https://github.com/ccz181078/busycoq/blob/BB6/verify/AntiHydra2.v}} A dozen other 6-state Cryptids have been identified to date.\footnote{\url{https://wiki.bbchallenge.org/wiki/BB(6)\#Cryptids}}
+          The machine reaches $A(0,4)$ after 11 steps and halts if and only if it reaches $A(a,b)$ with $a=0$ and $b$ odd. This can be reformulated as whether repeatedly applying the Collatz-like \textit{Hydra map}\footnote{\url{https://wiki.bbchallenge.org/wiki/Hydra_function}} $H(n) = \lfloor \frac{3}{2}n\rfloor$ starting from $n=8$ will ever reach a point where the number of reached odd values is greater than twice the number of reached even values \cite{ligocki2024bb6antis}. A probabilistic biased random walk model\footnotemark[\getrefnumber{note:antihydra}] suggests that the chance of Antihydra ever halting are less than $\left( \frac{\sqrt{5} - 1}{2} \right)^{1073720885}$. The rules of a 6-state machine very similar to Antihydra have been proven in \Coq.\footnote{\url{https://github.com/ccz181078/busycoq/blob/BB6/verify/AntiHydra2.v}} A dozen other 6-state Cryptids have been identified to date.\footnote{\url{https://wiki.bbchallenge.org/wiki/BB(6)\#Cryptids}}
 
 
     \item $S(3,3)$: \tm{1RB2RA1LC_2LC1RB2RB_---2LA1LA}; \textbf{Bigfoot}.\footnote{\label{note:bigfoot}\url{https://wiki.bbchallenge.org/wiki/Bigfoot}} Take the following parametrised configuration:
-          $$A(a,b,c) = \szero^\infty\; \sone \texttt{2}^a \sone \sone^b\; \texttt{<A}\; \sone\sone^c\; \szero^\infty$$
+          $$B(a,b,c) = \szero^\infty\; (\sone \texttt{2})^a \; (\sone \sone)^b \; \texttt{<A} \; (\sone \sone)^c \; \szero^\infty$$
 
           The following Collatz-like rules can be proved:
           \[
-              \begin{array}{rclcl}
-                  A(a,\, 6k,\, c)   & \to & A(a,\, 8k + c - 1,\, 2)                       \\
-                  A(a,\, 6k+1,\, c) & \to & A(a+1,\, 8k + c - 1,\, 3)                     \\
-                  A(a,\, 6k+2,\, c) & \to & A(a-1,\, 8k + c + 3,\, 2) \text{ if } a\geq 1 \\
-                  A(a,\, 6k+3,\, c) & \to & A(a,\, 8k + c + 1,\, 5)                       \\
-                  A(a,\, 6k+4,\, c) & \to & A(a+1,\, 8k + c + 3,\, 2)                     \\
-                  A(a,\, 6k+5,\, c) & \to & A(a,\, 8k + c + 5,\, 3)                       \\
+              \begin{array}{lllcllll}
+                  B(a, & 6k,   & c) & \to & B(a,   & 8k + c - 1, & 2)                        \\
+                  B(a, & 6k+1, & c) & \to & B(a+1, & 8k + c - 1, & 3)                        \\
+                  B(a, & 6k+2, & c) & \to & B(a-1, & 8k + c + 3, & 2) & \text{ if } a \geq 1 \\
+                  B(a, & 6k+3, & c) & \to & B(a,   & 8k + c + 1, & 5)                        \\
+                  B(a, & 6k+4, & c) & \to & B(a+1, & 8k + c + 3, & 2)                        \\
+                  B(a, & 6k+5, & c) & \to & B(a,   & 8k + c + 5, & 3)                        \\
               \end{array}
           \]
 
-          The machine enters configuration $A(2,1,2)$ at step 69 and halts if and only if $a$ reaches $0$ in the case $b = 2 \text{ mod } 6$ \cite{sligocki2023bb33}. Bigfoot has also been compiled into a 7-state 2-symbol machine: \tm{0RB1RB_1LC0RA_1RE1LF_1LF1RE_0RD1RD_1LG0LG_---1LB}. A probabilistic model\footnotemark[\getrefnumber{note:bigfoot}] suggests that the chance of Bigfoot ever halting are less than $2^{-3999889}$.
+          The machine enters configuration $B(2,1,2)$ at step 69 and halts if and only if it reaches $B(a,b,c,)$ with $a=0$ and $b \equiv 2 \mod 6$ \cite{ligocki2023bb33}. Bigfoot has also been compiled into a 7-state 2-symbol machine which halts under the same condition: \tm{0RB1RB_1LC0RA_1RE1LF_1LF1RE_0RD1RD_1LG0LG_---1LB}. A probabilistic model\footnotemark[\getrefnumber{note:bigfoot}] suggests that the chance of Bigfoot ever halting are less than $2^{-3999889}$.
 
     \item $S(2,5)$: \tm{1RB3RB---3LA1RA_2LA3RA4LB0LB0LA}; \textbf{Hydra}.\footnote{\label{note:hydra}\url{https://wiki.bbchallenge.org/wiki/Hydra}} Take the following parametrised configuration:
-          $$A(a,b) = \szero^\infty\; \texttt{<A}\; \texttt{2} \szero^a \sone^b \texttt{2}\;\szero^\infty$$
+          $$C(a,b) = \szero^\infty \; \texttt{<B} \; \szero^a \; \texttt{3}^b \; \texttt{2} \; \szero^\infty$$
 
           The following Collatz-like rules can be proved:
           \[
-              \begin{array}{rcl}
-                  A(2a,0)   & \longrightarrow & \texttt{Halt} \\
-                  A(2a,b+1) & \longrightarrow & A(3a+3,b)     \\
-                  A(2a+1,b) & \longrightarrow & A(3a+3,b+2)
+              \begin{array}{llcll}
+                  C(2a,   & 0) & \longrightarrow & \texttt{Halt}                       \\
+                  C(2a,   & b) & \longrightarrow & C(3a+3, b-1) & \text{ if } b \geq 1 \\
+                  C(2a+1, & b) & \longrightarrow & C(3a+3, b+2)                        \\
               \end{array}
           \]
 
-          The machine reaches $A(3,0)$ after 20 steps and halts if and only if $(a,b)$ with $a$ even and $b=0$ is ever reached. This can be reformulated as whether repeatedly applying the function $f(n) = 3\lfloor\frac{n}{2}\rfloor +3$ from $n=3$ will eventually produce more even values of $n$ than twice the number of odd values. Both Hydra and Antihydra can be reformulated as iterations of \textit{the Hydra map}\footnote{\url{https://wiki.bbchallenge.org/wiki/Hydra_function}}: $H(n) = \lfloor \frac{3}{2}n\rfloor$. A probabilistic model\footnotemark[\getrefnumber{note:hydra}] suggests that the chance of Hydra ever halting are less than $\left( \frac{\sqrt{5} - 1}{2} \right)^{2005374}$.
+          The machine reaches $C(3,0)$ after 19 steps and halts if and only if it reaches $C(a,b)$ with $a$ even and $b=0$. This can be reformulated as whether repeatedly applying the \textit{Hydra map} $H(n) = \lfloor \frac{3}{2}n\rfloor$ from $n=3$ will ever reach a point where the number of reached even values is greater than twice the number of reached odd values \cite{ligocki2024bb25}. This is the same Hydra map used for Antihydra above, but with the "opposite" condition (switching the role of even an odd values). A probabilistic model\footnotemark[\getrefnumber{note:hydra}] suggests that the chance of Hydra ever halting are less than $\left( \frac{\sqrt{5} - 1}{2} \right)^{2005374}$.
 
 \end{itemize}
 
