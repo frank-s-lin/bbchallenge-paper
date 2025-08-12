@@ -13,7 +13,7 @@ We prove that $S(5) = 47,176,870$ using the Coq proof assistant. The Busy Beaver
 📎 [Pre-Preprint v0.99 Release, PDF Link](https://github.com/bbchallenge/bbchallenge-paper/releases/download/pre-preprint-v0.99/bb5-pre-preprint-v0.99.pdf)  
 📎 [Diff between v0.99 and v0.9, PDF Link](https://github.com/bbchallenge/bbchallenge-paper/releases/download/pre-preprint-v0.99/bb5-diff-between-v0.99-and-v0.9.pdf)  
 🚧 [Live version of the manuscript](https://github.com/bbchallenge/bbchallenge-paper/blob/build-paper-pdf/bbchallenge-paper.pdf) (<- includes continuously integrated feedback such as typo corrections etc.)   
-🔍 [Live diff with v0.99](#)
+🔍 [Live diff with v0.99](https://github.com/bbchallenge/bbchallenge-paper/blob/build-paper-pdf/bbchallenge-paper-diff-with-v0.99.pdf)
 
 ## Temporary BibTeX entry
 
