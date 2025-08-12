@@ -5,19 +5,15 @@
 We prove that $S(5) = 47,176,870$ using the Coq proof assistant. The Busy Beaver value $S(n)$ is the maximum number of steps that an n-state 2-symbol Turing machine can perform from the all-0 tape before halting and $S$ was historically introduced by Tibor Radó in 1962 as one of the simplest examples of an uncomputable function.  The proof enumerates 181,385,789 Turing machines with 5 states, and, for each machine, decides whether it halts or not.
     Our result marks the first determination of a new Busy Beaver value in over 40 years and the first Busy Beaver value to ever be formally verified, attesting to the effectiveness of massively collaborative online research ([bbchallenge.org](https://bbchallenge.org)).
 
-## Pre-Preprint (v0.9)
+## Pre-Preprint (v0.99)
 
-Starting **May 12, 2025**, we are in an open review/feedback phase until **June 30, 2025**, and we’re looking for feedback of all kinds — from typo fixes and clarity suggestions to technical comments and structural feedback on our [pre-preprint](https://github.com/bbchallenge/bbchallenge-paper/releases/download/pre-preprint-v0.9/bb5-pre-preprint-v0.9.pdf).
+- **August 12, 2025**: [version 0.99](#) of the preprint released (integrating feedback received after v0.9 release); final opportunity to give feedback before arxiv upload on September 1st, 2025.
+- **May 12, 2025**: [version 0.9](https://github.com/bbchallenge/bbchallenge-paper/releases/tag/pre-preprint-v0.9) of the preprint released; open feedback period until June 30, 2025.
 
-**Update:** the feedback period has ended. Provisional schedule from now is: 
-
-- July 1st - August 12th: feedback integrations, you may still use [the issues](https://github.com/bbchallenge/bbchallenge-paper/issues) to discuss the manuscript and the integration of feedback. At the end of this period, we will release **v0.99** of the manuscript.
-- August 13th - August 13st: period to give your opinion and/or raise issues about **v0.99**. At the end of this period, we will release **v1** of the manucript.
-- September 1st 2025: **v1** of the manuscript is uploaded to arxiv.
-
-📎 [Pre-Preprint Release PDF Link](https://github.com/bbchallenge/bbchallenge-paper/releases/download/pre-preprint-v0.9/bb5-pre-preprint-v0.9.pdf)  
-🚧 [Live version of the manuscript](https://github.com/bbchallenge/bbchallenge-paper/blob/build-paper-pdf/bbchallenge-paper.pdf) (<- includes continuously integrated Pre-Preprint feedback such as typo corrections etc.)
-🔍 [PDF showing difference between live manuscript and Pre-Preprint](https://github.com/bbchallenge/bbchallenge-paper/blob/build-paper-pdf/bbchallenge-paper-diff-with-v0.9.pdf)
+📎 [Pre-Preprint v0.99 Release](#)  
+📎 [Diff between v0.99 and 0.9](#)  
+🚧 [Live version of the manuscript](https://github.com/bbchallenge/bbchallenge-paper/blob/build-paper-pdf/bbchallenge-paper.pdf) (<- includes continuously integrated feedback such as typo corrections etc.)
+🔍 [Live diff with v0.99](#)
 
 ## Temporary BibTeX entry
 
