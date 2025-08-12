@@ -7,13 +7,12 @@ We prove that $S(5) = 47,176,870$ using the Coq proof assistant. The Busy Beaver
 
 ## Pre-Preprint (v0.99)
 
-- **August 12, 2025**: [version 0.99](#) of the preprint released (integrating feedback received after v0.9 release); final opportunity to give feedback before arxiv upload on September 1st, 2025. Give feedback [here](https://github.com/bbchallenge/bbchallenge-paper/issues/40).
+- **August 12, 2025**: [version 0.99](https://github.com/bbchallenge/bbchallenge-paper/releases/tag/pre-preprint-v0.99) of the preprint released (integrating feedback received after v0.9 release); final opportunity to give feedback before arxiv upload on September 1st, 2025. Give feedback [here](https://github.com/bbchallenge/bbchallenge-paper/issues/40).
 - **May 12, 2025**: [version 0.9](https://github.com/bbchallenge/bbchallenge-paper/releases/tag/pre-preprint-v0.9) of the preprint released; open feedback period until June 30, 2025.
 
-📎 [Pre-Preprint v0.99 Release](#)  
-📎 [Diff between v0.99 and v0.9](#)  
-🚧 [Live version of the manuscript](https://github.com/bbchallenge/bbchallenge-paper/blob/build-paper-pdf/bbchallenge-paper.pdf) (<- includes continuously integrated feedback such as typo corrections etc.)
-
+📎 [Pre-Preprint v0.99 Release, PDF Link](https://github.com/bbchallenge/bbchallenge-paper/releases/download/pre-preprint-v0.99/bb5-pre-preprint-v0.99.pdf)  
+📎 [Diff between v0.99 and v0.9, PDF Link](https://github.com/bbchallenge/bbchallenge-paper/releases/download/pre-preprint-v0.99/bb5-diff-between-v0.99-and-v0.9.pdf)  
+🚧 [Live version of the manuscript](https://github.com/bbchallenge/bbchallenge-paper/blob/build-paper-pdf/bbchallenge-paper.pdf) (<- includes continuously integrated feedback such as typo corrections etc.)   
 🔍 [Live diff with v0.99](#)
 
 ## Temporary BibTeX entry
