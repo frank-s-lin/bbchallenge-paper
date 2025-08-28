@@ -411,7 +411,7 @@ This comprehensive use of \Coq in order to solve $S(5)$, where the TNF enumerati
 
 \subsection{Discussion}\label{sec:intro:discuss}
 
-\paragraph{Cryptids.} The Busy Beaver game is a concrete attempt at identifying the frontier between the knowable and the unknowable: what is the highest $n$ for which we can prove the value of $S(n)$? Knowing that for $n > 5$, as mentioned in Section~\ref{sec:intro:mainresults}, the proof may involve solving arbitrarily difficult problems or worse, simply be outside of PA or ZF. Said otherwise, the Busy Beaver game is great as generating open problems in mathematics.
+\paragraph{Cryptids.} The Busy Beaver game is a concrete attempt at identifying the frontier between the knowable and the unknowable: what is the highest $n$ for which we can prove the value of $S(n)$? Knowing that for $n > 5$, as mentioned in Section~\ref{sec:intro:mainresults}, the proof may involve solving arbitrarily difficult problems or worse, simply be outside of PA or ZF. Said otherwise, the Busy Beaver game is great at generating open problems in mathematics.
 
 
 For instance, in all the unsolved Turing machine classes (orange highlight in Table~\ref{table:landscape}), we have found what we call ``Cryptids'', which are loosely defined as Turing machines whose halting problem from the all-zero tape is believed to be mathematically hard (Appendix~\ref{app:cryptids}). For instance, with 6 states, Antihydra (\tm{1RB1RA_0LC1LE_1LD1LC_1LA0LB_1LF1RE_---0RA}; see Turing machine notation, Section~\ref{sec:TMs}) is a machine that does not halt from the all-zero tape if and only if the following Collatz-reminiscent conjecture holds:
@@ -557,7 +557,7 @@ Hence, in perpetuating a longstanding tradition of hope about Busy Beaver values
     When encountering a halting machine, the proof checks that it halts before $47{,}176{,}870$ steps, giving $S(5) \leq 47{,}176{,}870$, see \texttt{Lemma BB5\_upperbound}, and, using the 5-state champion (Figure~\ref{fig:bb5win}), see \texttt{Lemma BB5\_lowerbound}, the proof concludes $S(5) = 47{,}176{,}870$. Thanks to this proof, the 5-state champion becomes the winner of the 5th Busy Beaver competition, Figure~\ref{fig:bb5win}.
 \end{proof}
 
-\paragraph{Extracting machines.} The essential output of The Busy Beaver Challenge is the list of all $\BBtheFifthTNF$ TNF-enumerated 5-state machines together with their halting status and method used to determine it. Find the list at \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}. This list was computed by \textit{extracting} the \Coq proof to OCaml, which means that all the \Coq-implemented algorithms where automatically transcribed  in a trusted way to OCaml by the \Coq engine. From there, print statements were added to the OCaml code which, once ran, produced the list. If given an arbitrary 5-state Turing machine, computing TNF normalisation (see Section~\ref{sec:enum}) and then performing lookup in the list allows to determine the halting status of the machine from all-0 tape.
+\paragraph{Extracting machines.} The essential output of The Busy Beaver Challenge is the list of all $\BBtheFifthTNF$ TNF-enumerated 5-state machines together with their halting status and method used to determine it. Find the list at \url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}. This list was computed by \textit{extracting} the \Coq proof to OCaml, which means that all the \Coq-implemented algorithms were automatically transcribed  in a trusted way to OCaml by the \Coq engine. From there, print statements were added to the OCaml code which, once ran, produced the list. If given an arbitrary 5-state Turing machine, computing TNF normalisation (see Section~\ref{sec:enum}) and then performing lookup in the list allows to determine the halting status of the machine from all-0 tape.
 
 Using this Coq-verified list, any ``observable'' metric on 5-state Turing machines such as \rado's $\Sigma$ (see Section~\ref{sec:intro}) can be computed:
 
@@ -688,6 +688,7 @@ Although useful for talking about Turing machines, these families, especially wh
 \appendix
 \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 \newpage
+
 \section{Author Contributions}\label{app:contribs}
 
 \paragraph{The bbchallenge Collaboration: $S(5)$ credits.} The following contributions resulted in the determination of the fifth Busy Beaver value and in the better understanding of the landscape of small Busy Beaver values (Table~\ref{table:landscape}): mxdys (\CoqBB, Loops, RepWL); Nathan Fenner, Georgi Georgiev a.k.a~Skelet, savask, mxdys (NGramCPS); Justin Blanchard, Mateusz Naściszewski, Konrad Deka (FAR); Iijil (WFAR); mei (\texttt{busycoq}); Shawn Ligocki, Jason Yuen, mei (Sporadic Machines ``Shift Overflow Counters''); Shawn Ligocki, Pavel Kropitz, mei (Sporadic Machine ``Skelet \#1''); savask, Chris Xu, mxdys (Sporadic Machine ``Skelet \#17''); Shawn Ligocki, Dan Briggs, mei (Sporadic Machine ``Skelet \#10''); Justin Blanchard, mei (Sporadic Machines ``Finned Machines''); Shawn Ligocki, Daniel Yuan, mxdys, Matthew L. House, Rachel Hunter, Jason Yuen (``Cryptids''); Yannick Forster, Théo Zimmermann (Coq review); Yannick Forster (Coq optimisation); Tristan Stérin (bbchallenge.org); Tristan Stérin, Justin Blanchard (paper writing).
@@ -719,9 +720,7 @@ Although useful for talking about Turing machines, these families, especially wh
 \paragraph{Acknowledgement.} The bbchallenge Collaboration is not limited to the above contributors but regroups all those who participated in the bbchallenge's discussions through all our channels (Discord chat, forum, wiki, GitHub, emails) and in particular we thank:  Nick Drozd, Andrew Ducharme, Frans Faase, Tony Guilfoyle, Nick Howell, Jeffrey Huang, Alexandre Jouandin, Carl Kadie, Dawid Loranc, Terry J. Ligocki, Heiner Marxen, Pascal Michel, Milo Mighdoll (milomg), Sébastien Ohleyer, Peacemaker II, star, tomtom2357, Valentin, Daniel Yuan.
 
 
-We'd like to thank our sponsor, \texttt{prgm.dev} as well as the French state for funding this research (\textit{Crédit Impôt Recherche}, \textit{Jeune Entreprise Innovante}).
-
-We'd also like to thank those who gave feedback on early versions of this paper, including the following GitHub and Discord users: desseim, frank-s-lin, Lysxia, Nitrome, XnoobSpeakable, ZhiqiuCao.
+We'd like to thank our sponsor, \texttt{prgm.dev} as well as the French state for funding this research (\textit{Crédit Impôt Recherche}, \textit{Jeune Entreprise Innovante}). We'd also like to thank those who gave feedback on early versions of this paper, including the following GitHub and Discord users: desseim, frank-s-lin, Lysxia, Nitrome, RobinCodes, XnoobSpeakable, ZhiqiuCao.
 
 We'd also like to thank the following people who helped disseminate the bbchallenge project: Damien Woods, Dave Doty, Eric E. Severson, Scott Aaronson, Jean-Claude Bermond, Luc Albert, Ben Brubaker, and Léo Ramaën.
 
