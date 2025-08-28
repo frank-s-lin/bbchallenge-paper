@@ -427,7 +427,7 @@ Transcripts as defined in Section~\ref{sec:loops:algo} correspond to sequences o
     \end{itemize}
 \end{theorem}
 \begin{proof}
-    The call to \textsc{decider-loops}($\mathcal{M}$, $L$) terminates because of Algorithm~\ref{alg:loops}, l.\ref{alg:loops:terminate}. The call returns \texttt{HALT} if and only if $\mathcal{M}$ halts within $L$ steps from the all-zero tape, see Algorithm~\ref{alg:loops}, l.\ref{alg:loops:halt}, hence if the call returns \texttt{HALT} we know that the machine halts. The interesting case is the loop-detection leading to \texttt{NONHALT}.
+    The call to \textsc{decider-loops}($\mathcal{M}$, $L$) terminates as all loops are bounded. The call returns \texttt{HALT} if and only if $\mathcal{M}$ halts within $L$ steps from the all-zero tape, see Algorithm~\ref{alg:loops}, l.\ref{alg:loops:halt}, hence if the call returns \texttt{HALT} we know that the machine halts. The interesting case is the loop-detection leading to \texttt{NONHALT}.
 
     Algorithm~\ref{alg:loops} finds $t_0$ and $l$ satisfying the hypotheses of Theorem~\ref{th:loops:theory}: $t_0 = K-l-1-o$
     and where $F_\mathcal{M}(p_i)   = F_\mathcal{M}(p'_i)$ is guaranteed thanks to Algorithm~l.\ref{alg:loops:testeq}. Theorem~\ref{th:loops:theory} Cases~1, 2, and, 3 are respectively handled by Algorithm~l.\ref{alg:loops:cycler}, l.\ref{alg:loops:tcplus}, and, l.\ref{alg:loops:tcminus}. In Case 2/Case 3, the condition of having tapes be the same to the right/left of $p_0$ and $p_0'$ is handled by making sure the head is at the maximum/minimum seen position of the tape in both cases, ensuring that there are only 0s to the right/left, and therefore satisfying the condition. Hence, we get that $\mathcal{M}$ does not halt.
