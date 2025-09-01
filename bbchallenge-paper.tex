@@ -322,10 +322,10 @@ The goal of this paper is to present these proofs: this paper serves as a ``huma
     \end{tabular}
     \caption{Landscape of small Busy Beaver values.
         \cellcolor{green!20}Cells highlighted in green (that is, those strictly to the left of $S(6)$, $S(3,3)$, and $S(3,4)$) correspond to values for which we provide \Coq proofs. Bright green indicates the new results: $S(5)$ and $S(2,4)$, original to this work.
-        Cells highlighted in orange (that is, all cells excluding the green ones) indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and we believe to be mathematically hard); see Section~\ref{sec:intro:discuss} and Appendix~\ref{app:cryptids}. Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. Lower bounds (see Appendix~\ref{app:lowerbounds}), which come from exhibiting Turing machines achieving at least the given step-counts, are expressed using Knuth's ``up-arrow notation'' which is a way to express iterated exponentiation:
+        Cells highlighted in orange (that is, all cells excluding the green ones) indicate the existence of a Cryptid (\ie machines whose halting problem is currently open and we believe to be mathematically hard; see Section~\ref{sec:intro:discuss} and Appendix~\ref{app:cryptids}). Lighter orange means that the existence of a Cryptid comes trivially from reusing a known 3-state 3-symbol Cryptid and ignoring the available additional state or symbol. Lower bounds (see Appendix~\ref{app:lowerbounds}), which come from exhibiting Turing machines achieving at least the given step-counts, are expressed using Knuth's ``up-arrow notation'' which is a way to express iterated exponentiation:
         $a \uparrow b = a^b$ is exponentiation,
-        $a \uparrow\uparrow b = a^{a^{\dots^a}}$, called tetration, is a tower of powers of $a$ with $b$ occurrences of $a$,
-        and higher arrows indicate further levels of iteration \cite{Knuth1976Coping}.
+        $a \uparrow\uparrow b = a^{a^{\dots^a}}$, called \textit{tetration}, is a tower of powers of $a$ with $b$ occurrences of $a$,
+        and higher arrows indicate further levels of iteration \cite{Knuth1976Coping}; \eg three arrows is referred to as \textit{pentation} and, $2 \uparrow \uparrow \uparrow 5 = 2 \uparrow\uparrow \bigl( 2 \uparrow\uparrow ( 2 \uparrow\uparrow ( 2 \uparrow\uparrow 2 ) ) \bigr)$.
     }
     \label{table:landscape}
 \end{table}
