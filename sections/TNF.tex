@@ -95,10 +95,10 @@
 
 
 Syntactically, as defined in Section~\ref{sec:TMs}, there are $(2ns + 1)^{ns}$ Turing machines with $n$ states and $s$ symbols. This gives $21^{10} \simeq 1.67\times10^{13} \simeq 16 \text{ trillion}$ possible 5-state 2-symbol Turing machines. However, naively counting Turing machines this way does not account for two phenomena:
-\begin{itemize}
+\begin{enumerate}
     \item \textbf{Unreachable transitions.} Take the 5-state 2-symbol machine where only the first transition is defined as \texttt{0RA} -- the leftmost machine in Figure~\ref{fig:TNF}. This machine is the archetypal Turing machine equivalent of a ``while True'' infinite loop: the machine will never leave the transition, indefinitely drifting to the right of the tape. Hence, none of the $21^9$ machines obtained by defining the other 9 transitions are relevant since these transitions are never reached.
     \item \textbf{State/symbol permutations.} Permuting non-\stateA states and non-zero symbols (\stateA and 0 are special because the initial configuration is the all-0 tape in state \stateA) creates identical machines up to renaming, hence studying the halting of only one of them is enough. State/symbol permutation divides the syntactic space size by a factor of $(n-1)! (s-1)!$.
-\end{itemize}
+\end{enumerate}
 
 Tree Normal Form (TNF) enumeration, introduced by Brady in 1963 in his PhD thesis \cite{Brady64} and illustrated in Figure~\ref{fig:TNF}, solves both of these problems: Turing machines are recursively \textit{discovered} starting from the machine with no transitions defined (TNF root). Each enumerated machine is processed by a \textit{pipeline of deciders} (see Section~\ref{sec:deciders}) which will output either \HALT, \NONHALT or \UNKNOWN for each machine:
 \begin{itemize}
@@ -110,7 +110,7 @@ Tree Normal Form (TNF) enumeration, introduced by Brady in 1963 in his PhD thesi
 
 
 Hence, by design, TNF enumeration avoids machines with unreachable transitions and state/symbol permutations. One further optimization in the TNF algorithm is,
-at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left, as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 1 is enough to conclude the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}. In practice, and in the counts of Table~\ref{tab:TNF-numbers}, leaves of the TNF tree that have all their transitions defined are not enumerated because they are obviously nonhalting -- hence not relevant for computing $S$.
+at the first level of the TNF tree (see Figure~\ref{fig:TNF}), to avoid machines that make a first move to the left, as they can be symmetrised to go to the right instead, \eg for 5-state 2-symbol machines, this makes the TNF root have 4 children instead of 8. It is also known that only considering machines that first write a 1 is enough to conclude the value $S$, but, for simplicity, this is not used in our work \cite{Marxen_1990,busycoq}. In practice, and in the counts of Table~\ref{tab:TNF-numbers}, leaves of the TNF tree, that have all their transitions defined, are not enumerated because they are obviously nonhalting -- hence not relevant for computing $S$.
 
 \begin{table}[h!]
     \centering
