@@ -827,12 +827,16 @@ Cryptids are Turing machines whose halting problem from all-0 tape is believed t
 
 Tables~\ref{tab:pipelineBB5}, \ref{tab:pipelineBB2x4}, and~\ref{tab:pipelineBB4} give simplified descriptions of the proof technique (mainly, deciders) pipelines (see Section \ref{sec:pipelines}) implemented in \CoqBB.\footnote{\url{https://github.com/ccz181078/Coq-BB5/}} Here we give the exact pipelines that were used. The identifiers we use for identifying deciders are the same as used in the released\footnote{\url{https://docs.bbchallenge.org/CoqBB5_release_v1.0.0/}} \Coq-extracted lists of enumerated machines (in TNF, see Section~\ref{sec:enum}).
 
+In the following tables, formal deciders IDs are built as follows: \texttt{LOOP1\_params\_107} corresponds to Loops (Section~\ref{sec:loops}) with step-limit parameter $L=107$; \texttt{NGRAM\_CPS\_IMPL2\_params\_1\_1\_100} corresponds to NGramCPS (Section~\ref{sec:n-gramCPS}) with no augmentation, left n-gram size $1$, right n-gram size $1$, and an additional parameter, here set to $100$, limiting the size of the set of local configurations; \texttt{NGRAM\_CPS\_IMPL1\_params\_4\_2\_2\_600} corresponds to NGramCPS with fixed-length history, the first parameter is history length (set to $4$ in this example), then same as \texttt{IMPL2}; \texttt{NGRAM\_CPS\_LRU\_params\_2\_2\_10000} corresponds to NGramCPS with Least Recent Usage history, parameters are the same as from \texttt{IMPL2}; \texttt{REPWL\_params\_4\_3\_320\_10000} corresponds to RepWL (Section~\ref{sec:RepWL}) with block length $l=4$, repeat threshold $T=3$, block simulation parameter set to $320$ and maximum number of graph nodes set to $10{,}000$; in the case of $S(5)$ \textit{table based} machines (see Section~\ref{app:pipeS5exact}), the use of $\texttt{params\_custom}$ indicates hardcoded parameters that vary for each decided machine.
+
 \subsection{Exact $S(2,4)$ and $S(4)$ pipelines}
 
 Pipelines for $S(2,4)$ and $S(4)$ only use deciders, \ie there are no hardcoded verifier certificates, individual proofs of nonhalting or reduction argument used; see Section~\ref{sec:deciders-overview}. Both $S(4)$ and $S(2,4)$ only use the following deciders: Loops (Section~\ref{sec:loops}), NGramCPS (Section~\ref{sec:n-gramCPS}), and RepWL (Section~\ref{sec:RepWL}); which are all regular deciders (see Section~\ref{sec:deciders-overview}). The pipeline of $S(2,4)$ simulates 24 machines (including the $S(2,4)$ champion) up to $3{,}932{,}964$ steps in order to prove that they halt.
 
+
 \begin{table}[h!]
     \centering
+    \scriptsize
     \begin{tabular}{|lrrr|}
         \hline
         Exact $S(4)$ pipeline                               & Nonhalt   & Halt      & Total decided \\
@@ -860,8 +864,10 @@ Pipelines for $S(2,4)$ and $S(4)$ only use deciders, \ie there are no hardcoded 
     % \label{tab:pipelineBB4_exact}
 \end{table}
 
+
 \begin{table}[h!]
     \centering
+    \scriptsize
     \begin{tabular}{|lrrr|}
         \hline
         Exact $S(2,4)$ pipeline                           & Nonhalt       & Halt      & Total decided \\
@@ -894,10 +900,11 @@ Pipelines for $S(2,4)$ and $S(4)$ only use deciders, \ie there are no hardcoded 
     % \label{tab:pipelineBB2x4_exact}
 \end{table}
 
-\subsection{Exact $S(5)$ pipeline}
+\subsection{Exact $S(5)$ pipeline}\label{app:pipeS5exact}
 
-\begin{table}[h!]
+\begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|lrrr|}
         \hline
         Exact $S(5)$ pipeline                             & Nonhalt         & Halt           & Total decided   \\
@@ -924,8 +931,9 @@ Pipelines for $S(2,4)$ and $S(4)$ only use deciders, \ie there are no hardcoded 
 \end{table}
 
 The $S(5)$ pipeline differs from $S(2,4)$ and $S(4)$ in the following ways: for $8{,}045$ machines (marked as $\texttt{TABLE\_BASED}$), \CoqBB hardcodes either the parameters with which deciders should be called to solve them or their verifier certificates (see Section~\ref{sec:deciders-overview}); also, the 13 Sporadic Machines are proven using individual \Coq proofs, see Section~\ref{sec:sporadic}. Finally, machines marked \texttt{NORMAL\_FORM\_TABLE\_BASED} above are 24 machines which are proved using \texttt{1RB}-reduction (see Section~\ref{sec:deciders-overview}); we give the methods used to solve the \texttt{1RB} machines they reduce to.
-\begin{table}[h!]
+\begin{table}[H]
     \centering
+    \footnotesize
     \begin{minipage}{0.55\linewidth}
         \centering
         \begin{tabular}{|lrr|}
